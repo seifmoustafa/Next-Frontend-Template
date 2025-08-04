@@ -1,7 +1,7 @@
 "use client"
 
-import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 
 // Layout template types - Updated with new layouts
 export type LayoutTemplate = "classic" | "elegant" | "modern" | "minimal" | "compact" | "floating"
@@ -33,9 +33,7 @@ interface SettingsContextType {
   colorTheme: ColorTheme
   setColorTheme: (theme: ColorTheme) => void
 
-  // Dark mode
-  darkMode: boolean
-  setDarkMode: (isDark: boolean) => void
+
 
   // Sidebar position
   sidebarPosition: SidebarPosition
@@ -75,34 +73,35 @@ const defaultSettings = {
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined)
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
-  // Initialize state with default values
   const [layoutTemplate, setLayoutTemplate] = useState<LayoutTemplate>(defaultSettings.layoutTemplate)
   const [colorTheme, setColorTheme] = useState<ColorTheme>(defaultSettings.colorTheme)
-  const [darkMode, setDarkMode] = useState<boolean>(defaultSettings.darkMode)
+  
   const [sidebarPosition, setSidebarPosition] = useState<SidebarPosition>(defaultSettings.sidebarPosition)
   const [cardStyle, setCardStyle] = useState<CardStyle>(defaultSettings.cardStyle)
   const [animationLevel, setAnimationLevel] = useState<AnimationLevel>(defaultSettings.animationLevel)
   const [fontSize, setFontSize] = useState<FontSize>(defaultSettings.fontSize)
   const [borderRadius, setBorderRadius] = useState<BorderRadius>(defaultSettings.borderRadius)
+  const [mounted, setMounted] = useState(false)
 
-  // Load settings from localStorage on initial render
+  // Effect to load settings from localStorage on mount
   useEffect(() => {
-    const savedSettings = localStorage.getItem("appSettings")
-    if (savedSettings) {
-      try {
+    try {
+      const savedSettings = localStorage.getItem("appSettings")
+      if (savedSettings) {
         const parsedSettings = JSON.parse(savedSettings)
         setLayoutTemplate(parsedSettings.layoutTemplate || defaultSettings.layoutTemplate)
         setColorTheme(parsedSettings.colorTheme || defaultSettings.colorTheme)
-        setDarkMode(parsedSettings.darkMode !== undefined ? parsedSettings.darkMode : defaultSettings.darkMode)
+        
         setSidebarPosition(parsedSettings.sidebarPosition || defaultSettings.sidebarPosition)
         setCardStyle(parsedSettings.cardStyle || defaultSettings.cardStyle)
         setAnimationLevel(parsedSettings.animationLevel || defaultSettings.animationLevel)
         setFontSize(parsedSettings.fontSize || defaultSettings.fontSize)
         setBorderRadius(parsedSettings.borderRadius || defaultSettings.borderRadius)
-      } catch (error) {
-        console.error("Failed to parse settings:", error)
       }
+    } catch (error) {
+      console.error("Failed to parse settings:", error)
     }
+    setMounted(true)
   }, [])
 
   // Save settings to localStorage whenever they change
@@ -110,7 +109,6 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     const settings = {
       layoutTemplate,
       colorTheme,
-      darkMode,
       sidebarPosition,
       cardStyle,
       animationLevel,
@@ -127,27 +125,29 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute("data-font-size", fontSize)
     document.documentElement.setAttribute("data-radius", borderRadius)
 
-    // Apply dark mode
-    if (darkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
+
 
     // Apply RTL/LTR based on sidebar position
     document.documentElement.setAttribute("dir", sidebarPosition === "right" ? "rtl" : "ltr")
-  }, [layoutTemplate, colorTheme, darkMode, sidebarPosition, cardStyle, animationLevel, fontSize, borderRadius])
+  }, [layoutTemplate, colorTheme, sidebarPosition, cardStyle, animationLevel, fontSize, borderRadius])
+
+
 
   // Reset all settings to default
   const resetSettings = () => {
     setLayoutTemplate(defaultSettings.layoutTemplate)
     setColorTheme(defaultSettings.colorTheme)
-    setDarkMode(defaultSettings.darkMode)
+    
     setSidebarPosition(defaultSettings.sidebarPosition)
     setCardStyle(defaultSettings.cardStyle)
     setAnimationLevel(defaultSettings.animationLevel)
     setFontSize(defaultSettings.fontSize)
     setBorderRadius(defaultSettings.borderRadius)
+  }
+
+  // Render nothing until the component has mounted to avoid hydration mismatch
+  if (!mounted) {
+    return null
   }
 
   return (
@@ -157,8 +157,6 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         setLayoutTemplate,
         colorTheme,
         setColorTheme,
-        darkMode,
-        setDarkMode,
         sidebarPosition,
         setSidebarPosition,
         cardStyle,

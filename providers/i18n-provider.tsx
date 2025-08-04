@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
+import { useSettings } from "@/providers/settings-provider"
 import { ar } from "@/locales/ar"
 import { en } from "@/locales/en"
 
@@ -24,6 +25,7 @@ const translations = {
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>("ar") // Default to Arabic
+  const { setSidebarPosition } = useSettings()
   const direction: Direction = language === "ar" ? "rtl" : "ltr"
 
   const t = (key: string): string => {
@@ -33,7 +35,9 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang)
     localStorage.setItem("language", lang)
-    document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr")
+    const newDirection = lang === "ar" ? "right" : "left"
+    setSidebarPosition(newDirection)
+    document.documentElement.setAttribute("dir", newDirection === "right" ? "rtl" : "ltr")
     document.documentElement.setAttribute("lang", lang)
 
     // Update body class for font

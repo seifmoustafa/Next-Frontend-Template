@@ -34,11 +34,11 @@ export default function RootLayout({
       <body className={`${inter.variable} ${cairo.variable} antialiased font-arabic`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
           <ServiceProvider>
-            <I18nProvider>
-              <AuthProvider>
-                <SettingsProvider>{children}</SettingsProvider>
-              </AuthProvider>
-            </I18nProvider>
+            <SettingsProvider>
+              <I18nProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </I18nProvider>
+            </SettingsProvider>
           </ServiceProvider>
         </ThemeProvider>
       </body>

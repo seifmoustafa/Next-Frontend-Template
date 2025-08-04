@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { useI18n } from "@/providers/i18n-provider"
 import { useSettings } from "@/providers/settings-provider"
+import { useTheme } from "next-themes"
 import {
   Palette,
   Layout,
@@ -32,6 +33,7 @@ import { cn } from "@/lib/utils"
 export function SettingsView() {
   const { t, language, setLanguage } = useI18n()
   const settings = useSettings()
+  const { setTheme } = useTheme()
   const [saved, setSaved] = useState(false)
 
   // Color themes
@@ -169,7 +171,11 @@ export function SettingsView() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Sun className="h-4 w-4 text-muted-foreground" />
-                  <Switch checked={settings.darkMode} onCheckedChange={settings.setDarkMode} />
+                  <div className="grid grid-cols-3 gap-2">
+                    <Button variant="outline" onClick={() => setTheme('light')}>{t('theme.light')}</Button>
+                    <Button variant="outline" onClick={() => setTheme('dark')}>{t('theme.dark')}</Button>
+                    <Button variant="outline" onClick={() => setTheme('system')}>{t('theme.system')}</Button>
+                  </div>
                   <Moon className="h-4 w-4 text-muted-foreground" />
                 </div>
               </div>
