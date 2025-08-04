@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { I18nProvider } from "@/providers/i18n-provider"
 import { ServiceProvider } from "@/providers/service-provider"
 import { AuthProvider } from "@/providers/auth-provider"
+import { SettingsProvider } from "@/providers/settings-provider"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,7 +22,6 @@ const cairo = Cairo({
 export const metadata: Metadata = {
   title: "لوحة التحكم الإدارية",
   description: "لوحة تحكم إدارية احترافية مع دعم متعدد اللغات",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -35,7 +35,9 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
           <ServiceProvider>
             <I18nProvider>
-              <AuthProvider>{children}</AuthProvider>
+              <AuthProvider>
+                <SettingsProvider>{children}</SettingsProvider>
+              </AuthProvider>
             </I18nProvider>
           </ServiceProvider>
         </ThemeProvider>

@@ -1,6 +1,23 @@
 "use client"
 
-import { Menu, Bell, Search, Sun, Moon, Globe, Monitor } from "lucide-react"
+import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import {
+  Menu,
+  Bell,
+  Search,
+  Sun,
+  Moon,
+  Globe,
+  Monitor,
+  Shield,
+  User,
+  LayoutDashboard,
+  Users,
+  BarChart3,
+  Settings,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -9,49 +26,137 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { useTheme } from "next-themes"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
-import Link from "next/link"
 import { cn } from "@/lib/utils"
 
-interface HeaderProps {
-  onMenuClick: () => void
-  isModern?: boolean
-}
-
-export function Header({ onMenuClick, isModern = false }: HeaderProps) {
+export function MinimalHeader() {
   const { theme, setTheme } = useTheme()
   const { language, setLanguage, t, direction } = useI18n()
   const { user, logout } = useAuth()
+  const pathname = usePathname()
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  const navigation = [
+    {
+      name: t("nav.dashboard"),
+      href: "/dashboard",
+      icon: LayoutDashboard,
+    },
+    {
+      name: t("nav.users"),
+      href: "/dashboard/users",
+      icon: Users,
+    },
+    {
+      name: t("nav.analytics"),
+      href: "/dashboard/analytics",
+      icon: BarChart3,
+    },
+    {
+      name: "الملف الشخصي",
+      href: "/dashboard/profile",
+      icon: User,
+    },
+    {
+      name: t("nav.settings"),
+      href: "/dashboard/settings",
+      icon: Settings,
+    },
+  ]
 
   return (
-    <header className={cn("sticky top-0 z-40 glass border-b border-border", isModern && "h-20 flex items-center")}>
-      <div className={cn("flex items-center justify-between px-6", isModern ? "py-6" : "py-4")}>
-        {/* Left side */}
-        <div className="flex items-center space-x-4 rtl:space-x-reverse">
-          <Button variant="ghost" size="icon" className="lg:hidden hover-lift sidebar-trigger" onClick={onMenuClick}>
-            <Menu className="w-5 h-5" />
-          </Button>
+    <header className="fixed top-0 left-0 right-0 z-40 glass border-b border-border">
+      <div className="flex items-center justify-between px-6 py-4">
+        {/* Logo and Navigation */}
+        <div className="flex items-center space-x-6 rtl:space-x-reverse">
+          <Link href="/dashboard" className="flex items-center space-x-2 rtl:space-x-reverse">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+              <Shield className="w-6 h-6 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold">لوحة التحكم</h1>
+            </div>
+          </Link>
 
-          {/* Search */}
-          <div className="relative hidden md:block">
-            <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder={t("common.search")}
-              className={cn(
-                "pl-10 rtl:pl-4 rtl:pr-10 bg-muted/50 border-0 focus:bg-background transition-colors",
-                isModern ? "w-96 h-12" : "w-80",
-              )}
-            />
-          </div>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-1 rtl:space-x-reverse">
+            {navigation.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-primary text-primary-foreground"
+                      : "text-foreground/70 hover:bg-accent hover:text-accent-foreground",
+                  )}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
+          </nav>
+
+          {/* Mobile Navigation */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"} className="w-56">
+              <DropdownMenuLabel>التنقل</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {navigation.map((item) => {
+                const Icon = item.icon
+                const isActive = pathname === item.href
+                return (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link
+                      href={item.href}
+                      className={cn("flex items-center", isActive && "bg-primary/10 text-primary font-medium")}
+                    >
+                      <Icon className="mr-2 h-4 w-4" />
+                      <span>{item.name}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                )
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Right side */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
+          {/* Search */}
+          <div className={cn("relative", searchOpen ? "w-64" : "w-10")}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn("absolute right-0 top-0", searchOpen && "opacity-0")}
+              onClick={() => setSearchOpen(true)}
+            >
+              <Search className="h-5 w-5" />
+            </Button>
+            <Input
+              placeholder={t("common.search")}
+              className={cn(
+                "pl-4 pr-10 h-10 bg-muted/50 border-0 focus:bg-background transition-all",
+                searchOpen ? "opacity-100 w-full" : "opacity-0 w-0",
+              )}
+              onBlur={() => setSearchOpen(false)}
+              autoFocus={searchOpen}
+            />
+          </div>
+
           {/* Language Switcher */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -122,7 +227,9 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/profile">الملف الشخصي</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>الإعدادات</DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/settings">الإعدادات</Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout} className="text-destructive">
                 {t("nav.logout")}
