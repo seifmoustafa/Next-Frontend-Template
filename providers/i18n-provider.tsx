@@ -53,6 +53,95 @@ const translations = {
     "users.actions": "الإجراءات",
     "users.search": "البحث في المستخدمين...",
 
+    // Settings - Arabic
+    "settings.appearance": "المظهر",
+    "settings.layout": "التخطيط",
+    "settings.localization": "اللغة",
+    "settings.advanced": "متقدم",
+    "settings.colorTheme": "سمة الألوان",
+    "settings.darkMode": "الوضع المظلم",
+    "settings.lightDarkToggle": "تبديل بين الوضع الفاتح والمظلم",
+    "settings.selectColorTheme": "اختر سمة الألوان",
+    "settings.cardStyle": "نمط البطاقات",
+    "settings.fontSize": "حجم الخط",
+    "settings.borderRadius": "استدارة الحواف",
+    "settings.layoutTemplates": "قوالب التخطيط",
+    "settings.sidebarPosition": "موضع الشريط الجانبي",
+    "settings.languageSettings": "إعدادات اللغة",
+    "settings.selectLanguage": "اختر لغة الواجهة",
+    "settings.currentLanguage": "اللغة الحالية",
+    "settings.textDirection": "اتجاه النص",
+    "settings.fontUsed": "الخط المستخدم",
+    "settings.sidebarPos": "موضع الشريط الجانبي",
+    "settings.animationLevel": "مستوى التأثيرات الحركية",
+    "settings.resetSettings": "إعادة ضبط الإعدادات",
+    "settings.resetDescription":
+      "إعادة جميع إعدادات الواجهة إلى الوضع الافتراضي. هذا سيؤدي إلى إعادة ضبط جميع التخصيصات التي قمت بها.",
+    "settings.resetAll": "إعادة ضبط جميع الإعدادات",
+    "settings.saveSettings": "حفظ الإعدادات",
+    "settings.settingsSaved": "تم الحفظ!",
+
+    // Layout Templates - Arabic
+    "layout.classic": "كلاسيكي",
+    "layout.elegant": "أنيق",
+    "layout.modern": "عصري",
+    "layout.minimal": "بسيط",
+    "layout.compact": "مضغوط",
+    "layout.floating": "عائم",
+    "layout.classicDesc": "تصميم كلاسيكي مع شريط جانبي عريض وأيقونات كبيرة",
+    "layout.elegantDesc": "تصميم أنيق مع خطوط ناعمة وألوان متدرجة",
+    "layout.modernDesc": "تصميم عصري مع شريط جانبي مصغر وهيدر كبير",
+    "layout.minimalDesc": "تصميم بسيط مع شريط علوي فقط وقوائم منسدلة",
+    "layout.compactDesc": "تصميم مضغوط مع مساحات صغيرة وعناصر مكثفة",
+    "layout.floatingDesc": "تصميم عائم مع بطاقات منفصلة وتأثيرات ثلاثية الأبعاد",
+
+    // Color Themes - Arabic
+    "color.purple": "أرجواني",
+    "color.blue": "أزرق",
+    "color.green": "أخضر",
+    "color.orange": "برتقالي",
+    "color.red": "أحمر",
+    "color.teal": "فيروزي",
+
+    // Card Styles - Arabic
+    "cardStyle.default": "افتراضي",
+    "cardStyle.glass": "زجاجي",
+    "cardStyle.solid": "صلب",
+    "cardStyle.bordered": "إطار",
+    "cardStyle.defaultDesc": "بطاقات بتصميم بسيط",
+    "cardStyle.glassDesc": "تأثير زجاجي شفاف",
+    "cardStyle.solidDesc": "بطاقات ملونة بالكامل",
+    "cardStyle.borderedDesc": "بطاقات بإطار واضح",
+
+    // Animation Levels - Arabic
+    "animation.none": "بدون",
+    "animation.minimal": "بسيط",
+    "animation.moderate": "متوسط",
+    "animation.high": "عالي",
+    "animation.noneDesc": "بدون تأثيرات حركية",
+    "animation.minimalDesc": "تأثيرات حركية بسيطة",
+    "animation.moderateDesc": "تأثيرات حركية متوسطة",
+    "animation.highDesc": "تأثيرات حركية متقدمة",
+
+    // Font Sizes - Arabic
+    "fontSize.small": "صغير",
+    "fontSize.default": "متوسط",
+    "fontSize.large": "كبير",
+    "fontSize.smallDesc": "خط أصغر للواجهة",
+    "fontSize.defaultDesc": "حجم الخط الافتراضي",
+    "fontSize.largeDesc": "خط أكبر للواجهة",
+
+    // Border Radius - Arabic
+    "radius.none": "بدون",
+    "radius.small": "صغير",
+    "radius.default": "متوسط",
+    "radius.large": "كبير",
+    "radius.full": "دائري",
+
+    // Sidebar Position - Arabic
+    "sidebar.right": "يمين (RTL)",
+    "sidebar.left": "يسار (LTR)",
+
     // Common
     "common.search": "بحث...",
     "common.filter": "تصفية",
@@ -108,6 +197,95 @@ const translations = {
     "users.adminType": "Admin Type",
     "users.actions": "Actions",
     "users.search": "Search users...",
+
+    // Settings - English
+    "settings.appearance": "Appearance",
+    "settings.layout": "Layout",
+    "settings.localization": "Language",
+    "settings.advanced": "Advanced",
+    "settings.colorTheme": "Color Theme",
+    "settings.darkMode": "Dark Mode",
+    "settings.lightDarkToggle": "Toggle between light and dark mode",
+    "settings.selectColorTheme": "Select Color Theme",
+    "settings.cardStyle": "Card Style",
+    "settings.fontSize": "Font Size",
+    "settings.borderRadius": "Border Radius",
+    "settings.layoutTemplates": "Layout Templates",
+    "settings.sidebarPosition": "Sidebar Position",
+    "settings.languageSettings": "Language Settings",
+    "settings.selectLanguage": "Select Interface Language",
+    "settings.currentLanguage": "Current Language",
+    "settings.textDirection": "Text Direction",
+    "settings.fontUsed": "Font Used",
+    "settings.sidebarPos": "Sidebar Position",
+    "settings.animationLevel": "Animation Level",
+    "settings.resetSettings": "Reset Settings",
+    "settings.resetDescription":
+      "Reset all interface settings to default. This will undo all customizations you have made.",
+    "settings.resetAll": "Reset All Settings",
+    "settings.saveSettings": "Save Settings",
+    "settings.settingsSaved": "Saved!",
+
+    // Layout Templates - English
+    "layout.classic": "Classic",
+    "layout.elegant": "Elegant",
+    "layout.modern": "Modern",
+    "layout.minimal": "Minimal",
+    "layout.compact": "Compact",
+    "layout.floating": "Floating",
+    "layout.classicDesc": "Classic design with wide sidebar and large icons",
+    "layout.elegantDesc": "Elegant design with smooth lines and gradient colors",
+    "layout.modernDesc": "Modern design with collapsible sidebar and large header",
+    "layout.minimalDesc": "Minimal design with top bar only and dropdown menus",
+    "layout.compactDesc": "Compact design with small spaces and dense elements",
+    "layout.floatingDesc": "Floating design with separate cards and 3D effects",
+
+    // Color Themes - English
+    "color.purple": "Purple",
+    "color.blue": "Blue",
+    "color.green": "Green",
+    "color.orange": "Orange",
+    "color.red": "Red",
+    "color.teal": "Teal",
+
+    // Card Styles - English
+    "cardStyle.default": "Default",
+    "cardStyle.glass": "Glass",
+    "cardStyle.solid": "Solid",
+    "cardStyle.bordered": "Bordered",
+    "cardStyle.defaultDesc": "Simple design cards",
+    "cardStyle.glassDesc": "Transparent glass effect",
+    "cardStyle.solidDesc": "Fully colored cards",
+    "cardStyle.borderedDesc": "Cards with clear borders",
+
+    // Animation Levels - English
+    "animation.none": "None",
+    "animation.minimal": "Minimal",
+    "animation.moderate": "Moderate",
+    "animation.high": "High",
+    "animation.noneDesc": "No animations",
+    "animation.minimalDesc": "Simple animations",
+    "animation.moderateDesc": "Moderate animations",
+    "animation.highDesc": "Advanced animations",
+
+    // Font Sizes - English
+    "fontSize.small": "Small",
+    "fontSize.default": "Default",
+    "fontSize.large": "Large",
+    "fontSize.smallDesc": "Smaller interface font",
+    "fontSize.defaultDesc": "Default font size",
+    "fontSize.largeDesc": "Larger interface font",
+
+    // Border Radius - English
+    "radius.none": "None",
+    "radius.small": "Small",
+    "radius.default": "Default",
+    "radius.large": "Large",
+    "radius.full": "Full",
+
+    // Sidebar Position - English
+    "sidebar.right": "Right (RTL)",
+    "sidebar.left": "Left (LTR)",
 
     // Common
     "common.search": "Search...",

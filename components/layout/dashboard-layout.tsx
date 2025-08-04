@@ -4,16 +4,18 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Sidebar } from "@/components/layout/sidebar"
 import { Header } from "@/components/layout/header"
-import { MinimalHeader } from "./minimal-header"
-import { ClassicHeader } from "./classic-header"
-import { ClassicSidebar } from "./classic-sidebar"
-import { ModernSidebar } from "./modern-sidebar"
+import { MinimalHeader } from "@/components/layout/minimal-header"
+import { ClassicHeader } from "@/components/layout/classic-header"
+import { ClassicSidebar } from "@/components/layout/classic-sidebar"
+import { ModernSidebar } from "@/components/layout/modern-sidebar"
 import { useI18n } from "@/providers/i18n-provider"
 import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
 
-// Import the new elegant layout components
-import { ElegantLayout } from "./elegant-layout"
+// Import the new layout components
+import { ElegantLayout } from "@/components/layout/elegant-layout"
+import { CompactLayout } from "@/components/layout/compact-layout"
+import { FloatingLayout } from "@/components/layout/floating-layout"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -48,12 +50,30 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     }
   }, [])
 
-  // Elegant Layout (new design replacing the old default)
+  // Elegant Layout
   if (layoutTemplate === "elegant") {
     return (
       <ElegantLayout sidebarOpen={sidebarOpen} onSidebarOpenChange={setSidebarOpen}>
         {children}
       </ElegantLayout>
+    )
+  }
+
+  // Compact Layout - NEW
+  if (layoutTemplate === "compact") {
+    return (
+      <CompactLayout sidebarOpen={sidebarOpen} onSidebarOpenChange={setSidebarOpen}>
+        {children}
+      </CompactLayout>
+    )
+  }
+
+  // Floating Layout - NEW
+  if (layoutTemplate === "floating") {
+    return (
+      <FloatingLayout sidebarOpen={sidebarOpen} onSidebarOpenChange={setSidebarOpen}>
+        {children}
+      </FloatingLayout>
     )
   }
 
@@ -103,7 +123,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     )
   }
 
-  // Classic Layout (now the default)
+  // Classic Layout (default)
   if (layoutTemplate === "classic") {
     return (
       <div className={cn("min-h-screen bg-background", direction === "rtl" ? "rtl" : "ltr")}>

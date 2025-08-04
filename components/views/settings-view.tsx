@@ -36,72 +36,84 @@ export function SettingsView() {
 
   // Color themes
   const colorThemes = [
-    { value: "purple", label: "أرجواني", lightClass: "bg-[#7c3aed]", darkClass: "bg-[#6d28d9]" },
-    { value: "blue", label: "أزرق", lightClass: "bg-[#2563eb]", darkClass: "bg-[#1d4ed8]" },
-    { value: "green", label: "أخضر", lightClass: "bg-[#16a34a]", darkClass: "bg-[#15803d]" },
-    { value: "orange", label: "برتقالي", lightClass: "bg-[#ea580c]", darkClass: "bg-[#c2410c]" },
-    { value: "red", label: "أحمر", lightClass: "bg-[#dc2626]", darkClass: "bg-[#b91c1c]" },
-    { value: "teal", label: "فيروزي", lightClass: "bg-[#0d9488]", darkClass: "bg-[#0f766e]" },
+    { value: "purple", label: t("color.purple"), lightClass: "bg-[#7c3aed]", darkClass: "bg-[#6d28d9]" },
+    { value: "blue", label: t("color.blue"), lightClass: "bg-[#2563eb]", darkClass: "bg-[#1d4ed8]" },
+    { value: "green", label: t("color.green"), lightClass: "bg-[#16a34a]", darkClass: "bg-[#15803d]" },
+    { value: "orange", label: t("color.orange"), lightClass: "bg-[#ea580c]", darkClass: "bg-[#c2410c]" },
+    { value: "red", label: t("color.red"), lightClass: "bg-[#dc2626]", darkClass: "bg-[#b91c1c]" },
+    { value: "teal", label: t("color.teal"), lightClass: "bg-[#0d9488]", darkClass: "bg-[#0f766e]" },
   ]
 
-  // Layout templates - Updated with new "elegant" theme
+  // Layout templates - Updated with new layouts
   const layoutTemplates = [
     {
       value: "classic",
-      label: "كلاسيكي",
-      description: "تصميم كلاسيكي مع شريط جانبي عريض وأيقونات كبيرة",
+      label: t("layout.classic"),
+      description: t("layout.classicDesc"),
       image: "/placeholder.svg?height=100&width=200&text=Classic+Layout",
     },
     {
       value: "elegant",
-      label: "أنيق",
-      description: "تصميم أنيق مع خطوط ناعمة وألوان متدرجة",
+      label: t("layout.elegant"),
+      description: t("layout.elegantDesc"),
       image: "/placeholder.svg?height=100&width=200&text=Elegant+Layout",
     },
     {
       value: "modern",
-      label: "عصري",
-      description: "تصميم عصري مع شريط جانبي مصغر وهيدر كبير",
+      label: t("layout.modern"),
+      description: t("layout.modernDesc"),
       image: "/placeholder.svg?height=100&width=200&text=Modern+Layout",
     },
     {
       value: "minimal",
-      label: "بسيط",
-      description: "تصميم بسيط مع شريط علوي فقط وقوائم منسدلة",
+      label: t("layout.minimal"),
+      description: t("layout.minimalDesc"),
       image: "/placeholder.svg?height=100&width=200&text=Minimal+Layout",
+    },
+    {
+      value: "compact",
+      label: t("layout.compact"),
+      description: t("layout.compactDesc"),
+      image: "/placeholder.svg?height=100&width=200&text=Compact+Layout",
+    },
+    {
+      value: "floating",
+      label: t("layout.floating"),
+      description: t("layout.floatingDesc"),
+      image: "/placeholder.svg?height=100&width=200&text=Floating+Layout",
     },
   ]
 
   // Card styles
   const cardStyles = [
-    { value: "default", label: "افتراضي", description: "بطاقات بتصميم بسيط" },
-    { value: "glass", label: "زجاجي", description: "تأثير زجاجي شفاف" },
-    { value: "solid", label: "صلب", description: "بطاقات ملونة بالكامل" },
-    { value: "bordered", label: "إطار", description: "بطاقات بإطار واضح" },
+    { value: "default", label: t("cardStyle.default"), description: t("cardStyle.defaultDesc") },
+    { value: "glass", label: t("cardStyle.glass"), description: t("cardStyle.glassDesc") },
+    { value: "solid", label: t("cardStyle.solid"), description: t("cardStyle.solidDesc") },
+    { value: "bordered", label: t("cardStyle.bordered"), description: t("cardStyle.borderedDesc") },
   ]
 
   // Animation levels
   const animationLevels = [
-    { value: "none", label: "بدون", description: "بدون تأثيرات حركية" },
-    { value: "minimal", label: "بسيط", description: "تأثيرات حركية بسيطة" },
-    { value: "moderate", label: "متوسط", description: "تأثيرات حركية متوسطة" },
-    { value: "high", label: "عالي", description: "تأثيرات حركية متقدمة" },
+    { value: "none", label: t("animation.none"), description: t("animation.noneDesc") },
+    { value: "minimal", label: t("animation.minimal"), description: t("animation.minimalDesc") },
+    { value: "moderate", label: t("animation.moderate"), description: t("animation.moderateDesc") },
+    { value: "high", label: t("animation.high"), description: t("animation.highDesc") },
   ]
 
   // Font sizes
   const fontSizes = [
-    { value: "small", label: "صغير", description: "خط أصغر للواجهة" },
-    { value: "default", label: "متوسط", description: "حجم الخط الافتراضي" },
-    { value: "large", label: "كبير", description: "خط أكبر للواجهة" },
+    { value: "small", label: t("fontSize.small"), description: t("fontSize.smallDesc") },
+    { value: "default", label: t("fontSize.default"), description: t("fontSize.defaultDesc") },
+    { value: "large", label: t("fontSize.large"), description: t("fontSize.largeDesc") },
   ]
 
   // Border radius options
   const borderRadiusOptions = [
-    { value: "none", label: "بدون", icon: CircleOff },
-    { value: "small", label: "صغير", icon: Circle },
-    { value: "default", label: "متوسط", icon: Circle },
-    { value: "large", label: "كبير", icon: Circle },
-    { value: "full", label: "دائري", icon: Circle },
+    { value: "none", label: t("radius.none"), icon: CircleOff },
+    { value: "small", label: t("radius.small"), icon: Circle },
+    { value: "default", label: t("radius.default"), icon: Circle },
+    { value: "large", label: t("radius.large"), icon: Circle },
+    { value: "full", label: t("radius.full"), icon: Circle },
   ]
 
   const handleSave = () => {
@@ -113,26 +125,28 @@ export function SettingsView() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">{t("nav.settings")}</h1>
-        <p className="text-muted-foreground mt-2">تخصيص واجهة التطبيق والإعدادات العامة</p>
+        <p className="text-muted-foreground mt-2">
+          {language === "ar" ? "تخصيص واجهة التطبيق والإعدادات العامة" : "Customize app interface and general settings"}
+        </p>
       </div>
 
       <Tabs defaultValue="appearance" className="space-y-6">
         <TabsList className="grid grid-cols-4 w-full max-w-2xl">
           <TabsTrigger value="appearance" className="flex items-center gap-2">
             <Palette className="h-4 w-4" />
-            <span>المظهر</span>
+            <span>{t("settings.appearance")}</span>
           </TabsTrigger>
           <TabsTrigger value="layout" className="flex items-center gap-2">
             <Layout className="h-4 w-4" />
-            <span>التخطيط</span>
+            <span>{t("settings.layout")}</span>
           </TabsTrigger>
           <TabsTrigger value="localization" className="flex items-center gap-2">
             <Languages className="h-4 w-4" />
-            <span>اللغة</span>
+            <span>{t("settings.localization")}</span>
           </TabsTrigger>
           <TabsTrigger value="advanced" className="flex items-center gap-2">
             <Sliders className="h-4 w-4" />
-            <span>متقدم</span>
+            <span>{t("settings.advanced")}</span>
           </TabsTrigger>
         </TabsList>
 
@@ -143,15 +157,15 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Palette className="h-5 w-5" />
-                <span>سمة الألوان</span>
+                <span>{t("settings.colorTheme")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Dark Mode Toggle */}
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label>الوضع المظلم</Label>
-                  <p className="text-sm text-muted-foreground">تبديل بين الوضع الفاتح والمظلم</p>
+                  <Label>{t("settings.darkMode")}</Label>
+                  <p className="text-sm text-muted-foreground">{t("settings.lightDarkToggle")}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Sun className="h-4 w-4 text-muted-foreground" />
@@ -164,7 +178,7 @@ export function SettingsView() {
 
               {/* Color Theme Selection */}
               <div className="space-y-4">
-                <Label>اختر سمة الألوان</Label>
+                <Label>{t("settings.selectColorTheme")}</Label>
                 <div className="grid grid-cols-3 gap-4">
                   {colorThemes.map((theme) => (
                     <div
@@ -197,7 +211,7 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Layers className="h-5 w-5" />
-                <span>نمط البطاقات</span>
+                <span>{t("settings.cardStyle")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -229,7 +243,7 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Type className="h-5 w-5" />
-                <span>حجم الخط</span>
+                <span>{t("settings.fontSize")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -268,7 +282,7 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Circle className="h-5 w-5" />
-                <span>استدارة الحواف</span>
+                <span>{t("settings.borderRadius")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -317,11 +331,11 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Layout className="h-5 w-5" />
-                <span>قوالب التخطيط</span>
+                <span>{t("settings.layoutTemplates")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {layoutTemplates.map((template) => (
                   <div
                     key={template.value}
@@ -356,7 +370,7 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Layout className="h-5 w-5" />
-                <span>موضع الشريط الجانبي</span>
+                <span>{t("settings.sidebarPosition")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -378,7 +392,7 @@ export function SettingsView() {
                         <div className="h-10 w-full bg-muted-foreground/10 rounded-md"></div>
                       </div>
                     </div>
-                    <span className="text-sm">يمين (RTL)</span>
+                    <span className="text-sm">{t("sidebar.right")}</span>
                   </Label>
                 </div>
                 <div>
@@ -394,7 +408,7 @@ export function SettingsView() {
                       </div>
                       <div className="h-full w-1/4 bg-primary/20 rounded-md mr-2"></div>
                     </div>
-                    <span className="text-sm">يسار (LTR)</span>
+                    <span className="text-sm">{t("sidebar.left")}</span>
                   </Label>
                 </div>
               </RadioGroup>
@@ -408,12 +422,12 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Globe className="h-5 w-5" />
-                <span>إعدادات اللغة</span>
+                <span>{t("settings.languageSettings")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <Label>اختر لغة الواجهة</Label>
+                <Label>{t("settings.selectLanguage")}</Label>
                 <RadioGroup value={language} onValueChange={(value) => setLanguage(value as any)} className="space-y-4">
                   <div className="flex items-center space-x-3 rtl:space-x-reverse">
                     <RadioGroupItem value="ar" id="lang-ar" />
@@ -441,24 +455,32 @@ export function SettingsView() {
               <Separator />
 
               <div className="space-y-4">
-                <Label>معلومات اللغة المحددة</Label>
+                <Label>{language === "ar" ? "معلومات اللغة المحددة" : "Selected Language Information"}</Label>
                 <div className="p-4 rounded-lg bg-muted/50">
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <p className="font-medium text-muted-foreground">اللغة الحالية:</p>
+                      <p className="font-medium text-muted-foreground">{t("settings.currentLanguage")}:</p>
                       <p>{language === "ar" ? "العربية" : "English"}</p>
                     </div>
                     <div>
-                      <p className="font-medium text-muted-foreground">اتجاه النص:</p>
-                      <p>{language === "ar" ? "من اليمين إلى اليسار (RTL)" : "من اليسار إلى اليمين (LTR)"}</p>
+                      <p className="font-medium text-muted-foreground">{t("settings.textDirection")}:</p>
+                      <p>{language === "ar" ? "من اليمين إلى اليسار (RTL)" : "Left to Right (LTR)"}</p>
                     </div>
                     <div>
-                      <p className="font-medium text-muted-foreground">الخط المستخدم:</p>
+                      <p className="font-medium text-muted-foreground">{t("settings.fontUsed")}:</p>
                       <p>{language === "ar" ? "Cairo" : "Inter"}</p>
                     </div>
                     <div>
-                      <p className="font-medium text-muted-foreground">موضع الشريط الجانبي:</p>
-                      <p>{settings.sidebarPosition === "right" ? "يمين" : "يسار"}</p>
+                      <p className="font-medium text-muted-foreground">{t("settings.sidebarPos")}:</p>
+                      <p>
+                        {settings.sidebarPosition === "right"
+                          ? language === "ar"
+                            ? "يمين"
+                            : "Right"
+                          : language === "ar"
+                            ? "يسار"
+                            : "Left"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -474,7 +496,7 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5" />
-                <span>مستوى التأثيرات الحركية</span>
+                <span>{t("settings.animationLevel")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -521,17 +543,15 @@ export function SettingsView() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <RotateCcw className="h-5 w-5" />
-                <span>إعادة ضبط الإعدادات</span>
+                <span>{t("settings.resetSettings")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  إعادة جميع إعدادات الواجهة إلى الوضع الافتراضي. هذا سيؤدي إلى إعادة ضبط جميع التخصيصات التي قمت بها.
-                </p>
+                <p className="text-sm text-muted-foreground">{t("settings.resetDescription")}</p>
                 <Button variant="destructive" className="w-full sm:w-auto" onClick={settings.resetSettings}>
                   <RotateCcw className="mr-2 h-4 w-4" />
-                  إعادة ضبط جميع الإعدادات
+                  {t("settings.resetAll")}
                 </Button>
               </div>
             </CardContent>
@@ -552,12 +572,12 @@ export function SettingsView() {
           {saved ? (
             <>
               <Check className="mr-2 h-4 w-4" />
-              تم الحفظ!
+              {t("settings.settingsSaved")}
             </>
           ) : (
             <>
               <Save className="mr-2 h-4 w-4" />
-              حفظ الإعدادات
+              {t("settings.saveSettings")}
             </>
           )}
         </Button>

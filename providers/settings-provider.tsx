@@ -3,8 +3,8 @@
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
 
-// Layout template types
-export type LayoutTemplate = "default" | "modern" | "minimal" | "classic"
+// Layout template types - Updated with new layouts
+export type LayoutTemplate = "classic" | "elegant" | "modern" | "minimal" | "compact" | "floating"
 
 // Color theme types
 export type ColorTheme = "purple" | "blue" | "green" | "orange" | "red" | "teal"
@@ -62,7 +62,7 @@ interface SettingsContextType {
 }
 
 const defaultSettings = {
-  layoutTemplate: "classic" as LayoutTemplate, // Changed from "default" to "classic"
+  layoutTemplate: "classic" as LayoutTemplate,
   colorTheme: "purple" as ColorTheme,
   darkMode: true,
   sidebarPosition: "right" as SidebarPosition,
