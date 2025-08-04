@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Bell, Settings, Menu, Sun, Moon, Globe } from "lucide-react"
+import { Search, Bell, Settings, Menu, Sun, Moon, Globe, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -28,7 +28,14 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
   const { user } = useAuth()
 
   return (
-    <header className="fixed top-6 left-4 right-4 sm:left-8 sm:right-8 z-50 h-16 bg-background/95 backdrop-blur-xl rounded-2xl border border-border/50 shadow-lg">
+    <header
+      className={cn(
+        "fixed top-6 left-4 right-4 sm:left-8 sm:right-8 z-50 h-16",
+        "bg-gradient-to-r from-background/98 via-background/95 to-background/98 backdrop-blur-2xl",
+        "rounded-2xl border border-border/60 shadow-2xl shadow-primary/10",
+        "transition-all duration-500 hover:shadow-3xl hover:shadow-primary/15",
+      )}
+    >
       <div className="flex items-center justify-between h-full px-6">
         {/* Left Section */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
@@ -36,7 +43,10 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden h-10 w-10 rounded-xl hover:bg-primary/10"
+            className={cn(
+              "lg:hidden h-10 w-10 rounded-xl hover:bg-primary/10 hover:text-primary",
+              "shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+            )}
             onClick={onMenuClick}
           >
             <Menu className="h-5 w-5" />
@@ -44,8 +54,13 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
 
           {/* Logo/Title */}
           <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
-              <div className="w-6 h-6 rounded-md bg-white/20" />
+            <div
+              className={cn(
+                "w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg",
+                "hover:shadow-xl transition-all duration-300 hover:scale-105",
+              )}
+            >
+              <Sparkles className="w-5 h-5 text-primary-foreground animate-pulse" />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
@@ -58,19 +73,19 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
 
         {/* Center Section - Search */}
         <div className="flex-1 max-w-md mx-4 lg:mx-8">
-          <div className="relative">
+          <div className="relative group">
             <Search
               className={cn(
-                "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground",
+                "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-all duration-300",
                 direction === "rtl" ? "right-3" : "left-3",
               )}
             />
             <Input
               placeholder={t("nav.search")}
               className={cn(
-                "w-full h-11 rounded-xl border-0 bg-muted/50 backdrop-blur-sm",
-                "focus:bg-background focus:ring-2 focus:ring-primary/20",
-                "transition-all duration-200",
+                "w-full h-11 rounded-xl border-0 bg-muted/50 backdrop-blur-sm shadow-sm",
+                "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
+                "transition-all duration-300",
                 direction === "rtl" ? "pr-10 text-right" : "pl-10",
               )}
             />
@@ -83,7 +98,10 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10 rounded-xl hover:bg-primary/10"
+            className={cn(
+              "h-10 w-10 rounded-xl hover:bg-primary/10 hover:text-primary",
+              "shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+            )}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
             <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -94,25 +112,48 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10 rounded-xl hover:bg-primary/10"
+            className={cn(
+              "h-10 w-10 rounded-xl hover:bg-primary/10 hover:text-primary",
+              "shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+            )}
             onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
           >
             <Globe className="h-4 w-4" />
           </Button>
 
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl hover:bg-primary/10 relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "h-10 w-10 rounded-xl hover:bg-primary/10 hover:text-primary relative",
+              "shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+            )}
+          >
             <Bell className="h-4 w-4" />
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-primary">3</Badge>
+            <Badge
+              className={cn(
+                "absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs",
+                "bg-gradient-to-br from-red-500 to-red-600 shadow-lg animate-pulse",
+              )}
+            >
+              3
+            </Badge>
           </Button>
 
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-10 px-3 rounded-xl hover:bg-primary/10">
+              <Button
+                variant="ghost"
+                className={cn(
+                  "h-10 px-3 rounded-xl hover:bg-primary/10",
+                  "shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+                )}
+              >
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <Avatar className="h-8 w-8 ring-2 ring-primary/20">
-                    <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">
+                  <Avatar className="h-8 w-8 ring-2 ring-primary/20 shadow-md">
+                    <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold text-sm">
                       {user?.firstName.charAt(0)}
                       {user?.lastName.charAt(0)}
                     </AvatarFallback>
@@ -126,15 +167,19 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"} className="w-56 mt-2" sideOffset={8}>
+            <DropdownMenuContent
+              align={direction === "rtl" ? "start" : "end"}
+              className="w-56 mt-2 rounded-xl shadow-2xl"
+              sideOffset={8}
+            >
               <DropdownMenuLabel>{t("profile.title")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem className="rounded-lg">
                 <Settings className="mr-2 h-4 w-4 rtl:mr-0 rtl:ml-2" />
                 {t("nav.settings")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive">{t("nav.logout")}</DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive rounded-lg">{t("nav.logout")}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

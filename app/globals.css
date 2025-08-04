@@ -184,10 +184,19 @@
 }
 
 /* Card Styles */
-:root[data-card-style="glass"] .glass {
-  backdrop-filter: blur(10px);
-  background: hsl(var(--background) / 0.8);
-  border: 1px solid hsl(var(--border) / 0.5);
+:root[data-card-style="glass"] .card,
+:root[data-card-style="glass"] .glass-effect {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark[data-card-style="glass"] .card,
+.dark[data-card-style="glass"] .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 :root[data-card-style="solid"] .card {
@@ -196,6 +205,7 @@
 }
 
 :root[data-card-style="bordered"] .card {
+  background: transparent;
   border: 2px solid hsl(var(--border));
   box-shadow: none;
 }
@@ -357,10 +367,17 @@
 }
 
 /* Glass effect */
-.glass {
-  backdrop-filter: blur(10px);
-  background: hsl(var(--background) / 0.8);
-  border: 1px solid hsl(var(--border) / 0.5);
+.glass-effect {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* Hover effects */

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LogOut, X, Shield, ChevronDown } from "lucide-react"
+import { LogOut, X, Shield, ChevronDown, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -46,18 +46,18 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
           <CollapsibleTrigger asChild>
             <div
               className={cn(
-                "group flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer",
+                "group flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 cursor-pointer",
                 level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
-                  ? "bg-primary/15 text-primary shadow-sm"
-                  : "bg-background/60 text-foreground/80 hover:bg-background/80 hover:text-foreground",
+                  ? "bg-gradient-to-r from-primary/20 to-primary/10 text-primary shadow-md"
+                  : "bg-background/60 text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm",
               )}
             >
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <div
                   className={cn(
-                    "flex items-center justify-center rounded-lg",
+                    "flex items-center justify-center rounded-lg transition-all duration-300",
                     level === 0 ? "w-8 h-8 bg-primary/10" : "w-6 h-6 bg-primary/5",
                   )}
                 >
@@ -70,7 +70,7 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
                   </Badge>
                 )}
               </div>
-              <ChevronDown className={cn("w-4 h-4 transition-transform", isExpanded && "rotate-180")} />
+              <ChevronDown className={cn("w-4 h-4 transition-transform duration-300", isExpanded && "rotate-180")} />
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-2 mt-2">
@@ -85,19 +85,19 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
         key={item.name}
         href={item.href || "#"}
         className={cn(
-          "group flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
+          "group flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300",
           level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
-            ? "bg-primary/15 text-primary shadow-sm"
-            : "bg-background/60 text-foreground/80 hover:bg-background/80 hover:text-foreground",
+            ? "bg-gradient-to-r from-primary/20 to-primary/10 text-primary shadow-md"
+            : "bg-background/60 text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm",
         )}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <div
             className={cn(
-              "flex items-center justify-center rounded-lg",
+              "flex items-center justify-center rounded-lg transition-all duration-300",
               level === 0 ? "w-8 h-8 bg-primary/10" : "w-6 h-6 bg-primary/5",
             )}
           >
@@ -133,20 +133,31 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-border/50">
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
+              <div
+                className={cn(
+                  "w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg",
+                  "hover:shadow-xl transition-all duration-300 hover:scale-105",
+                )}
+              >
                 <Shield className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
                 <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                   {t("nav.dashboard")}
                 </h2>
-                <p className="text-xs text-muted-foreground">Floating</p>
+                <p className="text-xs text-muted-foreground flex items-center">
+                  <Sparkles className="w-2 h-2 mr-1 rtl:mr-0 rtl:ml-1" />
+                  Floating
+                </p>
               </div>
             </div>
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden h-8 w-8 rounded-full hover:bg-primary/10"
+              className={cn(
+                "lg:hidden h-8 w-8 rounded-full hover:bg-primary/10",
+                "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105",
+              )}
               onClick={() => onOpenChange(false)}
             >
               <X className="h-4 w-4" />
@@ -156,20 +167,37 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
           {/* User Info */}
           {user && (
             <div className="p-6 border-b border-border/50">
-              <div className="flex items-center space-x-4 rtl:space-x-reverse">
-                <Avatar className="h-12 w-12 ring-2 ring-primary/20">
-                  <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold">
-                    {user.firstName.charAt(0)}
-                    {user.lastName.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
+              <div
+                className={cn(
+                  "flex items-center space-x-4 rtl:space-x-reverse p-4 rounded-2xl",
+                  "bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
+                  "shadow-sm hover:shadow-md transition-all duration-300",
+                )}
+              >
+                <div className="relative">
+                  <Avatar
+                    className={cn(
+                      "h-12 w-12 ring-2 ring-primary/20 shadow-lg",
+                      "transition-all duration-300 hover:scale-105",
+                    )}
+                  >
+                    <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold">
+                      {user.firstName.charAt(0)}
+                      {user.lastName.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  {/* Fixed online indicator */}
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-background shadow-md">
+                    <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-600 rounded-full animate-pulse" />
+                  </div>
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold truncate">
                     {user.firstName} {user.lastName}
                   </p>
                   <p className="text-xs text-muted-foreground truncate">{user.adminTypeName}</p>
                   <div className="flex items-center mt-1">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2 rtl:mr-0 rtl:ml-2"></div>
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2 rtl:mr-0 rtl:ml-2 animate-pulse" />
                     <span className="text-xs text-green-600 font-medium">Online</span>
                   </div>
                 </div>
@@ -186,7 +214,10 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
           <div className="p-4 border-t border-border/50">
             <Button
               variant="ghost"
-              className="w-full justify-start h-10 px-4 text-sm font-medium hover:bg-destructive/10 hover:text-destructive transition-all duration-200 rounded-xl"
+              className={cn(
+                "w-full justify-start h-10 px-4 text-sm font-medium hover:bg-destructive/10 hover:text-destructive transition-all duration-300 rounded-xl",
+                "shadow-sm hover:shadow-md hover:scale-105",
+              )}
               onClick={logout}
             >
               <div className="flex items-center justify-center w-6 h-6 rounded-lg mr-3 rtl:mr-0 rtl:ml-3 bg-destructive/10">
