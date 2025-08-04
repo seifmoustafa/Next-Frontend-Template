@@ -6,6 +6,7 @@ import { useState } from "react"
 import { LogOut, X, Shield, ChevronDown, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
@@ -44,7 +45,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           <CollapsibleTrigger asChild>
             <div
               className={cn(
-                "group flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer",
+                "group flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer",
                 level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
@@ -76,7 +77,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
         key={item.name}
         href={item.href || "#"}
         className={cn(
-          "group flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+          "group flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
           level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
@@ -105,21 +106,21 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
     <>
       <div
         className={cn(
-          "sidebar fixed inset-y-0 z-50 w-72 bg-background border-r border-border transform transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto",
+          "fixed inset-y-0 z-40 w-64 bg-background border-r border-border transform transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto",
           direction === "rtl" ? "right-0" : "left-0",
           open ? "translate-x-0" : direction === "rtl" ? "translate-x-full" : "-translate-x-full",
         )}
       >
         <div className="flex flex-col h-full">
-          {/* Improved Header */}
-          <div className="flex items-center justify-between p-6 border-b border-border">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 pt-6 border-b border-border">
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-sm">
-                <Shield className="w-5 h-5 text-primary-foreground" />
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+                <Shield className="w-4 h-4 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-lg font-semibold text-foreground">لوحة التحكم</h1>
-                <p className="text-xs text-muted-foreground">المدمجة</p>
+                <h1 className="text-base font-semibold text-foreground">{t("nav.dashboard")}</h1>
+                <p className="text-xs text-muted-foreground">Compact</p>
               </div>
             </div>
 
@@ -128,18 +129,18 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
             </Button>
           </div>
 
-          {/* Improved User Info */}
+          {/* User Info */}
           {user && (
-            <div className="p-6 border-b border-border">
-              <div className="flex items-center space-x-4 rtl:space-x-reverse">
+            <div className="p-4 border-b border-border">
+              <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <div className="relative">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                    <span className="text-primary font-semibold text-lg">
+                  <Avatar className="h-10 w-10">
+                    <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
                       {user.firstName.charAt(0)}
                       {user.lastName.charAt(0)}
-                    </span>
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-background"></div>
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background"></div>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">
@@ -151,19 +152,22 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
             </div>
           )}
 
-          {/* Improved Navigation */}
-          <nav className="flex-1 p-4 space-y-2">{navigation.map((item) => renderNavigationItem(item))}</nav>
+          {/* Navigation */}
+          <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+            {navigation.map((item) => renderNavigationItem(item))}
+          </nav>
 
-          {/* Improved Footer */}
-          <div className="p-4 border-t border-border">
+          {/* Footer */}
+          <div className="p-3 border-t border-border">
             <Button
               variant="ghost"
               onClick={logout}
-              className="w-full justify-start space-x-3 rtl:space-x-reverse text-foreground/80 hover:text-destructive hover:bg-destructive/10 px-3 py-2.5 h-auto rounded-lg"
+              className="w-full justify-start space-x-3 rtl:space-x-reverse text-foreground/80 hover:text-destructive hover:bg-destructive/10 px-3 py-2 h-auto rounded-lg"
             >
               <LogOut className="w-4 h-4" />
-              <span>{t("nav.logout")}</span>
+              <span className="text-sm">{t("nav.logout")}</span>
             </Button>
+            <div className="text-xs text-muted-foreground text-center mt-2">v2.1.0</div>
           </div>
         </div>
       </div>

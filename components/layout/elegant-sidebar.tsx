@@ -3,9 +3,10 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LogOut, X, Shield, Sparkles, ChevronDown } from "lucide-react"
+import { LogOut, X, Shield, ChevronDown, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
@@ -44,32 +45,35 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
           <CollapsibleTrigger asChild>
             <div
               className={cn(
-                "group flex items-center justify-between w-full px-6 py-4 rounded-2xl text-base font-medium transition-all duration-300 hover-lift cursor-pointer relative overflow-hidden",
-                level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
+                "group flex items-center justify-between w-full px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-300 cursor-pointer",
+                level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
-                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-xl shadow-primary/25"
-                  : "text-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-foreground",
+                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25"
+                  : "text-foreground/80 hover:bg-primary/10 hover:text-primary",
               )}
             >
-              {isActive && (
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-50"></div>
-              )}
-              <div className="flex items-center space-x-4 rtl:space-x-reverse relative z-10">
-                <Icon className={cn("w-6 h-6", isActive && "drop-shadow-sm")} />
-                <span className="flex-1">{item.name}</span>
+              <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                <div
+                  className={cn(
+                    "flex items-center justify-center rounded-xl transition-all duration-300",
+                    level === 0 ? "w-10 h-10" : "w-8 h-8",
+                    isActive ? "bg-white/20" : "bg-primary/10",
+                  )}
+                >
+                  <Icon className={cn(level === 0 ? "w-5 h-5" : "w-4 h-4", isActive ? "text-white" : "text-primary")} />
+                </div>
+                <span className="truncate font-medium">{item.name}</span>
                 {item.badge && (
-                  <Badge variant="secondary" className="text-xs bg-white/20 text-current border-white/30">
+                  <Badge variant="secondary" className="text-xs h-6 px-2 bg-primary/10 text-primary border-0">
                     {item.badge}
                   </Badge>
                 )}
               </div>
-              <ChevronDown
-                className={cn("w-5 h-5 transition-transform duration-300 relative z-10", isExpanded && "rotate-180")}
-              />
+              <ChevronDown className={cn("w-4 h-4 transition-transform duration-300", isExpanded && "rotate-180")} />
             </div>
           </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-3 mt-3">
+          <CollapsibleContent className="space-y-2 mt-2">
             {item.children?.map((child) => renderNavigationItem(child, level + 1))}
           </CollapsibleContent>
         </Collapsible>
@@ -81,27 +85,34 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
         key={item.name}
         href={item.href || "#"}
         className={cn(
-          "group flex items-center justify-between px-6 py-4 rounded-2xl text-base font-medium transition-all duration-300 hover-lift relative overflow-hidden",
-          level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
+          "group flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-300",
+          level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
-            ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-xl shadow-primary/25"
-            : "text-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-foreground",
+            ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25"
+            : "text-foreground/80 hover:bg-primary/10 hover:text-primary",
         )}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
-        {isActive && <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-50"></div>}
-        <div className="flex items-center space-x-4 rtl:space-x-reverse relative z-10">
-          <Icon className={cn("w-6 h-6", isActive && "drop-shadow-sm")} />
-          <span className="flex-1">{item.name}</span>
+        <div className="flex items-center space-x-4 rtl:space-x-reverse">
+          <div
+            className={cn(
+              "flex items-center justify-center rounded-xl transition-all duration-300",
+              level === 0 ? "w-10 h-10" : "w-8 h-8",
+              isActive ? "bg-white/20" : "bg-primary/10",
+            )}
+          >
+            <Icon className={cn(level === 0 ? "w-5 h-5" : "w-4 h-4", isActive ? "text-white" : "text-primary")} />
+          </div>
+          <span className="truncate font-medium">{item.name}</span>
         </div>
-        <div className="flex items-center space-x-2 rtl:space-x-reverse relative z-10">
+        <div className="flex items-center space-x-2 rtl:space-x-reverse">
           {item.badge && (
-            <Badge variant="secondary" className="text-xs bg-white/20 text-current border-white/30">
+            <Badge variant="secondary" className="text-xs h-6 px-2 bg-primary/10 text-primary border-0">
               {item.badge}
             </Badge>
           )}
-          {isActive && <div className="w-2 h-2 bg-white/50 rounded-full"></div>}
+          {level === 0 && <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />}
         </div>
       </Link>
     )
@@ -111,38 +122,30 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
     <>
       <div
         className={cn(
-          "sidebar fixed inset-y-0 z-50 w-72 backdrop-blur-xl bg-background/80 border-r border-border/50 transform transition-all duration-500 ease-in-out lg:translate-x-0 custom-scrollbar overflow-y-auto",
+          "fixed inset-y-0 z-40 w-80 xl:w-72 bg-background/95 backdrop-blur-xl border-r border-border/50 transform transition-all duration-300 ease-in-out lg:translate-x-0 overflow-y-auto",
           direction === "rtl" ? "right-0" : "left-0",
           open ? "translate-x-0" : direction === "rtl" ? "translate-x-full" : "-translate-x-full",
         )}
       >
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10 pointer-events-none"></div>
-
-        <div className="relative flex flex-col h-full">
+        <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-8 border-b border-border/50">
+          <div className="flex items-center justify-between p-6 pt-8 border-b border-border/50">
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg">
-                  <Shield className="w-7 h-7 text-primary-foreground" />
-                </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-2 h-2 text-white" />
-                </div>
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg">
+                <Shield className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                  لوحة التحكم
+                <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                  {t("nav.dashboard")}
                 </h1>
-                <p className="text-sm text-muted-foreground">الأنيقة</p>
+                <p className="text-sm text-muted-foreground">Elegant</p>
               </div>
             </div>
 
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden text-foreground hover:bg-primary/10 rounded-full"
+              className="lg:hidden h-10 w-10 rounded-xl"
               onClick={() => onOpenChange(false)}
             >
               <X className="w-5 h-5" />
@@ -151,40 +154,49 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
 
           {/* User Info */}
           {user && (
-            <div className="p-8 border-b border-border/50">
+            <div className="p-6 border-b border-border/50">
               <div className="flex items-center space-x-4 rtl:space-x-reverse">
                 <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                    <span className="text-primary font-semibold text-xl">
+                  <Avatar className="h-14 w-14 ring-2 ring-primary/20">
+                    <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-bold text-lg">
                       {user.firstName.charAt(0)}
                       {user.lastName.charAt(0)}
-                    </span>
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-background"></div>
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-background shadow-sm"></div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-foreground font-medium text-lg truncate">
+                  <p className="text-base font-semibold text-foreground truncate">
                     {user.firstName} {user.lastName}
                   </p>
-                  <p className="text-muted-foreground text-sm truncate">{user.adminTypeName}</p>
+                  <p className="text-sm text-muted-foreground truncate">{user.adminTypeName}</p>
+                  <div className="flex items-center mt-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2 rtl:mr-0 rtl:ml-2"></div>
+                    <span className="text-xs text-green-600 font-medium">Online</span>
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
           {/* Navigation */}
-          <nav className="flex-1 p-6 space-y-3">{navigation.map((item) => renderNavigationItem(item))}</nav>
+          <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+            {navigation.map((item) => renderNavigationItem(item))}
+          </nav>
 
           {/* Footer */}
-          <div className="p-6 border-t border-border/50">
+          <div className="p-4 border-t border-border/50">
             <Button
               variant="ghost"
               onClick={logout}
-              className="w-full justify-start space-x-4 rtl:space-x-reverse text-foreground/70 hover:text-destructive hover:bg-destructive/10 px-6 py-4 h-auto rounded-2xl transition-all duration-300 text-base"
+              className="w-full justify-start space-x-4 rtl:space-x-reverse text-foreground/80 hover:text-destructive hover:bg-destructive/10 px-4 py-3 h-auto rounded-2xl transition-all duration-300"
             >
-              <LogOut className="w-6 h-6" />
-              <span>{t("nav.logout")}</span>
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-destructive/10">
+                <LogOut className="w-5 h-5 text-destructive" />
+              </div>
+              <span className="font-medium">{t("nav.logout")}</span>
             </Button>
+            <div className="text-xs text-muted-foreground text-center mt-4">v2.1.0 • Elegant Design</div>
           </div>
         </div>
       </div>

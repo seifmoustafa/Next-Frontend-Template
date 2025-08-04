@@ -17,21 +17,28 @@ export function CompactLayout({ children, sidebarOpen, onSidebarOpenChange }: Co
 
   return (
     <div className={cn("min-h-screen bg-background", direction === "rtl" ? "rtl" : "ltr")}>
-      {/* Improved compact sidebar - better width and spacing */}
+      {/* Fixed Header */}
+      <CompactHeader onMenuClick={() => onSidebarOpenChange(true)} />
+
+      {/* Sidebar */}
       <CompactSidebar open={sidebarOpen} onOpenChange={onSidebarOpenChange} />
 
-      <div className={cn("transition-all duration-300 ease-in-out", direction === "rtl" ? "lg:mr-72" : "lg:ml-72")}>
-        {/* Improved compact header - better height and elements */}
-        <CompactHeader onMenuClick={() => onSidebarOpenChange(true)} />
-
-        <main className="p-6">
+      {/* Main Content - Proper responsive margins */}
+      <main
+        className={cn(
+          "transition-all duration-300 ease-in-out pt-16",
+          // Desktop margins - sidebar width is 16rem (256px)
+          direction === "rtl" ? "lg:mr-64" : "lg:ml-64",
+        )}
+      >
+        <div className="p-4 lg:p-6">
           <div className="animate-fade-in space-y-6 max-w-7xl mx-auto">{children}</div>
-        </main>
-      </div>
+        </div>
+      </main>
 
       {/* Mobile overlay */}
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => onSidebarOpenChange(false)} />
+        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => onSidebarOpenChange(false)} />
       )}
     </div>
   )

@@ -17,24 +17,33 @@ export function FloatingLayout({ children, sidebarOpen, onSidebarOpenChange }: F
 
   return (
     <div
-      className={cn("min-h-screen bg-gradient-to-br from-background to-muted/30", direction === "rtl" ? "rtl" : "ltr")}
+      className={cn(
+        "min-h-screen bg-gradient-to-br from-background to-muted/30 relative overflow-hidden",
+        direction === "rtl" ? "rtl" : "ltr",
+      )}
     >
-      {/* Floating navigation - better positioned */}
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-grid-white/[0.02] bg-grid-16" />
+      <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
+
+      {/* Fixed Header */}
+      <FloatingHeader onMenuClick={() => onSidebarOpenChange(true)} />
+
+      {/* Floating Navigation - Properly positioned */}
       <FloatingNavigation open={sidebarOpen} onOpenChange={onSidebarOpenChange} />
 
-      <div className="min-h-screen">
-        {/* Floating header - improved design */}
-        <FloatingHeader onMenuClick={() => onSidebarOpenChange(true)} />
-
-        <main className="px-6 pt-32 pb-6">
-          <div className="animate-fade-in space-y-6 max-w-7xl mx-auto">{children}</div>
-        </main>
-      </div>
+      {/* Main Content */}
+      <main className="relative z-10 pt-24 px-4 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="animate-fade-in">{children}</div>
+        </div>
+      </main>
 
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/20 z-40 lg:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden"
           onClick={() => onSidebarOpenChange(false)}
         />
       )}

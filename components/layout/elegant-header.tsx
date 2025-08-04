@@ -1,21 +1,22 @@
 "use client"
 
-import { Menu, Bell, Search, Sun, Moon, Globe, Monitor, Sparkles } from "lucide-react"
+import { Search, Bell, Settings, Menu, Sun, Moon, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useTheme } from "next-themes"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
-import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface ElegantHeaderProps {
   onMenuClick: () => void
@@ -24,135 +25,122 @@ interface ElegantHeaderProps {
 export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
   const { theme, setTheme } = useTheme()
   const { language, setLanguage, t, direction } = useI18n()
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-background/80 border-b border-border/50">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5"></div>
-
-      <div className="relative flex items-center justify-between px-8 py-6">
-        {/* Left side */}
-        <div className="flex items-center space-x-6 rtl:space-x-reverse">
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 h-20",
+        "bg-background/80 backdrop-blur-xl border-b border-border/50",
+        "transition-all duration-300 ease-in-out",
+      )}
+    >
+      <div className="flex items-center justify-between h-full px-6 lg:px-8">
+        {/* Left Section */}
+        <div className="flex items-center space-x-4 rtl:space-x-reverse">
+          {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden hover-lift sidebar-trigger rounded-full bg-primary/10 hover:bg-primary/20"
+            className="lg:hidden h-10 w-10 rounded-xl hover:bg-primary/10"
             onClick={onMenuClick}
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="h-5 w-5" />
           </Button>
 
-          {/* Elegant Search */}
-          <div className="relative hidden md:block">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent rounded-full blur-sm"></div>
-            <div className="relative flex items-center">
-              <Search className="absolute left-4 rtl:left-auto rtl:right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary/70" />
-              <Input
-                placeholder={t("common.search")}
-                className="pl-12 rtl:pl-4 rtl:pr-12 w-96 h-12 bg-background/50 border-primary/20 focus:border-primary/50 rounded-full backdrop-blur-sm transition-all duration-300 focus:shadow-lg focus:shadow-primary/20"
-              />
-              <div className="absolute right-3 rtl:right-auto rtl:left-3 top-1/2 transform -translate-y-1/2">
-                <Sparkles className="w-4 h-4 text-primary/50" />
-              </div>
+          {/* Logo/Title - Hidden on mobile to save space */}
+          <div className="hidden md:flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
+              <div className="w-6 h-6 rounded-md bg-white/20" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                {t("nav.dashboard")}
+              </h1>
+              <p className="text-xs text-muted-foreground">Elegant</p>
             </div>
           </div>
         </div>
 
-        {/* Right side */}
-        <div className="flex items-center space-x-4 rtl:space-x-reverse">
-          {/* Language Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hover-lift rounded-full bg-muted/50 hover:bg-primary/10">
-                <Globe className="w-5 h-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align={direction === "rtl" ? "start" : "end"}
-              className="backdrop-blur-xl bg-background/90"
-            >
-              <DropdownMenuItem onClick={() => setLanguage("ar")}>🇸🇦 العربية</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage("en")}>🇺🇸 English</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {/* Center Section - Search */}
+        <div className="flex-1 max-w-md mx-4 lg:mx-8">
+          <div className="relative">
+            <Search
+              className={cn(
+                "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground",
+                direction === "rtl" ? "right-3" : "left-3",
+              )}
+            />
+            <Input
+              placeholder={t("nav.search")}
+              className={cn(
+                "w-full h-11 rounded-xl border-0 bg-muted/50 backdrop-blur-sm",
+                "focus:bg-background focus:ring-2 focus:ring-primary/20",
+                "transition-all duration-200",
+                direction === "rtl" ? "pr-10 text-right" : "pl-10",
+              )}
+            />
+          </div>
+        </div>
 
-          {/* Theme Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hover-lift rounded-full bg-muted/50 hover:bg-primary/10">
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align={direction === "rtl" ? "start" : "end"}
-              className="backdrop-blur-xl bg-background/90"
-            >
-              <DropdownMenuItem onClick={() => setTheme("light")}>
-                <Sun className="mr-2 h-4 w-4" />
-                فاتح
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
-                <Moon className="mr-2 h-4 w-4" />
-                داكن
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                <Monitor className="mr-2 h-4 w-4" />
-                النظام
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Notifications */}
+        {/* Right Section */}
+        <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          {/* Theme Toggle */}
           <Button
             variant="ghost"
             size="icon"
-            className="relative hover-lift rounded-full bg-muted/50 hover:bg-primary/10"
+            className="h-10 w-10 rounded-xl hover:bg-primary/10"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
-            <Bell className="w-5 h-5" />
-            <Badge className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 text-xs bg-gradient-to-r from-primary to-primary/80 animate-pulse">
-              3
-            </Badge>
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          </Button>
+
+          {/* Language Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-10 w-10 rounded-xl hover:bg-primary/10"
+            onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
+          >
+            <Globe className="h-4 w-4" />
+          </Button>
+
+          {/* Notifications */}
+          <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl hover:bg-primary/10 relative">
+            <Bell className="h-4 w-4" />
+            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-primary">3</Badge>
           </Button>
 
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="relative h-12 w-12 rounded-full hover-lift bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10"
-              >
-                <Avatar className="h-10 w-10">
-                  <AvatarFallback className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
-                    {user?.firstName.charAt(0)}
-                    {user?.lastName.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
+              <Button variant="ghost" className="h-10 px-3 rounded-xl hover:bg-primary/10">
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  <Avatar className="h-8 w-8 ring-2 ring-primary/20">
+                    <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">
+                      {user?.firstName.charAt(0)}
+                      {user?.lastName.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="hidden lg:block text-left rtl:text-right">
+                    <p className="text-sm font-medium">
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{user?.adminTypeName}</p>
+                  </div>
+                </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align={direction === "rtl" ? "start" : "end"}
-              className="w-56 backdrop-blur-xl bg-background/90"
-            >
-              <div className="flex items-center justify-start gap-2 p-2">
-                <div className="flex flex-col space-y-1 leading-none">
-                  <p className="font-medium">
-                    {user?.firstName} {user?.lastName}
-                  </p>
-                  <p className="w-[200px] truncate text-sm text-muted-foreground">{user?.adminTypeName}</p>
-                </div>
-              </div>
+            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"} className="w-56 mt-2" sideOffset={8}>
+              <DropdownMenuLabel>{t("profile.title")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/profile">الملف الشخصي</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/settings">الإعدادات</Link>
+              <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4 rtl:mr-0 rtl:ml-2" />
+                {t("nav.settings")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout} className="text-destructive">
-                {t("nav.logout")}
-              </DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive">{t("nav.logout")}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

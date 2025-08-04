@@ -6,6 +6,8 @@ import { useState } from "react"
 import { LogOut, X, Shield, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Card, CardContent } from "@/components/ui/card"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
@@ -48,15 +50,22 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
                 level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
-                  ? "bg-primary text-primary-foreground shadow-lg"
+                  ? "bg-primary/15 text-primary shadow-sm"
                   : "bg-background/60 text-foreground/80 hover:bg-background/80 hover:text-foreground",
               )}
             >
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                <Icon className="w-4 h-4" />
+                <div
+                  className={cn(
+                    "flex items-center justify-center rounded-lg",
+                    level === 0 ? "w-8 h-8 bg-primary/10" : "w-6 h-6 bg-primary/5",
+                  )}
+                >
+                  <Icon className={cn(level === 0 ? "h-4 w-4" : "h-3 w-3", "text-primary")} />
+                </div>
                 <span>{item.name}</span>
                 {item.badge && (
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-0">
                     {item.badge}
                   </Badge>
                 )}
@@ -80,17 +89,24 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
           level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
-            ? "bg-primary text-primary-foreground shadow-lg"
+            ? "bg-primary/15 text-primary shadow-sm"
             : "bg-background/60 text-foreground/80 hover:bg-background/80 hover:text-foreground",
         )}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <Icon className="w-4 h-4" />
+          <div
+            className={cn(
+              "flex items-center justify-center rounded-lg",
+              level === 0 ? "w-8 h-8 bg-primary/10" : "w-6 h-6 bg-primary/5",
+            )}
+          >
+            <Icon className={cn(level === 0 ? "h-4 w-4" : "h-3 w-3", "text-primary")} />
+          </div>
           <span>{item.name}</span>
         </div>
         {item.badge && (
-          <Badge variant="secondary" className="text-xs">
+          <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-0">
             {item.badge}
           </Badge>
         )}
@@ -99,30 +115,41 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
   }
 
   return (
-    <>
-      {/* Improved Floating Navigation */}
-      <div
-        className={cn(
-          "fixed top-24 z-50 w-80 transform transition-all duration-300 ease-in-out lg:translate-x-0",
-          direction === "rtl" ? "right-6" : "left-6",
-          open ? "translate-x-0" : direction === "rtl" ? "translate-x-full" : "-translate-x-full",
-        )}
-      >
-        <div className="bg-background/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-border/50 overflow-hidden">
+    <Card
+      className={cn(
+        "fixed z-40 w-80 max-h-[calc(100vh-8rem)] shadow-2xl border-0 bg-background/95 backdrop-blur-xl transition-all duration-300 ease-in-out",
+        // Responsive positioning
+        "top-24 left-4 right-4 sm:left-8 sm:right-auto sm:w-80",
+        // Show/hide animation
+        open ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0",
+        // Always visible on large screens
+        "lg:translate-y-0 lg:opacity-100",
+        // RTL support
+        direction === "rtl" && "sm:left-auto sm:right-8",
+      )}
+    >
+      <CardContent className="p-0">
+        <div className="flex flex-col h-full max-h-[calc(100vh-8rem)]">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-border/50">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
                 <Shield className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-lg font-semibold">لوحة التحكم</h1>
-                <p className="text-xs text-muted-foreground">العائمة</p>
+                <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                  {t("nav.dashboard")}
+                </h2>
+                <p className="text-xs text-muted-foreground">Floating</p>
               </div>
             </div>
-
-            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => onOpenChange(false)}>
-              <X className="w-4 h-4" />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden h-8 w-8 rounded-full hover:bg-primary/10"
+              onClick={() => onOpenChange(false)}
+            >
+              <X className="h-4 w-4" />
             </Button>
           </div>
 
@@ -130,27 +157,28 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
           {user && (
             <div className="p-6 border-b border-border/50">
               <div className="flex items-center space-x-4 rtl:space-x-reverse">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                    <span className="text-primary font-semibold text-lg">
-                      {user.firstName.charAt(0)}
-                      {user.lastName.charAt(0)}
-                    </span>
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-background"></div>
-                </div>
+                <Avatar className="h-12 w-12 ring-2 ring-primary/20">
+                  <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold">
+                    {user.firstName.charAt(0)}
+                    {user.lastName.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium truncate">
+                  <p className="text-sm font-semibold truncate">
                     {user.firstName} {user.lastName}
                   </p>
-                  <p className="text-sm text-muted-foreground truncate">{user.adminTypeName}</p>
+                  <p className="text-xs text-muted-foreground truncate">{user.adminTypeName}</p>
+                  <div className="flex items-center mt-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2 rtl:mr-0 rtl:ml-2"></div>
+                    <span className="text-xs text-green-600 font-medium">Online</span>
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
           {/* Navigation */}
-          <div className="p-4">
+          <div className="flex-1 overflow-y-auto p-4">
             <nav className="space-y-2">{navigation.map((item) => renderNavigationItem(item))}</nav>
           </div>
 
@@ -158,15 +186,18 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
           <div className="p-4 border-t border-border/50">
             <Button
               variant="ghost"
+              className="w-full justify-start h-10 px-4 text-sm font-medium hover:bg-destructive/10 hover:text-destructive transition-all duration-200 rounded-xl"
               onClick={logout}
-              className="w-full justify-start space-x-3 rtl:space-x-reverse text-foreground/80 hover:text-destructive hover:bg-destructive/10 rounded-xl"
             >
-              <LogOut className="w-4 h-4" />
+              <div className="flex items-center justify-center w-6 h-6 rounded-lg mr-3 rtl:mr-0 rtl:ml-3 bg-destructive/10">
+                <LogOut className="h-3 w-3 text-destructive" />
+              </div>
               <span>{t("nav.logout")}</span>
             </Button>
+            <div className="text-xs text-muted-foreground text-center mt-3">v2.1.0 • Floating Design</div>
           </div>
         </div>
-      </div>
-    </>
+      </CardContent>
+    </Card>
   )
 }
