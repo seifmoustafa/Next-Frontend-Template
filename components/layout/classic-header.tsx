@@ -1,6 +1,6 @@
 "use client"
 
-import { Menu, Bell, Search, Sun, Moon, Globe, Monitor, Sparkles } from "lucide-react"
+import { Menu, Search, Sun, Moon, Globe, Monitor, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -126,25 +126,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Notifications */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "relative hover:bg-primary/10 hover:text-primary transition-all duration-300",
-              "rounded-xl shadow-md hover:shadow-lg hover:scale-105",
-            )}
-          >
-            <Bell className="w-5 h-5" />
-            <Badge
-              className={cn(
-                "absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 text-xs",
-                "bg-gradient-to-br from-red-500 to-red-600 shadow-lg animate-pulse",
-              )}
-            >
-              3
-            </Badge>
-          </Button>
+
 
           {/* User Avatar */}
           <div className="flex items-center space-x-3 rtl:space-x-reverse">

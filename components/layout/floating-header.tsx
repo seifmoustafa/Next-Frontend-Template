@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Bell, Settings, Menu, Sun, Moon, Globe, Sparkles } from "lucide-react"
+import { Search, Settings, Menu, Sun, Moon, Globe, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -121,25 +121,7 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
             <Globe className="h-4 w-4" />
           </Button>
 
-          {/* Notifications */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "h-10 w-10 rounded-xl hover:bg-primary/10 hover:text-primary relative",
-              "shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
-            )}
-          >
-            <Bell className="h-4 w-4" />
-            <Badge
-              className={cn(
-                "absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs",
-                "bg-gradient-to-br from-red-500 to-red-600 shadow-lg animate-pulse",
-              )}
-            >
-              3
-            </Badge>
-          </Button>
+
 
           {/* User Menu */}
           <DropdownMenu>

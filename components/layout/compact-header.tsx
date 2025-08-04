@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Bell, Settings, Menu, Sun, Moon, Globe, Sparkles } from "lucide-react"
+import { Search, Settings, Menu, Sun, Moon, Globe, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -111,25 +111,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             <Globe className="h-4 w-4" />
           </Button>
 
-          {/* Notifications */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "h-9 w-9 rounded-xl relative hover:bg-primary/10 hover:text-primary",
-              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105",
-            )}
-          >
-            <Bell className="h-4 w-4" />
-            <Badge
-              className={cn(
-                "absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 text-xs",
-                "bg-gradient-to-br from-red-500 to-red-600 shadow-md animate-pulse",
-              )}
-            >
-              3
-            </Badge>
-          </Button>
+
 
           {/* User Menu */}
           <DropdownMenu>

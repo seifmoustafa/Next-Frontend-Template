@@ -131,7 +131,7 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
       <CardContent className="p-0">
         <div className="flex flex-col h-full max-h-[calc(100vh-8rem)]">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-border/50">
+          {/* <div className="flex items-center justify-between p-6 border-b border-border/50">
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
               <div
                 className={cn(
@@ -162,7 +162,7 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
             >
               <X className="h-4 w-4" />
             </Button>
-          </div>
+          </div> */}
 
           {/* User Info */}
           {user && (

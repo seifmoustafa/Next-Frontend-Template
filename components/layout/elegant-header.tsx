@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Bell, Settings, Menu, Sun, Moon, Globe, Sparkles, Zap } from "lucide-react"
+import { Search, Settings, Menu, Sun, Moon, Globe, Sparkles, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -195,35 +195,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
             <Globe className="h-5 w-5 text-primary" />
           </Button>
 
-          {/* Notifications */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "h-12 w-12 rounded-3xl relative",
-              "bg-gradient-to-br from-muted/60 via-muted/40 to-muted/20",
-              "hover:from-primary/15 hover:via-primary/10 hover:to-primary/5",
-              "border border-border/60 hover:border-primary/40",
-              "shadow-lg hover:shadow-xl hover:shadow-primary/15",
-              "transition-all duration-500 ease-out",
-              "hover:scale-110 active:scale-95",
-              "backdrop-blur-xl",
-              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
-            )}
-          >
-            <Bell className="h-5 w-5 text-primary" />
-            <Badge
-              className={cn(
-                "absolute -top-1 -right-1 h-7 w-7 rounded-full p-0 text-xs font-bold",
-                "bg-gradient-to-br from-red-500 via-red-600 to-red-700",
-                "shadow-xl shadow-red-500/40",
-                "animate-pulse border-2 border-background",
-                "flex items-center justify-center",
-              )}
-            >
-              3
-            </Badge>
-          </Button>
+
 
           {/* User Menu - Enhanced */}
           <DropdownMenu>

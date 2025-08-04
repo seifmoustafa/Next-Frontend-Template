@@ -1,6 +1,6 @@
 "use client"
 
-import { Menu, Bell, Search, Sun, Moon, Globe, Monitor } from "lucide-react"
+import { Menu, Search, Sun, Moon, Globe, Monitor } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -89,13 +89,7 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative hover-lift">
-            <Bell className="w-5 h-5" />
-            <Badge className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 text-xs bg-primary">
-              3
-            </Badge>
-          </Button>
+
 
           {/* User Menu */}
           <DropdownMenu>
