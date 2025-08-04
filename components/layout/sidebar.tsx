@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Users, BarChart3, Settings, LogOut, X, Shield } from "lucide-react"
+import { LayoutDashboard, Users, BarChart3, Settings, LogOut, X, Shield, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
@@ -33,6 +33,11 @@ export function Sidebar({ open, onOpenChange }: SidebarProps) {
       name: t("nav.analytics"),
       href: "/dashboard/analytics",
       icon: BarChart3,
+    },
+    {
+      name: "الملف الشخصي",
+      href: "/dashboard/profile",
+      icon: User,
     },
     {
       name: t("nav.settings"),
