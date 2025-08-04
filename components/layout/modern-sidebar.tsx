@@ -3,24 +3,19 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LayoutDashboard, Users, BarChart3, Settings, LogOut, X, Shield, User, ChevronDown } from "lucide-react"
+import { LogOut, X, Shield, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { getNavigationItems, isNavigationItemActive, type NavigationItem } from "@/config/navigation"
 
 interface ModernSidebarProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onHoverChange: (hovered: boolean) => void
-}
-
-interface NavigationItem {
-  name: string
-  href?: string
-  icon: any
-  children?: NavigationItem[]
 }
 
 export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSidebarProps) {
@@ -30,99 +25,8 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
   const [expandedItems, setExpandedItems] = useState<string[]>([])
   const [isHovered, setIsHovered] = useState(false)
 
-  // Main navigation items - clean and simple
-  const navigation: NavigationItem[] = [
-    {
-      name: t("nav.dashboard"),
-      href: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      name: t("nav.users"),
-      href: "/dashboard/users",
-      icon: Users,
-    },
-    {
-      name: t("nav.analytics"),
-      href: "/dashboard/analytics",
-      icon: BarChart3,
-    },
-    {
-      name: "الملف الشخصي",
-      href: "/dashboard/profile",
-      icon: User,
-    },
-    {
-      name: t("nav.settings"),
-      href: "/dashboard/settings",
-      icon: Settings,
-    },
-  ]
-
-  /* 
-  ============================================================================
-  NESTED MENU DOCUMENTATION - HOW TO ADD CHILDREN ITEMS
-  ============================================================================
-  
-  To add nested/children menu items, modify the navigation array like this:
-  
-  const navigation: NavigationItem[] = [
-    {
-      name: t("nav.users"),
-      icon: Users,
-      children: [
-        {
-          name: "قائمة المستخدمين",
-          href: "/dashboard/users",
-          icon: Users,
-        },
-        {
-          name: "إضافة مستخدم", 
-          href: "/dashboard/users/create",
-          icon: UserPlus,
-        },
-        {
-          name: "المستخدمين النشطين",
-          href: "/dashboard/users/active", 
-          icon: UserCheck,
-        },
-      ],
-    },
-    {
-      name: t("nav.analytics"),
-      icon: BarChart3,
-      children: [
-        {
-          name: "نظرة عامة",
-          href: "/dashboard/analytics",
-          icon: BarChart3,
-        },
-        {
-          name: "التقارير",
-          icon: PieChart,
-          children: [  // Nested children (3rd level)
-            {
-              name: "تقرير المبيعات",
-              href: "/dashboard/analytics/reports/sales",
-              icon: BarChart,
-            },
-            {
-              name: "تقرير المستخدمين", 
-              href: "/dashboard/analytics/reports/users",
-              icon: Users,
-            },
-          ],
-        },
-      ],
-    },
-  ]
-
-  The renderNavigationItem function below already supports unlimited nesting levels.
-  Just add the children array to any navigation item and it will automatically
-  render as a collapsible menu with proper indentation and styling.
-  
-  ============================================================================
-  */
+  // Get navigation items with translations
+  const navigation = getNavigationItems(t)
 
   const handleMouseEnter = () => {
     setIsHovered(true)
@@ -140,16 +44,8 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
     )
   }
 
-  const isItemActive = (item: NavigationItem): boolean => {
-    if (item.href && pathname === item.href) return true
-    if (item.children) {
-      return item.children.some((child) => isItemActive(child))
-    }
-    return false
-  }
-
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
-    const isActive = isItemActive(item)
+    const isActive = isNavigationItemActive(item, pathname)
     const isExpanded = expandedItems.includes(item.name)
     const hasChildren = item.children && item.children.length > 0
     const Icon = item.icon
@@ -162,6 +58,7 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
               className={cn(
                 "group flex items-center justify-between w-full px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover-lift cursor-pointer",
                 level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
+                item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? "bg-primary text-primary-foreground shadow-lg"
                   : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -177,6 +74,14 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
                 >
                   {item.name}
                 </span>
+                {item.badge && (
+                  <Badge
+                    variant="secondary"
+                    className={cn("ml-auto text-xs", !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden")}
+                  >
+                    {item.badge}
+                  </Badge>
+                )}
               </div>
               <ChevronDown
                 className={cn(
@@ -201,16 +106,25 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
         className={cn(
           "group flex items-center space-x-3 rtl:space-x-reverse px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover-lift",
           level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
+          item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? "bg-primary text-primary-foreground shadow-lg"
             : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         )}
-        onClick={() => onOpenChange(false)}
+        onClick={() => !item.disabled && onOpenChange(false)}
       >
         <Icon className="w-5 h-5 flex-shrink-0" />
         <span className={cn("transition-opacity duration-200", !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden")}>
           {item.name}
         </span>
+        {item.badge && (
+          <Badge
+            variant="secondary"
+            className={cn("ml-auto text-xs", !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden")}
+          >
+            {item.badge}
+          </Badge>
+        )}
       </Link>
     )
   }

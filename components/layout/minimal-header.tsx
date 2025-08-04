@@ -1,30 +1,17 @@
 "use client"
 
+import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import {
-  Menu,
-  Bell,
-  Search,
-  Sun,
-  Moon,
-  Globe,
-  Monitor,
-  Shield,
-  User,
-  LayoutDashboard,
-  Users,
-  BarChart3,
-  Settings,
-} from "lucide-react"
+import { Menu, Bell, Search, Sun, Moon, Globe, Monitor, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
@@ -34,6 +21,7 @@ import { useTheme } from "next-themes"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
+import { getNavigationItems } from "@/config/navigation"
 
 export function MinimalHeader() {
   const { theme, setTheme } = useTheme()
@@ -42,33 +30,8 @@ export function MinimalHeader() {
   const pathname = usePathname()
   const [searchOpen, setSearchOpen] = useState(false)
 
-  const navigation = [
-    {
-      name: t("nav.dashboard"),
-      href: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      name: t("nav.users"),
-      href: "/dashboard/users",
-      icon: Users,
-    },
-    {
-      name: t("nav.analytics"),
-      href: "/dashboard/analytics",
-      icon: BarChart3,
-    },
-    {
-      name: "الملف الشخصي",
-      href: "/dashboard/profile",
-      icon: User,
-    },
-    {
-      name: t("nav.settings"),
-      href: "/dashboard/settings",
-      icon: Settings,
-    },
-  ]
+  // Get navigation items with translations from centralized config
+  const navigation = getNavigationItems(t)
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 glass border-b border-border">
@@ -84,28 +47,35 @@ export function MinimalHeader() {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Updated to use centralized config */}
           <nav className="hidden md:flex items-center space-x-1 rtl:space-x-reverse">
-            {navigation.map((item) => {
-              const isActive = pathname === item.href
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    "px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-foreground/70 hover:bg-accent hover:text-accent-foreground",
-                  )}
-                >
-                  {item.name}
-                </Link>
-              )
-            })}
+            {navigation
+              .filter((item) => item.href && !item.disabled) // Only show items with href and not disabled
+              .map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href!}
+                    className={cn(
+                      "px-3 py-2 rounded-md text-sm font-medium transition-colors relative",
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "text-foreground/70 hover:bg-accent hover:text-accent-foreground",
+                    )}
+                  >
+                    {item.name}
+                    {item.badge && (
+                      <Badge className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 text-xs bg-primary">
+                        {item.badge}
+                      </Badge>
+                    )}
+                  </Link>
+                )
+              })}
           </nav>
 
-          {/* Mobile Navigation */}
+          {/* Mobile Navigation - Updated to use centralized config */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon">
@@ -115,26 +85,38 @@ export function MinimalHeader() {
             <DropdownMenuContent align={direction === "rtl" ? "start" : "end"} className="w-56">
               <DropdownMenuLabel>التنقل</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {navigation.map((item) => {
-                const Icon = item.icon
-                const isActive = pathname === item.href
-                return (
-                  <DropdownMenuItem key={item.name} asChild>
-                    <Link
-                      href={item.href}
-                      className={cn("flex items-center", isActive && "bg-primary/10 text-primary font-medium")}
-                    >
-                      <Icon className="mr-2 h-4 w-4" />
-                      <span>{item.name}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                )
-              })}
+              {navigation
+                .filter((item) => item.href && !item.disabled) // Only show items with href and not disabled
+                .map((item) => {
+                  const Icon = item.icon
+                  const isActive = pathname === item.href
+                  return (
+                    <DropdownMenuItem key={item.name} asChild>
+                      <Link
+                        href={item.href!}
+                        className={cn(
+                          "flex items-center justify-between w-full",
+                          isActive && "bg-primary/10 text-primary font-medium",
+                        )}
+                      >
+                        <div className="flex items-center">
+                          <Icon className="mr-2 h-4 w-4" />
+                          <span>{item.name}</span>
+                        </div>
+                        {item.badge && (
+                          <Badge variant="secondary" className="text-xs">
+                            {item.badge}
+                          </Badge>
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                  )
+                })}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
 
-        {/* Right side */}
+        {/* Right side - keep the rest unchanged */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
           {/* Search */}
           <div className={cn("relative", searchOpen ? "w-64" : "w-10")}>

@@ -3,34 +3,18 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import {
-  LayoutDashboard,
-  Users,
-  BarChart3,
-  Settings,
-  LogOut,
-  X,
-  Shield,
-  User,
-  Sparkles,
-  ChevronDown,
-} from "lucide-react"
+import { LogOut, X, Shield, Sparkles, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { getNavigationItems, isNavigationItemActive, type NavigationItem } from "@/config/navigation"
 
 interface ElegantSidebarProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-}
-
-interface NavigationItem {
-  name: string
-  href?: string
-  icon: any
-  children?: NavigationItem[]
 }
 
 export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
@@ -39,129 +23,8 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
   const { logout, user } = useAuth()
   const [expandedItems, setExpandedItems] = useState<string[]>([])
 
-  // Main navigation items - clean and simple
-  const navigation: NavigationItem[] = [
-    {
-      name: t("nav.dashboard"),
-      href: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      name: t("nav.users"),
-      href: "/dashboard/users",
-      icon: Users,
-    },
-    {
-      name: t("nav.analytics"),
-      href: "/dashboard/analytics",
-      icon: BarChart3,
-    },
-    {
-      name: "الملف الشخصي",
-      href: "/dashboard/profile",
-      icon: User,
-    },
-    {
-      name: t("nav.settings"),
-      href: "/dashboard/settings",
-      icon: Settings,
-    },
-  ]
-
-  /* 
-  ============================================================================
-  NESTED MENU DOCUMENTATION - HOW TO ADD CHILDREN ITEMS
-  ============================================================================
-  
-  To add nested/children menu items, modify the navigation array like this:
-  
-  const navigation: NavigationItem[] = [
-    {
-      name: t("nav.users"),
-      icon: Users,
-      children: [
-        {
-          name: "إدارة المستخدمين",
-          href: "/dashboard/users",
-          icon: Users,
-        },
-        {
-          name: "الأدوار والصلاحيات", 
-          icon: Shield,
-          children: [  // Nested children (3rd level)
-            {
-              name: "عرض الأدوار",
-              href: "/dashboard/users/roles",
-              icon: UserCheck,
-            },
-            {
-              name: "إنشاء دور جديد", 
-              href: "/dashboard/users/roles/create",
-              icon: UserPlus,
-            },
-            {
-              name: "صلاحيات متقدمة",
-              icon: Settings,
-              children: [  // 4th level nesting
-                {
-                  name: "صلاحيات النظام",
-                  href: "/dashboard/users/permissions/system",
-                  icon: Cog,
-                },
-                {
-                  name: "صلاحيات المحتوى",
-                  href: "/dashboard/users/permissions/content", 
-                  icon: FileText,
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: t("nav.analytics"),
-      icon: BarChart3,
-      children: [
-        {
-          name: "التحليلات الأساسية",
-          href: "/dashboard/analytics",
-          icon: BarChart3,
-        },
-        {
-          name: "التقارير المتقدمة",
-          icon: PieChart,
-          children: [  // Nested children (3rd level)
-            {
-              name: "تقارير الأداء",
-              href: "/dashboard/analytics/performance",
-              icon: TrendingUp,
-            },
-            {
-              name: "تحليل البيانات", 
-              href: "/dashboard/analytics/data-analysis",
-              icon: BarChart,
-            },
-          ],
-        },
-      ],
-    },
-  ]
-
-  The renderNavigationItem function below already supports unlimited nesting levels.
-  Just add the children array to any navigation item and it will automatically
-  render as a collapsible menu with elegant gradient styling and smooth animations.
-  
-  Features:
-  - Unlimited nesting levels
-  - Gradient-based active states
-  - Smooth hover and expand animations
-  - Proper indentation with elegant spacing
-  - Glass morphism effects
-  - Active state indicators with dots
-  
-  ============================================================================
-  */
+  // Get navigation items with translations
+  const navigation = getNavigationItems(t)
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>
@@ -169,16 +32,8 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
     )
   }
 
-  const isItemActive = (item: NavigationItem): boolean => {
-    if (item.href && pathname === item.href) return true
-    if (item.children) {
-      return item.children.some((child) => isItemActive(child))
-    }
-    return false
-  }
-
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
-    const isActive = isItemActive(item)
+    const isActive = isNavigationItemActive(item, pathname)
     const isExpanded = expandedItems.includes(item.name)
     const hasChildren = item.children && item.children.length > 0
     const Icon = item.icon
@@ -191,6 +46,7 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
               className={cn(
                 "group flex items-center justify-between w-full px-6 py-4 rounded-2xl text-base font-medium transition-all duration-300 hover-lift cursor-pointer relative overflow-hidden",
                 level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
+                item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-xl shadow-primary/25"
                   : "text-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-foreground",
@@ -201,7 +57,12 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
               )}
               <div className="flex items-center space-x-4 rtl:space-x-reverse relative z-10">
                 <Icon className={cn("w-6 h-6", isActive && "drop-shadow-sm")} />
-                <span>{item.name}</span>
+                <span className="flex-1">{item.name}</span>
+                {item.badge && (
+                  <Badge variant="secondary" className="text-xs bg-white/20 text-current border-white/30">
+                    {item.badge}
+                  </Badge>
+                )}
               </div>
               <ChevronDown
                 className={cn("w-5 h-5 transition-transform duration-300 relative z-10", isExpanded && "rotate-180")}
@@ -220,20 +81,28 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
         key={item.name}
         href={item.href || "#"}
         className={cn(
-          "group flex items-center space-x-4 rtl:space-x-reverse px-6 py-4 rounded-2xl text-base font-medium transition-all duration-300 hover-lift relative overflow-hidden",
+          "group flex items-center justify-between px-6 py-4 rounded-2xl text-base font-medium transition-all duration-300 hover-lift relative overflow-hidden",
           level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
+          item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-xl shadow-primary/25"
             : "text-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-foreground",
         )}
-        onClick={() => onOpenChange(false)}
+        onClick={() => !item.disabled && onOpenChange(false)}
       >
         {isActive && <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-50"></div>}
-        <Icon className={cn("w-6 h-6 relative z-10", isActive && "drop-shadow-sm")} />
-        <span className="relative z-10">{item.name}</span>
-        {isActive && (
-          <div className="absolute right-2 rtl:right-auto rtl:left-2 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-white/50 rounded-full"></div>
-        )}
+        <div className="flex items-center space-x-4 rtl:space-x-reverse relative z-10">
+          <Icon className={cn("w-6 h-6", isActive && "drop-shadow-sm")} />
+          <span className="flex-1">{item.name}</span>
+        </div>
+        <div className="flex items-center space-x-2 rtl:space-x-reverse relative z-10">
+          {item.badge && (
+            <Badge variant="secondary" className="text-xs bg-white/20 text-current border-white/30">
+              {item.badge}
+            </Badge>
+          )}
+          {isActive && <div className="w-2 h-2 bg-white/50 rounded-full"></div>}
+        </div>
       </Link>
     )
   }
