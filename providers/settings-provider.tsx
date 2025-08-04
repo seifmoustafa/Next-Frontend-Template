@@ -62,7 +62,7 @@ interface SettingsContextType {
 }
 
 const defaultSettings = {
-  layoutTemplate: "default" as LayoutTemplate,
+  layoutTemplate: "classic" as LayoutTemplate, // Changed from "default" to "classic"
   colorTheme: "purple" as ColorTheme,
   darkMode: true,
   sidebarPosition: "right" as SidebarPosition,

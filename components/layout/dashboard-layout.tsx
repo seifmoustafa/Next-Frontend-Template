@@ -4,12 +4,16 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Sidebar } from "@/components/layout/sidebar"
 import { Header } from "@/components/layout/header"
-import { MinimalHeader } from "@/components/layout/minimal-header"
-import { ClassicHeader } from "@/components/layout/classic-header"
-import { ClassicSidebar } from "@/components/layout/classic-sidebar"
+import { MinimalHeader } from "./minimal-header"
+import { ClassicHeader } from "./classic-header"
+import { ClassicSidebar } from "./classic-sidebar"
+import { ModernSidebar } from "./modern-sidebar"
 import { useI18n } from "@/providers/i18n-provider"
 import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
+
+// Import the new elegant layout components
+import { ElegantLayout } from "./elegant-layout"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -17,6 +21,7 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarHovered, setSidebarHovered] = useState(false)
   const { direction } = useI18n()
   const { layoutTemplate } = useSettings()
 
@@ -43,23 +48,29 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     }
   }, [])
 
-  // Modern Layout
+  // Elegant Layout (new design replacing the old default)
+  if (layoutTemplate === "elegant") {
+    return (
+      <ElegantLayout sidebarOpen={sidebarOpen} onSidebarOpenChange={setSidebarOpen}>
+        {children}
+      </ElegantLayout>
+    )
+  }
+
+  // Modern Layout - Enhanced with dynamic content adjustment
   if (layoutTemplate === "modern") {
     return (
       <div className={cn("min-h-screen bg-background", direction === "rtl" ? "rtl" : "ltr")}>
-        {/* Modern sidebar - collapsed by default on desktop */}
+        {/* Modern sidebar with hover expansion */}
+        <ModernSidebar open={sidebarOpen} onOpenChange={setSidebarOpen} onHoverChange={setSidebarHovered} />
+
         <div
           className={cn(
-            "sidebar fixed inset-y-0 z-50 w-20 bg-sidebar border-r border-sidebar-border transform transition-all duration-300 ease-in-out lg:translate-x-0 custom-scrollbar overflow-hidden hover:w-80",
-            direction === "rtl" ? "right-0" : "left-0",
-            sidebarOpen ? "translate-x-0" : direction === "rtl" ? "translate-x-full" : "-translate-x-full",
+            "transition-all duration-300 ease-in-out",
+            direction === "rtl" ? (sidebarHovered ? "lg:mr-80" : "lg:mr-20") : sidebarHovered ? "lg:ml-80" : "lg:ml-20",
           )}
         >
-          <Sidebar open={sidebarOpen} onOpenChange={setSidebarOpen} isModern={true} />
-        </div>
-
-        <div className={cn("transition-all duration-300 ease-in-out", direction === "rtl" ? "lg:mr-20" : "lg:ml-20")}>
-          {/* Modern header - taller with more prominent search */}
+          {/* Modern header */}
           <Header onMenuClick={() => setSidebarOpen(true)} isModern={true} />
 
           <main className="p-6 pt-24">
@@ -92,7 +103,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     )
   }
 
-  // Classic Layout
+  // Classic Layout (now the default)
   if (layoutTemplate === "classic") {
     return (
       <div className={cn("min-h-screen bg-background", direction === "rtl" ? "rtl" : "ltr")}>
@@ -119,7 +130,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     )
   }
 
-  // Default layout
+  // Default fallback (should not be reached now)
   return (
     <div className={cn("min-h-screen bg-background", direction === "rtl" ? "rtl" : "ltr")}>
       <Sidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />

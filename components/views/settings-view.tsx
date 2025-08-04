@@ -24,11 +24,13 @@ import {
   CircleOff,
   Circle,
   Save,
+  Globe,
+  Languages,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function SettingsView() {
-  const { t } = useI18n()
+  const { t, language, setLanguage } = useI18n()
   const settings = useSettings()
   const [saved, setSaved] = useState(false)
 
@@ -42,31 +44,31 @@ export function SettingsView() {
     { value: "teal", label: "فيروزي", lightClass: "bg-[#0d9488]", darkClass: "bg-[#0f766e]" },
   ]
 
-  // Layout templates
+  // Layout templates - Updated with new "elegant" theme
   const layoutTemplates = [
     {
-      value: "default",
-      label: "الافتراضي",
-      description: "تصميم كلاسيكي مع شريط جانبي وهيدر علوي",
-      image: "/placeholder.svg?height=100&width=200",
+      value: "classic",
+      label: "كلاسيكي",
+      description: "تصميم كلاسيكي مع شريط جانبي عريض وأيقونات كبيرة",
+      image: "/placeholder.svg?height=100&width=200&text=Classic+Layout",
+    },
+    {
+      value: "elegant",
+      label: "أنيق",
+      description: "تصميم أنيق مع خطوط ناعمة وألوان متدرجة",
+      image: "/placeholder.svg?height=100&width=200&text=Elegant+Layout",
     },
     {
       value: "modern",
       label: "عصري",
       description: "تصميم عصري مع شريط جانبي مصغر وهيدر كبير",
-      image: "/placeholder.svg?height=100&width=200",
+      image: "/placeholder.svg?height=100&width=200&text=Modern+Layout",
     },
     {
       value: "minimal",
       label: "بسيط",
       description: "تصميم بسيط مع شريط علوي فقط وقوائم منسدلة",
-      image: "/placeholder.svg?height=100&width=200",
-    },
-    {
-      value: "classic",
-      label: "كلاسيكي",
-      description: "تصميم كلاسيكي مع شريط جانبي عريض وأيقونات كبيرة",
-      image: "/placeholder.svg?height=100&width=200",
+      image: "/placeholder.svg?height=100&width=200&text=Minimal+Layout",
     },
   ]
 
@@ -115,7 +117,7 @@ export function SettingsView() {
       </div>
 
       <Tabs defaultValue="appearance" className="space-y-6">
-        <TabsList className="grid grid-cols-3 w-full max-w-md">
+        <TabsList className="grid grid-cols-4 w-full max-w-2xl">
           <TabsTrigger value="appearance" className="flex items-center gap-2">
             <Palette className="h-4 w-4" />
             <span>المظهر</span>
@@ -123,6 +125,10 @@ export function SettingsView() {
           <TabsTrigger value="layout" className="flex items-center gap-2">
             <Layout className="h-4 w-4" />
             <span>التخطيط</span>
+          </TabsTrigger>
+          <TabsTrigger value="localization" className="flex items-center gap-2">
+            <Languages className="h-4 w-4" />
+            <span>اللغة</span>
           </TabsTrigger>
           <TabsTrigger value="advanced" className="flex items-center gap-2">
             <Sliders className="h-4 w-4" />
@@ -392,6 +398,71 @@ export function SettingsView() {
                   </Label>
                 </div>
               </RadioGroup>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Localization Tab */}
+        <TabsContent value="localization" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Globe className="h-5 w-5" />
+                <span>إعدادات اللغة</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <Label>اختر لغة الواجهة</Label>
+                <RadioGroup value={language} onValueChange={(value) => setLanguage(value as any)} className="space-y-4">
+                  <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <RadioGroupItem value="ar" id="lang-ar" />
+                    <Label htmlFor="lang-ar" className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer">
+                      <span className="text-2xl">🇸🇦</span>
+                      <div>
+                        <p className="font-medium">العربية</p>
+                        <p className="text-sm text-muted-foreground">Arabic - اللغة العربية</p>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <RadioGroupItem value="en" id="lang-en" />
+                    <Label htmlFor="lang-en" className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer">
+                      <span className="text-2xl">🇺🇸</span>
+                      <div>
+                        <p className="font-medium">English</p>
+                        <p className="text-sm text-muted-foreground">English - الإنجليزية</p>
+                      </div>
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-4">
+                <Label>معلومات اللغة المحددة</Label>
+                <div className="p-4 rounded-lg bg-muted/50">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="font-medium text-muted-foreground">اللغة الحالية:</p>
+                      <p>{language === "ar" ? "العربية" : "English"}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-muted-foreground">اتجاه النص:</p>
+                      <p>{language === "ar" ? "من اليمين إلى اليسار (RTL)" : "من اليسار إلى اليمين (LTR)"}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-muted-foreground">الخط المستخدم:</p>
+                      <p>{language === "ar" ? "Cairo" : "Inter"}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-muted-foreground">موضع الشريط الجانبي:</p>
+                      <p>{settings.sidebarPosition === "right" ? "يمين" : "يسار"}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

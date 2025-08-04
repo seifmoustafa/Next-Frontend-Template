@@ -10,9 +10,10 @@ import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 
-interface ClassicSidebarProps {
+interface ModernSidebarProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  onHoverChange: (hovered: boolean) => void
 }
 
 interface NavigationItem {
@@ -22,11 +23,12 @@ interface NavigationItem {
   children?: NavigationItem[]
 }
 
-export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
+export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSidebarProps) {
   const pathname = usePathname()
   const { t, direction } = useI18n()
   const { logout, user } = useAuth()
   const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const [isHovered, setIsHovered] = useState(false)
 
   // Main navigation items - clean and simple
   const navigation: NavigationItem[] = [
@@ -80,20 +82,9 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           icon: UserPlus,
         },
         {
-          name: "إدارة الأدوار",
-          icon: Shield,
-          children: [  // Nested children (3rd level)
-            {
-              name: "الأدوار والصلاحيات",
-              href: "/dashboard/users/roles",
-              icon: UserCheck,
-            },
-            {
-              name: "إضافة دور جديد", 
-              href: "/dashboard/users/roles/create",
-              icon: UserPlus,
-            },
-          ],
+          name: "المستخدمين النشطين",
+          href: "/dashboard/users/active", 
+          icon: UserCheck,
         },
       ],
     },
@@ -107,18 +98,18 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           icon: BarChart3,
         },
         {
-          name: "التقارير المتقدمة",
+          name: "التقارير",
           icon: PieChart,
           children: [  // Nested children (3rd level)
             {
-              name: "تقرير المبيعات الشهري",
-              href: "/dashboard/analytics/reports/monthly-sales",
+              name: "تقرير المبيعات",
+              href: "/dashboard/analytics/reports/sales",
               icon: BarChart,
             },
             {
-              name: "تحليل سلوك المستخدمين", 
-              href: "/dashboard/analytics/reports/user-behavior",
-              icon: TrendingUp,
+              name: "تقرير المستخدمين", 
+              href: "/dashboard/analytics/reports/users",
+              icon: Users,
             },
           ],
         },
@@ -128,17 +119,20 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
 
   The renderNavigationItem function below already supports unlimited nesting levels.
   Just add the children array to any navigation item and it will automatically
-  render as a collapsible menu with proper indentation and classic styling.
-  
-  Features:
-  - Unlimited nesting levels
-  - Proper indentation for each level
-  - Collapsible sections with chevron indicators
-  - Active state detection for parent items
-  - Classic design with larger icons and text
+  render as a collapsible menu with proper indentation and styling.
   
   ============================================================================
   */
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+    onHoverChange(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+    onHoverChange(false)
+  }
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>
@@ -166,21 +160,34 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           <CollapsibleTrigger asChild>
             <div
               className={cn(
-                "group flex items-center justify-between w-full px-6 py-4 rounded-xl text-base font-medium transition-all duration-200 hover-lift cursor-pointer",
-                level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
+                "group flex items-center justify-between w-full px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover-lift cursor-pointer",
+                level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 isActive
                   ? "bg-primary text-primary-foreground shadow-lg"
                   : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
               )}
             >
-              <div className="flex items-center space-x-4 rtl:space-x-reverse">
-                <Icon className="w-6 h-6" />
-                <span>{item.name}</span>
+              <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                <span
+                  className={cn(
+                    "transition-opacity duration-200",
+                    !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden",
+                  )}
+                >
+                  {item.name}
+                </span>
               </div>
-              <ChevronDown className={cn("w-5 h-5 transition-transform duration-200", isExpanded && "rotate-180")} />
+              <ChevronDown
+                className={cn(
+                  "w-4 h-4 transition-all duration-200 flex-shrink-0",
+                  !isHovered && "lg:opacity-0",
+                  isExpanded && "rotate-180",
+                )}
+              />
             </div>
           </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-2 mt-2">
+          <CollapsibleContent className="space-y-1">
             {item.children?.map((child) => renderNavigationItem(child, level + 1))}
           </CollapsibleContent>
         </Collapsible>
@@ -192,16 +199,18 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
         key={item.name}
         href={item.href || "#"}
         className={cn(
-          "group flex items-center space-x-4 rtl:space-x-reverse px-6 py-4 rounded-xl text-base font-medium transition-all duration-200 hover-lift",
-          level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
+          "group flex items-center space-x-3 rtl:space-x-reverse px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover-lift",
+          level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           isActive
             ? "bg-primary text-primary-foreground shadow-lg"
             : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         )}
         onClick={() => onOpenChange(false)}
       >
-        <Icon className="w-6 h-6" />
-        <span>{item.name}</span>
+        <Icon className="w-5 h-5 flex-shrink-0" />
+        <span className={cn("transition-opacity duration-200", !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden")}>
+          {item.name}
+        </span>
       </Link>
     )
   }
@@ -210,28 +219,36 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
     <>
       <div
         className={cn(
-          "sidebar fixed inset-y-0 z-50 w-80 bg-sidebar border-r-2 border-sidebar-border transform transition-transform duration-300 ease-in-out lg:translate-x-0 custom-scrollbar overflow-y-auto",
+          "sidebar fixed inset-y-0 z-50 bg-sidebar border-r border-sidebar-border transform transition-all duration-300 ease-in-out lg:translate-x-0 custom-scrollbar overflow-y-auto",
           direction === "rtl" ? "right-0" : "left-0",
           open ? "translate-x-0" : direction === "rtl" ? "translate-x-full" : "-translate-x-full",
+          isHovered ? "w-80" : "w-20",
         )}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-8 border-b-2 border-sidebar-border">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-                <Shield className="w-7 h-7 text-primary-foreground" />
+          <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                <Shield className="w-6 h-6 text-primary-foreground" />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-sidebar-foreground">لوحة التحكم</h1>
-                <p className="text-sm text-sidebar-foreground/60">الكلاسيكية</p>
+              <div
+                className={cn(
+                  "transition-opacity duration-200",
+                  !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden",
+                )}
+              >
+                <h1 className="text-xl font-bold text-sidebar-foreground whitespace-nowrap">لوحة التحكم</h1>
+                <p className="text-xs text-sidebar-foreground/60 whitespace-nowrap">العصرية</p>
               </div>
             </div>
 
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden text-sidebar-foreground hover:bg-sidebar-accent"
+              className="lg:hidden text-sidebar-foreground hover:bg-sidebar-accent flex-shrink-0"
               onClick={() => onOpenChange(false)}
             >
               <X className="w-5 h-5" />
@@ -240,36 +257,51 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
 
           {/* User Info */}
           {user && (
-            <div className="p-8 border-b-2 border-sidebar-border">
-              <div className="flex items-center space-x-4 rtl:space-x-reverse">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
-                  <span className="text-primary font-semibold text-xl">
+            <div className="p-4 border-b border-sidebar-border">
+              <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-primary font-semibold text-sm">
                     {user.firstName.charAt(0)}
                     {user.lastName.charAt(0)}
                   </span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sidebar-foreground font-medium text-lg">
+                <div
+                  className={cn(
+                    "flex-1 min-w-0 transition-opacity duration-200",
+                    !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden",
+                  )}
+                >
+                  <p className="text-sidebar-foreground font-medium truncate text-sm">
                     {user.firstName} {user.lastName}
                   </p>
-                  <p className="text-sidebar-foreground/60 text-sm">{user.adminTypeName}</p>
+                  <p className="text-sidebar-foreground/60 text-xs truncate">{user.adminTypeName}</p>
                 </div>
               </div>
             </div>
           )}
 
           {/* Navigation */}
-          <nav className="flex-1 p-6 space-y-4">{navigation.map((item) => renderNavigationItem(item))}</nav>
+          <nav className="flex-1 p-3 space-y-2">{navigation.map((item) => renderNavigationItem(item))}</nav>
 
           {/* Footer */}
-          <div className="p-6 border-t-2 border-sidebar-border">
+          <div className="p-3 border-t border-sidebar-border">
             <Button
               variant="ghost"
               onClick={logout}
-              className="w-full justify-start space-x-4 rtl:space-x-reverse text-sidebar-foreground/70 hover:text-destructive hover:bg-destructive/10 px-6 py-4 h-auto text-base"
+              className={cn(
+                "w-full text-sidebar-foreground/70 hover:text-destructive hover:bg-destructive/10 transition-all duration-200",
+                isHovered ? "justify-start space-x-3 rtl:space-x-reverse" : "justify-center",
+              )}
             >
-              <LogOut className="w-6 h-6" />
-              <span>{t("nav.logout")}</span>
+              <LogOut className="w-5 h-5 flex-shrink-0" />
+              <span
+                className={cn(
+                  "transition-opacity duration-200",
+                  !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden",
+                )}
+              >
+                {t("nav.logout")}
+              </span>
             </Button>
           </div>
         </div>
