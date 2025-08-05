@@ -115,11 +115,13 @@ export function Sidebar({ open, onOpenChange, isModern = false }: SidebarProps) 
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover-lift",
+                  "flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 text-sm font-medium transition-all duration-200 hover-lift",
+                  isModern 
+                    ? "justify-center md:justify-start rounded-full w-12 h-12 flex items-center justify-center mx-auto"
+                    : "rounded-xl",
                   isActive
                     ? "bg-primary text-primary-foreground shadow-lg"
                     : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                  isModern && "justify-center md:justify-start",
                 )}
                 onClick={() => onOpenChange(false)}
               >
@@ -136,8 +138,10 @@ export function Sidebar({ open, onOpenChange, isModern = false }: SidebarProps) 
             variant="ghost"
             onClick={logout}
             className={cn(
-              "w-full text-sidebar-foreground/70 hover:text-destructive hover:bg-destructive/10",
-              isModern ? "justify-center" : "justify-start space-x-3 rtl:space-x-reverse",
+              "text-sidebar-foreground/70 hover:text-destructive hover:bg-destructive/10",
+              isModern 
+                ? "justify-center rounded-full w-12 h-12 flex items-center justify-center mx-auto"
+                : "w-full justify-start space-x-3 rtl:space-x-reverse",
             )}
           >
             <LogOut className="w-5 h-5" />

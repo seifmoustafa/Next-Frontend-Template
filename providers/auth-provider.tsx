@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       // Construct the API URL properly
       const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api"
-      const loginUrl = `${baseUrl}/Authentication/login/admin`
+      const loginUrl = `${baseUrl}/Authentication/login`
 
       console.log("Attempting login to:", loginUrl) // Debug log
 

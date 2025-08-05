@@ -177,7 +177,7 @@ export default function LoginPage() {
               <p>API URL: {process.env.NEXT_PUBLIC_API_URL || "Not set - using default"}</p>
               <p>
                 Login URL:{" "}
-                {(process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api") + "/Authentication/login/admin"}
+                {`${process.env.NEXT_PUBLIC_API_URL}/Authentication/login/admin`}
               </p>
             </div>
           )}

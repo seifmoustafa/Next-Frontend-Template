@@ -68,8 +68,8 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <div
                   className={cn(
-                    "flex items-center justify-center rounded-xl transition-all duration-300",
-                    "w-10 h-10",
+                    "flex items-center justify-center rounded-full transition-all duration-300",
+                    "w-12 h-12",
                     isActive ? "bg-white/20 shadow-md" : "bg-primary/10 group-hover:bg-primary/20",
                   )}
                 >
@@ -134,8 +134,8 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
       >
         <div
           className={cn(
-            "flex items-center justify-center rounded-xl transition-all duration-300",
-            "w-10 h-10",
+            "flex items-center justify-center rounded-full transition-all duration-300",
+            "w-12 h-12",
             isActive ? "bg-white/20 shadow-md" : "bg-primary/10 group-hover:bg-primary/20",
           )}
         >
@@ -184,7 +184,7 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
               <div
                 className={cn(
-                  "w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center flex-shrink-0",
+                  "w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center flex-shrink-0",
                   "shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105",
                 )}
               >
@@ -220,30 +220,30 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
           {/* User Info */}
           {user && (
             <div className="p-4 border-b border-sidebar-border">
-              <div
-                className={cn(
-                  "flex items-center space-x-3 rtl:space-x-reverse p-3 rounded-2xl",
-                  "bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
-                  "shadow-sm hover:shadow-md transition-all duration-300",
-                )}
-              >
-                <div className="relative">
-                  <Avatar
-                    className={cn(
-                      "h-10 w-10 ring-1 ring-primary/20 shadow-md flex-shrink-0",
-                      "transition-all duration-300 hover:scale-105",
-                    )}
-                  >
-                    <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold text-sm">
-                      {user.firstName.charAt(0)}
-                      {user.lastName.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  {/* Fixed online indicator */}
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-background shadow-sm">
-                    <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-600 rounded-full animate-pulse" />
-                  </div>
-                </div>
+                             <div
+                 className={cn(
+                   "flex items-center space-x-3 rtl:space-x-reverse p-4 rounded-2xl",
+                   "bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
+                   "shadow-sm hover:shadow-md transition-all duration-300",
+                 )}
+               >
+                                                   <div className="relative">
+                    <Avatar
+                      className={cn(
+                        "h-10 w-10 ring-1 ring-primary/20 shadow-md flex-shrink-0",
+                        "transition-all duration-300 hover:scale-105",
+                      )}
+                    >
+                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold text-sm">
+                       {user.firstName.charAt(0)}
+                       {user.lastName.charAt(0)}
+                     </AvatarFallback>
+                   </Avatar>
+                   {/* Fixed online indicator - positioned inside container */}
+                   <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-background shadow-sm">
+                     <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-600 rounded-full animate-pulse" />
+                   </div>
+                 </div>
                 <div
                   className={cn(
                     "flex-1 min-w-0 transition-opacity duration-300",
@@ -273,7 +273,7 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
                 isHovered ? "justify-start space-x-3 rtl:space-x-reverse" : "justify-center",
               )}
             >
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-destructive/10 flex-shrink-0">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-destructive/10 flex-shrink-0">
                 <LogOut className="w-5 h-5 text-destructive" />
               </div>
               <span
