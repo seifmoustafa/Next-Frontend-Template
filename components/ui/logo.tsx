@@ -2,9 +2,10 @@ import { Sparkles, Shield } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { logoConfig } from "@/config/logo";
+import { useSettings } from "@/providers/settings-provider";
 
 interface LogoProps {
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   variant?: "default" | "gradient" | "outline";
   className?: string;
   /**
@@ -14,11 +15,13 @@ interface LogoProps {
 }
 
 export function Logo({ size = "md", variant = "default", className, animation = "none" }: LogoProps) {
-  const logoType = logoConfig.type;
+  const settings = useSettings();
+  const logoType = settings?.logoType || logoConfig.type;
   const logoImage = logoConfig.imagePath;
   const logoText = logoConfig.text;
   
   const sizeClasses = {
+    xs: "w-4 h-4",
     sm: "w-6 h-6",
     md: "w-8 h-8", 
     lg: "w-10 h-10",
@@ -43,10 +46,10 @@ export function Logo({ size = "md", variant = "default", className, animation = 
             <div className={cn(
               "flex items-center justify-center rounded-full bg-background",
               // Slightly smaller to create a border effect
-              size === "sm" ? "w-5 h-5" : size === "md" ? "w-7 h-7" : size === "lg" ? "w-9 h-9" : "w-28 h-28"
+              size === "xs" ? "w-3 h-3" : size === "sm" ? "w-5 h-5" : size === "md" ? "w-7 h-7" : size === "lg" ? "w-9 h-9" : "w-28 h-28"
             )}>
               <Sparkles className={cn(
-                size === "sm" ? "w-4 h-4" : 
+                size === "xs" ? "w-3 h-3" : size === "sm" ? "w-4 h-4" : 
                 size === "md" ? "w-5 h-5" :
                 size === "lg" ? "w-6 h-6" : "w-7 h-7",
                 animation === "spin" && "animate-spin",
@@ -66,10 +69,10 @@ export function Logo({ size = "md", variant = "default", className, animation = 
           )}>
             <div className={cn(
               "flex items-center justify-center rounded-full bg-background",
-              size === "sm" ? "w-5 h-5" : size === "md" ? "w-7 h-7" : size === "lg" ? "w-9 h-9" : "w-28 h-28"
+              size === "xs" ? "w-3 h-3" : size === "sm" ? "w-5 h-5" : size === "md" ? "w-7 h-7" : size === "lg" ? "w-9 h-9" : "w-28 h-28"
             )}>
               <Shield className={cn(
-                size === "sm" ? "w-4 h-4" : 
+                size === "xs" ? "w-3 h-3" : size === "sm" ? "w-4 h-4" : 
                 size === "md" ? "w-5 h-5" :
                 size === "lg" ? "w-6 h-6" : "w-7 h-7",
                 animation === "spin" && "animate-spin",
@@ -85,8 +88,8 @@ export function Logo({ size = "md", variant = "default", className, animation = 
           <Image
             src={logoImage}
             alt="Logo"
-            width={size === "sm" ? 32 : size === "md" ? 46 : size === "lg" ? 72 : 128}
-            height={size === "sm" ? 32 : size === "md" ? 46 : size === "lg" ? 72 : 128}
+            width={size === "xs" ? 16 : size === "sm" ? 32 : size === "md" ? 46 : size === "lg" ? 72 : 128}
+            height={size === "xs" ? 16 : size === "sm" ? 32 : size === "md" ? 46 : size === "lg" ? 72 : 128}
             className={cn(
               "object-cover rounded-full",
               sizeClasses[size],
@@ -116,7 +119,7 @@ export function Logo({ size = "md", variant = "default", className, animation = 
             className
           )}>
             <Sparkles className={cn(
-              size === "sm" ? "w-4 h-4" : 
+              size === "xs" ? "w-3 h-3" : size === "sm" ? "w-4 h-4" : 
               size === "md" ? "w-5 h-5" :
               size === "lg" ? "w-6 h-6" : "w-7 h-7"
             )} />

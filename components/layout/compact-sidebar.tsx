@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LogOut, X, Shield, ChevronDown, ChevronRight, Sparkles } from "lucide-react"
+import { LogOut, X, ChevronDown, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -12,6 +12,7 @@ import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { getNavigationItems, isNavigationItemActive, type NavigationItem } from "@/config/navigation"
+import { Logo } from "@/components/ui/logo"
 
 interface CompactSidebarProps {
   open: boolean
@@ -162,21 +163,16 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 pt-6 border-b border-border/80">
+          <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div
-                className={cn(
-                  "w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-md",
-                  "hover:shadow-lg transition-all duration-300 hover:scale-105",
-                )}
-              >
-                <Shield className="w-4 h-4 text-primary-foreground" />
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
+                <Logo size="xs" className="text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-base font-semibold text-foreground">{t("nav.dashboard")}</h1>
-                <p className="text-xs text-muted-foreground flex items-center">
-                  <Sparkles className="w-2 h-2 mr-1 rtl:mr-0 rtl:ml-1" />
-                  Compact
+                <h1 className="text-lg font-bold text-sidebar-foreground">{t("app.title")}</h1>
+                <p className="text-xs text-sidebar-foreground/60 flex items-center">
+                  <Logo size="xs" className="mr-1 rtl:mr-0 rtl:ml-1" />
+                  {t("app.compact")}
                 </p>
               </div>
             </div>

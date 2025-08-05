@@ -15,6 +15,9 @@ export type SidebarPosition = "right" | "left"
 // Card style types
 export type CardStyle = "default" | "glass" | "solid" | "bordered"
 
+// Logo type types
+export type LogoType = "sparkles" | "shield" | "image" | "custom"
+
 // Animation level types
 export type AnimationLevel = "none" | "minimal" | "moderate" | "high"
 
@@ -33,8 +36,6 @@ interface SettingsContextType {
   colorTheme: ColorTheme
   setColorTheme: (theme: ColorTheme) => void
 
-
-
   // Sidebar position
   sidebarPosition: SidebarPosition
   setSidebarPosition: (position: SidebarPosition) => void
@@ -42,6 +43,10 @@ interface SettingsContextType {
   // Card style
   cardStyle: CardStyle
   setCardStyle: (style: CardStyle) => void
+
+  // Logo type
+  logoType: LogoType
+  setLogoType: (type: LogoType) => void
 
   // Animation level
   animationLevel: AnimationLevel
@@ -65,6 +70,7 @@ const defaultSettings = {
   darkMode: true,
   sidebarPosition: "right" as SidebarPosition,
   cardStyle: "glass" as CardStyle,
+  logoType: "image" as LogoType,
   animationLevel: "moderate" as AnimationLevel,
   fontSize: "default" as FontSize,
   borderRadius: "default" as BorderRadius,
@@ -78,6 +84,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   
   const [sidebarPosition, setSidebarPosition] = useState<SidebarPosition>(defaultSettings.sidebarPosition)
   const [cardStyle, setCardStyle] = useState<CardStyle>(defaultSettings.cardStyle)
+  const [logoType, setLogoType] = useState<LogoType>(defaultSettings.logoType)
   const [animationLevel, setAnimationLevel] = useState<AnimationLevel>(defaultSettings.animationLevel)
   const [fontSize, setFontSize] = useState<FontSize>(defaultSettings.fontSize)
   const [borderRadius, setBorderRadius] = useState<BorderRadius>(defaultSettings.borderRadius)
@@ -94,6 +101,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         
         setSidebarPosition(parsedSettings.sidebarPosition || defaultSettings.sidebarPosition)
         setCardStyle(parsedSettings.cardStyle || defaultSettings.cardStyle)
+        setLogoType(parsedSettings.logoType || defaultSettings.logoType)
         setAnimationLevel(parsedSettings.animationLevel || defaultSettings.animationLevel)
         setFontSize(parsedSettings.fontSize || defaultSettings.fontSize)
         setBorderRadius(parsedSettings.borderRadius || defaultSettings.borderRadius)
@@ -111,6 +119,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       colorTheme,
       sidebarPosition,
       cardStyle,
+      logoType,
       animationLevel,
       fontSize,
       borderRadius,
@@ -129,7 +138,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
 
     // Apply RTL/LTR based on sidebar position
     document.documentElement.setAttribute("dir", sidebarPosition === "right" ? "rtl" : "ltr")
-  }, [layoutTemplate, colorTheme, sidebarPosition, cardStyle, animationLevel, fontSize, borderRadius])
+  }, [layoutTemplate, colorTheme, sidebarPosition, cardStyle, logoType, animationLevel, fontSize, borderRadius])
 
 
 
@@ -140,6 +149,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     
     setSidebarPosition(defaultSettings.sidebarPosition)
     setCardStyle(defaultSettings.cardStyle)
+    setLogoType(defaultSettings.logoType)
     setAnimationLevel(defaultSettings.animationLevel)
     setFontSize(defaultSettings.fontSize)
     setBorderRadius(defaultSettings.borderRadius)
@@ -161,6 +171,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         setSidebarPosition,
         cardStyle,
         setCardStyle,
+        logoType,
+        setLogoType,
         animationLevel,
         setAnimationLevel,
         fontSize,

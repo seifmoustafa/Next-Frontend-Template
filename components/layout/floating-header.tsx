@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Settings, Menu, Sun, Moon, Globe, Sparkles } from "lucide-react"
+import { Search, Settings, Menu, Sun, Moon, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -17,6 +17,7 @@ import { useTheme } from "next-themes"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
+import { Logo } from "@/components/ui/logo"
 
 interface FloatingHeaderProps {
   onMenuClick: () => void
@@ -54,13 +55,8 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
 
           {/* Logo/Title */}
           <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div
-              className={cn(
-                "w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg",
-                "hover:shadow-xl transition-all duration-300 hover:scale-105",
-              )}
-            >
-              <Sparkles className="w-5 h-5 text-primary-foreground animate-pulse" />
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+              <Logo size="sm" className="text-primary-foreground animate-pulse" />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">

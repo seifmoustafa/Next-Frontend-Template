@@ -1,6 +1,6 @@
 "use client"
 
-import { Menu, Search, Sun, Moon, Globe, Monitor, Sparkles } from "lucide-react"
+import { Menu, Search, Sun, Moon, Globe, Monitor } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -10,6 +10,7 @@ import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
+import { Logo } from "@/components/ui/logo"
 
 interface ClassicHeaderProps {
   onMenuClick: () => void
@@ -42,14 +43,10 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
             <Menu className="w-5 h-5" />
           </Button>
 
+          {/* Logo/Title */}
           <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div
-              className={cn(
-                "w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80",
-                "flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300",
-              )}
-            >
-              <Sparkles className="w-5 h-5 text-primary-foreground" />
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+              <Logo size="sm" className="text-primary-foreground" />
             </div>
             <div className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               {t("app.title")}

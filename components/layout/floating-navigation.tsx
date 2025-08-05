@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LogOut, X, Shield, ChevronDown, Sparkles } from "lucide-react"
+import { LogOut, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -13,6 +13,7 @@ import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { getNavigationItems, isNavigationItemActive, type NavigationItem } from "@/config/navigation"
+import { Logo } from "@/components/ui/logo"
 
 interface FloatingNavigationProps {
   open: boolean
@@ -131,23 +132,16 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
       <CardContent className="p-0">
         <div className="flex flex-col h-full max-h-[calc(100vh-8rem)]">
           {/* Header */}
-          {/* <div className="flex items-center justify-between p-6 border-b border-border/50">
+          <div className="flex items-center justify-between p-4 border-b border-border/20">
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div
-                className={cn(
-                  "w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg",
-                  "hover:shadow-xl transition-all duration-300 hover:scale-105",
-                )}
-              >
-                <Shield className="w-5 h-5 text-primary-foreground" />
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+                <Logo size="sm" className="text-primary-foreground" />
               </div>
               <div>
-                <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                  {t("nav.dashboard")}
-                </h2>
+                <h1 className="text-lg font-bold text-foreground">{t("app.title")}</h1>
                 <p className="text-xs text-muted-foreground flex items-center">
-                  <Sparkles className="w-2 h-2 mr-1 rtl:mr-0 rtl:ml-1" />
-                  Floating
+                  <Logo size="xs" className="mr-1 rtl:mr-0 rtl:ml-1" />
+                  {t("app.floating")}
                 </p>
               </div>
             </div>
@@ -162,7 +156,7 @@ export function FloatingNavigation({ open, onOpenChange }: FloatingNavigationPro
             >
               <X className="h-4 w-4" />
             </Button>
-          </div> */}
+          </div>
 
           {/* User Info */}
           {user && (

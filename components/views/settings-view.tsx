@@ -29,6 +29,7 @@ import {
   Languages,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Logo } from "@/components/ui/logo"
 
 export function SettingsView() {
   const { t, language, setLanguage } = useI18n()
@@ -92,6 +93,14 @@ export function SettingsView() {
     { value: "glass", label: t("cardStyle.glass"), description: t("cardStyle.glassDesc") },
     { value: "solid", label: t("cardStyle.solid"), description: t("cardStyle.solidDesc") },
     { value: "bordered", label: t("cardStyle.bordered"), description: t("cardStyle.borderedDesc") },
+  ]
+
+  // Logo types
+  const logoTypes = [
+    { value: "image", label: t("logoType.image"), description: t("logoType.imageDesc") },
+    { value: "sparkles", label: t("logoType.sparkles"), description: t("logoType.sparklesDesc") },
+    { value: "shield", label: t("logoType.shield"), description: t("logoType.shieldDesc") },
+    { value: "custom", label: t("logoType.custom"), description: t("logoType.customDesc") },
   ]
 
   // Animation levels
@@ -237,6 +246,38 @@ export function SettingsView() {
                         <span className="text-xs">{style.label}</span>
                       </div>
                       <p className="text-xs text-center text-muted-foreground">{style.description}</p>
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
+          {/* Logo Type */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Layers className="h-5 w-5" />
+                <span>{t("settings.logoType")}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={settings.logoType}
+                onValueChange={(value) => settings.setLogoType(value as any)}
+                className="grid grid-cols-2 gap-4"
+              >
+                {logoTypes.map((type) => (
+                  <div key={type.value}>
+                    <RadioGroupItem value={type.value} id={`logo-type-${type.value}`} className="peer sr-only" />
+                    <Label
+                      htmlFor={`logo-type-${type.value}`}
+                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    >
+                      <div className="mb-2 rounded-md border p-2 w-full h-12 flex items-center justify-center">
+                        <Logo size="sm" />
+                      </div>
+                      <p className="text-xs text-center text-muted-foreground">{type.description}</p>
                     </Label>
                   </div>
                 ))}

@@ -61,6 +61,7 @@ export const ar = {
     "settings.lightDarkToggle": "تبديل بين الوضع الفاتح والمظلم",
     "settings.selectColorTheme": "اختر سمة الألوان",
     "settings.cardStyle": "نمط البطاقات",
+    "settings.logoType": "نوع الشعار",
     "settings.fontSize": "حجم الخط",
     "settings.borderRadius": "استدارة الحواف",
     "settings.layoutTemplates": "قوالب التخطيط",
@@ -110,6 +111,16 @@ export const ar = {
     "cardStyle.glassDesc": "تأثير زجاجي شفاف",
     "cardStyle.solidDesc": "بطاقات ملونة بالكامل",
     "cardStyle.borderedDesc": "بطاقات بإطار واضح",
+
+    // Logo Types
+    "logoType.image": "صورة",
+    "logoType.sparkles": "شرر",
+    "logoType.shield": "درع",
+    "logoType.custom": "مخصص",
+    "logoType.imageDesc": "استخدام صورة الشعار",
+    "logoType.sparklesDesc": "أيقونة شرر",
+    "logoType.shieldDesc": "أيقونة درع",
+    "logoType.customDesc": "شعار نصي مخصص",
   
     // Animation Levels
     "animation.none": "بدون",

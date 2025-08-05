@@ -61,6 +61,7 @@ export const en = {
     "settings.lightDarkToggle": "Toggle between light and dark mode",
     "settings.selectColorTheme": "Select Color Theme",
     "settings.cardStyle": "Card Style",
+    "settings.logoType": "Logo Type",
     "settings.fontSize": "Font Size",
     "settings.borderRadius": "Border Radius",
     "settings.layoutTemplates": "Layout Templates",
@@ -110,6 +111,16 @@ export const en = {
     "cardStyle.glassDesc": "Transparent glass effect",
     "cardStyle.solidDesc": "Fully colored cards",
     "cardStyle.borderedDesc": "Cards with clear borders",
+
+    // Logo Types
+    "logoType.image": "Image",
+    "logoType.sparkles": "Sparkles",
+    "logoType.shield": "Shield",
+    "logoType.custom": "Custom",
+    "logoType.imageDesc": "Use logo image",
+    "logoType.sparklesDesc": "Sparkles icon",
+    "logoType.shieldDesc": "Shield icon",
+    "logoType.customDesc": "Custom text logo",
   
     // Animation Levels
     "animation.none": "None",

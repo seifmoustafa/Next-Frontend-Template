@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LogOut, X, Shield, ChevronDown } from "lucide-react"
+import { LogOut, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/providers/i18n-provider"
@@ -185,11 +185,13 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
               <div
                 className={cn(
-                  "w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center flex-shrink-0",
-                  "shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105",
+                  "flex items-center justify-center rounded-2xl",
+                  "bg-gradient-to-br from-primary to-primary/80 shadow-lg",
+                  "transition-all duration-300 hover:scale-105 hover:shadow-xl",
+                  "w-12 h-12 flex-shrink-0",
                 )}
               >
-                <Shield className="w-6 h-6 text-primary-foreground" />
+                <Logo size="sm" className="text-primary-foreground" />
               </div>
               <div
                 className={cn(

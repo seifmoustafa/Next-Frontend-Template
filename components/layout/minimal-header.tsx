@@ -22,6 +22,7 @@ import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
 import { getNavigationItems } from "@/config/navigation"
+import { Logo } from "@/components/ui/logo"
 
 export function MinimalHeader() {
   const { theme, setTheme } = useTheme()
@@ -37,15 +38,15 @@ export function MinimalHeader() {
     <header className="fixed top-0 left-0 right-0 z-40 glass border-b border-border">
       <div className="flex items-center justify-between px-6 py-4">
         {/* Logo and Navigation */}
-        <div className="flex items-center space-x-6 rtl:space-x-reverse">
-          <Link href="/dashboard" className="flex items-center space-x-2 rtl:space-x-reverse">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <Shield className="w-6 h-6 text-primary-foreground" />
+        <div className="flex items-center space-x-4 rtl:space-x-reverse">
+          <div className="flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-md">
+              <Logo size="sm" className="text-primary-foreground" />
             </div>
             <div>
               <h1 className="text-xl font-bold">{t("app.title")}</h1>
             </div>
-          </Link>
+          </div>
 
           {/* Desktop Navigation - Updated to use centralized config */}
           <nav className="hidden md:flex items-center space-x-1 rtl:space-x-reverse">

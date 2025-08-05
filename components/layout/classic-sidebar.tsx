@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LogOut, X, Shield, ChevronDown, Sparkles } from "lucide-react"
+import { LogOut, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/providers/i18n-provider"
@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { getNavigationItems, isNavigationItemActive, type NavigationItem } from "@/config/navigation"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Logo } from "@/components/ui/logo"
 
 interface ClassicSidebarProps {
   open: boolean
@@ -151,21 +152,16 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-8 border-b-2 border-sidebar-border">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div
-                className={cn(
-                  "w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center",
-                  "shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105",
-                )}
-              >
-                <Shield className="w-7 h-7 text-primary-foreground" />
+          <div className="flex items-center justify-between p-6 border-b border-sidebar-border">
+            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+              <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+                <Logo size="md" className="text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-sidebar-foreground">لوحة التحكم</h1>
-                <p className="text-sm text-sidebar-foreground/60 flex items-center">
-                  <Sparkles className="w-3 h-3 mr-1 rtl:mr-0 rtl:ml-1" />
-                  الكلاسيكية
+                <h1 className="text-xl font-bold text-sidebar-foreground">{t("app.title")}</h1>
+                <p className="text-xs text-sidebar-foreground/60 flex items-center">
+                  <Logo size="xs" className="mr-1 rtl:mr-0 rtl:ml-1" />
+                  {t("app.classic")}
                 </p>
               </div>
             </div>

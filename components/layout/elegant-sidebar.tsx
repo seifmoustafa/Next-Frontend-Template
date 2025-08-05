@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LogOut, X, ChevronDown, ChevronRight, Sparkles, Crown, Star } from "lucide-react"
+import { LogOut, X, ChevronDown, ChevronRight, Crown, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -12,6 +12,7 @@ import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { getNavigationItems, isNavigationItemActive, type NavigationItem } from "@/config/navigation"
+import { Logo } from "@/components/ui/logo"
 
 interface ElegantSidebarProps {
   open: boolean
@@ -198,7 +199,9 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
 
             {/* Floating particles */}
             <Star className="absolute top-32 left-8 w-3 h-3 text-primary/30 animate-pulse" />
-            <Sparkles className="absolute top-64 right-12 w-4 h-4 text-primary/40 animate-bounce delay-500" />
+            <div className="absolute top-64 right-12 w-4 h-4 text-primary/40 animate-bounce delay-500">
+              <Logo size="xs" />
+            </div>
             <Crown className="absolute bottom-80 left-12 w-3 h-3 text-primary/35 animate-pulse delay-1000" />
           </div>
 

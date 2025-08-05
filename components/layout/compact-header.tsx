@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Settings, Menu, Sun, Moon, Globe, Sparkles } from "lucide-react"
+import { Search, Settings, Menu, Sun, Moon, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -17,6 +17,7 @@ import { useTheme } from "next-themes"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
+import { Logo } from "@/components/ui/logo"
 
 interface CompactHeaderProps {
   onMenuClick: () => void
@@ -50,10 +51,10 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             <Menu className="h-4 w-4" />
           </Button>
 
-          {/* Title - Hidden on small screens */}
-          <div className="hidden sm:flex items-center space-x-2 rtl:space-x-reverse">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
-              <Sparkles className="w-4 h-4 text-primary-foreground" />
+          {/* Logo/Title */}
+          <div className="flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
+              <Logo size="xs" className="text-primary-foreground" />
             </div>
             <h1 className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               {t("app.title")}
