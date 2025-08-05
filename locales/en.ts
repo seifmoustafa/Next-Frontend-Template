@@ -25,6 +25,11 @@ export const en = {
     "app.minimal": "Minimal",
     "app.compact": "Compact",
     "app.floating": "Floating",
+    
+    // Logo & Icons
+    "logo.type": "sparkles", // Options: "sparkles", "shield", "image", "custom"
+    "logo.image": "/placeholder-logo.svg", // Path to logo image
+    "logo.text": "SA", // Text for shield/avatar fallback
   
     // Dashboard
     "dashboard.title": "Dashboard Overview",

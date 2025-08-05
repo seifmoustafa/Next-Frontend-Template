@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { LogOut, X, Shield, ChevronDown, Sparkles } from "lucide-react"
+import { LogOut, X, Shield, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/providers/i18n-provider"
@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { getNavigationItems, isNavigationItemActive, type NavigationItem } from "@/config/navigation"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Logo } from "@/components/ui/logo"
 
 interface ModernSidebarProps {
   open: boolean
@@ -198,7 +199,7 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
               >
                                  <h1 className="text-xl font-bold text-sidebar-foreground whitespace-nowrap">{t("app.title")}</h1>
                  <p className="text-xs text-sidebar-foreground/60 whitespace-nowrap flex items-center">
-                   <Sparkles className="w-2 h-2 mr-1 rtl:mr-0 rtl:ml-1" />
+                   <Logo size="sm" className="mr-1 rtl:mr-0 rtl:ml-1" />
                    {t("app.modern")}
                  </p>
               </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Settings, Menu, Sun, Moon, Globe, Sparkles, Zap } from "lucide-react"
+import { Search, Settings, Menu, Sun, Moon, Globe, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -17,6 +17,7 @@ import { useTheme } from "next-themes"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
+import { Logo } from "@/components/ui/logo"
 
 interface ElegantHeaderProps {
   onMenuClick: () => void
@@ -84,7 +85,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "group cursor-pointer",
               )}
             >
-              <Sparkles className="w-7 h-7 text-primary-foreground relative z-10 group-hover:animate-spin transition-transform duration-700" />
+              <Logo size="lg" variant="default" className="relative z-10 group-hover:animate-spin transition-transform duration-700" />
               <Zap className="absolute top-1 right-1 w-4 h-4 text-primary-foreground/80 animate-pulse" />
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-transparent via-white/10 to-transparent animate-pulse opacity-50" />
             </div>
@@ -98,10 +99,10 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               >
                 {t("app.title")}
               </h1>
-              <p className="text-sm text-muted-foreground/90 font-semibold tracking-widest uppercase flex items-center">
+              {/* <p className="text-sm text-muted-foreground/90 font-semibold tracking-widest uppercase flex items-center">
                 <div className="w-2 h-2 bg-gradient-to-r from-primary to-primary/60 rounded-full mr-2 rtl:mr-0 rtl:ml-2 animate-pulse" />
                 ELEGANT DESIGN
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

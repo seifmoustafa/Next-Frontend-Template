@@ -2,11 +2,12 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Users, BarChart3, Settings, LogOut, X, Shield, User } from "lucide-react"
+import { LayoutDashboard, Users, BarChart3, Settings, LogOut, X, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useI18n } from "@/providers/i18n-provider"
 import { useAuth } from "@/providers/auth-provider"
 import { cn } from "@/lib/utils"
+import { Logo } from "@/components/ui/logo"
 
 interface SidebarProps {
   open: boolean
@@ -53,9 +54,7 @@ export function Sidebar({ open, onOpenChange, isModern = false }: SidebarProps) 
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-sidebar-border">
           <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <Shield className="w-6 h-6 text-primary-foreground" />
-            </div>
+            <Logo size="md" variant="gradient" />
                          <div className={isModern ? "sidebar-text" : ""}>
                <h1 className="text-xl font-bold text-sidebar-foreground">{t("app.title")}</h1>
                <p className="text-xs text-sidebar-foreground/60">{t("app.subtitle")}</p>

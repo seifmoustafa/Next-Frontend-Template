@@ -25,6 +25,11 @@ export const ar = {
     "app.minimal": "البسيطة",
     "app.compact": "المدمجة",
     "app.floating": "العائمة",
+    
+    // Logo & Icons
+    "logo.type": "sparkles", // Options: "sparkles", "shield", "image", "custom"
+    "logo.image": "/placeholder-logo.svg", // Path to logo image
+    "logo.text": "SA", // Text for shield/avatar fallback
   
     // Dashboard
     "dashboard.title": "نظرة عامة على لوحة التحكم",
