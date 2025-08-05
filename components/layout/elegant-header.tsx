@@ -96,7 +96,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                   "animate-gradient-x drop-shadow-sm",
                 )}
               >
-                {t("nav.dashboard")}
+                {t("app.title")}
               </h1>
               <p className="text-sm text-muted-foreground/90 font-semibold tracking-widest uppercase flex items-center">
                 <div className="w-2 h-2 bg-gradient-to-r from-primary to-primary/60 rounded-full mr-2 rtl:mr-0 rtl:ml-2 animate-pulse" />

@@ -5,7 +5,7 @@ export const ar = {
     "auth.password": "كلمة المرور",
     "auth.loginButton": "دخول",
     "auth.loginError": "خطأ في اسم المستخدم أو كلمة المرور",
-    "auth.welcome": "مرحباً بك في لوحة التحكم",
+    "auth.welcome": "منظومة إدارة العقود",
     "auth.pleaseLogin": "يرجى تسجيل الدخول للمتابعة",
   
     // Navigation
@@ -15,6 +15,16 @@ export const ar = {
     "nav.profile": "الملف الشخصي",
     "nav.settings": "الإعدادات",
     "nav.logout": "تسجيل الخروج",
+    
+    // Layout & App
+    "app.title": "منظومة إدارة العقود",
+    "app.subtitle": "الإدارية",
+    "app.modern": "العصرية",
+    "app.classic": "الكلاسيكية",
+    "app.elegant": "الأنيقة",
+    "app.minimal": "البسيطة",
+    "app.compact": "المدمجة",
+    "app.floating": "العائمة",
   
     // Dashboard
     "dashboard.title": "نظرة عامة على لوحة التحكم",

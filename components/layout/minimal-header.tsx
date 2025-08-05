@@ -43,7 +43,7 @@ export function MinimalHeader() {
               <Shield className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold">لوحة التحكم</h1>
+              <h1 className="text-xl font-bold">{t("app.title")}</h1>
             </div>
           </Link>
 

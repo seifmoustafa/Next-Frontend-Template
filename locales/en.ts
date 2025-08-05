@@ -15,6 +15,16 @@ export const en = {
     "nav.profile": "Profile",
     "nav.settings": "Settings",
     "nav.logout": "Logout",
+    
+    // Layout & App
+    "app.title": "Admin Dashboard",
+    "app.subtitle": "Administrative",
+    "app.modern": "Modern",
+    "app.classic": "Classic",
+    "app.elegant": "Elegant",
+    "app.minimal": "Minimal",
+    "app.compact": "Compact",
+    "app.floating": "Floating",
   
     // Dashboard
     "dashboard.title": "Dashboard Overview",

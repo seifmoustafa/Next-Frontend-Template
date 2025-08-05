@@ -56,7 +56,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
               <Sparkles className="w-4 h-4 text-primary-foreground" />
             </div>
             <h1 className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              {t("nav.dashboard")}
+              {t("app.title")}
             </h1>
           </div>
         </div>

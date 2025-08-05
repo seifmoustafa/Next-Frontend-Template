@@ -196,11 +196,11 @@ export function ModernSidebar({ open, onOpenChange, onHoverChange }: ModernSideb
                   !isHovered && "lg:opacity-0 lg:w-0 lg:overflow-hidden",
                 )}
               >
-                <h1 className="text-xl font-bold text-sidebar-foreground whitespace-nowrap">لوحة التحكم</h1>
-                <p className="text-xs text-sidebar-foreground/60 whitespace-nowrap flex items-center">
-                  <Sparkles className="w-2 h-2 mr-1 rtl:mr-0 rtl:ml-1" />
-                  العصرية
-                </p>
+                                 <h1 className="text-xl font-bold text-sidebar-foreground whitespace-nowrap">{t("app.title")}</h1>
+                 <p className="text-xs text-sidebar-foreground/60 whitespace-nowrap flex items-center">
+                   <Sparkles className="w-2 h-2 mr-1 rtl:mr-0 rtl:ml-1" />
+                   {t("app.modern")}
+                 </p>
               </div>
             </div>
 

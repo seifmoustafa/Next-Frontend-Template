@@ -52,7 +52,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
               <Sparkles className="w-5 h-5 text-primary-foreground" />
             </div>
             <div className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              لوحة التحكم
+              {t("app.title")}
             </div>
           </div>
         </div>

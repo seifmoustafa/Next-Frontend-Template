@@ -64,9 +64,9 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                {t("nav.dashboard")}
+                {t("app.title")}
               </h1>
-              <p className="text-xs text-muted-foreground">Floating</p>
+              <p className="text-xs text-muted-foreground">{t("app.floating")}</p>
             </div>
           </div>
         </div>

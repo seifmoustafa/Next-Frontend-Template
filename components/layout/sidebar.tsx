@@ -56,10 +56,10 @@ export function Sidebar({ open, onOpenChange, isModern = false }: SidebarProps) 
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
               <Shield className="w-6 h-6 text-primary-foreground" />
             </div>
-            <div className={isModern ? "sidebar-text" : ""}>
-              <h1 className="text-xl font-bold text-sidebar-foreground">لوحة التحكم</h1>
-              <p className="text-xs text-sidebar-foreground/60">الإدارية</p>
-            </div>
+                         <div className={isModern ? "sidebar-text" : ""}>
+               <h1 className="text-xl font-bold text-sidebar-foreground">{t("app.title")}</h1>
+               <p className="text-xs text-sidebar-foreground/60">{t("app.subtitle")}</p>
+             </div>
           </div>
 
           <Button
