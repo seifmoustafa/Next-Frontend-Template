@@ -18,7 +18,7 @@ interface AuthContextType {
   isAuthenticated: boolean
   isLoading: boolean
   login: (username: string, password: string) => Promise<boolean>
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -28,12 +28,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
+  // Define baseUrl once for the whole provider
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api"
+
   const isAuthenticated = !!user
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      // Construct the API URL properly
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api"
       const loginUrl = `${baseUrl}/Authentication/login`
 
       console.log("Attempting login to:", loginUrl) // Debug log
@@ -99,11 +100,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const logout = () => {
-    localStorage.removeItem("accessToken")
-    localStorage.removeItem("refreshToken")
-    setUser(null)
-    router.push("/login")
+  const logout = async () => {
+    const logoutUrl = `${baseUrl}/Authentication/logout`;
+    const accessToken = localStorage.getItem("accessToken");
+
+    try {
+      const response = await fetch(logoutUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (response.status === 204) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setUser(null);
+        router.push("/login");
+      } else {
+        // Optionally handle unsuccessful logout
+        console.error("Logout failed:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Optionally handle network errors
+    }
   }
 
   const checkAuth = async () => {
@@ -115,7 +137,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api"
       const userUrl = `${baseUrl}/admins/me`
 
       const response = await fetch(userUrl, {

@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/providers/auth-provider"
 import { useI18n } from "@/providers/i18n-provider"
-import { Loader2, Eye, EyeOff, Shield, Globe, Sun, Moon, Monitor } from "lucide-react"
+import { Loader2, Eye, EyeOff, Globe, Sun, Moon, Monitor } from "lucide-react"
+import { Logo } from "@/components/ui/logo"
 import { useTheme } from "next-themes"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
@@ -102,8 +103,8 @@ export default function LoginPage() {
 
       <Card className="w-full max-w-md glass hover-lift animate-fade-in">
         <CardHeader className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-primary rounded-2xl flex items-center justify-center">
-            <Shield className="w-8 h-8 text-primary-foreground" />
+          <div className="mx-auto">
+            <Logo size="xl" animation="fancy" />
           </div>
           <div>
             <h1 className="text-2xl font-bold">{t("auth.welcome")}</h1>

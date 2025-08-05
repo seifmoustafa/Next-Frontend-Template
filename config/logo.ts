@@ -3,10 +3,10 @@
 
 export const logoConfig = {
   // Logo type: "sparkles", "shield", "image", "custom"
-  type: "sparkles" as "sparkles" | "shield" | "image" | "custom",
-  
+  // type: "image" as "sparkles" | "shield" | "image" | "custom", // Changed to "image" to use the applogo.png
+  type: "shield" as "sparkles" | "shield" | "image" | "custom",
   // Image path (used when type is "image")
-  imagePath: "/placeholder-logo.svg",
+  imagePath: "/images/applogo.png", // Updated to use your logo image
   
   // Text for custom logo (used when type is "custom")
   text: "SA",

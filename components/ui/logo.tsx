@@ -7,9 +7,13 @@ interface LogoProps {
   size?: "sm" | "md" | "lg" | "xl";
   variant?: "default" | "gradient" | "outline";
   className?: string;
+  /**
+   * Animation for icon logos: 'none' (default), 'spin', 'pulse', or 'fancy' (strong effect).
+   */
+  animation?: "none" | "spin" | "pulse" | "fancy";
 }
 
-export function Logo({ size = "md", variant = "default", className }: LogoProps) {
+export function Logo({ size = "md", variant = "default", className, animation = "none" }: LogoProps) {
   const logoType = logoConfig.type;
   const logoImage = logoConfig.imagePath;
   const logoText = logoConfig.text;
@@ -18,7 +22,7 @@ export function Logo({ size = "md", variant = "default", className }: LogoProps)
     sm: "w-6 h-6",
     md: "w-8 h-8", 
     lg: "w-10 h-10",
-    xl: "w-12 h-12"
+    xl: "w-32 h-32" // 128px for extra large
   };
   
   const variantClasses = {
@@ -32,50 +36,63 @@ export function Logo({ size = "md", variant = "default", className }: LogoProps)
       case "sparkles":
         return (
           <div className={cn(
-            "flex items-center justify-center rounded-full",
+            "flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary shadow-lg",
             sizeClasses[size],
-            variantClasses[variant],
             className
           )}>
-            <Sparkles className={cn(
-              size === "sm" ? "w-4 h-4" : 
-              size === "md" ? "w-5 h-5" :
-              size === "lg" ? "w-6 h-6" : "w-7 h-7"
-            )} />
+            <div className={cn(
+              "flex items-center justify-center rounded-full bg-background",
+              // Slightly smaller to create a border effect
+              size === "sm" ? "w-5 h-5" : size === "md" ? "w-7 h-7" : size === "lg" ? "w-9 h-9" : "w-28 h-28"
+            )}>
+              <Sparkles className={cn(
+                size === "sm" ? "w-4 h-4" : 
+                size === "md" ? "w-5 h-5" :
+                size === "lg" ? "w-6 h-6" : "w-7 h-7",
+                animation === "spin" && "animate-spin",
+                animation === "pulse" && "animate-pulse",
+                animation === "fancy" && "animate-spin animate-pulse shadow-[0_0_32px_theme('colors.primary.DEFAULT')] text-primary drop-shadow-lg",
+              )} />
+            </div>
           </div>
         );
         
       case "shield":
         return (
           <div className={cn(
-            "flex items-center justify-center rounded-full",
+            "flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary shadow-lg",
             sizeClasses[size],
-            variantClasses[variant],
             className
           )}>
-            <Shield className={cn(
-              size === "sm" ? "w-4 h-4" : 
-              size === "md" ? "w-5 h-5" :
-              size === "lg" ? "w-6 h-6" : "w-7 h-7"
-            )} />
+            <div className={cn(
+              "flex items-center justify-center rounded-full bg-background",
+              size === "sm" ? "w-5 h-5" : size === "md" ? "w-7 h-7" : size === "lg" ? "w-9 h-9" : "w-28 h-28"
+            )}>
+              <Shield className={cn(
+                size === "sm" ? "w-4 h-4" : 
+                size === "md" ? "w-5 h-5" :
+                size === "lg" ? "w-6 h-6" : "w-7 h-7",
+                animation === "spin" && "animate-spin",
+                animation === "pulse" && "animate-pulse",
+                animation === "fancy" && "animate-spin animate-pulse shadow-[0_0_32px_theme('colors.primary.DEFAULT')] text-primary drop-shadow-lg",
+              )} />
+            </div>
           </div>
         );
         
       case "image":
         return (
-          <div className={cn(
-            "flex items-center justify-center rounded-full overflow-hidden",
-            sizeClasses[size],
-            className
-          )}>
-            <Image
-              src={logoImage}
-              alt="Logo"
-              width={size === "sm" ? 24 : size === "md" ? 32 : size === "lg" ? 40 : 48}
-              height={size === "sm" ? 24 : size === "md" ? 32 : size === "lg" ? 40 : 48}
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <Image
+            src={logoImage}
+            alt="Logo"
+            width={size === "sm" ? 32 : size === "md" ? 46 : size === "lg" ? 72 : 128}
+            height={size === "sm" ? 32 : size === "md" ? 46 : size === "lg" ? 72 : 128}
+            className={cn(
+              "object-cover rounded-full",
+              sizeClasses[size],
+              className
+            )}
+          />
         );
         
       case "custom":
