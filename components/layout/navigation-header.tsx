@@ -72,7 +72,7 @@ export function NavigationHeader({
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-30 h-16 backdrop-blur-xl border-b transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-30 h-16 backdrop-blur-xl border-b transition-all duration-300 header-shadow",
         cardStyle === "glass"
           ? "bg-background/80 border-border/30"
           : cardStyle === "solid"
@@ -128,7 +128,11 @@ export function NavigationHeader({
                       colorTheme === "orange" &&
                         "bg-orange-600 hover:bg-orange-700",
                       colorTheme === "red" && "bg-red-600 hover:bg-red-700",
-                      colorTheme === "teal" && "bg-teal-600 hover:bg-teal-700"
+                      colorTheme === "teal" && "bg-teal-600 hover:bg-teal-700",
+                      colorTheme === "pink" && "bg-pink-600 hover:bg-pink-700",
+                      colorTheme === "indigo" &&
+                        "bg-indigo-600 hover:bg-indigo-700",
+                      colorTheme === "cyan" && "bg-cyan-600 hover:bg-cyan-700"
                     )
                   : "text-muted-foreground"
               )}
@@ -253,7 +257,13 @@ export function NavigationHeader({
                       colorTheme === "red" &&
                         "bg-gradient-to-br from-red-500 to-red-600",
                       colorTheme === "teal" &&
-                        "bg-gradient-to-br from-teal-500 to-teal-600"
+                        "bg-gradient-to-br from-teal-500 to-teal-600",
+                      colorTheme === "pink" &&
+                        "bg-gradient-to-br from-pink-500 to-pink-600",
+                      colorTheme === "indigo" &&
+                        "bg-gradient-to-br from-indigo-500 to-indigo-600",
+                      colorTheme === "cyan" &&
+                        "bg-gradient-to-br from-cyan-500 to-cyan-600"
                     )}
                   >
                     {getUserInitials()}

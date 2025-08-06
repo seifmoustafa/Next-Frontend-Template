@@ -27,6 +27,9 @@ import {
   Save,
   Globe,
   Languages,
+  Paintbrush,
+  GhostIcon as Shadow,
+  Monitor,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
@@ -34,50 +37,212 @@ import { Logo } from "@/components/ui/logo";
 export function SettingsView() {
   const { t, language, setLanguage } = useI18n();
   const settings = useSettings();
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [saved, setSaved] = useState(false);
 
-  // Color themes
+  // Color themes - Extended
   const colorThemes = [
     {
       value: "purple",
       label: t("color.purple"),
-      lightClass: "bg-[#7c3aed]",
-      darkClass: "bg-[#6d28d9]",
+      lightClass: "bg-purple-500",
+      darkClass: "bg-purple-600",
     },
     {
       value: "blue",
       label: t("color.blue"),
-      lightClass: "bg-[#2563eb]",
-      darkClass: "bg-[#1d4ed8]",
+      lightClass: "bg-blue-500",
+      darkClass: "bg-blue-600",
     },
     {
       value: "green",
       label: t("color.green"),
-      lightClass: "bg-[#16a34a]",
-      darkClass: "bg-[#15803d]",
+      lightClass: "bg-green-500",
+      darkClass: "bg-green-600",
     },
     {
       value: "orange",
       label: t("color.orange"),
-      lightClass: "bg-[#ea580c]",
-      darkClass: "bg-[#c2410c]",
+      lightClass: "bg-orange-500",
+      darkClass: "bg-orange-600",
     },
     {
       value: "red",
       label: t("color.red"),
-      lightClass: "bg-[#dc2626]",
-      darkClass: "bg-[#b91c1c]",
+      lightClass: "bg-red-500",
+      darkClass: "bg-red-600",
     },
     {
       value: "teal",
       label: t("color.teal"),
-      lightClass: "bg-[#0d9488]",
-      darkClass: "bg-[#0f766e]",
+      lightClass: "bg-teal-500",
+      darkClass: "bg-teal-600",
+    },
+    {
+      value: "pink",
+      label: "Pink",
+      lightClass: "bg-pink-500",
+      darkClass: "bg-pink-600",
+    },
+    {
+      value: "indigo",
+      label: "Indigo",
+      lightClass: "bg-indigo-500",
+      darkClass: "bg-indigo-600",
+    },
+    {
+      value: "cyan",
+      label: "Cyan",
+      lightClass: "bg-cyan-500",
+      darkClass: "bg-cyan-600",
     },
   ];
 
-  // Layout templates - Updated with new navigation layout
+  // Light background themes - More variety and very different colors
+  const lightBackgroundThemes = [
+    {
+      value: "default",
+      label: "Pure White",
+      description: "Clean white background",
+      preview: "bg-white",
+    },
+    {
+      value: "warm",
+      label: "Warm Cream",
+      description: "Warm cream with golden undertones",
+      preview: "bg-orange-50",
+    },
+    {
+      value: "cool",
+      label: "Cool Blue",
+      description: "Cool blue-tinted background",
+      preview: "bg-blue-50",
+    },
+    {
+      value: "neutral",
+      label: "Soft Gray",
+      description: "Neutral light gray",
+      preview: "bg-gray-100",
+    },
+    {
+      value: "soft",
+      label: "Beige Comfort",
+      description: "Soft beige with yellow hints",
+      preview: "bg-yellow-50",
+    },
+    {
+      value: "cream",
+      label: "Rich Cream",
+      description: "Rich creamy yellow background",
+      preview: "bg-amber-50",
+    },
+    {
+      value: "mint",
+      label: "Fresh Mint",
+      description: "Fresh mint green background",
+      preview: "bg-green-50",
+    },
+    {
+      value: "lavender",
+      label: "Soft Lavender",
+      description: "Gentle purple lavender",
+      preview: "bg-purple-50",
+    },
+    {
+      value: "rose",
+      label: "Rose Blush",
+      description: "Soft rose pink background",
+      preview: "bg-rose-50",
+    },
+  ];
+
+  // Dark background themes - More variety and very different colors
+  const darkBackgroundThemes = [
+    {
+      value: "default",
+      label: "Standard Dark",
+      description: "Classic dark gray background",
+      preview: "bg-gray-900",
+    },
+    {
+      value: "darker",
+      label: "Deep Dark",
+      description: "Deeper charcoal background",
+      preview: "bg-gray-950",
+    },
+    {
+      value: "pitch",
+      label: "Pitch Black",
+      description: "Pure black background",
+      preview: "bg-black",
+    },
+    {
+      value: "slate",
+      label: "Blue Slate",
+      description: "Dark blue-gray slate",
+      preview: "bg-slate-800",
+    },
+    {
+      value: "warm-dark",
+      label: "Warm Brown",
+      description: "Warm dark brown tones",
+      preview: "bg-stone-900",
+    },
+    {
+      value: "forest",
+      label: "Forest Green",
+      description: "Deep forest green dark",
+      preview: "bg-green-900",
+    },
+    {
+      value: "ocean",
+      label: "Ocean Blue",
+      description: "Deep ocean blue dark",
+      preview: "bg-blue-900",
+    },
+    {
+      value: "purple-dark",
+      label: "Royal Purple",
+      description: "Rich dark purple",
+      preview: "bg-purple-900",
+    },
+    {
+      value: "crimson",
+      label: "Crimson Red",
+      description: "Deep crimson red dark",
+      preview: "bg-red-900",
+    },
+  ];
+
+  // Shadow intensity options
+  const shadowIntensities = [
+    {
+      value: "none",
+      label: "None",
+      description: "No shadows",
+      icon: CircleOff,
+    },
+    {
+      value: "subtle",
+      label: "Subtle",
+      description: "Light shadows",
+      icon: Circle,
+    },
+    {
+      value: "moderate",
+      label: "Moderate",
+      description: "Medium shadows",
+      icon: Circle,
+    },
+    {
+      value: "strong",
+      label: "Strong",
+      description: "Bold shadows",
+      icon: Circle,
+    },
+  ];
+
+  // Layout templates
   const layoutTemplates = [
     {
       value: "classic",
@@ -123,7 +288,7 @@ export function SettingsView() {
     },
   ];
 
-  // Card styles
+  // Card styles - Extended
   const cardStyles = [
     {
       value: "default",
@@ -144,6 +309,11 @@ export function SettingsView() {
       value: "bordered",
       label: t("cardStyle.bordered"),
       description: t("cardStyle.borderedDesc"),
+    },
+    {
+      value: "elevated",
+      label: "Elevated",
+      description: "Cards with strong elevation shadows",
     },
   ];
 
@@ -240,10 +410,14 @@ export function SettingsView() {
       </div>
 
       <Tabs defaultValue="appearance" className="space-y-6">
-        <TabsList className="grid grid-cols-4 w-full max-w-2xl">
+        <TabsList className="grid grid-cols-5 w-full max-w-3xl">
           <TabsTrigger value="appearance" className="flex items-center gap-2">
             <Palette className="h-4 w-4" />
             <span>{t("settings.appearance")}</span>
+          </TabsTrigger>
+          <TabsTrigger value="colors" className="flex items-center gap-2">
+            <Paintbrush className="h-4 w-4" />
+            <span>Colors</span>
           </TabsTrigger>
           <TabsTrigger value="layout" className="flex items-center gap-2">
             <Layout className="h-4 w-4" />
@@ -261,21 +435,20 @@ export function SettingsView() {
 
         {/* Appearance Tab */}
         <TabsContent value="appearance" className="space-y-6">
-          {/* Color Theme */}
+          {/* Dark Mode Toggle */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Palette className="h-5 w-5" />
-                <span>{t("settings.colorTheme")}</span>
+                <Monitor className="h-5 w-5" />
+                <span>{t("settings.darkMode")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Dark Mode Toggle */}
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label>{t("settings.darkMode")}</Label>
+                  <Label>{t("settings.lightDarkToggle")}</Label>
                   <p className="text-sm text-muted-foreground">
-                    {t("settings.lightDarkToggle")}
+                    Choose your preferred theme mode
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -297,47 +470,6 @@ export function SettingsView() {
                   <Moon className="h-4 w-4 text-muted-foreground" />
                 </div>
               </div>
-
-              <Separator />
-
-              {/* Color Theme Selection */}
-              <div className="space-y-4">
-                <Label>{t("settings.selectColorTheme")}</Label>
-                <div className="grid grid-cols-3 gap-4">
-                  {colorThemes.map((theme) => (
-                    <div
-                      key={theme.value}
-                      className={cn(
-                        "relative flex flex-col items-center gap-2 rounded-lg border p-4 hover:border-primary cursor-pointer transition-all",
-                        settings.colorTheme === theme.value &&
-                          "border-primary bg-primary/5"
-                      )}
-                      onClick={() => settings.setColorTheme(theme.value as any)}
-                    >
-                      <div className="flex gap-2">
-                        <div
-                          className={cn(
-                            "h-6 w-6 rounded-full",
-                            theme.lightClass
-                          )}
-                        />
-                        <div
-                          className={cn(
-                            "h-6 w-6 rounded-full",
-                            theme.darkClass
-                          )}
-                        />
-                      </div>
-                      <span className="text-sm font-medium">{theme.label}</span>
-                      {settings.colorTheme === theme.value && (
-                        <div className="absolute top-2 right-2 h-4 w-4 rounded-full bg-primary flex items-center justify-center">
-                          <Check className="h-3 w-3 text-primary-foreground" />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
             </CardContent>
           </Card>
 
@@ -353,7 +485,7 @@ export function SettingsView() {
               <RadioGroup
                 value={settings.cardStyle}
                 onValueChange={(value) => settings.setCardStyle(value as any)}
-                className="grid grid-cols-2 gap-4"
+                className="grid grid-cols-2 lg:grid-cols-3 gap-4"
               >
                 {cardStyles.map((style) => (
                   <div key={style.value}>
@@ -371,44 +503,6 @@ export function SettingsView() {
                       </div>
                       <p className="text-xs text-center text-muted-foreground">
                         {style.description}
-                      </p>
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </CardContent>
-          </Card>
-
-          {/* Logo Type */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Layers className="h-5 w-5" />
-                <span>{t("settings.logoType")}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <RadioGroup
-                value={settings.logoType}
-                onValueChange={(value) => settings.setLogoType(value as any)}
-                className="grid grid-cols-2 gap-4"
-              >
-                {logoTypes.map((type) => (
-                  <div key={type.value}>
-                    <RadioGroupItem
-                      value={type.value}
-                      id={`logo-type-${type.value}`}
-                      className="peer sr-only"
-                    />
-                    <Label
-                      htmlFor={`logo-type-${type.value}`}
-                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                    >
-                      <div className="mb-2 rounded-md border p-2 w-full h-12 flex items-center justify-center">
-                        <Logo size="sm" />
-                      </div>
-                      <p className="text-xs text-center text-muted-foreground">
-                        {type.description}
                       </p>
                     </Label>
                   </div>
@@ -502,6 +596,206 @@ export function SettingsView() {
                           )}
                         />
                         <span className="text-xs">{option.label}</span>
+                      </Label>
+                    </div>
+                  );
+                })}
+              </RadioGroup>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Colors Tab */}
+        <TabsContent value="colors" className="space-y-6">
+          {/* Primary Color Theme */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Palette className="h-5 w-5" />
+                <span>Primary Color Theme</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-3 gap-4">
+                {colorThemes.map((theme) => (
+                  <div
+                    key={theme.value}
+                    className={cn(
+                      "relative flex flex-col items-center gap-2 rounded-lg border p-4 hover:border-primary cursor-pointer transition-all",
+                      settings.colorTheme === theme.value &&
+                        "border-primary bg-primary/5"
+                    )}
+                    onClick={() => settings.setColorTheme(theme.value as any)}
+                  >
+                    <div className="flex gap-2">
+                      <div
+                        className={cn("h-6 w-6 rounded-full", theme.lightClass)}
+                      />
+                      <div
+                        className={cn("h-6 w-6 rounded-full", theme.darkClass)}
+                      />
+                    </div>
+                    <span className="text-sm font-medium">{theme.label}</span>
+                    {settings.colorTheme === theme.value && (
+                      <div className="absolute top-2 right-2 h-4 w-4 rounded-full bg-primary flex items-center justify-center">
+                        <Check className="h-3 w-3 text-primary-foreground" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Background Themes */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Paintbrush className="h-5 w-5" />
+                <span>Background Themes</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Light Backgrounds */}
+              <div>
+                <Label className="text-base font-semibold">
+                  Light Mode Backgrounds
+                </Label>
+                <p className="text-sm text-muted-foreground mb-4">
+                  These backgrounds only apply when using light theme
+                </p>
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                  {lightBackgroundThemes.map((theme) => (
+                    <div
+                      key={theme.value}
+                      className={cn(
+                        "relative flex flex-col items-center gap-2 rounded-lg border p-4 hover:border-primary cursor-pointer transition-all",
+                        settings.backgroundTheme === theme.value &&
+                          "border-primary bg-primary/5"
+                      )}
+                      onClick={() =>
+                        settings.setBackgroundTheme(theme.value as any)
+                      }
+                    >
+                      <div
+                        className={cn(
+                          "h-12 w-full rounded-md border",
+                          theme.preview
+                        )}
+                      />
+                      <div className="text-center">
+                        <span className="text-sm font-medium">
+                          {theme.label}
+                        </span>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {theme.description}
+                        </p>
+                      </div>
+                      {settings.backgroundTheme === theme.value && (
+                        <div className="absolute top-2 right-2 h-4 w-4 rounded-full bg-primary flex items-center justify-center">
+                          <Check className="h-3 w-3 text-primary-foreground" />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* Dark Backgrounds */}
+              <div>
+                <Label className="text-base font-semibold">
+                  Dark Mode Backgrounds
+                </Label>
+                <p className="text-sm text-muted-foreground mb-4">
+                  These backgrounds only apply when using dark theme
+                </p>
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                  {darkBackgroundThemes.map((theme) => (
+                    <div
+                      key={theme.value}
+                      className={cn(
+                        "relative flex flex-col items-center gap-2 rounded-lg border p-4 hover:border-primary cursor-pointer transition-all",
+                        settings.backgroundTheme === theme.value &&
+                          "border-primary bg-primary/5"
+                      )}
+                      onClick={() =>
+                        settings.setBackgroundTheme(theme.value as any)
+                      }
+                    >
+                      <div
+                        className={cn(
+                          "h-12 w-full rounded-md border",
+                          theme.preview
+                        )}
+                      />
+                      <div className="text-center">
+                        <span className="text-sm font-medium">
+                          {theme.label}
+                        </span>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {theme.description}
+                        </p>
+                      </div>
+                      {settings.backgroundTheme === theme.value && (
+                        <div className="absolute top-2 right-2 h-4 w-4 rounded-full bg-primary flex items-center justify-center">
+                          <Check className="h-3 w-3 text-primary-foreground" />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Shadow Intensity */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shadow className="h-5 w-5" />
+                <span>Shadow Intensity</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={settings.shadowIntensity}
+                onValueChange={(value) =>
+                  settings.setShadowIntensity(value as any)
+                }
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                {shadowIntensities.map((intensity) => {
+                  const Icon = intensity.icon;
+                  return (
+                    <div key={intensity.value}>
+                      <RadioGroupItem
+                        value={intensity.value}
+                        id={`shadow-${intensity.value}`}
+                        className="peer sr-only"
+                      />
+                      <Label
+                        htmlFor={`shadow-${intensity.value}`}
+                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        <div
+                          className={cn(
+                            "mb-2 flex items-center justify-center w-10 h-10 rounded-full bg-primary/10",
+                            intensity.value === "none" && "shadow-none",
+                            intensity.value === "subtle" && "shadow-sm",
+                            intensity.value === "moderate" && "shadow-md",
+                            intensity.value === "strong" && "shadow-lg"
+                          )}
+                        >
+                          <Icon className="h-5 w-5 text-primary" />
+                        </div>
+                        <span className="text-sm font-medium">
+                          {intensity.label}
+                        </span>
+                        <p className="text-xs text-center text-muted-foreground mt-1">
+                          {intensity.description}
+                        </p>
                       </Label>
                     </div>
                   );
@@ -613,6 +907,44 @@ export function SettingsView() {
                     <span className="text-sm">{t("sidebar.left")}</span>
                   </Label>
                 </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
+          {/* Logo Type */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Layers className="h-5 w-5" />
+                <span>{t("settings.logoType")}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={settings.logoType}
+                onValueChange={(value) => settings.setLogoType(value as any)}
+                className="grid grid-cols-2 gap-4"
+              >
+                {logoTypes.map((type) => (
+                  <div key={type.value}>
+                    <RadioGroupItem
+                      value={type.value}
+                      id={`logo-type-${type.value}`}
+                      className="peer sr-only"
+                    />
+                    <Label
+                      htmlFor={`logo-type-${type.value}`}
+                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    >
+                      <div className="mb-2 rounded-md border p-2 w-full h-12 flex items-center justify-center">
+                        <Logo size="sm" />
+                      </div>
+                      <p className="text-xs text-center text-muted-foreground">
+                        {type.description}
+                      </p>
+                    </Label>
+                  </div>
+                ))}
               </RadioGroup>
             </CardContent>
           </Card>

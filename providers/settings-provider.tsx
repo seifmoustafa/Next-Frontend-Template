@@ -1,9 +1,8 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { useTheme } from "next-themes";
 
-// Layout template types - Updated with new layouts
+// Layout template types
 export type LayoutTemplate =
   | "classic"
   | "elegant"
@@ -13,20 +12,38 @@ export type LayoutTemplate =
   | "floating"
   | "navigation";
 
-// Color theme types
+// Color theme types - Extended
 export type ColorTheme =
   | "purple"
   | "blue"
   | "green"
   | "orange"
   | "red"
-  | "teal";
+  | "teal"
+  | "pink"
+  | "indigo"
+  | "cyan";
+
+// Background theme types - New
+export type BackgroundTheme =
+  | "default"
+  | "warm"
+  | "cool"
+  | "neutral"
+  | "soft"
+  | "darker"
+  | "pitch"
+  | "slate"
+  | "warm-dark";
+
+// Shadow intensity types - New
+export type ShadowIntensity = "none" | "subtle" | "moderate" | "strong";
 
 // Sidebar position types
 export type SidebarPosition = "right" | "left";
 
-// Card style types
-export type CardStyle = "default" | "glass" | "solid" | "bordered";
+// Card style types - Extended
+export type CardStyle = "default" | "glass" | "solid" | "bordered" | "elevated";
 
 // Logo type types
 export type LogoType = "sparkles" | "shield" | "image" | "custom";
@@ -48,6 +65,14 @@ interface SettingsContextType {
   // Color theme
   colorTheme: ColorTheme;
   setColorTheme: (theme: ColorTheme) => void;
+
+  // Background theme - New
+  backgroundTheme: BackgroundTheme;
+  setBackgroundTheme: (theme: BackgroundTheme) => void;
+
+  // Shadow intensity - New
+  shadowIntensity: ShadowIntensity;
+  setShadowIntensity: (intensity: ShadowIntensity) => void;
 
   // Sidebar position
   sidebarPosition: SidebarPosition;
@@ -80,7 +105,8 @@ interface SettingsContextType {
 const defaultSettings = {
   layoutTemplate: "classic" as LayoutTemplate,
   colorTheme: "purple" as ColorTheme,
-  darkMode: true,
+  backgroundTheme: "default" as BackgroundTheme,
+  shadowIntensity: "moderate" as ShadowIntensity,
   sidebarPosition: "right" as SidebarPosition,
   cardStyle: "glass" as CardStyle,
   logoType: "image" as LogoType,
@@ -100,7 +126,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [colorTheme, setColorTheme] = useState<ColorTheme>(
     defaultSettings.colorTheme
   );
-
+  const [backgroundTheme, setBackgroundTheme] = useState<BackgroundTheme>(
+    defaultSettings.backgroundTheme
+  );
+  const [shadowIntensity, setShadowIntensity] = useState<ShadowIntensity>(
+    defaultSettings.shadowIntensity
+  );
   const [sidebarPosition, setSidebarPosition] = useState<SidebarPosition>(
     defaultSettings.sidebarPosition
   );
@@ -127,7 +158,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
           parsedSettings.layoutTemplate || defaultSettings.layoutTemplate
         );
         setColorTheme(parsedSettings.colorTheme || defaultSettings.colorTheme);
-
+        setBackgroundTheme(
+          parsedSettings.backgroundTheme || defaultSettings.backgroundTheme
+        );
+        setShadowIntensity(
+          parsedSettings.shadowIntensity || defaultSettings.shadowIntensity
+        );
         setSidebarPosition(
           parsedSettings.sidebarPosition || defaultSettings.sidebarPosition
         );
@@ -152,6 +188,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     const settings = {
       layoutTemplate,
       colorTheme,
+      backgroundTheme,
+      shadowIntensity,
       sidebarPosition,
       cardStyle,
       logoType,
@@ -161,8 +199,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     };
     localStorage.setItem("appSettings", JSON.stringify(settings));
 
-    // Apply CSS variables for the selected theme
+    // Apply CSS variables for the selected themes
     document.documentElement.setAttribute("data-theme", colorTheme);
+    document.documentElement.setAttribute("data-bg-theme", backgroundTheme);
+    document.documentElement.setAttribute("data-shadow", shadowIntensity);
     document.documentElement.setAttribute("data-layout", layoutTemplate);
     document.documentElement.setAttribute("data-card-style", cardStyle);
     document.documentElement.setAttribute("data-animation", animationLevel);
@@ -177,6 +217,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   }, [
     layoutTemplate,
     colorTheme,
+    backgroundTheme,
+    shadowIntensity,
     sidebarPosition,
     cardStyle,
     logoType,
@@ -189,7 +231,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const resetSettings = () => {
     setLayoutTemplate(defaultSettings.layoutTemplate);
     setColorTheme(defaultSettings.colorTheme);
-
+    setBackgroundTheme(defaultSettings.backgroundTheme);
+    setShadowIntensity(defaultSettings.shadowIntensity);
     setSidebarPosition(defaultSettings.sidebarPosition);
     setCardStyle(defaultSettings.cardStyle);
     setLogoType(defaultSettings.logoType);
@@ -210,6 +253,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         setLayoutTemplate,
         colorTheme,
         setColorTheme,
+        backgroundTheme,
+        setBackgroundTheme,
+        shadowIntensity,
+        setShadowIntensity,
         sidebarPosition,
         setSidebarPosition,
         cardStyle,
