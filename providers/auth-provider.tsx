@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      const loginUrl = `${baseUrl}/Authentication/login`
+      const loginUrl = `${baseUrl}/Authentication/login/admin`
 
       console.log("Attempting login to:", loginUrl) // Debug log
 

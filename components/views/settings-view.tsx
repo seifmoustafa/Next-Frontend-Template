@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Switch } from "@/components/ui/switch"
-import { useI18n } from "@/providers/i18n-provider"
-import { useSettings } from "@/providers/settings-provider"
-import { useTheme } from "next-themes"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch";
+import { useI18n } from "@/providers/i18n-provider";
+import { useSettings } from "@/providers/settings-provider";
+import { useTheme } from "next-themes";
 import {
   Palette,
   Layout,
@@ -27,27 +27,57 @@ import {
   Save,
   Globe,
   Languages,
-} from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Logo } from "@/components/ui/logo"
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui/logo";
 
 export function SettingsView() {
-  const { t, language, setLanguage } = useI18n()
-  const settings = useSettings()
-  const { setTheme } = useTheme()
-  const [saved, setSaved] = useState(false)
+  const { t, language, setLanguage } = useI18n();
+  const settings = useSettings();
+  const { setTheme } = useTheme();
+  const [saved, setSaved] = useState(false);
 
   // Color themes
   const colorThemes = [
-    { value: "purple", label: t("color.purple"), lightClass: "bg-[#7c3aed]", darkClass: "bg-[#6d28d9]" },
-    { value: "blue", label: t("color.blue"), lightClass: "bg-[#2563eb]", darkClass: "bg-[#1d4ed8]" },
-    { value: "green", label: t("color.green"), lightClass: "bg-[#16a34a]", darkClass: "bg-[#15803d]" },
-    { value: "orange", label: t("color.orange"), lightClass: "bg-[#ea580c]", darkClass: "bg-[#c2410c]" },
-    { value: "red", label: t("color.red"), lightClass: "bg-[#dc2626]", darkClass: "bg-[#b91c1c]" },
-    { value: "teal", label: t("color.teal"), lightClass: "bg-[#0d9488]", darkClass: "bg-[#0f766e]" },
-  ]
+    {
+      value: "purple",
+      label: t("color.purple"),
+      lightClass: "bg-[#7c3aed]",
+      darkClass: "bg-[#6d28d9]",
+    },
+    {
+      value: "blue",
+      label: t("color.blue"),
+      lightClass: "bg-[#2563eb]",
+      darkClass: "bg-[#1d4ed8]",
+    },
+    {
+      value: "green",
+      label: t("color.green"),
+      lightClass: "bg-[#16a34a]",
+      darkClass: "bg-[#15803d]",
+    },
+    {
+      value: "orange",
+      label: t("color.orange"),
+      lightClass: "bg-[#ea580c]",
+      darkClass: "bg-[#c2410c]",
+    },
+    {
+      value: "red",
+      label: t("color.red"),
+      lightClass: "bg-[#dc2626]",
+      darkClass: "bg-[#b91c1c]",
+    },
+    {
+      value: "teal",
+      label: t("color.teal"),
+      lightClass: "bg-[#0d9488]",
+      darkClass: "bg-[#0f766e]",
+    },
+  ];
 
-  // Layout templates - Updated with new layouts
+  // Layout templates - Updated with new navigation layout
   const layoutTemplates = [
     {
       value: "classic",
@@ -85,38 +115,104 @@ export function SettingsView() {
       description: t("layout.floatingDesc"),
       image: "/placeholder.svg?height=100&width=200&text=Floating+Layout",
     },
-  ]
+    {
+      value: "navigation",
+      label: t("layout.navigation"),
+      description: t("layout.navigationDesc"),
+      image: "/placeholder.svg?height=100&width=200&text=Navigation+Layout",
+    },
+  ];
 
   // Card styles
   const cardStyles = [
-    { value: "default", label: t("cardStyle.default"), description: t("cardStyle.defaultDesc") },
-    { value: "glass", label: t("cardStyle.glass"), description: t("cardStyle.glassDesc") },
-    { value: "solid", label: t("cardStyle.solid"), description: t("cardStyle.solidDesc") },
-    { value: "bordered", label: t("cardStyle.bordered"), description: t("cardStyle.borderedDesc") },
-  ]
+    {
+      value: "default",
+      label: t("cardStyle.default"),
+      description: t("cardStyle.defaultDesc"),
+    },
+    {
+      value: "glass",
+      label: t("cardStyle.glass"),
+      description: t("cardStyle.glassDesc"),
+    },
+    {
+      value: "solid",
+      label: t("cardStyle.solid"),
+      description: t("cardStyle.solidDesc"),
+    },
+    {
+      value: "bordered",
+      label: t("cardStyle.bordered"),
+      description: t("cardStyle.borderedDesc"),
+    },
+  ];
 
   // Logo types
   const logoTypes = [
-    { value: "image", label: t("logoType.image"), description: t("logoType.imageDesc") },
-    { value: "sparkles", label: t("logoType.sparkles"), description: t("logoType.sparklesDesc") },
-    { value: "shield", label: t("logoType.shield"), description: t("logoType.shieldDesc") },
-    { value: "custom", label: t("logoType.custom"), description: t("logoType.customDesc") },
-  ]
+    {
+      value: "image",
+      label: t("logoType.image"),
+      description: t("logoType.imageDesc"),
+    },
+    {
+      value: "sparkles",
+      label: t("logoType.sparkles"),
+      description: t("logoType.sparklesDesc"),
+    },
+    {
+      value: "shield",
+      label: t("logoType.shield"),
+      description: t("logoType.shieldDesc"),
+    },
+    {
+      value: "custom",
+      label: t("logoType.custom"),
+      description: t("logoType.customDesc"),
+    },
+  ];
 
   // Animation levels
   const animationLevels = [
-    { value: "none", label: t("animation.none"), description: t("animation.noneDesc") },
-    { value: "minimal", label: t("animation.minimal"), description: t("animation.minimalDesc") },
-    { value: "moderate", label: t("animation.moderate"), description: t("animation.moderateDesc") },
-    { value: "high", label: t("animation.high"), description: t("animation.highDesc") },
-  ]
+    {
+      value: "none",
+      label: t("animation.none"),
+      description: t("animation.noneDesc"),
+    },
+    {
+      value: "minimal",
+      label: t("animation.minimal"),
+      description: t("animation.minimalDesc"),
+    },
+    {
+      value: "moderate",
+      label: t("animation.moderate"),
+      description: t("animation.moderateDesc"),
+    },
+    {
+      value: "high",
+      label: t("animation.high"),
+      description: t("animation.highDesc"),
+    },
+  ];
 
   // Font sizes
   const fontSizes = [
-    { value: "small", label: t("fontSize.small"), description: t("fontSize.smallDesc") },
-    { value: "default", label: t("fontSize.default"), description: t("fontSize.defaultDesc") },
-    { value: "large", label: t("fontSize.large"), description: t("fontSize.largeDesc") },
-  ]
+    {
+      value: "small",
+      label: t("fontSize.small"),
+      description: t("fontSize.smallDesc"),
+    },
+    {
+      value: "default",
+      label: t("fontSize.default"),
+      description: t("fontSize.defaultDesc"),
+    },
+    {
+      value: "large",
+      label: t("fontSize.large"),
+      description: t("fontSize.largeDesc"),
+    },
+  ];
 
   // Border radius options
   const borderRadiusOptions = [
@@ -125,19 +221,21 @@ export function SettingsView() {
     { value: "default", label: t("radius.default"), icon: Circle },
     { value: "large", label: t("radius.large"), icon: Circle },
     { value: "full", label: t("radius.full"), icon: Circle },
-  ]
+  ];
 
   const handleSave = () => {
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
-  }
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">{t("nav.settings")}</h1>
         <p className="text-muted-foreground mt-2">
-          {language === "ar" ? "تخصيص واجهة التطبيق والإعدادات العامة" : "Customize app interface and general settings"}
+          {language === "ar"
+            ? "تخصيص واجهة التطبيق والإعدادات العامة"
+            : "Customize app interface and general settings"}
         </p>
       </div>
 
@@ -176,14 +274,25 @@ export function SettingsView() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>{t("settings.darkMode")}</Label>
-                  <p className="text-sm text-muted-foreground">{t("settings.lightDarkToggle")}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t("settings.lightDarkToggle")}
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Sun className="h-4 w-4 text-muted-foreground" />
                   <div className="grid grid-cols-3 gap-2">
-                    <Button variant="outline" onClick={() => setTheme('light')}>{t('theme.light')}</Button>
-                    <Button variant="outline" onClick={() => setTheme('dark')}>{t('theme.dark')}</Button>
-                    <Button variant="outline" onClick={() => setTheme('system')}>{t('theme.system')}</Button>
+                    <Button variant="outline" onClick={() => setTheme("light")}>
+                      {t("theme.light")}
+                    </Button>
+                    <Button variant="outline" onClick={() => setTheme("dark")}>
+                      {t("theme.dark")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setTheme("system")}
+                    >
+                      {t("theme.system")}
+                    </Button>
                   </div>
                   <Moon className="h-4 w-4 text-muted-foreground" />
                 </div>
@@ -200,13 +309,24 @@ export function SettingsView() {
                       key={theme.value}
                       className={cn(
                         "relative flex flex-col items-center gap-2 rounded-lg border p-4 hover:border-primary cursor-pointer transition-all",
-                        settings.colorTheme === theme.value && "border-primary bg-primary/5",
+                        settings.colorTheme === theme.value &&
+                          "border-primary bg-primary/5"
                       )}
                       onClick={() => settings.setColorTheme(theme.value as any)}
                     >
                       <div className="flex gap-2">
-                        <div className={cn("h-6 w-6 rounded-full", theme.lightClass)} />
-                        <div className={cn("h-6 w-6 rounded-full", theme.darkClass)} />
+                        <div
+                          className={cn(
+                            "h-6 w-6 rounded-full",
+                            theme.lightClass
+                          )}
+                        />
+                        <div
+                          className={cn(
+                            "h-6 w-6 rounded-full",
+                            theme.darkClass
+                          )}
+                        />
                       </div>
                       <span className="text-sm font-medium">{theme.label}</span>
                       {settings.colorTheme === theme.value && (
@@ -237,7 +357,11 @@ export function SettingsView() {
               >
                 {cardStyles.map((style) => (
                   <div key={style.value}>
-                    <RadioGroupItem value={style.value} id={`card-style-${style.value}`} className="peer sr-only" />
+                    <RadioGroupItem
+                      value={style.value}
+                      id={`card-style-${style.value}`}
+                      className="peer sr-only"
+                    />
                     <Label
                       htmlFor={`card-style-${style.value}`}
                       className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -245,7 +369,9 @@ export function SettingsView() {
                       <div className="mb-2 rounded-md border p-2 w-full h-12 flex items-center justify-center">
                         <span className="text-xs">{style.label}</span>
                       </div>
-                      <p className="text-xs text-center text-muted-foreground">{style.description}</p>
+                      <p className="text-xs text-center text-muted-foreground">
+                        {style.description}
+                      </p>
                     </Label>
                   </div>
                 ))}
@@ -269,7 +395,11 @@ export function SettingsView() {
               >
                 {logoTypes.map((type) => (
                   <div key={type.value}>
-                    <RadioGroupItem value={type.value} id={`logo-type-${type.value}`} className="peer sr-only" />
+                    <RadioGroupItem
+                      value={type.value}
+                      id={`logo-type-${type.value}`}
+                      className="peer sr-only"
+                    />
                     <Label
                       htmlFor={`logo-type-${type.value}`}
                       className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -277,7 +407,9 @@ export function SettingsView() {
                       <div className="mb-2 rounded-md border p-2 w-full h-12 flex items-center justify-center">
                         <Logo size="sm" />
                       </div>
-                      <p className="text-xs text-center text-muted-foreground">{type.description}</p>
+                      <p className="text-xs text-center text-muted-foreground">
+                        {type.description}
+                      </p>
                     </Label>
                   </div>
                 ))}
@@ -301,7 +433,11 @@ export function SettingsView() {
               >
                 {fontSizes.map((size) => (
                   <div key={size.value}>
-                    <RadioGroupItem value={size.value} id={`font-size-${size.value}`} className="peer sr-only" />
+                    <RadioGroupItem
+                      value={size.value}
+                      id={`font-size-${size.value}`}
+                      className="peer sr-only"
+                    />
                     <Label
                       htmlFor={`font-size-${size.value}`}
                       className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -311,12 +447,14 @@ export function SettingsView() {
                           "mb-2",
                           size.value === "small" && "text-sm",
                           size.value === "default" && "text-base",
-                          size.value === "large" && "text-lg",
+                          size.value === "large" && "text-lg"
                         )}
                       >
                         {size.label}
                       </span>
-                      <p className="text-xs text-center text-muted-foreground">{size.description}</p>
+                      <p className="text-xs text-center text-muted-foreground">
+                        {size.description}
+                      </p>
                     </Label>
                   </div>
                 ))}
@@ -335,11 +473,13 @@ export function SettingsView() {
             <CardContent>
               <RadioGroup
                 value={settings.borderRadius}
-                onValueChange={(value) => settings.setBorderRadius(value as any)}
+                onValueChange={(value) =>
+                  settings.setBorderRadius(value as any)
+                }
                 className="grid grid-cols-5 gap-4"
               >
                 {borderRadiusOptions.map((option) => {
-                  const Icon = option.icon
+                  const Icon = option.icon;
                   return (
                     <div key={option.value}>
                       <RadioGroupItem
@@ -358,13 +498,13 @@ export function SettingsView() {
                             option.value === "small" && "rounded-sm",
                             option.value === "default" && "rounded-md",
                             option.value === "large" && "rounded-lg",
-                            option.value === "full" && "rounded-full",
+                            option.value === "full" && "rounded-full"
                           )}
                         />
                         <span className="text-xs">{option.label}</span>
                       </Label>
                     </div>
-                  )
+                  );
                 })}
               </RadioGroup>
             </CardContent>
@@ -388,9 +528,12 @@ export function SettingsView() {
                     key={template.value}
                     className={cn(
                       "relative rounded-lg border p-4 hover:border-primary cursor-pointer transition-all",
-                      settings.layoutTemplate === template.value && "border-primary bg-primary/5",
+                      settings.layoutTemplate === template.value &&
+                        "border-primary bg-primary/5"
                     )}
-                    onClick={() => settings.setLayoutTemplate(template.value as any)}
+                    onClick={() =>
+                      settings.setLayoutTemplate(template.value as any)
+                    }
                   >
                     <div className="aspect-video w-full rounded-md overflow-hidden mb-4">
                       <img
@@ -400,7 +543,9 @@ export function SettingsView() {
                       />
                     </div>
                     <h3 className="font-medium">{template.label}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{template.description}</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {template.description}
+                    </p>
                     {settings.layoutTemplate === template.value && (
                       <div className="absolute top-4 right-4 h-6 w-6 rounded-full bg-primary flex items-center justify-center">
                         <Check className="h-4 w-4 text-primary-foreground" />
@@ -423,11 +568,17 @@ export function SettingsView() {
             <CardContent>
               <RadioGroup
                 value={settings.sidebarPosition}
-                onValueChange={(value) => settings.setSidebarPosition(value as any)}
+                onValueChange={(value) =>
+                  settings.setSidebarPosition(value as any)
+                }
                 className="grid grid-cols-2 gap-4"
               >
                 <div>
-                  <RadioGroupItem value="right" id="sidebar-right" className="peer sr-only" />
+                  <RadioGroupItem
+                    value="right"
+                    id="sidebar-right"
+                    className="peer sr-only"
+                  />
                   <Label
                     htmlFor="sidebar-right"
                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -443,7 +594,11 @@ export function SettingsView() {
                   </Label>
                 </div>
                 <div>
-                  <RadioGroupItem value="left" id="sidebar-left" className="peer sr-only" />
+                  <RadioGroupItem
+                    value="left"
+                    id="sidebar-left"
+                    className="peer sr-only"
+                  />
                   <Label
                     htmlFor="sidebar-left"
                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -475,24 +630,38 @@ export function SettingsView() {
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <Label>{t("settings.selectLanguage")}</Label>
-                <RadioGroup value={language} onValueChange={(value) => setLanguage(value as any)} className="space-y-4">
+                <RadioGroup
+                  value={language}
+                  onValueChange={(value) => setLanguage(value as any)}
+                  className="space-y-4"
+                >
                   <div className="flex items-center space-x-3 rtl:space-x-reverse">
                     <RadioGroupItem value="ar" id="lang-ar" />
-                    <Label htmlFor="lang-ar" className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer">
+                    <Label
+                      htmlFor="lang-ar"
+                      className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer"
+                    >
                       <span className="text-2xl">🇸🇦</span>
                       <div>
                         <p className="font-medium">العربية</p>
-                        <p className="text-sm text-muted-foreground">Arabic - اللغة العربية</p>
+                        <p className="text-sm text-muted-foreground">
+                          Arabic - اللغة العربية
+                        </p>
                       </div>
                     </Label>
                   </div>
                   <div className="flex items-center space-x-3 rtl:space-x-reverse">
                     <RadioGroupItem value="en" id="lang-en" />
-                    <Label htmlFor="lang-en" className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer">
+                    <Label
+                      htmlFor="lang-en"
+                      className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer"
+                    >
                       <span className="text-2xl">🇺🇸</span>
                       <div>
                         <p className="font-medium">English</p>
-                        <p className="text-sm text-muted-foreground">English - الإنجليزية</p>
+                        <p className="text-sm text-muted-foreground">
+                          English - الإنجليزية
+                        </p>
                       </div>
                     </Label>
                   </div>
@@ -502,31 +671,47 @@ export function SettingsView() {
               <Separator />
 
               <div className="space-y-4">
-                <Label>{language === "ar" ? "معلومات اللغة المحددة" : "Selected Language Information"}</Label>
+                <Label>
+                  {language === "ar"
+                    ? "معلومات اللغة المحددة"
+                    : "Selected Language Information"}
+                </Label>
                 <div className="p-4 rounded-lg bg-muted/50">
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <p className="font-medium text-muted-foreground">{t("settings.currentLanguage")}:</p>
+                      <p className="font-medium text-muted-foreground">
+                        {t("settings.currentLanguage")}:
+                      </p>
                       <p>{language === "ar" ? "العربية" : "English"}</p>
                     </div>
                     <div>
-                      <p className="font-medium text-muted-foreground">{t("settings.textDirection")}:</p>
-                      <p>{language === "ar" ? "من اليمين إلى اليسار (RTL)" : "Left to Right (LTR)"}</p>
+                      <p className="font-medium text-muted-foreground">
+                        {t("settings.textDirection")}:
+                      </p>
+                      <p>
+                        {language === "ar"
+                          ? "من اليمين إلى اليسار (RTL)"
+                          : "Left to Right (LTR)"}
+                      </p>
                     </div>
                     <div>
-                      <p className="font-medium text-muted-foreground">{t("settings.fontUsed")}:</p>
+                      <p className="font-medium text-muted-foreground">
+                        {t("settings.fontUsed")}:
+                      </p>
                       <p>{language === "ar" ? "Cairo" : "Inter"}</p>
                     </div>
                     <div>
-                      <p className="font-medium text-muted-foreground">{t("settings.sidebarPos")}:</p>
+                      <p className="font-medium text-muted-foreground">
+                        {t("settings.sidebarPos")}:
+                      </p>
                       <p>
                         {settings.sidebarPosition === "right"
                           ? language === "ar"
                             ? "يمين"
                             : "Right"
                           : language === "ar"
-                            ? "يسار"
-                            : "Left"}
+                          ? "يسار"
+                          : "Left"}
                       </p>
                     </div>
                   </div>
@@ -549,12 +734,18 @@ export function SettingsView() {
             <CardContent>
               <RadioGroup
                 value={settings.animationLevel}
-                onValueChange={(value) => settings.setAnimationLevel(value as any)}
+                onValueChange={(value) =>
+                  settings.setAnimationLevel(value as any)
+                }
                 className="grid grid-cols-2 md:grid-cols-4 gap-4"
               >
                 {animationLevels.map((level) => (
                   <div key={level.value}>
-                    <RadioGroupItem value={level.value} id={`animation-${level.value}`} className="peer sr-only" />
+                    <RadioGroupItem
+                      value={level.value}
+                      id={`animation-${level.value}`}
+                      className="peer sr-only"
+                    />
                     <Label
                       htmlFor={`animation-${level.value}`}
                       className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -565,19 +756,21 @@ export function SettingsView() {
                           level.value === "none" && "bg-muted-foreground/20",
                           level.value === "minimal" && "bg-primary/30",
                           level.value === "moderate" && "bg-primary/60",
-                          level.value === "high" && "bg-primary",
+                          level.value === "high" && "bg-primary"
                         )}
                       >
                         <Sparkles
                           className={cn(
                             "h-5 w-5",
                             level.value === "none" && "text-muted-foreground",
-                            level.value !== "none" && "text-primary-foreground",
+                            level.value !== "none" && "text-primary-foreground"
                           )}
                         />
                       </div>
                       <span className="text-sm font-medium">{level.label}</span>
-                      <p className="text-xs text-center text-muted-foreground mt-1">{level.description}</p>
+                      <p className="text-xs text-center text-muted-foreground mt-1">
+                        {level.description}
+                      </p>
                     </Label>
                   </div>
                 ))}
@@ -595,8 +788,14 @@ export function SettingsView() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col space-y-4">
-                <p className="text-sm text-muted-foreground">{t("settings.resetDescription")}</p>
-                <Button variant="destructive" className="w-full sm:w-auto" onClick={settings.resetSettings}>
+                <p className="text-sm text-muted-foreground">
+                  {t("settings.resetDescription")}
+                </p>
+                <Button
+                  variant="destructive"
+                  className="w-full sm:w-auto"
+                  onClick={settings.resetSettings}
+                >
                   <RotateCcw className="mr-2 h-4 w-4" />
                   {t("settings.resetAll")}
                 </Button>
@@ -611,7 +810,7 @@ export function SettingsView() {
         <Button
           className={cn(
             "shadow-lg transition-all duration-300",
-            saved ? "bg-green-600 hover:bg-green-700" : "gradient-primary",
+            saved ? "bg-green-600 hover:bg-green-700" : "gradient-primary"
           )}
           size="lg"
           onClick={handleSave}
@@ -630,5 +829,5 @@ export function SettingsView() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

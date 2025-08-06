@@ -1,67 +1,80 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, useEffect } from "react"
-import { useTheme } from "next-themes"
+import { createContext, useContext, useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 
 // Layout template types - Updated with new layouts
-export type LayoutTemplate = "classic" | "elegant" | "modern" | "minimal" | "compact" | "floating"
+export type LayoutTemplate =
+  | "classic"
+  | "elegant"
+  | "modern"
+  | "minimal"
+  | "compact"
+  | "floating"
+  | "navigation";
 
 // Color theme types
-export type ColorTheme = "purple" | "blue" | "green" | "orange" | "red" | "teal"
+export type ColorTheme =
+  | "purple"
+  | "blue"
+  | "green"
+  | "orange"
+  | "red"
+  | "teal";
 
 // Sidebar position types
-export type SidebarPosition = "right" | "left"
+export type SidebarPosition = "right" | "left";
 
 // Card style types
-export type CardStyle = "default" | "glass" | "solid" | "bordered"
+export type CardStyle = "default" | "glass" | "solid" | "bordered";
 
 // Logo type types
-export type LogoType = "sparkles" | "shield" | "image" | "custom"
+export type LogoType = "sparkles" | "shield" | "image" | "custom";
 
 // Animation level types
-export type AnimationLevel = "none" | "minimal" | "moderate" | "high"
+export type AnimationLevel = "none" | "minimal" | "moderate" | "high";
 
 // Font size types
-export type FontSize = "small" | "default" | "large"
+export type FontSize = "small" | "default" | "large";
 
 // Border radius types
-export type BorderRadius = "none" | "small" | "default" | "large" | "full"
+export type BorderRadius = "none" | "small" | "default" | "large" | "full";
 
 interface SettingsContextType {
   // Layout template
-  layoutTemplate: LayoutTemplate
-  setLayoutTemplate: (template: LayoutTemplate) => void
+  layoutTemplate: LayoutTemplate;
+  setLayoutTemplate: (template: LayoutTemplate) => void;
 
   // Color theme
-  colorTheme: ColorTheme
-  setColorTheme: (theme: ColorTheme) => void
+  colorTheme: ColorTheme;
+  setColorTheme: (theme: ColorTheme) => void;
 
   // Sidebar position
-  sidebarPosition: SidebarPosition
-  setSidebarPosition: (position: SidebarPosition) => void
+  sidebarPosition: SidebarPosition;
+  setSidebarPosition: (position: SidebarPosition) => void;
 
   // Card style
-  cardStyle: CardStyle
-  setCardStyle: (style: CardStyle) => void
+  cardStyle: CardStyle;
+  setCardStyle: (style: CardStyle) => void;
 
   // Logo type
-  logoType: LogoType
-  setLogoType: (type: LogoType) => void
+  logoType: LogoType;
+  setLogoType: (type: LogoType) => void;
 
   // Animation level
-  animationLevel: AnimationLevel
-  setAnimationLevel: (level: AnimationLevel) => void
+  animationLevel: AnimationLevel;
+  setAnimationLevel: (level: AnimationLevel) => void;
 
   // Font size
-  fontSize: FontSize
-  setFontSize: (size: FontSize) => void
+  fontSize: FontSize;
+  setFontSize: (size: FontSize) => void;
 
   // Border radius
-  borderRadius: BorderRadius
-  setBorderRadius: (radius: BorderRadius) => void
+  borderRadius: BorderRadius;
+  setBorderRadius: (radius: BorderRadius) => void;
 
   // Reset all settings to default
-  resetSettings: () => void
+  resetSettings: () => void;
 }
 
 const defaultSettings = {
@@ -74,43 +87,65 @@ const defaultSettings = {
   animationLevel: "moderate" as AnimationLevel,
   fontSize: "default" as FontSize,
   borderRadius: "default" as BorderRadius,
-}
+};
 
-const SettingsContext = createContext<SettingsContextType | undefined>(undefined)
+const SettingsContext = createContext<SettingsContextType | undefined>(
+  undefined
+);
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
-  const [layoutTemplate, setLayoutTemplate] = useState<LayoutTemplate>(defaultSettings.layoutTemplate)
-  const [colorTheme, setColorTheme] = useState<ColorTheme>(defaultSettings.colorTheme)
-  
-  const [sidebarPosition, setSidebarPosition] = useState<SidebarPosition>(defaultSettings.sidebarPosition)
-  const [cardStyle, setCardStyle] = useState<CardStyle>(defaultSettings.cardStyle)
-  const [logoType, setLogoType] = useState<LogoType>(defaultSettings.logoType)
-  const [animationLevel, setAnimationLevel] = useState<AnimationLevel>(defaultSettings.animationLevel)
-  const [fontSize, setFontSize] = useState<FontSize>(defaultSettings.fontSize)
-  const [borderRadius, setBorderRadius] = useState<BorderRadius>(defaultSettings.borderRadius)
-  const [mounted, setMounted] = useState(false)
+  const [layoutTemplate, setLayoutTemplate] = useState<LayoutTemplate>(
+    defaultSettings.layoutTemplate
+  );
+  const [colorTheme, setColorTheme] = useState<ColorTheme>(
+    defaultSettings.colorTheme
+  );
+
+  const [sidebarPosition, setSidebarPosition] = useState<SidebarPosition>(
+    defaultSettings.sidebarPosition
+  );
+  const [cardStyle, setCardStyle] = useState<CardStyle>(
+    defaultSettings.cardStyle
+  );
+  const [logoType, setLogoType] = useState<LogoType>(defaultSettings.logoType);
+  const [animationLevel, setAnimationLevel] = useState<AnimationLevel>(
+    defaultSettings.animationLevel
+  );
+  const [fontSize, setFontSize] = useState<FontSize>(defaultSettings.fontSize);
+  const [borderRadius, setBorderRadius] = useState<BorderRadius>(
+    defaultSettings.borderRadius
+  );
+  const [mounted, setMounted] = useState(false);
 
   // Effect to load settings from localStorage on mount
   useEffect(() => {
     try {
-      const savedSettings = localStorage.getItem("appSettings")
+      const savedSettings = localStorage.getItem("appSettings");
       if (savedSettings) {
-        const parsedSettings = JSON.parse(savedSettings)
-        setLayoutTemplate(parsedSettings.layoutTemplate || defaultSettings.layoutTemplate)
-        setColorTheme(parsedSettings.colorTheme || defaultSettings.colorTheme)
-        
-        setSidebarPosition(parsedSettings.sidebarPosition || defaultSettings.sidebarPosition)
-        setCardStyle(parsedSettings.cardStyle || defaultSettings.cardStyle)
-        setLogoType(parsedSettings.logoType || defaultSettings.logoType)
-        setAnimationLevel(parsedSettings.animationLevel || defaultSettings.animationLevel)
-        setFontSize(parsedSettings.fontSize || defaultSettings.fontSize)
-        setBorderRadius(parsedSettings.borderRadius || defaultSettings.borderRadius)
+        const parsedSettings = JSON.parse(savedSettings);
+        setLayoutTemplate(
+          parsedSettings.layoutTemplate || defaultSettings.layoutTemplate
+        );
+        setColorTheme(parsedSettings.colorTheme || defaultSettings.colorTheme);
+
+        setSidebarPosition(
+          parsedSettings.sidebarPosition || defaultSettings.sidebarPosition
+        );
+        setCardStyle(parsedSettings.cardStyle || defaultSettings.cardStyle);
+        setLogoType(parsedSettings.logoType || defaultSettings.logoType);
+        setAnimationLevel(
+          parsedSettings.animationLevel || defaultSettings.animationLevel
+        );
+        setFontSize(parsedSettings.fontSize || defaultSettings.fontSize);
+        setBorderRadius(
+          parsedSettings.borderRadius || defaultSettings.borderRadius
+        );
       }
     } catch (error) {
-      console.error("Failed to parse settings:", error)
+      console.error("Failed to parse settings:", error);
     }
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   // Save settings to localStorage whenever they change
   useEffect(() => {
@@ -123,41 +158,49 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       animationLevel,
       fontSize,
       borderRadius,
-    }
-    localStorage.setItem("appSettings", JSON.stringify(settings))
+    };
+    localStorage.setItem("appSettings", JSON.stringify(settings));
 
     // Apply CSS variables for the selected theme
-    document.documentElement.setAttribute("data-theme", colorTheme)
-    document.documentElement.setAttribute("data-layout", layoutTemplate)
-    document.documentElement.setAttribute("data-card-style", cardStyle)
-    document.documentElement.setAttribute("data-animation", animationLevel)
-    document.documentElement.setAttribute("data-font-size", fontSize)
-    document.documentElement.setAttribute("data-radius", borderRadius)
-
-
+    document.documentElement.setAttribute("data-theme", colorTheme);
+    document.documentElement.setAttribute("data-layout", layoutTemplate);
+    document.documentElement.setAttribute("data-card-style", cardStyle);
+    document.documentElement.setAttribute("data-animation", animationLevel);
+    document.documentElement.setAttribute("data-font-size", fontSize);
+    document.documentElement.setAttribute("data-radius", borderRadius);
 
     // Apply RTL/LTR based on sidebar position
-    document.documentElement.setAttribute("dir", sidebarPosition === "right" ? "rtl" : "ltr")
-  }, [layoutTemplate, colorTheme, sidebarPosition, cardStyle, logoType, animationLevel, fontSize, borderRadius])
-
-
+    document.documentElement.setAttribute(
+      "dir",
+      sidebarPosition === "right" ? "rtl" : "ltr"
+    );
+  }, [
+    layoutTemplate,
+    colorTheme,
+    sidebarPosition,
+    cardStyle,
+    logoType,
+    animationLevel,
+    fontSize,
+    borderRadius,
+  ]);
 
   // Reset all settings to default
   const resetSettings = () => {
-    setLayoutTemplate(defaultSettings.layoutTemplate)
-    setColorTheme(defaultSettings.colorTheme)
-    
-    setSidebarPosition(defaultSettings.sidebarPosition)
-    setCardStyle(defaultSettings.cardStyle)
-    setLogoType(defaultSettings.logoType)
-    setAnimationLevel(defaultSettings.animationLevel)
-    setFontSize(defaultSettings.fontSize)
-    setBorderRadius(defaultSettings.borderRadius)
-  }
+    setLayoutTemplate(defaultSettings.layoutTemplate);
+    setColorTheme(defaultSettings.colorTheme);
+
+    setSidebarPosition(defaultSettings.sidebarPosition);
+    setCardStyle(defaultSettings.cardStyle);
+    setLogoType(defaultSettings.logoType);
+    setAnimationLevel(defaultSettings.animationLevel);
+    setFontSize(defaultSettings.fontSize);
+    setBorderRadius(defaultSettings.borderRadius);
+  };
 
   // Render nothing until the component has mounted to avoid hydration mismatch
   if (!mounted) {
-    return null
+    return null;
   }
 
   return (
@@ -184,13 +227,13 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     >
       {children}
     </SettingsContext.Provider>
-  )
+  );
 }
 
 export function useSettings() {
-  const context = useContext(SettingsContext)
+  const context = useContext(SettingsContext);
   if (context === undefined) {
-    throw new Error("useSettings must be used within a SettingsProvider")
+    throw new Error("useSettings must be used within a SettingsProvider");
   }
-  return context
+  return context;
 }

@@ -1,48 +1,62 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useState } from "react"
-import { LogOut, X, ChevronDown, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { useI18n } from "@/providers/i18n-provider"
-import { useAuth } from "@/providers/auth-provider"
-import { cn } from "@/lib/utils"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { getNavigationItems, isNavigationItemActive, type NavigationItem } from "@/config/navigation"
-import { Logo } from "@/components/ui/logo"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { LogOut, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useI18n } from "@/providers/i18n-provider";
+import { useAuth } from "@/providers/auth-provider";
+import { cn } from "@/lib/utils";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  getNavigationItems,
+  isNavigationItemActive,
+  type NavigationItem,
+} from "@/config/navigation";
+import { Logo } from "@/components/ui/logo";
 
 interface CompactSidebarProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
-  const pathname = usePathname()
-  const { t, direction } = useI18n()
-  const { logout, user } = useAuth()
-  const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const pathname = usePathname();
+  const { t, direction } = useI18n();
+  const { logout, user } = useAuth();
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations
-  const navigation = getNavigationItems(t)
+  const navigation = getNavigationItems(t);
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>
-      prev.includes(itemName) ? prev.filter((name) => name !== itemName) : [...prev, itemName],
-    )
-  }
+      prev.includes(itemName)
+        ? prev.filter((name) => name !== itemName)
+        : [...prev, itemName]
+    );
+  };
 
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
-    const isActive = isNavigationItemActive(item, pathname)
-    const isExpanded = expandedItems.includes(item.name)
-    const hasChildren = item.children && item.children.length > 0
-    const Icon = item.icon
+    const isActive = isNavigationItemActive(item, pathname);
+    const isExpanded = expandedItems.includes(item.name);
+    const hasChildren = item.children && item.children.length > 0;
+    const Icon = item.icon;
 
     if (hasChildren) {
       return (
-        <Collapsible key={item.name} open={isExpanded} onOpenChange={() => toggleExpanded(item.name)}>
+        <Collapsible
+          key={item.name}
+          open={isExpanded}
+          onOpenChange={() => toggleExpanded(item.name)}
+        >
           <CollapsibleTrigger asChild>
             <div
               className={cn(
@@ -51,7 +65,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
-                  : "text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm",
+                  : "text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
               )}
             >
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -59,13 +73,15 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                   className={cn(
                     "flex items-center justify-center rounded-lg transition-all duration-300",
                     "w-8 h-8",
-                    isActive ? "bg-white/20" : "bg-primary/10 group-hover:bg-primary/20",
+                    isActive
+                      ? "bg-white/20"
+                      : "bg-primary/10 group-hover:bg-primary/20"
                   )}
                 >
                   <Icon
                     className={cn(
                       "w-4 h-4 flex-shrink-0 transition-all duration-300 group-hover:scale-110",
-                      isActive ? "text-white" : "text-primary",
+                      isActive ? "text-white" : "text-primary"
                     )}
                   />
                 </div>
@@ -75,7 +91,9 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                     variant="secondary"
                     className={cn(
                       "text-xs h-5 px-2",
-                      isActive ? "bg-white/20 text-white" : "bg-primary/10 text-primary",
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : "bg-primary/10 text-primary"
                     )}
                   >
                     {item.badge}
@@ -86,16 +104,18 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                 className={cn(
                   "w-4 h-4 transition-transform duration-300",
                   isExpanded && "rotate-180",
-                  isActive ? "text-white" : "text-primary",
+                  isActive ? "text-white" : "text-primary"
                 )}
               />
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-1 mt-1">
-            {item.children?.map((child) => renderNavigationItem(child, level + 1))}
+            {item.children?.map((child) =>
+              renderNavigationItem(child, level + 1)
+            )}
           </CollapsibleContent>
         </Collapsible>
-      )
+      );
     }
 
     return (
@@ -108,7 +128,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
-            : "text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm",
+            : "text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
         )}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
@@ -117,13 +137,15 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
             className={cn(
               "flex items-center justify-center rounded-lg transition-all duration-300",
               "w-8 h-8",
-              isActive ? "bg-white/20" : "bg-primary/10 group-hover:bg-primary/20",
+              isActive
+                ? "bg-white/20"
+                : "bg-primary/10 group-hover:bg-primary/20"
             )}
           >
             <Icon
               className={cn(
                 "w-4 h-4 flex-shrink-0 transition-all duration-300 group-hover:scale-110",
-                isActive ? "text-white" : "text-primary",
+                isActive ? "text-white" : "text-primary"
               )}
             />
           </div>
@@ -133,7 +155,12 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           {item.badge && (
             <Badge
               variant="secondary"
-              className={cn("text-xs h-5 px-2", isActive ? "bg-white/20 text-white" : "bg-primary/10 text-primary")}
+              className={cn(
+                "text-xs h-5 px-2",
+                isActive
+                  ? "bg-white/20 text-white"
+                  : "bg-primary/10 text-primary"
+              )}
             >
               {item.badge}
             </Badge>
@@ -142,54 +169,31 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
             <ChevronRight
               className={cn(
                 "w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-                isActive ? "text-white" : "text-primary",
+                isActive ? "text-white" : "text-primary"
               )}
             />
           )}
         </div>
       </Link>
-    )
-  }
+    );
+  };
 
   return (
     <>
       <div
         className={cn(
+          "mt-24",
           "fixed inset-y-0 z-40 w-64 bg-gradient-to-b from-background via-background/98 to-background border-r border-border/80 transform transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto",
           "shadow-xl shadow-primary/10 backdrop-blur-sm",
           direction === "rtl" ? "right-0" : "left-0",
-          open ? "translate-x-0" : direction === "rtl" ? "translate-x-full" : "-translate-x-full",
+          open
+            ? "translate-x-0"
+            : direction === "rtl"
+            ? "translate-x-full"
+            : "-translate-x-full"
         )}
       >
         <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
-            <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
-                <Logo size="xs" className="text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-sidebar-foreground">{t("app.title")}</h1>
-                <p className="text-xs text-sidebar-foreground/60 flex items-center">
-                  <Logo size="xs" className="mr-1 rtl:mr-0 rtl:ml-1" />
-                  {t("app.compact")}
-                </p>
-              </div>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "lg:hidden h-8 w-8 rounded-lg hover:bg-primary/10",
-                "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105",
-              )}
-              onClick={() => onOpenChange(false)}
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
-
           {/* User Info */}
           {user && (
             <div className="p-4 border-b border-border/80">
@@ -197,14 +201,14 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                 className={cn(
                   "flex items-center space-x-3 rtl:space-x-reverse p-3 rounded-xl",
                   "bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
-                  "shadow-sm hover:shadow-md transition-all duration-300",
+                  "shadow-sm hover:shadow-md transition-all duration-300"
                 )}
               >
                 <div className="relative">
                   <Avatar
                     className={cn(
                       "h-10 w-10 ring-1 ring-primary/20 shadow-md",
-                      "transition-all duration-300 hover:scale-105",
+                      "transition-all duration-300 hover:scale-105"
                     )}
                   >
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary text-sm font-semibold">
@@ -221,7 +225,9 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                   <p className="text-sm font-medium text-foreground truncate">
                     {user.firstName} {user.lastName}
                   </p>
-                  <p className="text-xs text-muted-foreground truncate">{user.adminTypeName}</p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {user.adminTypeName}
+                  </p>
                 </div>
               </div>
             </div>
@@ -239,7 +245,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
               onClick={logout}
               className={cn(
                 "w-full justify-start space-x-3 rtl:space-x-reverse text-foreground/80 hover:text-destructive hover:bg-destructive/10 px-3 py-2 h-auto rounded-lg",
-                "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105",
+                "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
               )}
             >
               <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-destructive/10">
@@ -247,10 +253,12 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
               </div>
               <span className="text-sm">{t("nav.logout")}</span>
             </Button>
-            <div className="text-xs text-muted-foreground text-center mt-2">v2.1.0</div>
+            <div className="text-xs text-muted-foreground text-center mt-2">
+              v2.1.0
+            </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
