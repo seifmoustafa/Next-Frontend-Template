@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LogOut, X, ChevronDown, ChevronRight } from "lucide-react";
+import { X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
+import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
 import {
   Collapsible,
@@ -30,7 +31,9 @@ interface CompactSidebarProps {
 export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
+  const { sidebarStyle, animationLevel, buttonStyle, spacingSize } =
+    useSettings();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations
@@ -42,6 +45,52 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
         ? prev.filter((name) => name !== itemName)
         : [...prev, itemName]
     );
+  };
+
+  const getSidebarStyleClass = () => {
+    switch (sidebarStyle) {
+      case "compact":
+        return "w-56";
+      case "floating":
+        return "w-64 m-2 rounded-2xl shadow-2xl";
+      case "minimal":
+        return "w-60 border-r-0 shadow-lg";
+      default:
+        return "w-64";
+    }
+  };
+
+  const getAnimationClass = () => {
+    if (animationLevel === "none") return "";
+    if (animationLevel === "minimal") return "transition-colors duration-200";
+    if (animationLevel === "moderate") return "transition-all duration-300";
+    return "transition-all duration-500";
+  };
+
+  const getButtonStyleClass = () => {
+    switch (buttonStyle) {
+      case "rounded":
+        return "rounded-full";
+      case "sharp":
+        return "rounded-none";
+      case "modern":
+        return "rounded-2xl";
+      default:
+        return "rounded-lg";
+    }
+  };
+
+  const getSpacingClass = () => {
+    switch (spacingSize) {
+      case "compact":
+        return "space-y-1 p-2";
+      case "comfortable":
+        return "space-y-3 p-4";
+      case "spacious":
+        return "space-y-4 p-6";
+      default:
+        return "space-y-2 p-3";
+    }
   };
 
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
@@ -60,7 +109,9 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           <CollapsibleTrigger asChild>
             <div
               className={cn(
-                "group flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 cursor-pointer",
+                "group flex items-center justify-between w-full px-3 py-2 text-sm font-medium cursor-pointer",
+                getButtonStyleClass(),
+                getAnimationClass(),
                 level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
@@ -71,7 +122,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <div
                   className={cn(
-                    "flex items-center justify-center rounded-lg transition-all duration-300",
+                    "flex items-center justify-center rounded-lg",
+                    getAnimationClass(),
                     "w-8 h-8",
                     isActive
                       ? "bg-white/20"
@@ -80,7 +132,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                 >
                   <Icon
                     className={cn(
-                      "w-4 h-4 flex-shrink-0 transition-all duration-300 group-hover:scale-110",
+                      "w-4 h-4 flex-shrink-0 group-hover:scale-110",
+                      getAnimationClass(),
                       isActive ? "text-white" : "text-primary"
                     )}
                   />
@@ -102,7 +155,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
               </div>
               <ChevronDown
                 className={cn(
-                  "w-4 h-4 transition-transform duration-300",
+                  "w-4 h-4",
+                  getAnimationClass(),
                   isExpanded && "rotate-180",
                   isActive ? "text-white" : "text-primary"
                 )}
@@ -123,7 +177,9 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
         key={item.name}
         href={item.href || "#"}
         className={cn(
-          "group flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300",
+          "group flex items-center justify-between px-3 py-2 text-sm font-medium",
+          getButtonStyleClass(),
+          getAnimationClass(),
           level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
@@ -135,7 +191,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <div
             className={cn(
-              "flex items-center justify-center rounded-lg transition-all duration-300",
+              "flex items-center justify-center rounded-lg",
+              getAnimationClass(),
               "w-8 h-8",
               isActive
                 ? "bg-white/20"
@@ -144,7 +201,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           >
             <Icon
               className={cn(
-                "w-4 h-4 flex-shrink-0 transition-all duration-300 group-hover:scale-110",
+                "w-4 h-4 flex-shrink-0 group-hover:scale-110",
+                getAnimationClass(),
                 isActive ? "text-white" : "text-primary"
               )}
             />
@@ -168,7 +226,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           {level === 0 && (
             <ChevronRight
               className={cn(
-                "w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                "w-3 h-3 opacity-0 group-hover:opacity-100",
+                getAnimationClass(),
                 isActive ? "text-white" : "text-primary"
               )}
             />
@@ -182,9 +241,10 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
     <>
       <div
         className={cn(
-          "mt-24",
-          "fixed inset-y-0 z-40 w-64 bg-gradient-to-b from-background via-background/98 to-background border-r border-border/80 transform transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto sidebar-shadow",
+          "fixed inset-y-0 z-40 bg-gradient-to-b from-background via-background/98 to-background border-r border-border/80 transform lg:translate-x-0 overflow-y-auto sidebar-shadow",
           "backdrop-blur-sm",
+          getSidebarStyleClass(),
+          getAnimationClass(),
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
@@ -194,21 +254,66 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
         )}
       >
         <div className="flex flex-col h-full">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
+                <Logo size="xs" className="text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-sidebar-foreground">
+                  {t("app.title")}
+                </h1>
+                <p className="text-xs text-sidebar-foreground/60 flex items-center">
+                  <Logo size="xs" className="mr-1 rtl:mr-0 rtl:ml-1" />
+                  {t("app.compact")}
+                </p>
+              </div>
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "lg:hidden h-8 w-8 hover:bg-primary/10",
+                "shadow-sm hover:shadow-md hover:scale-105",
+                getButtonStyleClass(),
+                getAnimationClass()
+              )}
+              onClick={() => onOpenChange(false)}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
+
           {/* User Info */}
           {user && (
             <div className="p-4 border-b border-border/80">
               <div
                 className={cn(
-                  "flex items-center space-x-3 rtl:space-x-reverse p-3 rounded-xl",
+                  "flex items-center rounded-xl",
+                  getAnimationClass(),
                   "bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
-                  "shadow-sm hover:shadow-md transition-all duration-300"
+                  "shadow-sm hover:shadow-md",
+                  spacingSize === "compact"
+                    ? "space-x-2 rtl:space-x-reverse p-2"
+                    : spacingSize === "comfortable"
+                    ? "space-x-4 rtl:space-x-reverse p-4"
+                    : spacingSize === "spacious"
+                    ? "space-x-5 rtl:space-x-reverse p-5"
+                    : "space-x-3 rtl:space-x-reverse p-3"
                 )}
               >
                 <div className="relative">
                   <Avatar
                     className={cn(
-                      "h-10 w-10 ring-1 ring-primary/20 shadow-md",
-                      "transition-all duration-300 hover:scale-105"
+                      "ring-1 ring-primary/20 shadow-md hover:scale-105",
+                      getAnimationClass(),
+                      spacingSize === "compact"
+                        ? "h-8 w-8"
+                        : spacingSize === "spacious"
+                        ? "h-12 w-12"
+                        : "h-10 w-10"
                     )}
                   >
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary text-sm font-semibold">
@@ -216,7 +321,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                       {user.lastName.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  {/* Fixed online indicator */}
+                  {/* Online indicator */}
                   <div className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-background shadow-sm">
                     <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-600 rounded-full animate-pulse" />
                   </div>
@@ -234,26 +339,13 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           )}
 
           {/* Navigation */}
-          <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+          <nav className={cn("flex-1 overflow-y-auto", getSpacingClass())}>
             {navigation.map((item) => renderNavigationItem(item))}
           </nav>
 
-          {/* Footer */}
+          {/* Footer - Version only */}
           <div className="p-3 border-t border-border/80">
-            <Button
-              variant="ghost"
-              onClick={logout}
-              className={cn(
-                "w-full justify-start space-x-3 rtl:space-x-reverse text-foreground/80 hover:text-destructive hover:bg-destructive/10 px-3 py-2 h-auto rounded-lg",
-                "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-              )}
-            >
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-destructive/10">
-                <LogOut className="w-4 h-4 text-destructive" />
-              </div>
-              <span className="text-sm">{t("nav.logout")}</span>
-            </Button>
-            <div className="text-xs text-muted-foreground text-center mt-2">
+            <div className="text-xs text-muted-foreground text-center">
               v2.1.0
             </div>
           </div>

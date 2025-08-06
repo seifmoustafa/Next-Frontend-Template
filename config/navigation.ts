@@ -4,6 +4,7 @@ import {
   BarChart3,
   Settings,
   User,
+  UserX,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -40,6 +41,32 @@ export const navigation: NavigationItem[] = [
   {
     name: "nav.users", // Uses translation key
     href: "/dashboard/users",
+    children: [
+      {
+        name: "EWQEER",
+        href: "/dashboard/userswe",
+        children: [
+          {
+            name: "UUUSSS",
+            href: "/dashboard/usersx",
+            icon: Users,
+          },
+          {
+            name: "UUUSSS",
+            href: "/dashboard/user",
+            children: [
+              {
+                name: "UUUSSS",
+                href: "/dashboard/us",
+                icon: UserX,
+              },
+            ],
+            icon: Users,
+          },
+        ],
+        icon: Users,
+      },
+    ],
     icon: Users,
   },
   {

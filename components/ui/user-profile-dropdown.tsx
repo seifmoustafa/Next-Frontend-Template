@@ -1,8 +1,9 @@
-"use client";
+"use client"
 
-import { User, Settings, LogOut, Shield, Mail, Phone } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { useState } from "react"
+import { User, Settings, LogOut, ChevronDown } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,278 +11,275 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/providers/auth-provider";
-import { useI18n } from "@/providers/i18n-provider";
-import { useSettings } from "@/providers/settings-provider";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
+} from "@/components/ui/dropdown-menu"
+import { useI18n } from "@/providers/i18n-provider"
+import { useAuth } from "@/providers/auth-provider"
+import { useSettings } from "@/providers/settings-provider"
+import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 interface UserProfileDropdownProps {
-  variant?: "default" | "compact" | "minimal";
-  showUserInfo?: boolean;
-  className?: string;
+  variant?: "default" | "compact" | "minimal" | "elegant" | "floating"
+  showName?: boolean
+  className?: string
 }
 
-export function UserProfileDropdown({
-  variant = "default",
-  showUserInfo = true,
-  className,
+export function UserProfileDropdown({ 
+  variant = "default", 
+  showName = true,
+  className 
 }: UserProfileDropdownProps) {
-  const { user, logout } = useAuth();
-  const { t, direction } = useI18n();
-  const { colorTheme, buttonStyle, borderRadius } = useSettings();
+  const { t, direction } = useI18n()
+  const { user, logout } = useAuth()
+  const { colorTheme, buttonStyle, animationLevel } = useSettings()
+  const [isOpen, setIsOpen] = useState(false)
 
-  if (!user) return null;
+  if (!user) return null
 
   const getUserInitials = () => {
-    const firstName = user.firstName || "";
-    const lastName = user.lastName || "";
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-  };
+    const firstName = user.firstName || ""
+    const lastName = user.lastName || ""
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
+  }
 
   const getUserDisplayName = () => {
-    return `${user.firstName || ""} ${user.lastName || ""}`.trim();
-  };
+    return `${user.firstName || ""} ${user.lastName || ""}`.trim()
+  }
 
-  const getButtonClass = () => {
-    const baseClass = "transition-all duration-300 hover:scale-105";
+  const getVariantStyles = () => {
+    switch (variant) {
+      case "compact":
+        return {
+          trigger: "h-10 px-3 rounded-xl",
+          avatar: "h-8 w-8",
+          content: "w-56 mt-2 rounded-xl"
+        }
+      case "minimal":
+        return {
+          trigger: "h-10 px-2 rounded-lg",
+          avatar: "h-8 w-8",
+          content: "w-48 mt-1 rounded-lg"
+        }
+      case "elegant":
+        return {
+          trigger: "h-14 px-5 rounded-3xl",
+          avatar: "h-9 w-9",
+          content: "w-72 mt-3 p-3 rounded-3xl"
+        }
+      case "floating":
+        return {
+          trigger: "h-10 px-3 rounded-xl",
+          avatar: "h-8 w-8",
+          content: "w-56 mt-2 rounded-xl"
+        }
+      default:
+        return {
+          trigger: "h-12 px-4 rounded-lg",
+          avatar: "h-10 w-10",
+          content: "w-64 mt-2 rounded-lg"
+        }
+    }
+  }
 
+  const styles = getVariantStyles()
+
+  const getAnimationClass = () => {
+    if (animationLevel === 'none') return ''
+    if (animationLevel === 'minimal') return 'transition-colors duration-200'
+    if (animationLevel === 'moderate') return 'transition-all duration-300'
+    return 'transition-all duration-500 hover:scale-105'
+  }
+
+  const getButtonStyleClass = () => {
     switch (buttonStyle) {
-      case "rounded":
-        return cn(baseClass, "rounded-full");
-      case "square":
-        return cn(baseClass, "rounded-none");
-      case "pill":
-        return cn(baseClass, "rounded-full px-6");
+      case 'rounded':
+        return 'rounded-full'
+      case 'sharp':
+        return 'rounded-none'
+      case 'modern':
+        return 'rounded-2xl'
       default:
-        return cn(baseClass, "rounded-xl");
+        return styles.trigger.includes('rounded-') ? '' : 'rounded-lg'
     }
-  };
-
-  const getBorderRadiusClass = () => {
-    switch (borderRadius) {
-      case "none":
-        return "rounded-none";
-      case "small":
-        return "rounded-sm";
-      case "large":
-        return "rounded-lg";
-      case "full":
-        return "rounded-full";
-      default:
-        return "rounded-xl";
-    }
-  };
+  }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           className={cn(
-            getButtonClass(),
-            "shadow-md hover:shadow-lg",
-            variant === "compact" ? "h-9 px-2" : "h-10 px-3",
-            variant === "minimal" ? "p-2" : "",
+            "flex items-center space-x-3 rtl:space-x-reverse hover:bg-accent hover:text-accent-foreground",
+            styles.trigger,
+            getButtonStyleClass(),
+            getAnimationClass(),
+            variant === "elegant" && [
+              "bg-gradient-to-br from-muted/60 via-muted/40 to-muted/20",
+              "hover:from-primary/15 hover:via-primary/10 hover:to-primary/5",
+              "border border-border/60 hover:border-primary/40",
+              "shadow-lg hover:shadow-xl hover:shadow-primary/15",
+              "backdrop-blur-xl",
+              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
+            ],
+            variant === "compact" && [
+              "shadow-md hover:shadow-lg"
+            ],
+            variant === "floating" && [
+              "shadow-md hover:shadow-lg"
+            ],
             className
           )}
         >
-          <div
-            className={cn(
-              "flex items-center",
-              direction === "rtl" ? "space-x-reverse" : "",
-              variant === "minimal" ? "" : "space-x-3"
-            )}
-          >
+          <div className="flex items-center space-x-3 rtl:space-x-reverse">
             <Avatar
               className={cn(
-                "ring-2 ring-primary/20 shadow-md transition-all duration-300 hover:scale-110",
-                variant === "compact" ? "h-7 w-7" : "h-8 w-8",
-                variant === "minimal" ? "h-6 w-6" : ""
+                styles.avatar,
+                "ring-2 ring-primary/20 shadow-md",
+                variant === "elegant" && "ring-2 ring-primary/40 hover:ring-primary/60 shadow-xl shadow-primary/30 hover:scale-110",
+                getAnimationClass()
               )}
             >
-              <AvatarImage
-                src={user.avatar || "/placeholder.svg"}
-                alt={getUserDisplayName()}
-              />
+              <AvatarImage src={user.avatar || "/placeholder.svg"} alt={getUserDisplayName()} />
               <AvatarFallback
                 className={cn(
-                  "text-white font-semibold",
-                  colorTheme === "blue" &&
-                    "bg-gradient-to-br from-blue-500 to-blue-600",
-                  colorTheme === "purple" &&
-                    "bg-gradient-to-br from-purple-500 to-purple-600",
-                  colorTheme === "green" &&
-                    "bg-gradient-to-br from-green-500 to-green-600",
-                  colorTheme === "orange" &&
-                    "bg-gradient-to-br from-orange-500 to-orange-600",
-                  colorTheme === "red" &&
-                    "bg-gradient-to-br from-red-500 to-red-600",
-                  colorTheme === "teal" &&
-                    "bg-gradient-to-br from-teal-500 to-teal-600",
-                  colorTheme === "pink" &&
-                    "bg-gradient-to-br from-pink-500 to-pink-600",
-                  colorTheme === "indigo" &&
-                    "bg-gradient-to-br from-indigo-500 to-indigo-600",
-                  colorTheme === "cyan" &&
-                    "bg-gradient-to-br from-cyan-500 to-cyan-600",
-                  variant === "compact" ? "text-xs" : "text-sm"
+                  "bg-gradient-to-br from-primary/25 via-primary/15 to-primary/10 text-primary font-bold",
+                  variant === "elegant" && "border border-primary/20"
                 )}
               >
                 {getUserInitials()}
               </AvatarFallback>
             </Avatar>
-
-            {showUserInfo && variant !== "minimal" && (
-              <div
-                className={cn(
-                  "hidden lg:block min-w-0",
-                  direction === "rtl" ? "text-right" : "text-left"
-                )}
-              >
-                <div
-                  className={cn(
-                    "font-medium truncate max-w-32",
-                    variant === "compact" ? "text-xs" : "text-sm"
-                  )}
-                >
+            
+            {showName && (
+              <div className="hidden lg:block text-left rtl:text-right min-w-0">
+                <p className={cn(
+                  "font-medium truncate max-w-32",
+                  variant === "elegant" ? "text-sm font-bold" : "text-sm"
+                )}>
                   {getUserDisplayName()}
-                </div>
-                <div
-                  className={cn(
-                    "text-muted-foreground truncate max-w-32",
-                    variant === "compact" ? "text-xs" : "text-xs"
-                  )}
-                >
+                </p>
+                <p className={cn(
+                  "text-muted-foreground truncate max-w-32",
+                  variant === "elegant" ? "text-xs font-medium" : "text-xs"
+                )}>
                   {user.adminTypeName || user.role || t("common.user")}
-                </div>
+                </p>
               </div>
             )}
+            
+            <ChevronDown className={cn(
+              "w-4 h-4 transition-transform duration-200",
+              isOpen && "rotate-180"
+            )} />
           </div>
         </Button>
       </DropdownMenuTrigger>
-
+      
       <DropdownMenuContent
         align={direction === "rtl" ? "start" : "end"}
         className={cn(
-          "w-72 mt-2 p-3 bg-background/98 backdrop-blur-xl border border-border/60 shadow-2xl",
-          getBorderRadiusClass(),
-          "animate-in slide-in-from-top-2 duration-300"
+          styles.content,
+          "bg-background/98 backdrop-blur-xl border border-border/60 shadow-2xl",
+          variant === "elegant" && [
+            "animate-in slide-in-from-top-2 duration-300",
+            "shadow-2xl shadow-primary/15"
+          ],
+          getAnimationClass()
         )}
         sideOffset={8}
       >
-        {/* User Info Header */}
-        <DropdownMenuLabel className="p-0 mb-3">
-          <div
-            className={cn(
-              "flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
-              direction === "rtl" ? "flex-row-reverse" : ""
-            )}
-          >
-            <Avatar className="h-12 w-12 ring-2 ring-primary/30 shadow-lg">
-              <AvatarImage
-                src={user.avatar || "/placeholder.svg"}
-                alt={getUserDisplayName()}
-              />
-              <AvatarFallback
-                className={cn(
-                  "text-white font-bold",
-                  colorTheme === "blue" &&
-                    "bg-gradient-to-br from-blue-500 to-blue-600",
-                  colorTheme === "purple" &&
-                    "bg-gradient-to-br from-purple-500 to-purple-600",
-                  colorTheme === "green" &&
-                    "bg-gradient-to-br from-green-500 to-green-600",
-                  colorTheme === "orange" &&
-                    "bg-gradient-to-br from-orange-500 to-orange-600",
-                  colorTheme === "red" &&
-                    "bg-gradient-to-br from-red-500 to-red-600",
-                  colorTheme === "teal" &&
-                    "bg-gradient-to-br from-teal-500 to-teal-600",
-                  colorTheme === "pink" &&
-                    "bg-gradient-to-br from-pink-500 to-pink-600",
-                  colorTheme === "indigo" &&
-                    "bg-gradient-to-br from-indigo-500 to-indigo-600",
-                  colorTheme === "cyan" &&
-                    "bg-gradient-to-br from-cyan-500 to-cyan-600"
-                )}
-              >
-                {getUserInitials()}
-              </AvatarFallback>
-            </Avatar>
-            <div
-              className={cn(
-                "flex-1 min-w-0",
-                direction === "rtl" ? "text-right" : "text-left"
-              )}
-            >
-              <p className="font-bold text-lg truncate">
-                {getUserDisplayName()}
-              </p>
-              <p className="text-sm text-muted-foreground truncate">
-                {user.email}
-              </p>
-              <div className="flex items-center gap-2 mt-1">
-                <Shield className="h-3 w-3 text-primary" />
-                <span className="text-xs font-medium text-primary">
-                  {user.adminTypeName || user.role || t("common.user")}
-                </span>
-              </div>
-            </div>
+        <DropdownMenuLabel className={cn(
+          variant === "elegant" ? "text-lg font-bold px-2 py-3" : "text-sm font-medium"
+        )}>
+          <div className="flex flex-col space-y-1">
+            <span>{getUserDisplayName()}</span>
+            <span className="text-xs text-muted-foreground font-normal">
+              {user.email || user.adminTypeName || t("common.user")}
+            </span>
           </div>
         </DropdownMenuLabel>
-
-        <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-border/60 to-transparent" />
-
-        {/* Profile Menu Item */}
-        <DropdownMenuItem
-          asChild
-          className={cn(
-            "rounded-xl p-3 my-1 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary transition-all duration-300 cursor-pointer",
-            direction === "rtl" ? "flex-row-reverse" : ""
-          )}
-        >
-          <Link href="/dashboard/profile">
-            <User
-              className={cn("h-5 w-5", direction === "rtl" ? "ml-3" : "mr-3")}
-            />
-            <span className="font-medium">{t("nav.profile")}</span>
+        
+        <DropdownMenuSeparator className={cn(
+          variant === "elegant" && "bg-gradient-to-r from-transparent via-border/60 to-transparent"
+        )} />
+        
+        <DropdownMenuItem asChild>
+          <Link
+            href="/dashboard/profile"
+            className={cn(
+              "flex items-center cursor-pointer",
+              variant === "elegant" && [
+                "rounded-2xl p-4 my-2",
+                "hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary",
+                "transition-all duration-300"
+              ],
+              getAnimationClass()
+            )}
+          >
+            <User className={cn(
+              "mr-3 rtl:mr-0 rtl:ml-3",
+              variant === "elegant" ? "h-5 w-5" : "h-4 w-4"
+            )} />
+            <span className={cn(
+              variant === "elegant" && "font-medium"
+            )}>
+              {t("nav.profile")}
+            </span>
           </Link>
         </DropdownMenuItem>
-
-        {/* Settings Menu Item */}
-        <DropdownMenuItem
-          asChild
-          className={cn(
-            "rounded-xl p-3 my-1 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary transition-all duration-300 cursor-pointer",
-            direction === "rtl" ? "flex-row-reverse" : ""
-          )}
-        >
-          <Link href="/dashboard/settings">
-            <Settings
-              className={cn("h-5 w-5", direction === "rtl" ? "ml-3" : "mr-3")}
-            />
-            <span className="font-medium">{t("nav.settings")}</span>
+        
+        <DropdownMenuItem asChild>
+          <Link
+            href="/dashboard/settings"
+            className={cn(
+              "flex items-center cursor-pointer",
+              variant === "elegant" && [
+                "rounded-2xl p-4 my-2",
+                "hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary",
+                "transition-all duration-300"
+              ],
+              getAnimationClass()
+            )}
+          >
+            <Settings className={cn(
+              "mr-3 rtl:mr-0 rtl:ml-3",
+              variant === "elegant" ? "h-5 w-5" : "h-4 w-4"
+            )} />
+            <span className={cn(
+              variant === "elegant" && "font-medium"
+            )}>
+              {t("nav.settings")}
+            </span>
           </Link>
         </DropdownMenuItem>
-
-        <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-border/60 to-transparent" />
-
-        {/* Logout Menu Item */}
+        
+        <DropdownMenuSeparator className={cn(
+          variant === "elegant" && "bg-gradient-to-r from-transparent via-border/60 to-transparent"
+        )} />
+        
         <DropdownMenuItem
+          onClick={logout}
           className={cn(
-            "rounded-xl p-3 my-1 text-destructive hover:bg-gradient-to-r hover:from-destructive/10 hover:to-destructive/5 transition-all duration-300 cursor-pointer",
-            direction === "rtl" ? "flex-row-reverse" : ""
+            "text-destructive hover:text-destructive cursor-pointer",
+            variant === "elegant" && [
+              "rounded-2xl p-4 my-2",
+              "hover:bg-gradient-to-r hover:from-destructive/10 hover:to-destructive/5",
+              "transition-all duration-300"
+            ],
+            getAnimationClass()
           )}
-          onClick={() => logout()}
         >
-          <LogOut
-            className={cn("h-5 w-5", direction === "rtl" ? "ml-3" : "mr-3")}
-          />
-          <span className="font-medium">{t("nav.logout")}</span>
+          <LogOut className={cn(
+            "mr-3 rtl:mr-0 rtl:ml-3",
+            variant === "elegant" ? "h-5 w-5" : "h-4 w-4"
+          )} />
+          <span className={cn(
+            variant === "elegant" && "font-medium"
+          )}>
+            {t("nav.logout")}
+          </span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

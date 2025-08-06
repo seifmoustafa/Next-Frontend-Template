@@ -70,7 +70,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
       default:
         return "shadow-lg";
     }
-};
+  };
 
   const getAnimationClass = () => {
     if (animationLevel === "none") return "";
@@ -220,7 +220,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
           </DropdownMenu>
 
           {/* User Profile Dropdown */}
-          <UserProfileDropdown variant="default" showUserInfo={true} />
+          <UserProfileDropdown variant="default" />
         </div>
       </div>
     </header>

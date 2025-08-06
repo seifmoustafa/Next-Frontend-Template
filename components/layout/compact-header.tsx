@@ -1,23 +1,13 @@
 "use client";
 
-import { Search, Settings, Menu, Sun, Moon, Globe } from "lucide-react";
+import { Search, Menu, Sun, Moon, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
-import { useAuth } from "@/providers/auth-provider";
+import { useSettings } from "@/providers/settings-provider";
+import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
-import { Logo } from "@/components/ui/logo";
 
 interface CompactHeaderProps {
   onMenuClick: () => void;
@@ -26,16 +16,51 @@ interface CompactHeaderProps {
 export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t, direction } = useI18n();
-  const { user } = useAuth();
+  const { headerStyle, animationLevel, buttonStyle } = useSettings();
+
+  const getHeaderStyleClass = () => {
+    switch (headerStyle) {
+      case "compact":
+        return "h-14 px-3";
+      case "elevated":
+        return "h-16 px-4 shadow-lg";
+      case "transparent":
+        return "h-16 px-4 bg-transparent backdrop-blur-md";
+      default:
+        return "h-16 px-4";
+    }
+  };
+
+  const getAnimationClass = () => {
+    if (animationLevel === "none") return "";
+    if (animationLevel === "minimal") return "transition-colors duration-200";
+    if (animationLevel === "moderate") return "transition-all duration-300";
+    return "transition-all duration-500";
+  };
+
+  const getButtonStyleClass = () => {
+    switch (buttonStyle) {
+      case "rounded":
+        return "rounded-full";
+      case "sharp":
+        return "rounded-none";
+      case "modern":
+        return "rounded-2xl";
+      default:
+        return "rounded-xl";
+    }
+  };
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 h-16 bg-gradient-to-r from-background via-background/98 to-background border-b border-border/80",
-        "shadow-lg shadow-primary/5 backdrop-blur-xl"
+        "fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-background via-background/98 to-background border-b border-border/80",
+        "shadow-lg shadow-primary/5 backdrop-blur-xl",
+        getHeaderStyleClass(),
+        getAnimationClass()
       )}
     >
-      <div className="flex items-center justify-between h-full px-4">
+      <div className="flex items-center justify-between h-full">
         {/* Left Section */}
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           {/* Mobile Menu Button */}
@@ -43,23 +68,15 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             variant="ghost"
             size="icon"
             className={cn(
-              "lg:hidden h-9 w-9 rounded-xl hover:bg-primary/10 hover:text-primary",
-              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+              "lg:hidden h-9 w-9 hover:bg-primary/10 hover:text-primary",
+              "shadow-sm hover:shadow-md hover:scale-105",
+              getButtonStyleClass(),
+              getAnimationClass()
             )}
             onClick={onMenuClick}
           >
             <Menu className="h-4 w-4" />
           </Button>
-
-          {/* Logo/Title */}
-          <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
-              <Logo size="xs" className="text-primary-foreground" />
-            </div>
-            <h1 className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              {t("app.title")}
-            </h1>
-          </div>
         </div>
 
         {/* Center Section - Search */}
@@ -67,16 +84,18 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
           <div className="relative group">
             <Search
               className={cn(
-                "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors duration-300",
+                "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary",
+                getAnimationClass(),
                 direction === "rtl" ? "right-3" : "left-3"
               )}
             />
             <Input
               placeholder={t("nav.search")}
               className={cn(
-                "w-full h-9 rounded-xl border-0 bg-muted/50 shadow-sm",
+                "w-full h-9 border-0 bg-muted/50 shadow-sm",
                 "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
-                "transition-all duration-300",
+                getAnimationClass(),
+                getButtonStyleClass(),
                 direction === "rtl" ? "pr-9 text-right" : "pl-9"
               )}
             />
@@ -90,8 +109,10 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             variant="ghost"
             size="icon"
             className={cn(
-              "h-9 w-9 rounded-xl hover:bg-primary/10 hover:text-primary",
-              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+              "h-9 w-9 hover:bg-primary/10 hover:text-primary",
+              "shadow-sm hover:shadow-md hover:scale-105",
+              getButtonStyleClass(),
+              getAnimationClass()
             )}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
@@ -104,50 +125,18 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             variant="ghost"
             size="icon"
             className={cn(
-              "h-9 w-9 rounded-xl hover:bg-primary/10 hover:text-primary",
-              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+              "h-9 w-9 hover:bg-primary/10 hover:text-primary",
+              "shadow-sm hover:shadow-md hover:scale-105",
+              getButtonStyleClass(),
+              getAnimationClass()
             )}
             onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
           >
             <Globe className="h-4 w-4" />
           </Button>
 
-          {/* User Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className={cn(
-                  "h-9 px-2 rounded-xl hover:bg-primary/10",
-                  "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-                )}
-              >
-                <Avatar className="h-7 w-7 ring-1 ring-primary/20">
-                  <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary text-xs font-semibold">
-                    {user?.firstName.charAt(0)}
-                    {user?.lastName.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align={direction === "rtl" ? "start" : "end"}
-              className="w-48 rounded-xl shadow-xl"
-            >
-              <DropdownMenuLabel className="text-sm">
-                {user?.firstName} {user?.lastName}
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-sm rounded-lg">
-                <Settings className="mr-2 h-4 w-4 rtl:mr-0 rtl:ml-2" />
-                {t("nav.settings")}
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive text-sm rounded-lg">
-                {t("nav.logout")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {/* User Profile Dropdown */}
+          <UserProfileDropdown variant="compact" showName={false} />
         </div>
       </div>
     </header>

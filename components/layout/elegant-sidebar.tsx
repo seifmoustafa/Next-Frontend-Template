@@ -3,19 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import {
-  LogOut,
-  X,
-  ChevronDown,
-  ChevronRight,
-  Crown,
-  Star,
-} from "lucide-react";
+import { X, ChevronDown, ChevronRight, Crown, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
+import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
 import {
   Collapsible,
@@ -37,7 +31,9 @@ interface ElegantSidebarProps {
 export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
+  const { sidebarStyle, animationLevel, buttonStyle, spacingSize } =
+    useSettings();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations
@@ -49,6 +45,52 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
         ? prev.filter((name) => name !== itemName)
         : [...prev, itemName]
     );
+  };
+
+  const getSidebarStyleClass = () => {
+    switch (sidebarStyle) {
+      case "compact":
+        return "w-72";
+      case "floating":
+        return "w-80 xl:w-72 m-4 rounded-3xl shadow-2xl";
+      case "minimal":
+        return "w-76 border-r-0";
+      default:
+        return "w-80 xl:w-72";
+    }
+  };
+
+  const getAnimationClass = () => {
+    if (animationLevel === "none") return "";
+    if (animationLevel === "minimal") return "transition-colors duration-300";
+    if (animationLevel === "moderate") return "transition-all duration-500";
+    return "transition-all duration-700 ease-out";
+  };
+
+  const getButtonStyleClass = () => {
+    switch (buttonStyle) {
+      case "rounded":
+        return "rounded-full";
+      case "sharp":
+        return "rounded-none";
+      case "modern":
+        return "rounded-3xl";
+      default:
+        return "rounded-3xl";
+    }
+  };
+
+  const getSpacingClass = () => {
+    switch (spacingSize) {
+      case "compact":
+        return "space-y-2 p-4";
+      case "comfortable":
+        return "space-y-4 p-6";
+      case "spacious":
+        return "space-y-6 p-8";
+      default:
+        return "space-y-4 p-6";
+    }
   };
 
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
@@ -67,7 +109,9 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
           <CollapsibleTrigger asChild>
             <div
               className={cn(
-                "group flex items-center justify-between w-full px-5 py-5 rounded-3xl text-sm font-semibold transition-all duration-700 cursor-pointer relative overflow-hidden",
+                "group flex items-center justify-between w-full px-5 py-5 text-sm font-semibold cursor-pointer relative overflow-hidden",
+                getButtonStyleClass(),
+                getAnimationClass(),
                 level > 0 && "ml-6 rtl:ml-0 rtl:mr-6",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
@@ -80,20 +124,23 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
               <div className="flex items-center space-x-5 rtl:space-x-reverse relative z-10">
                 <div
                   className={cn(
-                    "flex items-center justify-center rounded-3xl transition-all duration-700 relative",
+                    "flex items-center justify-center relative",
+                    getAnimationClass(),
                     level === 0 ? "w-14 h-14" : "w-12 h-12",
                     isActive
                       ? "bg-white/25 shadow-xl"
                       : "bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5 group-hover:from-primary/25 group-hover:via-primary/15 group-hover:to-primary/10",
-                    "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/25 before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500",
-                    "after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-br after:from-transparent after:via-white/10 after:to-transparent after:animate-pulse after:opacity-50"
+                    "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/25 before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500",
+                    "after:absolute after:inset-0 after:bg-gradient-to-br after:from-transparent after:via-white/10 after:to-transparent after:animate-pulse after:opacity-50",
+                    getButtonStyleClass()
                   )}
                 >
                   <Icon
                     className={cn(
                       level === 0 ? "w-7 h-7" : "w-6 h-6",
                       isActive ? "text-white drop-shadow-sm" : "text-primary",
-                      "transition-all duration-500 group-hover:scale-110 relative z-10"
+                      "group-hover:scale-110 relative z-10",
+                      getAnimationClass()
                     )}
                   />
                 </div>
@@ -116,10 +163,10 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
               </div>
               <ChevronDown
                 className={cn(
-                  "w-6 h-6 transition-all duration-700 relative z-10",
+                  "w-6 h-6 relative z-10 group-hover:scale-110",
+                  getAnimationClass(),
                   isExpanded && "rotate-180",
-                  isActive ? "text-white" : "text-primary",
-                  "group-hover:scale-110"
+                  isActive ? "text-white" : "text-primary"
                 )}
               />
             </div>
@@ -138,7 +185,9 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
         key={item.name}
         href={item.href || "#"}
         className={cn(
-          "group flex items-center justify-between px-5 py-5 rounded-3xl text-sm font-semibold transition-all duration-700 relative overflow-hidden",
+          "group flex items-center justify-between px-5 py-5 text-sm font-semibold relative overflow-hidden",
+          getButtonStyleClass(),
+          getAnimationClass(),
           level > 0 && "ml-6 rtl:ml-0 rtl:mr-6",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
@@ -152,20 +201,23 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
         <div className="flex items-center space-x-5 rtl:space-x-reverse relative z-10">
           <div
             className={cn(
-              "flex items-center justify-center rounded-3xl transition-all duration-700 relative",
+              "flex items-center justify-center relative",
+              getAnimationClass(),
               level === 0 ? "w-14 h-14" : "w-12 h-12",
               isActive
                 ? "bg-white/25 shadow-xl"
                 : "bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5 group-hover:from-primary/25 group-hover:via-primary/15 group-hover:to-primary/10",
-              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/25 before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500",
-              "after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-br after:from-transparent after:via-white/10 after:to-transparent after:animate-pulse after:opacity-50"
+              "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/25 before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500",
+              "after:absolute after:inset-0 after:bg-gradient-to-br after:from-transparent after:via-white/10 after:to-transparent after:animate-pulse after:opacity-50",
+              getButtonStyleClass()
             )}
           >
             <Icon
               className={cn(
                 level === 0 ? "w-7 h-7" : "w-6 h-6",
                 isActive ? "text-white drop-shadow-sm" : "text-primary",
-                "transition-all duration-500 group-hover:scale-110 relative z-10"
+                "group-hover:scale-110 relative z-10",
+                getAnimationClass()
               )}
             />
           </div>
@@ -188,9 +240,9 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
           {level === 0 && (
             <ChevronRight
               className={cn(
-                "w-5 h-5 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-x-1",
-                isActive ? "text-white" : "text-primary",
-                "group-hover:scale-110"
+                "w-5 h-5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 group-hover:scale-110",
+                getAnimationClass(),
+                isActive ? "text-white" : "text-primary"
               )}
             />
           )}
@@ -203,11 +255,13 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
     <>
       <div
         className={cn(
-          "fixed inset-y-0 z-40 w-80 xl:w-72",
+          "fixed inset-y-0 z-40",
           "bg-gradient-to-b from-background/99 via-background/97 to-background/99",
           "backdrop-blur-3xl border-r border-gradient-to-b from-border/40 via-border/60 to-border/40",
           "sidebar-shadow",
-          "transform transition-all duration-700 ease-out lg:translate-x-0 overflow-y-auto",
+          "transform lg:translate-x-0 overflow-y-auto",
+          getSidebarStyleClass(),
+          getAnimationClass(),
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
@@ -239,14 +293,15 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
             variant="ghost"
             size="icon"
             className={cn(
-              "lg:hidden absolute top-4 right-4 h-12 w-12 rounded-full z-50",
+              "lg:hidden absolute top-4 right-4 h-12 w-12 z-50",
               "bg-gradient-to-br from-muted/60 via-muted/40 to-muted/20",
               "hover:from-primary/15 hover:via-primary/10 hover:to-primary/5",
               "border border-border/60 hover:border-primary/40",
               "shadow-xl hover:shadow-2xl hover:shadow-primary/15",
-              "transition-all duration-500 ease-out",
               "hover:scale-110 active:scale-95",
-              "backdrop-blur-xl"
+              "backdrop-blur-xl",
+              getButtonStyleClass(),
+              getAnimationClass()
             )}
             onClick={() => onOpenChange(false)}
           >
@@ -258,46 +313,90 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
             <div className="relative mt-16 p-8 pt-10 border-b border-gradient-to-r from-transparent via-border/60 to-transparent">
               <div
                 className={cn(
-                  "flex items-center space-x-5 rtl:space-x-reverse p-6 rounded-3xl",
+                  "flex items-center rounded-3xl",
+                  getAnimationClass(),
                   "bg-gradient-to-br from-primary/8 via-primary/4 to-transparent",
                   "border border-primary/15",
                   "shadow-xl shadow-primary/10",
-                  "transition-all duration-500 hover:shadow-2xl hover:shadow-primary/15",
+                  "hover:shadow-2xl hover:shadow-primary/15",
                   "backdrop-blur-xl",
-                  "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500"
+                  "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500",
+                  spacingSize === "compact"
+                    ? "space-x-3 rtl:space-x-reverse p-4"
+                    : spacingSize === "comfortable"
+                    ? "space-x-6 rtl:space-x-reverse p-7"
+                    : spacingSize === "spacious"
+                    ? "space-x-8 rtl:space-x-reverse p-8"
+                    : "space-x-5 rtl:space-x-reverse p-6"
                 )}
               >
                 <div className="relative">
                   <Avatar
                     className={cn(
-                      "h-16 w-16",
                       "ring-4 ring-primary/30",
                       "shadow-2xl shadow-primary/40",
-                      "transition-all duration-500 hover:scale-110"
+                      "hover:scale-110",
+                      getAnimationClass(),
+                      spacingSize === "compact"
+                        ? "h-12 w-12"
+                        : spacingSize === "spacious"
+                        ? "h-20 w-20"
+                        : "h-16 w-16"
                     )}
                   >
                     <AvatarFallback
                       className={cn(
                         "bg-gradient-to-br from-primary/25 via-primary/20 to-primary/15",
-                        "text-primary font-bold text-xl",
-                        "border-2 border-primary/30"
+                        "text-primary font-bold border-2 border-primary/30",
+                        spacingSize === "compact"
+                          ? "text-lg"
+                          : spacingSize === "spacious"
+                          ? "text-3xl"
+                          : "text-xl"
                       )}
                     >
                       {user.firstName.charAt(0)}
                       {user.lastName.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  {/* Fixed online indicator */}
-                  <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-3 border-background shadow-lg">
+                  {/* Online indicator */}
+                  <div
+                    className={cn(
+                      "absolute rounded-full border-3 border-background shadow-lg",
+                      spacingSize === "compact"
+                        ? "bottom-0 right-0 w-4 h-4"
+                        : spacingSize === "spacious"
+                        ? "bottom-0 right-0 w-8 h-8"
+                        : "bottom-0 right-0 w-6 h-6"
+                    )}
+                  >
                     <div className="w-full h-full bg-gradient-to-br from-green-400 via-green-500 to-green-600 rounded-full animate-pulse" />
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-lg font-bold text-foreground truncate tracking-wide">
+                  <p
+                    className={cn(
+                      "text-foreground font-bold truncate tracking-wide",
+                      spacingSize === "compact"
+                        ? "text-base"
+                        : spacingSize === "spacious"
+                        ? "text-2xl"
+                        : "text-lg"
+                    )}
+                  >
                     {user.firstName} {user.lastName}
                   </p>
-                  <p className="text-sm text-muted-foreground/90 truncate font-semibold tracking-wide">
+                  <p
+                    className={cn(
+                      "text-muted-foreground/90 truncate font-semibold tracking-wide",
+                      spacingSize === "compact"
+                        ? "text-xs"
+                        : spacingSize === "spacious"
+                        ? "text-base"
+                        : "text-sm"
+                    )}
+                  >
                     {user.adminTypeName}
                   </p>
                   <div className="flex items-center mt-3">
@@ -312,43 +411,15 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
           )}
 
           {/* Navigation */}
-          <nav className="relative flex-1 p-6 space-y-4 overflow-y-auto">
+          <nav
+            className={cn("relative flex-1 overflow-y-auto", getSpacingClass())}
+          >
             {navigation.map((item) => renderNavigationItem(item))}
           </nav>
 
-          {/* Footer - Enhanced */}
+          {/* Footer - Version only */}
           <div className="relative p-6 border-t border-gradient-to-r from-transparent via-border/60 to-transparent">
-            <Button
-              variant="ghost"
-              onClick={logout}
-              className={cn(
-                "w-full justify-start space-x-5 rtl:space-x-reverse px-6 py-6 h-auto rounded-3xl",
-                "text-foreground/85 hover:text-destructive",
-                "bg-gradient-to-r from-muted/40 via-muted/30 to-muted/20",
-                "hover:from-destructive/15 hover:via-destructive/8 hover:to-destructive/15",
-                "border border-border/40 hover:border-destructive/40",
-                "shadow-lg hover:shadow-xl hover:shadow-destructive/15",
-                "transition-all duration-500 ease-out",
-                "hover:scale-105 active:scale-95",
-                "backdrop-blur-xl",
-                "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500"
-              )}
-            >
-              <div
-                className={cn(
-                  "flex items-center justify-center w-14 h-14 rounded-3xl",
-                  "bg-gradient-to-br from-destructive/15 via-destructive/10 to-destructive/5",
-                  "transition-all duration-500",
-                  "shadow-lg"
-                )}
-              >
-                <LogOut className="w-6 h-6 text-destructive" />
-              </div>
-              <span className="font-bold text-lg tracking-wide">
-                {t("nav.logout")}
-              </span>
-            </Button>
-            <div className="text-xs text-muted-foreground/70 text-center mt-6 font-bold tracking-widest uppercase">
+            <div className="text-xs text-muted-foreground/70 text-center font-bold tracking-widest uppercase">
               v2.1.0 • ELEGANT DESIGN SYSTEM
             </div>
           </div>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { X, ChevronDown } from 'lucide-react';
+import { X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/providers/i18n-provider";
@@ -32,19 +32,19 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
   const { user } = useAuth();
-  const { 
-    colorTheme, 
-    sidebarStyle, 
-    spacingSize, 
-    borderRadius, 
+  const {
+    colorTheme,
+    sidebarStyle,
+    spacingSize,
+    borderRadius,
     animationLevel,
-    shadowIntensity 
+    shadowIntensity,
   } = useSettings();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations and filter out profile, settings, logout
-  const navigation = getNavigationItems(t).filter(item => 
-    !['nav.profile', 'nav.settings', 'nav.logout'].includes(item.name)
+  const navigation = getNavigationItems(t).filter(
+    (item) => !["nav.profile", "nav.settings", "nav.logout"].includes(item.name)
   );
 
   const toggleExpanded = (itemName: string) => {
@@ -127,15 +127,24 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                 isActive
                   ? cn(
                       "text-primary-foreground shadow-lg",
-                      colorTheme === "blue" && "bg-gradient-to-r from-blue-500 to-blue-600",
-                      colorTheme === "purple" && "bg-gradient-to-r from-purple-500 to-purple-600",
-                      colorTheme === "green" && "bg-gradient-to-r from-green-500 to-green-600",
-                      colorTheme === "orange" && "bg-gradient-to-r from-orange-500 to-orange-600",
-                      colorTheme === "red" && "bg-gradient-to-r from-red-500 to-red-600",
-                      colorTheme === "teal" && "bg-gradient-to-r from-teal-500 to-teal-600",
-                      colorTheme === "pink" && "bg-gradient-to-r from-pink-500 to-pink-600",
-                      colorTheme === "indigo" && "bg-gradient-to-r from-indigo-500 to-indigo-600",
-                      colorTheme === "cyan" && "bg-gradient-to-r from-cyan-500 to-cyan-600"
+                      colorTheme === "blue" &&
+                        "bg-gradient-to-r from-blue-500 to-blue-600",
+                      colorTheme === "purple" &&
+                        "bg-gradient-to-r from-purple-500 to-purple-600",
+                      colorTheme === "green" &&
+                        "bg-gradient-to-r from-green-500 to-green-600",
+                      colorTheme === "orange" &&
+                        "bg-gradient-to-r from-orange-500 to-orange-600",
+                      colorTheme === "red" &&
+                        "bg-gradient-to-r from-red-500 to-red-600",
+                      colorTheme === "teal" &&
+                        "bg-gradient-to-r from-teal-500 to-teal-600",
+                      colorTheme === "pink" &&
+                        "bg-gradient-to-r from-pink-500 to-pink-600",
+                      colorTheme === "indigo" &&
+                        "bg-gradient-to-r from-indigo-500 to-indigo-600",
+                      colorTheme === "cyan" &&
+                        "bg-gradient-to-r from-cyan-500 to-cyan-600"
                     )
                   : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md"
               )}
@@ -204,15 +213,24 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           isActive
             ? cn(
                 "text-primary-foreground shadow-lg",
-                colorTheme === "blue" && "bg-gradient-to-r from-blue-500 to-blue-600",
-                colorTheme === "purple" && "bg-gradient-to-r from-purple-500 to-purple-600",
-                colorTheme === "green" && "bg-gradient-to-r from-green-500 to-green-600",
-                colorTheme === "orange" && "bg-gradient-to-r from-orange-500 to-orange-600",
-                colorTheme === "red" && "bg-gradient-to-r from-red-500 to-red-600",
-                colorTheme === "teal" && "bg-gradient-to-r from-teal-500 to-teal-600",
-                colorTheme === "pink" && "bg-gradient-to-r from-pink-500 to-pink-600",
-                colorTheme === "indigo" && "bg-gradient-to-r from-indigo-500 to-indigo-600",
-                colorTheme === "cyan" && "bg-gradient-to-r from-cyan-500 to-cyan-600"
+                colorTheme === "blue" &&
+                  "bg-gradient-to-r from-blue-500 to-blue-600",
+                colorTheme === "purple" &&
+                  "bg-gradient-to-r from-purple-500 to-purple-600",
+                colorTheme === "green" &&
+                  "bg-gradient-to-r from-green-500 to-green-600",
+                colorTheme === "orange" &&
+                  "bg-gradient-to-r from-orange-500 to-orange-600",
+                colorTheme === "red" &&
+                  "bg-gradient-to-r from-red-500 to-red-600",
+                colorTheme === "teal" &&
+                  "bg-gradient-to-r from-teal-500 to-teal-600",
+                colorTheme === "pink" &&
+                  "bg-gradient-to-r from-pink-500 to-pink-600",
+                colorTheme === "indigo" &&
+                  "bg-gradient-to-r from-indigo-500 to-indigo-600",
+                colorTheme === "cyan" &&
+                  "bg-gradient-to-r from-cyan-500 to-cyan-600"
               )
             : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md"
         )}
@@ -273,12 +291,14 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-sidebar-border">
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div className={cn(
-                "w-12 h-12 bg-primary flex items-center justify-center shadow-lg",
-                getBorderRadiusClass(),
-                getAnimationClass(),
-                "hover:scale-105 hover:shadow-xl"
-              )}>
+              <div
+                className={cn(
+                  "w-12 h-12 bg-primary flex items-center justify-center shadow-lg",
+                  getBorderRadiusClass(),
+                  getAnimationClass(),
+                  "hover:scale-105 hover:shadow-xl"
+                )}
+              >
                 <Logo size="md" className="text-primary-foreground" />
               </div>
               <div>
@@ -328,18 +348,29 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                       "hover:scale-105"
                     )}
                   >
-                    <AvatarFallback className={cn(
-                      "text-primary font-semibold text-xl",
-                      colorTheme === "blue" && "bg-gradient-to-br from-blue-500/20 to-blue-600/10",
-                      colorTheme === "purple" && "bg-gradient-to-br from-purple-500/20 to-purple-600/10",
-                      colorTheme === "green" && "bg-gradient-to-br from-green-500/20 to-green-600/10",
-                      colorTheme === "orange" && "bg-gradient-to-br from-orange-500/20 to-orange-600/10",
-                      colorTheme === "red" && "bg-gradient-to-br from-red-500/20 to-red-600/10",
-                      colorTheme === "teal" && "bg-gradient-to-br from-teal-500/20 to-teal-600/10",
-                      colorTheme === "pink" && "bg-gradient-to-br from-pink-500/20 to-pink-600/10",
-                      colorTheme === "indigo" && "bg-gradient-to-br from-indigo-500/20 to-indigo-600/10",
-                      colorTheme === "cyan" && "bg-gradient-to-br from-cyan-500/20 to-cyan-600/10"
-                    )}>
+                    <AvatarFallback
+                      className={cn(
+                        "text-primary font-semibold text-xl",
+                        colorTheme === "blue" &&
+                          "bg-gradient-to-br from-blue-500/20 to-blue-600/10",
+                        colorTheme === "purple" &&
+                          "bg-gradient-to-br from-purple-500/20 to-purple-600/10",
+                        colorTheme === "green" &&
+                          "bg-gradient-to-br from-green-500/20 to-green-600/10",
+                        colorTheme === "orange" &&
+                          "bg-gradient-to-br from-orange-500/20 to-orange-600/10",
+                        colorTheme === "red" &&
+                          "bg-gradient-to-br from-red-500/20 to-red-600/10",
+                        colorTheme === "teal" &&
+                          "bg-gradient-to-br from-teal-500/20 to-teal-600/10",
+                        colorTheme === "pink" &&
+                          "bg-gradient-to-br from-pink-500/20 to-pink-600/10",
+                        colorTheme === "indigo" &&
+                          "bg-gradient-to-br from-indigo-500/20 to-indigo-600/10",
+                        colorTheme === "cyan" &&
+                          "bg-gradient-to-br from-cyan-500/20 to-cyan-600/10"
+                      )}
+                    >
                       {user.firstName.charAt(0)}
                       {user.lastName.charAt(0)}
                     </AvatarFallback>
