@@ -108,26 +108,43 @@
   --shadow-primary: 188 94% 43%;
 }
 
-/* Light Background Themes - Only apply in light mode */
+/* Light Background Themes - Comprehensive color changes */
 :root:not(.dark)[data-bg-theme="default"] {
   --background: 0 0% 100%;
   --card: 0 0% 100%;
   --popover: 0 0% 100%;
   --sidebar: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --muted: 240 4.8% 95.9%;
+  --accent: 240 4.8% 95.9%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
 }
 
 :root:not(.dark)[data-bg-theme="warm"] {
-  --background: 35 100% 98%;
-  --card: 35 100% 99%;
-  --popover: 35 100% 99%;
-  --sidebar: 35 100% 96%;
+  --background: 35 100% 97%;
+  --card: 35 80% 98%;
+  --popover: 35 80% 99%;
+  --sidebar: 35 60% 95%;
+  --secondary: 35 40% 92%;
+  --muted: 35 40% 92%;
+  --accent: 35 40% 92%;
+  --border: 35 30% 85%;
+  --input: 35 30% 85%;
+  --sidebar-border: 35 30% 85%;
 }
 
 :root:not(.dark)[data-bg-theme="cool"] {
-  --background: 210 100% 98%;
-  --card: 210 100% 99%;
-  --popover: 210 100% 99%;
-  --sidebar: 210 100% 96%;
+  --background: 210 100% 97%;
+  --card: 210 80% 98%;
+  --popover: 210 80% 99%;
+  --sidebar: 210 60% 95%;
+  --secondary: 210 40% 92%;
+  --muted: 210 40% 92%;
+  --accent: 210 40% 92%;
+  --border: 210 30% 85%;
+  --input: 210 30% 85%;
+  --sidebar-border: 210 30% 85%;
 }
 
 :root:not(.dark)[data-bg-theme="neutral"] {
@@ -135,41 +152,77 @@
   --card: 0 0% 98%;
   --popover: 0 0% 98%;
   --sidebar: 0 0% 94%;
+  --secondary: 0 0% 90%;
+  --muted: 0 0% 90%;
+  --accent: 0 0% 90%;
+  --border: 0 0% 85%;
+  --input: 0 0% 85%;
+  --sidebar-border: 0 0% 85%;
 }
 
 :root:not(.dark)[data-bg-theme="soft"] {
-  --background: 60 30% 97%;
-  --card: 60 30% 98%;
-  --popover: 60 30% 98%;
-  --sidebar: 60 30% 95%;
+  --background: 60 30% 96%;
+  --card: 60 25% 97%;
+  --popover: 60 25% 98%;
+  --sidebar: 60 20% 94%;
+  --secondary: 60 15% 90%;
+  --muted: 60 15% 90%;
+  --accent: 60 15% 90%;
+  --border: 60 10% 85%;
+  --input: 60 10% 85%;
+  --sidebar-border: 60 10% 85%;
 }
 
 :root:not(.dark)[data-bg-theme="cream"] {
-  --background: 45 100% 97%;
-  --card: 45 100% 98%;
-  --popover: 45 100% 98%;
-  --sidebar: 45 100% 95%;
+  --background: 45 100% 96%;
+  --card: 45 80% 97%;
+  --popover: 45 80% 98%;
+  --sidebar: 45 60% 94%;
+  --secondary: 45 40% 90%;
+  --muted: 45 40% 90%;
+  --accent: 45 40% 90%;
+  --border: 45 30% 85%;
+  --input: 45 30% 85%;
+  --sidebar-border: 45 30% 85%;
 }
 
 :root:not(.dark)[data-bg-theme="mint"] {
-  --background: 150 30% 97%;
-  --card: 150 30% 98%;
-  --popover: 150 30% 98%;
-  --sidebar: 150 30% 95%;
+  --background: 150 30% 96%;
+  --card: 150 25% 97%;
+  --popover: 150 25% 98%;
+  --sidebar: 150 20% 94%;
+  --secondary: 150 15% 90%;
+  --muted: 150 15% 90%;
+  --accent: 150 15% 90%;
+  --border: 150 10% 85%;
+  --input: 150 10% 85%;
+  --sidebar-border: 150 10% 85%;
 }
 
 :root:not(.dark)[data-bg-theme="lavender"] {
-  --background: 270 30% 97%;
-  --card: 270 30% 98%;
-  --popover: 270 30% 98%;
-  --sidebar: 270 30% 95%;
+  --background: 270 30% 96%;
+  --card: 270 25% 97%;
+  --popover: 270 25% 98%;
+  --sidebar: 270 20% 94%;
+  --secondary: 270 15% 90%;
+  --muted: 270 15% 90%;
+  --accent: 270 15% 90%;
+  --border: 270 10% 85%;
+  --input: 270 10% 85%;
+  --sidebar-border: 270 10% 85%;
 }
 
 :root:not(.dark)[data-bg-theme="rose"] {
-  --background: 350 30% 97%;
-  --card: 350 30% 98%;
-  --popover: 350 30% 98%;
-  --sidebar: 350 30% 95%;
+  --background: 350 30% 96%;
+  --card: 350 25% 97%;
+  --popover: 350 25% 98%;
+  --sidebar: 350 20% 94%;
+  --secondary: 350 15% 90%;
+  --muted: 350 15% 90%;
+  --accent: 350 15% 90%;
+  --border: 350 10% 85%;
+  --input: 350 10% 85%;
+  --sidebar-border: 350 10% 85%;
 }
 
 /* Dark theme colors */
@@ -269,12 +322,18 @@
   --shadow-primary: 188 94% 43%;
 }
 
-/* Dark Background Themes - Only apply in dark mode */
+/* Dark Background Themes - Comprehensive color changes */
 .dark[data-bg-theme="default"] {
   --background: 240 10% 3.9%;
   --card: 240 10% 3.9%;
   --popover: 240 10% 3.9%;
   --sidebar: 240 5.9% 10%;
+  --secondary: 240 3.7% 15.9%;
+  --muted: 240 3.7% 15.9%;
+  --accent: 240 3.7% 15.9%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --sidebar-border: 240 3.7% 15.9%;
 }
 
 .dark[data-bg-theme="darker"] {
@@ -282,6 +341,12 @@
   --card: 240 15% 2%;
   --popover: 240 15% 2%;
   --sidebar: 240 15% 6%;
+  --secondary: 240 10% 12%;
+  --muted: 240 10% 12%;
+  --accent: 240 10% 12%;
+  --border: 240 8% 18%;
+  --input: 240 8% 18%;
+  --sidebar-border: 240 8% 18%;
 }
 
 .dark[data-bg-theme="pitch"] {
@@ -289,13 +354,25 @@
   --card: 0 0% 0%;
   --popover: 0 0% 0%;
   --sidebar: 0 0% 4%;
+  --secondary: 0 0% 8%;
+  --muted: 0 0% 8%;
+  --accent: 0 0% 8%;
+  --border: 0 0% 12%;
+  --input: 0 0% 12%;
+  --sidebar-border: 0 0% 12%;
 }
 
 .dark[data-bg-theme="slate"] {
-  --background: 215 50% 8%;
-  --card: 215 50% 8%;
-  --popover: 215 50% 8%;
-  --sidebar: 215 50% 12%;
+  --background: 215 50% 6%;
+  --card: 215 50% 6%;
+  --popover: 215 50% 6%;
+  --sidebar: 215 50% 10%;
+  --secondary: 215 40% 14%;
+  --muted: 215 40% 14%;
+  --accent: 215 40% 14%;
+  --border: 215 30% 18%;
+  --input: 215 30% 18%;
+  --sidebar-border: 215 30% 18%;
 }
 
 .dark[data-bg-theme="warm-dark"] {
@@ -303,6 +380,12 @@
   --card: 20 30% 3%;
   --popover: 20 30% 3%;
   --sidebar: 20 30% 7%;
+  --secondary: 20 25% 11%;
+  --muted: 20 25% 11%;
+  --accent: 20 25% 11%;
+  --border: 20 20% 15%;
+  --input: 20 20% 15%;
+  --sidebar-border: 20 20% 15%;
 }
 
 .dark[data-bg-theme="forest"] {
@@ -310,6 +393,12 @@
   --card: 120 30% 4%;
   --popover: 120 30% 4%;
   --sidebar: 120 30% 8%;
+  --secondary: 120 25% 12%;
+  --muted: 120 25% 12%;
+  --accent: 120 25% 12%;
+  --border: 120 20% 16%;
+  --input: 120 20% 16%;
+  --sidebar-border: 120 20% 16%;
 }
 
 .dark[data-bg-theme="ocean"] {
@@ -317,6 +406,12 @@
   --card: 200 50% 5%;
   --popover: 200 50% 5%;
   --sidebar: 200 50% 9%;
+  --secondary: 200 40% 13%;
+  --muted: 200 40% 13%;
+  --accent: 200 40% 13%;
+  --border: 200 30% 17%;
+  --input: 200 30% 17%;
+  --sidebar-border: 200 30% 17%;
 }
 
 .dark[data-bg-theme="purple-dark"] {
@@ -324,6 +419,12 @@
   --card: 270 30% 4%;
   --popover: 270 30% 4%;
   --sidebar: 270 30% 8%;
+  --secondary: 270 25% 12%;
+  --muted: 270 25% 12%;
+  --accent: 270 25% 12%;
+  --border: 270 20% 16%;
+  --input: 270 20% 16%;
+  --sidebar-border: 270 20% 16%;
 }
 
 .dark[data-bg-theme="crimson"] {
@@ -331,6 +432,12 @@
   --card: 350 40% 4%;
   --popover: 350 40% 4%;
   --sidebar: 350 40% 8%;
+  --secondary: 350 30% 12%;
+  --muted: 350 30% 12%;
+  --accent: 350 30% 12%;
+  --border: 350 25% 16%;
+  --input: 350 25% 16%;
+  --sidebar-border: 350 25% 16%;
 }
 
 /* Shadow Intensity */

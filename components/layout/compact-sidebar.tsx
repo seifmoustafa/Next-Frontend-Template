@@ -182,9 +182,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
     <>
       <div
         className={cn(
-          "mt-24",
-          "fixed inset-y-0 z-40 w-64 bg-gradient-to-b from-background via-background/98 to-background border-r border-border/80 transform transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto",
-          "shadow-xl shadow-primary/10 backdrop-blur-sm",
+          "fixed inset-y-0 z-40 w-64 bg-gradient-to-b from-background via-background/98 to-background border-r border-border/80 transform transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto sidebar-shadow",
+          "backdrop-blur-sm",
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
@@ -194,6 +193,36 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
         )}
       >
         <div className="flex flex-col h-full">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
+                <Logo size="xs" className="text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-sidebar-foreground">
+                  {t("app.title")}
+                </h1>
+                <p className="text-xs text-sidebar-foreground/60 flex items-center">
+                  <Logo size="xs" className="mr-1 rtl:mr-0 rtl:ml-1" />
+                  {t("app.compact")}
+                </p>
+              </div>
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "lg:hidden h-8 w-8 rounded-lg hover:bg-primary/10",
+                "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+              )}
+              onClick={() => onOpenChange(false)}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
+
           {/* User Info */}
           {user && (
             <div className="p-4 border-b border-border/80">

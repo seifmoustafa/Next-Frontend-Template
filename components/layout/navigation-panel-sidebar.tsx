@@ -1,79 +1,94 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { ChevronRight, ChevronDown, ChevronLeft } from 'lucide-react'
-import { useI18n } from "@/providers/i18n-provider"
-import { useSettings } from "@/providers/settings-provider"
-import { navigation } from "@/config/navigation"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import type React from "react";
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronRight, ChevronDown, ChevronLeft } from "lucide-react";
+import { useI18n } from "@/providers/i18n-provider";
+import { useSettings } from "@/providers/settings-provider";
+import { navigation } from "@/config/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 interface NavigationPanelSidebarProps {
-  selectedMainItem: string
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  hasChildren: boolean
+  selectedMainItem: string;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  hasChildren: boolean;
 }
 
-export function NavigationPanelSidebar({ 
-  selectedMainItem, 
-  open, 
-  onOpenChange, 
-  hasChildren 
+export function NavigationPanelSidebar({
+  selectedMainItem,
+  open,
+  onOpenChange,
+  hasChildren,
 }: NavigationPanelSidebarProps) {
-  const pathname = usePathname()
-  const { direction, t } = useI18n()
-  const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings()
-  const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const pathname = usePathname();
+  const { direction, t } = useI18n();
+  const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings();
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get the selected main navigation item
-  const selectedNavItem = navigation.find(item => item.name === selectedMainItem)
-  
+  const selectedNavItem = navigation.find(
+    (item) => item.name === selectedMainItem
+  );
+
   // Don't render if no children or not open
   if (!selectedNavItem || !hasChildren || !open) {
-    return null
+    return null;
   }
 
   const toggleExpanded = (itemName: string) => {
-    setExpandedItems(prev => 
-      prev.includes(itemName) 
-        ? prev.filter(name => name !== itemName)
+    setExpandedItems((prev) =>
+      prev.includes(itemName)
+        ? prev.filter((name) => name !== itemName)
         : [...prev, itemName]
-    )
-  }
+    );
+  };
 
   const getBorderRadiusClass = () => {
     switch (borderRadius) {
-      case 'none': return 'rounded-none'
-      case 'small': return 'rounded-sm'
-      case 'large': return 'rounded-lg'
-      case 'full': return 'rounded-full'
-      default: return 'rounded-md'
+      case "none":
+        return "rounded-none";
+      case "small":
+        return "rounded-sm";
+      case "large":
+        return "rounded-lg";
+      case "full":
+        return "rounded-full";
+      default:
+        return "rounded-md";
     }
-  }
+  };
 
   const getAnimationClass = () => {
-    if (animationLevel === 'none') return ''
-    if (animationLevel === 'minimal') return 'transition-colors duration-200'
-    if (animationLevel === 'moderate') return 'transition-all duration-200'
-    return 'transition-all duration-300 hover:scale-[1.02]'
-  }
+    if (animationLevel === "none") return "";
+    if (animationLevel === "minimal") return "transition-colors duration-200";
+    if (animationLevel === "moderate") return "transition-all duration-200";
+    return "transition-all duration-300 hover:scale-[1.02]";
+  };
 
   const renderNavigationItem = (item: any, level: number = 0) => {
-    const isActive = pathname === item.href
-    const hasSubChildren = item.children && item.children.length > 0
-    const isExpanded = expandedItems.includes(item.name)
-    const displayName = t(item.name) || item.name
+    const isActive = pathname === item.href;
+    const hasSubChildren = item.children && item.children.length > 0;
+    const isExpanded = expandedItems.includes(item.name);
+    const displayName = t(item.name) || item.name;
 
     if (hasSubChildren) {
       return (
-        <Collapsible key={item.name} open={isExpanded} onOpenChange={() => toggleExpanded(item.name)}>
+        <Collapsible
+          key={item.name}
+          open={isExpanded}
+          onOpenChange={() => toggleExpanded(item.name)}
+        >
           <CollapsibleTrigger asChild>
             <Button
               variant="ghost"
@@ -122,10 +137,12 @@ export function NavigationPanelSidebar({
             </Button>
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-1">
-            {item.children.map((child: any) => renderNavigationItem(child, level + 1))}
+            {item.children.map((child: any) =>
+              renderNavigationItem(child, level + 1)
+            )}
           </CollapsibleContent>
         </Collapsible>
-      )
+      );
     }
 
     return (
@@ -140,30 +157,39 @@ export function NavigationPanelSidebar({
           getBorderRadiusClass(),
           getAnimationClass(),
           level > 0 && (direction === "rtl" ? "mr-4" : "ml-4"),
-          isActive 
+          isActive
             ? cn(
                 "text-white shadow-sm",
-                colorTheme === 'blue' && "bg-blue-500 hover:bg-blue-600",
-                colorTheme === 'purple' && "bg-purple-500 hover:bg-purple-600",
-                colorTheme === 'green' && "bg-green-500 hover:bg-green-600",
-                colorTheme === 'orange' && "bg-orange-500 hover:bg-orange-600",
-                colorTheme === 'red' && "bg-red-500 hover:bg-red-600",
-                colorTheme === 'teal' && "bg-teal-500 hover:bg-teal-600"
+                colorTheme === "blue" && "bg-blue-500 hover:bg-blue-600",
+                colorTheme === "purple" && "bg-purple-500 hover:bg-purple-600",
+                colorTheme === "green" && "bg-green-500 hover:bg-green-600",
+                colorTheme === "orange" && "bg-orange-500 hover:bg-orange-600",
+                colorTheme === "red" && "bg-red-500 hover:bg-red-600",
+                colorTheme === "teal" && "bg-teal-500 hover:bg-teal-600",
+                colorTheme === "pink" && "bg-pink-500 hover:bg-pink-600",
+                colorTheme === "indigo" && "bg-indigo-500 hover:bg-indigo-600",
+                colorTheme === "cyan" && "bg-cyan-500 hover:bg-cyan-600"
               )
             : "hover:bg-accent hover:text-accent-foreground",
           item.disabled && "opacity-50 cursor-not-allowed"
         )}
         disabled={item.disabled}
       >
-        <Link href={item.href || '#'} className={cn(
-          "flex items-center gap-2 w-full",
-          direction === "rtl" ? "justify-end" : "justify-start"
-        )}>
+        <Link
+          href={item.href || "#"}
+          className={cn(
+            "flex items-center gap-2 w-full",
+            direction === "rtl" ? "justify-end" : "justify-start"
+          )}
+        >
           {/* RTL: Icon on the right, LTR: Icon on the left */}
           {direction === "rtl" ? (
             <>
               {item.badge && (
-                <Badge variant={isActive ? "secondary" : "outline"} className="mr-auto">
+                <Badge
+                  variant={isActive ? "secondary" : "outline"}
+                  className="mr-auto"
+                >
                   {item.badge}
                 </Badge>
               )}
@@ -175,7 +201,10 @@ export function NavigationPanelSidebar({
               {item.icon && <item.icon className="w-4 h-4" />}
               <span className="flex-1 text-left">{displayName}</span>
               {item.badge && (
-                <Badge variant={isActive ? "secondary" : "outline"} className="ml-auto">
+                <Badge
+                  variant={isActive ? "secondary" : "outline"}
+                  className="ml-auto"
+                >
                   {item.badge}
                 </Badge>
               )}
@@ -183,16 +212,16 @@ export function NavigationPanelSidebar({
           )}
         </Link>
       </Button>
-    )
-  }
+    );
+  };
 
   return (
     <div
       className={cn(
-        "navigation-panel-sidebar fixed inset-y-0 z-40 w-64 backdrop-blur-xl transform transition-all duration-300 ease-in-out",
-        cardStyle === 'glass' 
-          ? "bg-background/90 border-border/50" 
-          : cardStyle === 'solid'
+        "navigation-panel-sidebar fixed inset-y-0 z-40 w-64 backdrop-blur-xl transform transition-all duration-300 ease-in-out sidebar-shadow",
+        cardStyle === "glass"
+          ? "bg-background/90 border-border/50"
+          : cardStyle === "solid"
           ? "bg-background border-border"
           : "bg-background/95 border-border/50",
         // RTL/LTR positioning and borders
@@ -203,32 +232,47 @@ export function NavigationPanelSidebar({
       <div className="flex flex-col h-full">
         {/* Header */}
         <div className="p-4 border-b border-border/50">
-          <div className={cn(
-            "flex items-center gap-3",
-            direction === "rtl" && "flex-row-reverse"
-          )}>
+          <div
+            className={cn(
+              "flex items-center gap-3",
+              direction === "rtl" && "flex-row-reverse"
+            )}
+          >
             {selectedNavItem.icon && (
-              <div className={cn(
-                "w-8 h-8 flex items-center justify-center text-white",
-                getBorderRadiusClass(),
-                colorTheme === 'blue' && "bg-gradient-to-br from-blue-500 to-blue-600",
-                colorTheme === 'purple' && "bg-gradient-to-br from-purple-500 to-purple-600",
-                colorTheme === 'green' && "bg-gradient-to-br from-green-500 to-green-600",
-                colorTheme === 'orange' && "bg-gradient-to-br from-orange-500 to-orange-600",
-                colorTheme === 'red' && "bg-gradient-to-br from-red-500 to-red-600",
-                colorTheme === 'teal' && "bg-gradient-to-br from-teal-500 to-teal-600"
-              )}>
+              <div
+                className={cn(
+                  "w-8 h-8 flex items-center justify-center text-white",
+                  getBorderRadiusClass(),
+                  colorTheme === "blue" &&
+                    "bg-gradient-to-br from-blue-500 to-blue-600",
+                  colorTheme === "purple" &&
+                    "bg-gradient-to-br from-purple-500 to-purple-600",
+                  colorTheme === "green" &&
+                    "bg-gradient-to-br from-green-500 to-green-600",
+                  colorTheme === "orange" &&
+                    "bg-gradient-to-br from-orange-500 to-orange-600",
+                  colorTheme === "red" &&
+                    "bg-gradient-to-br from-red-500 to-red-600",
+                  colorTheme === "teal" &&
+                    "bg-gradient-to-br from-teal-500 to-teal-600",
+                  colorTheme === "pink" &&
+                    "bg-gradient-to-br from-pink-500 to-pink-600",
+                  colorTheme === "indigo" &&
+                    "bg-gradient-to-br from-indigo-500 to-indigo-600",
+                  colorTheme === "cyan" &&
+                    "bg-gradient-to-br from-cyan-500 to-cyan-600"
+                )}
+              >
                 <selectedNavItem.icon className="w-4 h-4" />
               </div>
             )}
-            <div className={cn(
-              direction === "rtl" && "text-right"
-            )}>
+            <div className={cn(direction === "rtl" && "text-right")}>
               <h3 className="font-semibold text-sm">
                 {t(selectedNavItem.name) || selectedNavItem.name}
               </h3>
               <p className="text-xs text-muted-foreground">
-                {selectedNavItem.children?.length || 0} {t('layout.items') || 'items'}
+                {selectedNavItem.children?.length || 0}{" "}
+                {t("layout.items") || "items"}
               </p>
             </div>
           </div>
@@ -237,10 +281,12 @@ export function NavigationPanelSidebar({
         {/* Navigation Items */}
         <ScrollArea className="flex-1 p-2">
           <div className="space-y-1">
-            {selectedNavItem.children?.map((item: any) => renderNavigationItem(item))}
+            {selectedNavItem.children?.map((item: any) =>
+              renderNavigationItem(item)
+            )}
           </div>
         </ScrollArea>
       </div>
     </div>
-  )
+  );
 }

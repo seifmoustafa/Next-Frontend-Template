@@ -4,9 +4,6 @@ import {
   BarChart3,
   Settings,
   User,
-  UserPlus,
-  UserCheck,
-  UserX,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -42,30 +39,7 @@ export const navigation: NavigationItem[] = [
   },
   {
     name: "nav.users", // Uses translation key
-    // href: "/dashboard/users",
-    children: [
-      {
-        name: "قائمة المستخدمين",
-        children: [
-          {
-            name: "المستخدمين النشطين",
-            href: "/dashboard/users/active",
-            icon: UserCheck,
-          },
-          {
-            name: "المستخدمين المحظورين",
-            href: "/dashboard/users/blocked",
-            icon: UserX,
-          },
-        ],
-        icon: Users,
-      },
-      {
-        name: "إضافة مستخدم",
-        href: "/dashboard/users/create",
-        icon: UserPlus,
-      },
-    ],
+    href: "/dashboard/users",
     icon: Users,
   },
   {
