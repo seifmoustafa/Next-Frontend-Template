@@ -30,6 +30,12 @@ import {
   Paintbrush,
   GhostIcon as Shadow,
   Monitor,
+  Navigation,
+  BracketsIcon as Spacing,
+  MousePointer,
+  ImagesIcon as Icons,
+  HeadingIcon as Header,
+  Sidebar,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
@@ -98,7 +104,7 @@ export function SettingsView() {
     },
   ];
 
-  // Light background themes - More variety and very different colors
+  // Light background themes
   const lightBackgroundThemes = [
     {
       value: "default",
@@ -156,7 +162,7 @@ export function SettingsView() {
     },
   ];
 
-  // Dark background themes - More variety and very different colors
+  // Dark background themes
   const darkBackgroundThemes = [
     {
       value: "default",
@@ -214,34 +220,6 @@ export function SettingsView() {
     },
   ];
 
-  // Shadow intensity options
-  const shadowIntensities = [
-    {
-      value: "none",
-      label: "None",
-      description: "No shadows",
-      icon: CircleOff,
-    },
-    {
-      value: "subtle",
-      label: "Subtle",
-      description: "Light shadows",
-      icon: Circle,
-    },
-    {
-      value: "moderate",
-      label: "Moderate",
-      description: "Medium shadows",
-      icon: Circle,
-    },
-    {
-      value: "strong",
-      label: "Strong",
-      description: "Bold shadows",
-      icon: Circle,
-    },
-  ];
-
   // Layout templates
   const layoutTemplates = [
     {
@@ -288,111 +266,6 @@ export function SettingsView() {
     },
   ];
 
-  // Card styles - Extended
-  const cardStyles = [
-    {
-      value: "default",
-      label: t("cardStyle.default"),
-      description: t("cardStyle.defaultDesc"),
-    },
-    {
-      value: "glass",
-      label: t("cardStyle.glass"),
-      description: t("cardStyle.glassDesc"),
-    },
-    {
-      value: "solid",
-      label: t("cardStyle.solid"),
-      description: t("cardStyle.solidDesc"),
-    },
-    {
-      value: "bordered",
-      label: t("cardStyle.bordered"),
-      description: t("cardStyle.borderedDesc"),
-    },
-    {
-      value: "elevated",
-      label: "Elevated",
-      description: "Cards with strong elevation shadows",
-    },
-  ];
-
-  // Logo types
-  const logoTypes = [
-    {
-      value: "image",
-      label: t("logoType.image"),
-      description: t("logoType.imageDesc"),
-    },
-    {
-      value: "sparkles",
-      label: t("logoType.sparkles"),
-      description: t("logoType.sparklesDesc"),
-    },
-    {
-      value: "shield",
-      label: t("logoType.shield"),
-      description: t("logoType.shieldDesc"),
-    },
-    {
-      value: "custom",
-      label: t("logoType.custom"),
-      description: t("logoType.customDesc"),
-    },
-  ];
-
-  // Animation levels
-  const animationLevels = [
-    {
-      value: "none",
-      label: t("animation.none"),
-      description: t("animation.noneDesc"),
-    },
-    {
-      value: "minimal",
-      label: t("animation.minimal"),
-      description: t("animation.minimalDesc"),
-    },
-    {
-      value: "moderate",
-      label: t("animation.moderate"),
-      description: t("animation.moderateDesc"),
-    },
-    {
-      value: "high",
-      label: t("animation.high"),
-      description: t("animation.highDesc"),
-    },
-  ];
-
-  // Font sizes
-  const fontSizes = [
-    {
-      value: "small",
-      label: t("fontSize.small"),
-      description: t("fontSize.smallDesc"),
-    },
-    {
-      value: "default",
-      label: t("fontSize.default"),
-      description: t("fontSize.defaultDesc"),
-    },
-    {
-      value: "large",
-      label: t("fontSize.large"),
-      description: t("fontSize.largeDesc"),
-    },
-  ];
-
-  // Border radius options
-  const borderRadiusOptions = [
-    { value: "none", label: t("radius.none"), icon: CircleOff },
-    { value: "small", label: t("radius.small"), icon: Circle },
-    { value: "default", label: t("radius.default"), icon: Circle },
-    { value: "large", label: t("radius.large"), icon: Circle },
-    { value: "full", label: t("radius.full"), icon: Circle },
-  ];
-
   const handleSave = () => {
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -410,7 +283,7 @@ export function SettingsView() {
       </div>
 
       <Tabs defaultValue="appearance" className="space-y-6">
-        <TabsList className="grid grid-cols-5 w-full max-w-3xl">
+        <TabsList className="grid grid-cols-6 w-full max-w-4xl">
           <TabsTrigger value="appearance" className="flex items-center gap-2">
             <Palette className="h-4 w-4" />
             <span>{t("settings.appearance")}</span>
@@ -422,6 +295,10 @@ export function SettingsView() {
           <TabsTrigger value="layout" className="flex items-center gap-2">
             <Layout className="h-4 w-4" />
             <span>{t("settings.layout")}</span>
+          </TabsTrigger>
+          <TabsTrigger value="components" className="flex items-center gap-2">
+            <Layers className="h-4 w-4" />
+            <span>Components</span>
           </TabsTrigger>
           <TabsTrigger value="localization" className="flex items-center gap-2">
             <Languages className="h-4 w-4" />
@@ -473,44 +350,6 @@ export function SettingsView() {
             </CardContent>
           </Card>
 
-          {/* Card Style */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Layers className="h-5 w-5" />
-                <span>{t("settings.cardStyle")}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <RadioGroup
-                value={settings.cardStyle}
-                onValueChange={(value) => settings.setCardStyle(value as any)}
-                className="grid grid-cols-2 lg:grid-cols-3 gap-4"
-              >
-                {cardStyles.map((style) => (
-                  <div key={style.value}>
-                    <RadioGroupItem
-                      value={style.value}
-                      id={`card-style-${style.value}`}
-                      className="peer sr-only"
-                    />
-                    <Label
-                      htmlFor={`card-style-${style.value}`}
-                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                    >
-                      <div className="mb-2 rounded-md border p-2 w-full h-12 flex items-center justify-center">
-                        <span className="text-xs">{style.label}</span>
-                      </div>
-                      <p className="text-xs text-center text-muted-foreground">
-                        {style.description}
-                      </p>
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </CardContent>
-          </Card>
-
           {/* Font Size */}
           <Card>
             <CardHeader>
@@ -525,7 +364,23 @@ export function SettingsView() {
                 onValueChange={(value) => settings.setFontSize(value as any)}
                 className="grid grid-cols-3 gap-4"
               >
-                {fontSizes.map((size) => (
+                {[
+                  {
+                    value: "small",
+                    label: t("fontSize.small"),
+                    desc: t("fontSize.smallDesc"),
+                  },
+                  {
+                    value: "default",
+                    label: t("fontSize.default"),
+                    desc: t("fontSize.defaultDesc"),
+                  },
+                  {
+                    value: "large",
+                    label: t("fontSize.large"),
+                    desc: t("fontSize.largeDesc"),
+                  },
+                ].map((size) => (
                   <div key={size.value}>
                     <RadioGroupItem
                       value={size.value}
@@ -547,7 +402,7 @@ export function SettingsView() {
                         {size.label}
                       </span>
                       <p className="text-xs text-center text-muted-foreground">
-                        {size.description}
+                        {size.desc}
                       </p>
                     </Label>
                   </div>
@@ -572,7 +427,17 @@ export function SettingsView() {
                 }
                 className="grid grid-cols-5 gap-4"
               >
-                {borderRadiusOptions.map((option) => {
+                {[
+                  { value: "none", label: t("radius.none"), icon: CircleOff },
+                  { value: "small", label: t("radius.small"), icon: Circle },
+                  {
+                    value: "default",
+                    label: t("radius.default"),
+                    icon: Circle,
+                  },
+                  { value: "large", label: t("radius.large"), icon: Circle },
+                  { value: "full", label: t("radius.full"), icon: Circle },
+                ].map((option) => {
                   const Icon = option.icon;
                   return (
                     <div key={option.value}>
@@ -600,6 +465,75 @@ export function SettingsView() {
                     </div>
                   );
                 })}
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
+          {/* Spacing Size */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Spacing className="h-5 w-5" />
+                <span>{t("settings.spacingSize")}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={settings.spacingSize}
+                onValueChange={(value) => settings.setSpacingSize(value as any)}
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                {[
+                  {
+                    value: "compact",
+                    label: t("spacingSize.compact"),
+                    desc: t("spacingSize.compactDesc"),
+                  },
+                  {
+                    value: "default",
+                    label: t("spacingSize.default"),
+                    desc: t("spacingSize.defaultDesc"),
+                  },
+                  {
+                    value: "comfortable",
+                    label: t("spacingSize.comfortable"),
+                    desc: t("spacingSize.comfortableDesc"),
+                  },
+                  {
+                    value: "spacious",
+                    label: t("spacingSize.spacious"),
+                    desc: t("spacingSize.spaciousDesc"),
+                  },
+                ].map((spacing) => (
+                  <div key={spacing.value}>
+                    <RadioGroupItem
+                      value={spacing.value}
+                      id={`spacing-${spacing.value}`}
+                      className="peer sr-only"
+                    />
+                    <Label
+                      htmlFor={`spacing-${spacing.value}`}
+                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    >
+                      <div
+                        className={cn(
+                          "mb-2 flex items-center justify-center w-10 h-10 rounded-full bg-primary/10",
+                          spacing.value === "compact" && "w-8 h-8",
+                          spacing.value === "comfortable" && "w-12 h-12",
+                          spacing.value === "spacious" && "w-14 h-14"
+                        )}
+                      >
+                        <Spacing className="h-5 w-5 text-primary" />
+                      </div>
+                      <span className="text-sm font-medium">
+                        {spacing.label}
+                      </span>
+                      <p className="text-xs text-center text-muted-foreground mt-1">
+                        {spacing.desc}
+                      </p>
+                    </Label>
+                  </div>
+                ))}
               </RadioGroup>
             </CardContent>
           </Card>
@@ -768,7 +702,32 @@ export function SettingsView() {
                 }
                 className="grid grid-cols-2 md:grid-cols-4 gap-4"
               >
-                {shadowIntensities.map((intensity) => {
+                {[
+                  {
+                    value: "none",
+                    label: "None",
+                    desc: "No shadows",
+                    icon: CircleOff,
+                  },
+                  {
+                    value: "subtle",
+                    label: "Subtle",
+                    desc: "Light shadows",
+                    icon: Circle,
+                  },
+                  {
+                    value: "moderate",
+                    label: "Moderate",
+                    desc: "Medium shadows",
+                    icon: Circle,
+                  },
+                  {
+                    value: "strong",
+                    label: "Strong",
+                    desc: "Bold shadows",
+                    icon: Circle,
+                  },
+                ].map((intensity) => {
                   const Icon = intensity.icon;
                   return (
                     <div key={intensity.value}>
@@ -796,7 +755,7 @@ export function SettingsView() {
                           {intensity.label}
                         </span>
                         <p className="text-xs text-center text-muted-foreground mt-1">
-                          {intensity.description}
+                          {intensity.desc}
                         </p>
                       </Label>
                     </div>
@@ -857,7 +816,7 @@ export function SettingsView() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Layout className="h-5 w-5" />
+                <Sidebar className="h-5 w-5" />
                 <span>{t("settings.sidebarPosition")}</span>
               </CardTitle>
             </CardHeader>
@@ -912,37 +871,314 @@ export function SettingsView() {
               </RadioGroup>
             </CardContent>
           </Card>
+        </TabsContent>
 
-          {/* Logo Type */}
+        {/* Components Tab */}
+        <TabsContent value="components" className="space-y-6">
+          {/* Header Style */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Layers className="h-5 w-5" />
-                <span>{t("settings.logoType")}</span>
+                <Header className="h-5 w-5" />
+                <span>{t("settings.headerStyle")}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <RadioGroup
-                value={settings.logoType}
-                onValueChange={(value) => settings.setLogoType(value as any)}
-                className="grid grid-cols-2 gap-4"
+                value={settings.headerStyle}
+                onValueChange={(value) => settings.setHeaderStyle(value as any)}
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
               >
-                {logoTypes.map((type) => (
-                  <div key={type.value}>
+                {[
+                  {
+                    value: "default",
+                    label: t("headerStyle.default"),
+                    desc: t("headerStyle.defaultDesc"),
+                  },
+                  {
+                    value: "compact",
+                    label: t("headerStyle.compact"),
+                    desc: t("headerStyle.compactDesc"),
+                  },
+                  {
+                    value: "elevated",
+                    label: t("headerStyle.elevated"),
+                    desc: t("headerStyle.elevatedDesc"),
+                  },
+                  {
+                    value: "transparent",
+                    label: t("headerStyle.transparent"),
+                    desc: t("headerStyle.transparentDesc"),
+                  },
+                ].map((style) => (
+                  <div key={style.value}>
                     <RadioGroupItem
-                      value={type.value}
-                      id={`logo-type-${type.value}`}
+                      value={style.value}
+                      id={`header-style-${style.value}`}
                       className="peer sr-only"
                     />
                     <Label
-                      htmlFor={`logo-type-${type.value}`}
+                      htmlFor={`header-style-${style.value}`}
                       className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                     >
-                      <div className="mb-2 rounded-md border p-2 w-full h-12 flex items-center justify-center">
-                        <Logo size="sm" />
+                      <div className="mb-2 w-full h-8 bg-primary/10 rounded-md flex items-center justify-center">
+                        <Header className="h-4 w-4 text-primary" />
                       </div>
-                      <p className="text-xs text-center text-muted-foreground">
-                        {type.description}
+                      <span className="text-sm font-medium">{style.label}</span>
+                      <p className="text-xs text-center text-muted-foreground mt-1">
+                        {style.desc}
+                      </p>
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
+          {/* Sidebar Style */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sidebar className="h-5 w-5" />
+                <span>{t("settings.sidebarStyle")}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={settings.sidebarStyle}
+                onValueChange={(value) =>
+                  settings.setSidebarStyle(value as any)
+                }
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                {[
+                  {
+                    value: "default",
+                    label: t("sidebarStyle.default"),
+                    desc: t("sidebarStyle.defaultDesc"),
+                  },
+                  {
+                    value: "compact",
+                    label: t("sidebarStyle.compact"),
+                    desc: t("sidebarStyle.compactDesc"),
+                  },
+                  {
+                    value: "minimal",
+                    label: t("sidebarStyle.minimal"),
+                    desc: t("sidebarStyle.minimalDesc"),
+                  },
+                  {
+                    value: "floating",
+                    label: t("sidebarStyle.floating"),
+                    desc: t("sidebarStyle.floatingDesc"),
+                  },
+                ].map((style) => (
+                  <div key={style.value}>
+                    <RadioGroupItem
+                      value={style.value}
+                      id={`sidebar-style-${style.value}`}
+                      className="peer sr-only"
+                    />
+                    <Label
+                      htmlFor={`sidebar-style-${style.value}`}
+                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    >
+                      <div className="mb-2 w-8 h-12 bg-primary/10 rounded-md flex items-center justify-center">
+                        <Sidebar className="h-4 w-4 text-primary" />
+                      </div>
+                      <span className="text-sm font-medium">{style.label}</span>
+                      <p className="text-xs text-center text-muted-foreground mt-1">
+                        {style.desc}
+                      </p>
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
+          {/* Button Style */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MousePointer className="h-5 w-5" />
+                <span>{t("settings.buttonStyle")}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={settings.buttonStyle}
+                onValueChange={(value) => settings.setButtonStyle(value as any)}
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                {[
+                  {
+                    value: "default",
+                    label: t("buttonStyle.default"),
+                    desc: t("buttonStyle.defaultDesc"),
+                  },
+                  {
+                    value: "rounded",
+                    label: t("buttonStyle.rounded"),
+                    desc: t("buttonStyle.roundedDesc"),
+                  },
+                  {
+                    value: "square",
+                    label: t("buttonStyle.square"),
+                    desc: t("buttonStyle.squareDesc"),
+                  },
+                  {
+                    value: "pill",
+                    label: t("buttonStyle.pill"),
+                    desc: t("buttonStyle.pillDesc"),
+                  },
+                ].map((style) => (
+                  <div key={style.value}>
+                    <RadioGroupItem
+                      value={style.value}
+                      id={`button-style-${style.value}`}
+                      className="peer sr-only"
+                    />
+                    <Label
+                      htmlFor={`button-style-${style.value}`}
+                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    >
+                      <div
+                        className={cn(
+                          "mb-2 w-16 h-8 bg-primary/10 flex items-center justify-center text-xs font-medium text-primary",
+                          style.value === "default" && "rounded-md",
+                          style.value === "rounded" && "rounded-full",
+                          style.value === "square" && "rounded-none",
+                          style.value === "pill" && "rounded-full px-4"
+                        )}
+                      >
+                        Button
+                      </div>
+                      <span className="text-sm font-medium">{style.label}</span>
+                      <p className="text-xs text-center text-muted-foreground mt-1">
+                        {style.desc}
+                      </p>
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
+          {/* Navigation Style */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Navigation className="h-5 w-5" />
+                <span>{t("settings.navigationStyle")}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={settings.navigationStyle}
+                onValueChange={(value) =>
+                  settings.setNavigationStyle(value as any)
+                }
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                {[
+                  {
+                    value: "default",
+                    label: t("navigationStyle.default"),
+                    desc: t("navigationStyle.defaultDesc"),
+                  },
+                  {
+                    value: "pills",
+                    label: t("navigationStyle.pills"),
+                    desc: t("navigationStyle.pillsDesc"),
+                  },
+                  {
+                    value: "underline",
+                    label: t("navigationStyle.underline"),
+                    desc: t("navigationStyle.underlineDesc"),
+                  },
+                  {
+                    value: "background",
+                    label: t("navigationStyle.background"),
+                    desc: t("navigationStyle.backgroundDesc"),
+                  },
+                ].map((style) => (
+                  <div key={style.value}>
+                    <RadioGroupItem
+                      value={style.value}
+                      id={`nav-style-${style.value}`}
+                      className="peer sr-only"
+                    />
+                    <Label
+                      htmlFor={`nav-style-${style.value}`}
+                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    >
+                      <div className="mb-2 w-full h-8 flex items-center justify-center">
+                        <Navigation className="h-4 w-4 text-primary" />
+                      </div>
+                      <span className="text-sm font-medium">{style.label}</span>
+                      <p className="text-xs text-center text-muted-foreground mt-1">
+                        {style.desc}
+                      </p>
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
+          {/* Icon Style */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Icons className="h-5 w-5" />
+                <span>{t("settings.iconStyle")}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={settings.iconStyle}
+                onValueChange={(value) => settings.setIconStyle(value as any)}
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                {[
+                  {
+                    value: "outline",
+                    label: t("iconStyle.outline"),
+                    desc: t("iconStyle.outlineDesc"),
+                  },
+                  {
+                    value: "filled",
+                    label: t("iconStyle.filled"),
+                    desc: t("iconStyle.filledDesc"),
+                  },
+                  {
+                    value: "duotone",
+                    label: t("iconStyle.duotone"),
+                    desc: t("iconStyle.duotoneDesc"),
+                  },
+                  {
+                    value: "minimal",
+                    label: t("iconStyle.minimal"),
+                    desc: t("iconStyle.minimalDesc"),
+                  },
+                ].map((style) => (
+                  <div key={style.value}>
+                    <RadioGroupItem
+                      value={style.value}
+                      id={`icon-style-${style.value}`}
+                      className="peer sr-only"
+                    />
+                    <Label
+                      htmlFor={`icon-style-${style.value}`}
+                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    >
+                      <div className="mb-2 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Icons className="h-5 w-5 text-primary" />
+                      </div>
+                      <span className="text-sm font-medium">{style.label}</span>
+                      <p className="text-xs text-center text-muted-foreground mt-1">
+                        {style.desc}
                       </p>
                     </Label>
                   </div>
@@ -977,7 +1213,7 @@ export function SettingsView() {
                     >
                       <span className="text-2xl">🇸🇦</span>
                       <div>
-                        <p className="font-medium">العربية</p>
+                        <p className="font-medium">{t("language.arabic")}</p>
                         <p className="text-sm text-muted-foreground">
                           Arabic - اللغة العربية
                         </p>
@@ -992,7 +1228,7 @@ export function SettingsView() {
                     >
                       <span className="text-2xl">🇺🇸</span>
                       <div>
-                        <p className="font-medium">English</p>
+                        <p className="font-medium">{t("language.english")}</p>
                         <p className="text-sm text-muted-foreground">
                           English - الإنجليزية
                         </p>
@@ -1073,7 +1309,28 @@ export function SettingsView() {
                 }
                 className="grid grid-cols-2 md:grid-cols-4 gap-4"
               >
-                {animationLevels.map((level) => (
+                {[
+                  {
+                    value: "none",
+                    label: t("animation.none"),
+                    desc: t("animation.noneDesc"),
+                  },
+                  {
+                    value: "minimal",
+                    label: t("animation.minimal"),
+                    desc: t("animation.minimalDesc"),
+                  },
+                  {
+                    value: "moderate",
+                    label: t("animation.moderate"),
+                    desc: t("animation.moderateDesc"),
+                  },
+                  {
+                    value: "high",
+                    label: t("animation.high"),
+                    desc: t("animation.highDesc"),
+                  },
+                ].map((level) => (
                   <div key={level.value}>
                     <RadioGroupItem
                       value={level.value}
@@ -1103,7 +1360,7 @@ export function SettingsView() {
                       </div>
                       <span className="text-sm font-medium">{level.label}</span>
                       <p className="text-xs text-center text-muted-foreground mt-1">
-                        {level.description}
+                        {level.desc}
                       </p>
                     </Label>
                   </div>

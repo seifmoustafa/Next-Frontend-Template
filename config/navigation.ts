@@ -39,19 +39,7 @@ export const navigation: NavigationItem[] = [
   },
   {
     name: "nav.users", // Uses translation key
-    children: [
-      {
-        name: "nav.users",
-        children: [
-          {
-            name: "UUUSSS",
-            href: "/dashboard/users",
-            icon: null,
-          },
-        ],
-        icon: null,
-      },
-    ],
+    href: "/dashboard/users",
     icon: Users,
   },
   {

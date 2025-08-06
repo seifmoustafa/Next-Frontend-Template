@@ -47,7 +47,7 @@ export type DarkBackgroundTheme =
   | "purple-dark"
   | "crimson";
 
-// Shadow intensity types - New
+// Shadow intensity types
 export type ShadowIntensity = "none" | "subtle" | "moderate" | "strong";
 
 // Sidebar position types
@@ -67,6 +67,24 @@ export type FontSize = "small" | "default" | "large";
 
 // Border radius types
 export type BorderRadius = "none" | "small" | "default" | "large" | "full";
+
+// Header style types - New
+export type HeaderStyle = "default" | "compact" | "elevated" | "transparent";
+
+// Sidebar style types - New
+export type SidebarStyle = "default" | "compact" | "minimal" | "floating";
+
+// Button style types - New
+export type ButtonStyle = "default" | "rounded" | "square" | "pill";
+
+// Navigation style types - New
+export type NavigationStyle = "default" | "pills" | "underline" | "background";
+
+// Spacing types - New
+export type SpacingSize = "compact" | "default" | "comfortable" | "spacious";
+
+// Icon style types - New
+export type IconStyle = "outline" | "filled" | "duotone" | "minimal";
 
 interface SettingsContextType {
   // Layout template
@@ -112,6 +130,30 @@ interface SettingsContextType {
   borderRadius: BorderRadius;
   setBorderRadius: (radius: BorderRadius) => void;
 
+  // Header style - New
+  headerStyle: HeaderStyle;
+  setHeaderStyle: (style: HeaderStyle) => void;
+
+  // Sidebar style - New
+  sidebarStyle: SidebarStyle;
+  setSidebarStyle: (style: SidebarStyle) => void;
+
+  // Button style - New
+  buttonStyle: ButtonStyle;
+  setButtonStyle: (style: ButtonStyle) => void;
+
+  // Navigation style - New
+  navigationStyle: NavigationStyle;
+  setNavigationStyle: (style: NavigationStyle) => void;
+
+  // Spacing size - New
+  spacingSize: SpacingSize;
+  setSpacingSize: (size: SpacingSize) => void;
+
+  // Icon style - New
+  iconStyle: IconStyle;
+  setIconStyle: (style: IconStyle) => void;
+
   // Reset all settings to default
   resetSettings: () => void;
 }
@@ -128,6 +170,12 @@ const defaultSettings = {
   animationLevel: "moderate" as AnimationLevel,
   fontSize: "default" as FontSize,
   borderRadius: "default" as BorderRadius,
+  headerStyle: "default" as HeaderStyle,
+  sidebarStyle: "default" as SidebarStyle,
+  buttonStyle: "default" as ButtonStyle,
+  navigationStyle: "default" as NavigationStyle,
+  spacingSize: "default" as SpacingSize,
+  iconStyle: "outline" as IconStyle,
 };
 
 const SettingsContext = createContext<SettingsContextType | undefined>(
@@ -161,6 +209,24 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [fontSize, setFontSize] = useState<FontSize>(defaultSettings.fontSize);
   const [borderRadius, setBorderRadius] = useState<BorderRadius>(
     defaultSettings.borderRadius
+  );
+  const [headerStyle, setHeaderStyle] = useState<HeaderStyle>(
+    defaultSettings.headerStyle
+  );
+  const [sidebarStyle, setSidebarStyle] = useState<SidebarStyle>(
+    defaultSettings.sidebarStyle
+  );
+  const [buttonStyle, setButtonStyle] = useState<ButtonStyle>(
+    defaultSettings.buttonStyle
+  );
+  const [navigationStyle, setNavigationStyle] = useState<NavigationStyle>(
+    defaultSettings.navigationStyle
+  );
+  const [spacingSize, setSpacingSize] = useState<SpacingSize>(
+    defaultSettings.spacingSize
+  );
+  const [iconStyle, setIconStyle] = useState<IconStyle>(
+    defaultSettings.iconStyle
   );
   const [mounted, setMounted] = useState(false);
 
@@ -197,6 +263,22 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         setBorderRadius(
           parsedSettings.borderRadius || defaultSettings.borderRadius
         );
+        setHeaderStyle(
+          parsedSettings.headerStyle || defaultSettings.headerStyle
+        );
+        setSidebarStyle(
+          parsedSettings.sidebarStyle || defaultSettings.sidebarStyle
+        );
+        setButtonStyle(
+          parsedSettings.buttonStyle || defaultSettings.buttonStyle
+        );
+        setNavigationStyle(
+          parsedSettings.navigationStyle || defaultSettings.navigationStyle
+        );
+        setSpacingSize(
+          parsedSettings.spacingSize || defaultSettings.spacingSize
+        );
+        setIconStyle(parsedSettings.iconStyle || defaultSettings.iconStyle);
       }
     } catch (error) {
       console.error("Failed to parse settings:", error);
@@ -220,6 +302,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       animationLevel,
       fontSize,
       borderRadius,
+      headerStyle,
+      sidebarStyle,
+      buttonStyle,
+      navigationStyle,
+      spacingSize,
+      iconStyle,
     };
     localStorage.setItem("appSettings", JSON.stringify(settings));
 
@@ -236,6 +324,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     root.setAttribute("data-animation", animationLevel);
     root.setAttribute("data-font-size", fontSize);
     root.setAttribute("data-radius", borderRadius);
+    root.setAttribute("data-header-style", headerStyle);
+    root.setAttribute("data-sidebar-style", sidebarStyle);
+    root.setAttribute("data-button-style", buttonStyle);
+    root.setAttribute("data-navigation-style", navigationStyle);
+    root.setAttribute("data-spacing", spacingSize);
+    root.setAttribute("data-icon-style", iconStyle);
 
     // Apply RTL/LTR based on sidebar position
     root.setAttribute("dir", sidebarPosition === "right" ? "rtl" : "ltr");
@@ -257,6 +351,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     animationLevel,
     fontSize,
     borderRadius,
+    headerStyle,
+    sidebarStyle,
+    buttonStyle,
+    navigationStyle,
+    spacingSize,
+    iconStyle,
   ]);
 
   // Reset all settings to default
@@ -272,6 +372,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setAnimationLevel(defaultSettings.animationLevel);
     setFontSize(defaultSettings.fontSize);
     setBorderRadius(defaultSettings.borderRadius);
+    setHeaderStyle(defaultSettings.headerStyle);
+    setSidebarStyle(defaultSettings.sidebarStyle);
+    setButtonStyle(defaultSettings.buttonStyle);
+    setNavigationStyle(defaultSettings.navigationStyle);
+    setSpacingSize(defaultSettings.spacingSize);
+    setIconStyle(defaultSettings.iconStyle);
   };
 
   // Render nothing until the component has mounted to avoid hydration mismatch
@@ -304,6 +410,18 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         setFontSize,
         borderRadius,
         setBorderRadius,
+        headerStyle,
+        setHeaderStyle,
+        sidebarStyle,
+        setSidebarStyle,
+        buttonStyle,
+        setButtonStyle,
+        navigationStyle,
+        setNavigationStyle,
+        spacingSize,
+        setSpacingSize,
+        iconStyle,
+        setIconStyle,
         resetSettings,
       }}
     >

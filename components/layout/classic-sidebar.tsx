@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LogOut, X, ChevronDown } from "lucide-react";
+import { X, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
+import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
 import {
   Collapsible,
@@ -30,11 +31,21 @@ interface ClassicSidebarProps {
 export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
+  const { 
+    colorTheme, 
+    sidebarStyle, 
+    spacingSize, 
+    borderRadius, 
+    animationLevel,
+    shadowIntensity 
+  } = useSettings();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
-  // Get navigation items with translations
-  const navigation = getNavigationItems(t);
+  // Get navigation items with translations and filter out profile, settings, logout
+  const navigation = getNavigationItems(t).filter(item => 
+    !['nav.profile', 'nav.settings', 'nav.logout'].includes(item.name)
+  );
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>
@@ -42,6 +53,54 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
         ? prev.filter((name) => name !== itemName)
         : [...prev, itemName]
     );
+  };
+
+  const getSpacingClass = () => {
+    switch (spacingSize) {
+      case "compact":
+        return "p-2 space-y-1";
+      case "comfortable":
+        return "p-8 space-y-6";
+      case "spacious":
+        return "p-12 space-y-8";
+      default:
+        return "p-6 space-y-4";
+    }
+  };
+
+  const getBorderRadiusClass = () => {
+    switch (borderRadius) {
+      case "none":
+        return "rounded-none";
+      case "small":
+        return "rounded-sm";
+      case "large":
+        return "rounded-2xl";
+      case "full":
+        return "rounded-3xl";
+      default:
+        return "rounded-xl";
+    }
+  };
+
+  const getShadowClass = () => {
+    switch (shadowIntensity) {
+      case "none":
+        return "";
+      case "subtle":
+        return "shadow-sm";
+      case "strong":
+        return "shadow-2xl";
+      default:
+        return "shadow-lg";
+    }
+  };
+
+  const getAnimationClass = () => {
+    if (animationLevel === "none") return "";
+    if (animationLevel === "minimal") return "transition-colors duration-200";
+    if (animationLevel === "moderate") return "transition-all duration-300";
+    return "transition-all duration-500 ease-in-out";
   };
 
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
@@ -60,11 +119,24 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           <CollapsibleTrigger asChild>
             <div
               className={cn(
-                "group flex items-center justify-between w-full px-6 py-4 rounded-xl text-base font-medium transition-all duration-300 cursor-pointer",
+                "group flex items-center justify-between w-full px-6 py-4 text-base font-medium cursor-pointer",
+                getBorderRadiusClass(),
+                getAnimationClass(),
                 level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
-                  ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
+                  ? cn(
+                      "text-primary-foreground shadow-lg",
+                      colorTheme === "blue" && "bg-gradient-to-r from-blue-500 to-blue-600",
+                      colorTheme === "purple" && "bg-gradient-to-r from-purple-500 to-purple-600",
+                      colorTheme === "green" && "bg-gradient-to-r from-green-500 to-green-600",
+                      colorTheme === "orange" && "bg-gradient-to-r from-orange-500 to-orange-600",
+                      colorTheme === "red" && "bg-gradient-to-r from-red-500 to-red-600",
+                      colorTheme === "teal" && "bg-gradient-to-r from-teal-500 to-teal-600",
+                      colorTheme === "pink" && "bg-gradient-to-r from-pink-500 to-pink-600",
+                      colorTheme === "indigo" && "bg-gradient-to-r from-indigo-500 to-indigo-600",
+                      colorTheme === "cyan" && "bg-gradient-to-r from-cyan-500 to-cyan-600"
+                    )
                   : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md"
               )}
             >
@@ -124,11 +196,24 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
         key={item.name}
         href={item.href || "#"}
         className={cn(
-          "group flex items-center justify-between px-6 py-4 rounded-xl text-base font-medium transition-all duration-300",
+          "group flex items-center justify-between px-6 py-4 text-base font-medium",
+          getBorderRadiusClass(),
+          getAnimationClass(),
           level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
-            ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
+            ? cn(
+                "text-primary-foreground shadow-lg",
+                colorTheme === "blue" && "bg-gradient-to-r from-blue-500 to-blue-600",
+                colorTheme === "purple" && "bg-gradient-to-r from-purple-500 to-purple-600",
+                colorTheme === "green" && "bg-gradient-to-r from-green-500 to-green-600",
+                colorTheme === "orange" && "bg-gradient-to-r from-orange-500 to-orange-600",
+                colorTheme === "red" && "bg-gradient-to-r from-red-500 to-red-600",
+                colorTheme === "teal" && "bg-gradient-to-r from-teal-500 to-teal-600",
+                colorTheme === "pink" && "bg-gradient-to-r from-pink-500 to-pink-600",
+                colorTheme === "indigo" && "bg-gradient-to-r from-indigo-500 to-indigo-600",
+                colorTheme === "cyan" && "bg-gradient-to-r from-cyan-500 to-cyan-600"
+              )
             : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md"
         )}
         onClick={() => !item.disabled && onOpenChange(false)}
@@ -172,8 +257,10 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
     <>
       <div
         className={cn(
-          "sidebar fixed inset-y-0 z-50 w-80 bg-gradient-to-b from-sidebar via-sidebar/98 to-sidebar border-r-2 border-sidebar-border transform transition-transform duration-300 ease-in-out lg:translate-x-0 custom-scrollbar overflow-y-auto sidebar-shadow",
+          "sidebar fixed inset-y-0 z-50 w-80 bg-gradient-to-b from-sidebar via-sidebar/98 to-sidebar border-r-2 border-sidebar-border transform lg:translate-x-0 custom-scrollbar overflow-y-auto",
           "backdrop-blur-sm",
+          getShadowClass(),
+          getAnimationClass(),
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
@@ -186,7 +273,12 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-sidebar-border">
             <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+              <div className={cn(
+                "w-12 h-12 bg-primary flex items-center justify-center shadow-lg",
+                getBorderRadiusClass(),
+                getAnimationClass(),
+                "hover:scale-105 hover:shadow-xl"
+              )}>
                 <Logo size="md" className="text-primary-foreground" />
               </div>
               <div>
@@ -204,8 +296,10 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
               variant="ghost"
               size="icon"
               className={cn(
-                "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent transition-all duration-300",
-                "rounded-xl shadow-md hover:shadow-lg hover:scale-105"
+                "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent",
+                getBorderRadiusClass(),
+                getAnimationClass(),
+                "shadow-md hover:shadow-lg hover:scale-105"
               )}
               onClick={() => onOpenChange(false)}
             >
@@ -218,24 +312,39 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
             <div className="p-8 border-b-2 border-sidebar-border">
               <div
                 className={cn(
-                  "flex items-center space-x-4 rtl:space-x-reverse p-4 rounded-2xl",
+                  "flex items-center space-x-4 rtl:space-x-reverse p-4",
                   "bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
-                  "shadow-lg hover:shadow-xl transition-all duration-300"
+                  getBorderRadiusClass(),
+                  getShadowClass(),
+                  getAnimationClass(),
+                  "hover:shadow-xl"
                 )}
               >
                 <div className="relative">
                   <Avatar
                     className={cn(
                       "h-16 w-16 ring-2 ring-primary/30 shadow-lg",
-                      "transition-all duration-300 hover:scale-105"
+                      getAnimationClass(),
+                      "hover:scale-105"
                     )}
                   >
-                    <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold text-xl">
+                    <AvatarFallback className={cn(
+                      "text-primary font-semibold text-xl",
+                      colorTheme === "blue" && "bg-gradient-to-br from-blue-500/20 to-blue-600/10",
+                      colorTheme === "purple" && "bg-gradient-to-br from-purple-500/20 to-purple-600/10",
+                      colorTheme === "green" && "bg-gradient-to-br from-green-500/20 to-green-600/10",
+                      colorTheme === "orange" && "bg-gradient-to-br from-orange-500/20 to-orange-600/10",
+                      colorTheme === "red" && "bg-gradient-to-br from-red-500/20 to-red-600/10",
+                      colorTheme === "teal" && "bg-gradient-to-br from-teal-500/20 to-teal-600/10",
+                      colorTheme === "pink" && "bg-gradient-to-br from-pink-500/20 to-pink-600/10",
+                      colorTheme === "indigo" && "bg-gradient-to-br from-indigo-500/20 to-indigo-600/10",
+                      colorTheme === "cyan" && "bg-gradient-to-br from-cyan-500/20 to-cyan-600/10"
+                    )}>
                       {user.firstName.charAt(0)}
                       {user.lastName.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  {/* Fixed online indicator */}
+                  {/* Online indicator */}
                   <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-background shadow-md">
                     <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-600 rounded-full animate-pulse" />
                   </div>
@@ -250,7 +359,7 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                   <div className="flex items-center mt-1">
                     <div className="w-2 h-2 bg-green-500 rounded-full mr-2 rtl:mr-0 rtl:ml-2 animate-pulse" />
                     <span className="text-xs text-green-600 font-medium">
-                      متصل
+                      {t("status.online")}
                     </span>
                   </div>
                 </div>
@@ -259,26 +368,9 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           )}
 
           {/* Navigation */}
-          <nav className="flex-1 p-6 space-y-4">
+          <nav className={cn("flex-1 overflow-y-auto", getSpacingClass())}>
             {navigation.map((item) => renderNavigationItem(item))}
           </nav>
-
-          {/* Footer */}
-          <div className="p-6 border-t-2 border-sidebar-border">
-            <Button
-              variant="ghost"
-              onClick={logout}
-              className={cn(
-                "w-full justify-start space-x-4 rtl:space-x-reverse text-sidebar-foreground/70 hover:text-destructive hover:bg-destructive/10 px-6 py-4 h-auto text-base",
-                "rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
-              )}
-            >
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-destructive/10">
-                <LogOut className="w-5 h-5 text-destructive" />
-              </div>
-              <span>{t("nav.logout")}</span>
-            </Button>
-          </div>
         </div>
       </div>
     </>

@@ -1,41 +1,121 @@
-"use client"
+"use client";
 
-import { Menu, Search, Sun, Moon, Globe, Monitor } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { useTheme } from "next-themes"
-import { useI18n } from "@/providers/i18n-provider"
-import { useAuth } from "@/providers/auth-provider"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { cn } from "@/lib/utils"
+import { Menu, Search, Sun, Moon, Globe, Monitor } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useTheme } from "next-themes";
+import { useI18n } from "@/providers/i18n-provider";
+import { useAuth } from "@/providers/auth-provider";
+import { useSettings } from "@/providers/settings-provider";
+import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
+import { cn } from "@/lib/utils";
 
 interface ClassicHeaderProps {
-  onMenuClick: () => void
+  onMenuClick: () => void;
 }
 
 export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
-  const { theme, setTheme } = useTheme()
-  const { language, setLanguage, t, direction } = useI18n()
-  const { user } = useAuth()
+  const { theme, setTheme } = useTheme();
+  const { language, setLanguage, t, direction } = useI18n();
+  const { user } = useAuth();
+  const {
+    headerStyle,
+    spacingSize,
+    borderRadius,
+    animationLevel,
+    shadowIntensity,
+  } = useSettings();
+
+  const getSpacingClass = () => {
+    switch (spacingSize) {
+      case "compact":
+        return "px-4 py-2";
+      case "comfortable":
+        return "px-10 py-6";
+      case "spacious":
+        return "px-12 py-8";
+      default:
+        return "px-8 py-4";
+    }
+  };
+
+  const getHeaderStyleClass = () => {
+    switch (headerStyle) {
+      case "compact":
+        return "h-14 bg-background/95 border-b";
+      case "elevated":
+        return "bg-gradient-to-r from-background via-background/98 to-background border-b-2 border-border/80 shadow-xl shadow-primary/10";
+      case "transparent":
+        return "bg-transparent backdrop-blur-xl border-b border-border/30";
+      default:
+        return "bg-gradient-to-r from-background via-background/95 to-background border-b-2 border-border/80 shadow-lg shadow-primary/5 backdrop-blur-sm";
+    }
+  };
+
+  const getShadowClass = () => {
+    switch (shadowIntensity) {
+      case "none":
+        return "";
+      case "subtle":
+        return "shadow-sm";
+      case "strong":
+        return "shadow-2xl";
+      default:
+        return "shadow-lg";
+    }
+};
+
+  const getAnimationClass = () => {
+    if (animationLevel === "none") return "";
+    if (animationLevel === "minimal") return "transition-colors duration-200";
+    if (animationLevel === "moderate") return "transition-all duration-300";
+    return "transition-all duration-500 ease-in-out";
+  };
+
+  const getBorderRadiusClass = () => {
+    switch (borderRadius) {
+      case "none":
+        return "rounded-none";
+      case "small":
+        return "rounded-sm";
+      case "large":
+        return "rounded-lg";
+      case "full":
+        return "rounded-full";
+      default:
+        return "rounded-xl";
+    }
+  };
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 bg-gradient-to-r from-background via-background/95 to-background border-b-2 border-border/80",
-        "shadow-lg shadow-primary/5 backdrop-blur-sm",
+        "sticky top-0 z-40",
+        getHeaderStyleClass(),
+        getShadowClass(),
+        getAnimationClass()
       )}
     >
-      <div className="flex items-center justify-between px-8 py-4">
+      <div
+        className={cn("flex items-center justify-between", getSpacingClass())}
+      >
         {/* Left side */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
           <Button
             variant="ghost"
             size="icon"
             className={cn(
-              "lg:hidden hover:bg-primary/10 hover:text-primary transition-all duration-300",
-              "rounded-xl shadow-md hover:shadow-lg hover:scale-105",
+              "lg:hidden hover:bg-primary/10 hover:text-primary",
+              getBorderRadiusClass(),
+              getAnimationClass(),
+              "shadow-md hover:shadow-lg hover:scale-105"
             )}
             onClick={onMenuClick}
           >
@@ -51,8 +131,10 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
             <Input
               placeholder={t("common.search")}
               className={cn(
-                "pl-10 rtl:pl-4 rtl:pr-10 w-64 bg-muted/50 border-0 focus:bg-background transition-all duration-300",
-                "rounded-xl shadow-sm focus:shadow-md hover:shadow-md",
+                "pl-10 rtl:pl-4 rtl:pr-10 w-64 bg-muted/50 border-0 focus:bg-background",
+                getBorderRadiusClass(),
+                getAnimationClass(),
+                "shadow-sm focus:shadow-md hover:shadow-md"
               )}
             />
           </div>
@@ -64,19 +146,30 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "hover:bg-primary/10 hover:text-primary transition-all duration-300",
-                  "rounded-xl shadow-md hover:shadow-lg hover:scale-105",
+                  "hover:bg-primary/10 hover:text-primary",
+                  getBorderRadiusClass(),
+                  getAnimationClass(),
+                  "shadow-md hover:shadow-lg hover:scale-105"
                 )}
               >
                 <Globe className="w-5 h-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"} className="rounded-xl shadow-xl">
-              <DropdownMenuItem onClick={() => setLanguage("ar")} className="rounded-lg">
-                🇸🇦 العربية
+            <DropdownMenuContent
+              align={direction === "rtl" ? "start" : "end"}
+              className={cn(getBorderRadiusClass(), "shadow-xl")}
+            >
+              <DropdownMenuItem
+                onClick={() => setLanguage("ar")}
+                className="rounded-lg"
+              >
+                🇸🇦 {t("language.arabic")}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage("en")} className="rounded-lg">
-                🇺🇸 English
+              <DropdownMenuItem
+                onClick={() => setLanguage("en")}
+                className="rounded-lg"
+              >
+                🇺🇸 {t("language.english")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -88,52 +181,48 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "hover:bg-primary/10 hover:text-primary transition-all duration-300",
-                  "rounded-xl shadow-md hover:shadow-lg hover:scale-105",
+                  "hover:bg-primary/10 hover:text-primary",
+                  getBorderRadiusClass(),
+                  getAnimationClass(),
+                  "shadow-md hover:shadow-lg hover:scale-105"
                 )}
               >
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"} className="rounded-xl shadow-xl">
-              <DropdownMenuItem onClick={() => setTheme("light")} className="rounded-lg">
+            <DropdownMenuContent
+              align={direction === "rtl" ? "start" : "end"}
+              className={cn(getBorderRadiusClass(), "shadow-xl")}
+            >
+              <DropdownMenuItem
+                onClick={() => setTheme("light")}
+                className="rounded-lg"
+              >
                 <Sun className="mr-2 h-4 w-4" />
-                فاتح
+                {t("theme.light")}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")} className="rounded-lg">
+              <DropdownMenuItem
+                onClick={() => setTheme("dark")}
+                className="rounded-lg"
+              >
                 <Moon className="mr-2 h-4 w-4" />
-                داكن
+                {t("theme.dark")}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")} className="rounded-lg">
+              <DropdownMenuItem
+                onClick={() => setTheme("system")}
+                className="rounded-lg"
+              >
                 <Monitor className="mr-2 h-4 w-4" />
-                النظام
+                {t("theme.system")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* User Avatar */}
-          <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <Avatar
-              className={cn(
-                "h-10 w-10 ring-2 ring-primary/20 hover:ring-primary/40 transition-all duration-300",
-                "shadow-lg hover:shadow-xl hover:scale-105",
-              )}
-            >
-              <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-bold">
-                {user?.firstName.charAt(0)}
-                {user?.lastName.charAt(0)}
-              </AvatarFallback>
-            </Avatar>
-            <div className="hidden md:block">
-              <p className="font-medium text-foreground">
-                {user?.firstName} {user?.lastName}
-              </p>
-              <p className="text-sm text-muted-foreground">{user?.adminTypeName}</p>
-            </div>
-          </div>
+          {/* User Profile Dropdown */}
+          <UserProfileDropdown variant="default" showUserInfo={true} />
         </div>
       </div>
     </header>
-  )
+  );
 }
