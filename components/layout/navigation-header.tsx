@@ -156,7 +156,11 @@ export function NavigationHeader({
             </Button>
           )}
         </div>
-
+        <div className="flex items-start space-x-3 rtl:space-x-reverse">
+          <h1 className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+            {t("app.title")}
+          </h1>
+        </div>
         {/* Center Section - Search */}
         <div className="flex-1 max-w-md min-w-0">
           <div className="relative">

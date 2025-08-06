@@ -32,7 +32,7 @@ export function NavigationPanelSidebar({
   hasChildren,
 }: NavigationPanelSidebarProps) {
   const pathname = usePathname();
-  const { direction, t } = useI18n();
+  const { language, direction, t, setLanguage } = useI18n();
   const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
@@ -230,18 +230,20 @@ export function NavigationPanelSidebar({
       )}
     >
       <div className="flex flex-col h-full">
-        {/* Header */}
+        {/* Header - RTL/LTR Layout */}
         <div className="p-4 border-b border-border/50">
           <div
             className={cn(
               "flex items-center gap-3",
-              direction === "rtl" && "flex-row-reverse"
+              // RTL: Start from right with icon first, LTR: Start from left with icon first
+              direction === "rtl" ? "items-end text-right" : "flex-row"
             )}
           >
+            {/* Icon - Always appears first in reading direction */}
             {selectedNavItem.icon && (
               <div
                 className={cn(
-                  "w-8 h-8 flex items-center justify-center text-white",
+                  "w-8 h-8 flex items-center justify-center text-white flex-shrink-0",
                   getBorderRadiusClass(),
                   colorTheme === "blue" &&
                     "bg-gradient-to-br from-blue-500 to-blue-600",

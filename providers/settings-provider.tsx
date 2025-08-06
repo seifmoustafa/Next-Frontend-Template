@@ -204,8 +204,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  // Save settings to localStorage whenever they change
+  // Save settings to localStorage and apply CSS variables whenever they change
   useEffect(() => {
+    if (!mounted) return;
+
     const settings = {
       layoutTemplate,
       colorTheme,
@@ -222,28 +224,28 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("appSettings", JSON.stringify(settings));
 
     // Apply CSS variables for the selected themes
-    document.documentElement.setAttribute("data-theme", colorTheme);
-    document.documentElement.setAttribute(
-      "data-light-bg-theme",
-      lightBackgroundTheme
-    );
-    document.documentElement.setAttribute(
-      "data-dark-bg-theme",
-      darkBackgroundTheme
-    );
-    document.documentElement.setAttribute("data-shadow", shadowIntensity);
-    document.documentElement.setAttribute("data-layout", layoutTemplate);
-    document.documentElement.setAttribute("data-card-style", cardStyle);
-    document.documentElement.setAttribute("data-animation", animationLevel);
-    document.documentElement.setAttribute("data-font-size", fontSize);
-    document.documentElement.setAttribute("data-radius", borderRadius);
+    const root = document.documentElement;
+
+    // Apply all data attributes
+    root.setAttribute("data-theme", colorTheme);
+    root.setAttribute("data-light-bg-theme", lightBackgroundTheme);
+    root.setAttribute("data-dark-bg-theme", darkBackgroundTheme);
+    root.setAttribute("data-shadow", shadowIntensity);
+    root.setAttribute("data-layout", layoutTemplate);
+    root.setAttribute("data-card-style", cardStyle);
+    root.setAttribute("data-animation", animationLevel);
+    root.setAttribute("data-font-size", fontSize);
+    root.setAttribute("data-radius", borderRadius);
 
     // Apply RTL/LTR based on sidebar position
-    document.documentElement.setAttribute(
-      "dir",
-      sidebarPosition === "right" ? "rtl" : "ltr"
-    );
+    root.setAttribute("dir", sidebarPosition === "right" ? "rtl" : "ltr");
+
+    // Force a repaint to ensure CSS variables are applied
+    root.style.display = "none";
+    root.offsetHeight; // Trigger reflow
+    root.style.display = "";
   }, [
+    mounted,
     layoutTemplate,
     colorTheme,
     lightBackgroundTheme,

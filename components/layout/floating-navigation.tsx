@@ -173,35 +173,6 @@ export function FloatingNavigation({
     >
       <CardContent className="p-0">
         <div className="flex flex-col h-full max-h-[calc(100vh-8rem)]">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border/20">
-            <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
-                <Logo size="sm" className="text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-foreground">
-                  {t("app.title")}
-                </h1>
-                <p className="text-xs text-muted-foreground flex items-center">
-                  <Logo size="xs" className="mr-1 rtl:mr-0 rtl:ml-1" />
-                  {t("app.floating")}
-                </p>
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "lg:hidden h-8 w-8 rounded-full hover:bg-primary/10",
-                "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-              )}
-              onClick={() => onOpenChange(false)}
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-
           {/* User Info */}
           {user && (
             <div className="p-6 border-b border-border/50">
