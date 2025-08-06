@@ -103,13 +103,23 @@ export function ModernSidebar({
                       : "bg-primary/10 group-hover:bg-primary/20"
                   )}
                 >
-                  <Icon
-                    className={cn(
-                      "flex-shrink-0 transition-all duration-300 group-hover:scale-110",
-                      isHovered ? "w-5 h-5" : "w-4 h-4",
-                      isActive ? "text-white" : "text-primary"
-                    )}
-                  />
+                  {Icon ? (
+                    <Icon
+                      className={cn(
+                        "flex-shrink-0 transition-all duration-300 group-hover:scale-110",
+                        isHovered ? "w-5 h-5" : "w-4 h-4",
+                        isActive ? "text-white" : "text-primary"
+                      )}
+                    />
+                  ) : (
+                    <div
+                      className={cn(
+                        "rounded-full",
+                        isHovered ? "w-2.5 h-2.5" : "w-2 h-2",
+                        isActive ? "bg-white" : "bg-primary"
+                      )}
+                    />
+                  )}
                 </div>
 
                 {/* Text content - only visible when hovered */}
@@ -183,13 +193,23 @@ export function ModernSidebar({
               : "bg-primary/10 group-hover:bg-primary/20"
           )}
         >
-          <Icon
-            className={cn(
-              "flex-shrink-0 transition-all duration-300 group-hover:scale-110",
-              isHovered ? "w-5 h-5" : "w-4 h-4",
-              isActive ? "text-white" : "text-primary"
-            )}
-          />
+          {Icon ? (
+            <Icon
+              className={cn(
+                "flex-shrink-0 transition-all duration-300 group-hover:scale-110",
+                isHovered ? "w-5 h-5" : "w-4 h-4",
+                isActive ? "text-white" : "text-primary"
+              )}
+            />
+          ) : (
+            <div
+              className={cn(
+                "rounded-full",
+                isHovered ? "w-2.5 h-2.5" : "w-2 h-2",
+                isActive ? "bg-white" : "bg-primary"
+              )}
+            />
+          )}
         </div>
 
         {/* Text content - only visible when hovered */}

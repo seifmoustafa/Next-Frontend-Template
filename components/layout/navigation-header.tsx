@@ -7,8 +7,6 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Settings,
-  User,
-  LogOut,
   Globe,
   Sun,
   Moon,
@@ -21,7 +19,7 @@ import { navigation } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,7 +27,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@radix-ui/react-dropdown-menu";
 
 interface NavigationHeaderProps {
   onMenuClick: () => void;
@@ -52,18 +50,6 @@ export function NavigationHeader({
   const { language, direction, t, setLanguage } = useI18n();
   const { user, logout } = useAuth();
   const { colorTheme, cardStyle, animationLevel } = useSettings();
-
-  const getUserInitials = () => {
-    if (!user) return "U";
-    const firstName = user.firstName || "";
-    const lastName = user.lastName || "";
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-  };
-
-  const getUserDisplayName = () => {
-    if (!user) return "User";
-    return `${user.firstName || ""} ${user.lastName || ""}`.trim();
-  };
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -236,85 +222,11 @@ export function NavigationHeader({
           </DropdownMenu>
 
           {/* User Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex items-center gap-2 px-2 py-2 h-auto hover:bg-accent hover:text-accent-foreground"
-              >
-                <Avatar className="w-8 h-8">
-                  <AvatarImage
-                    src={user?.avatar || undefined}
-                    alt={getUserDisplayName()}
-                  />
-                  <AvatarFallback
-                    className={cn(
-                      "text-white text-sm font-semibold",
-                      colorTheme === "blue" &&
-                        "bg-gradient-to-br from-blue-500 to-blue-600",
-                      colorTheme === "purple" &&
-                        "bg-gradient-to-br from-purple-500 to-purple-600",
-                      colorTheme === "green" &&
-                        "bg-gradient-to-br from-green-500 to-green-600",
-                      colorTheme === "orange" &&
-                        "bg-gradient-to-br from-orange-500 to-orange-600",
-                      colorTheme === "red" &&
-                        "bg-gradient-to-br from-red-500 to-red-600",
-                      colorTheme === "teal" &&
-                        "bg-gradient-to-br from-teal-500 to-teal-600",
-                      colorTheme === "pink" &&
-                        "bg-gradient-to-br from-pink-500 to-pink-600",
-                      colorTheme === "indigo" &&
-                        "bg-gradient-to-br from-indigo-500 to-indigo-600",
-                      colorTheme === "cyan" &&
-                        "bg-gradient-to-br from-cyan-500 to-cyan-600"
-                    )}
-                  >
-                    {getUserInitials()}
-                  </AvatarFallback>
-                </Avatar>
-                {/* Show user name only when there's enough space */}
-                <div className="hidden xl:block text-left min-w-0">
-                  <div className="text-sm font-medium truncate max-w-32">
-                    {getUserDisplayName()}
-                  </div>
-                  <div className="text-xs text-muted-foreground truncate max-w-32">
-                    {user?.adminTypeName || user?.role || "User"}
-                  </div>
-                </div>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="w-56 bg-popover border-border"
-            >
-              <DropdownMenuLabel>
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium">{getUserDisplayName()}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {user?.email || "No email"}
-                  </p>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="hover:bg-accent hover:text-accent-foreground">
-                <User className="mr-2 h-4 w-4" />
-                <span>{t("layout.profile") || "Profile"}</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-accent hover:text-accent-foreground">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>{t("layout.account_settings") || "Settings"}</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                onClick={() => logout()}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>{t("layout.logout") || "Log out"}</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <UserProfileDropdown
+            variant="navigation"
+            showName={true}
+            className="flex-shrink-0"
+          />
         </div>
       </div>
     </header>

@@ -62,9 +62,18 @@ export function NavigationSidebar({
             }
           }}
         >
-          <item.icon
-            className={cn("w-5 h-5 shrink-0", isActive && "text-white")}
-          />
+          {item.icon ? (
+            <item.icon
+              className={cn("w-5 h-5 shrink-0", isActive && "text-white")}
+            />
+          ) : (
+            <div
+              className={cn(
+                "w-2.5 h-2.5 rounded-full shrink-0",
+                isActive ? "bg-white" : "bg-slate-400"
+              )}
+            />
+          )}
 
           {hasChildren ? (
             <span className="flex-1 text-sm font-medium truncate">

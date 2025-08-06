@@ -159,13 +159,22 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                       : "bg-primary/10 group-hover:bg-primary/20"
                   )}
                 >
-                  <Icon
-                    className={cn(
-                      "transition-all duration-300 group-hover:scale-110",
-                      level === 0 ? "w-5 h-5" : "w-4 h-4",
-                      isActive ? "text-white" : "text-primary"
-                    )}
-                  />
+                  {Icon ? (
+                    <Icon
+                      className={cn(
+                        "transition-all duration-300 group-hover:scale-110",
+                        level === 0 ? "w-5 h-5" : "w-4 h-4",
+                        isActive ? "text-white" : "text-primary"
+                      )}
+                    />
+                  ) : (
+                    <div
+                      className={cn(
+                        "w-2 h-2 rounded-full",
+                        isActive ? "bg-white" : "bg-primary"
+                      )}
+                    />
+                  )}
                 </div>
                 <span className="flex-1">{item.name}</span>
                 {item.badge && (
@@ -246,13 +255,22 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                 : "bg-primary/10 group-hover:bg-primary/20"
             )}
           >
-            <Icon
-              className={cn(
-                "transition-all duration-300 group-hover:scale-110",
-                level === 0 ? "w-5 h-5" : "w-4 h-4",
-                isActive ? "text-white" : "text-primary"
-              )}
-            />
+            {Icon ? (
+              <Icon
+                className={cn(
+                  "transition-all duration-300 group-hover:scale-110",
+                  level === 0 ? "w-5 h-5" : "w-4 h-4",
+                  isActive ? "text-white" : "text-primary"
+                )}
+              />
+            ) : (
+              <div
+                className={cn(
+                  "w-2 h-2 rounded-full",
+                  isActive ? "bg-white" : "bg-primary"
+                )}
+              />
+            )}
           </div>
           <span className="flex-1">{item.name}</span>
         </div>

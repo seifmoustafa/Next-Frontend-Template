@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { X, ChevronDown, ChevronRight, Crown, Star } from "lucide-react";
+import { X, ChevronDown, ChevronRight, Crown, Star } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -135,14 +135,22 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
                     getButtonStyleClass()
                   )}
                 >
-                  <Icon
-                    className={cn(
-                      level === 0 ? "w-7 h-7" : "w-6 h-6",
-                      isActive ? "text-white drop-shadow-sm" : "text-primary",
-                      "group-hover:scale-110 relative z-10",
-                      getAnimationClass()
-                    )}
-                  />
+                  {Icon ? (
+                    <Icon
+                      className={cn(
+                        level === 0 ? "w-7 h-7" : "w-6 h-6",
+                        isActive ? "text-white drop-shadow-sm" : "text-primary",
+                        "group-hover:scale-110 relative z-10",
+                        getAnimationClass()
+                      )}
+                    />
+                  ) : (
+                    <div className={cn(
+                      "rounded-full relative z-10",
+                      level === 0 ? "w-3 h-3" : "w-2 h-2",
+                      isActive ? "bg-white" : "bg-primary"
+                    )} />
+                  )}
                 </div>
                 <span className="truncate font-bold tracking-wide">
                   {item.name}
@@ -212,14 +220,22 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
               getButtonStyleClass()
             )}
           >
-            <Icon
-              className={cn(
-                level === 0 ? "w-7 h-7" : "w-6 h-6",
-                isActive ? "text-white drop-shadow-sm" : "text-primary",
-                "group-hover:scale-110 relative z-10",
-                getAnimationClass()
-              )}
-            />
+            {Icon ? (
+              <Icon
+                className={cn(
+                  level === 0 ? "w-7 h-7" : "w-6 h-6",
+                  isActive ? "text-white drop-shadow-sm" : "text-primary",
+                  "group-hover:scale-110 relative z-10",
+                  getAnimationClass()
+                )}
+              />
+            ) : (
+              <div className={cn(
+                "rounded-full relative z-10",
+                level === 0 ? "w-3 h-3" : "w-2 h-2",
+                isActive ? "bg-white" : "bg-primary"
+              )} />
+            )}
           </div>
           <span className="truncate font-bold tracking-wide">{item.name}</span>
         </div>

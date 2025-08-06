@@ -134,12 +134,21 @@ export function FloatingNavigation({
                       : "w-6 h-6 bg-primary/5"
                   )}
                 >
-                  <Icon
-                    className={cn(
-                      level === 0 ? "h-4 w-4" : "h-3 w-3",
-                      "text-primary"
-                    )}
-                  />
+                  {Icon ? (
+                    <Icon
+                      className={cn(
+                        level === 0 ? "h-4 w-4" : "h-3 w-3",
+                        "text-primary"
+                      )}
+                    />
+                  ) : (
+                    <div
+                      className={cn(
+                        "rounded-full bg-primary",
+                        level === 0 ? "w-2 h-2" : "w-1.5 h-1.5"
+                      )}
+                    />
+                  )}
                 </div>
                 <span>{item.name}</span>
                 {item.badge && (
@@ -193,12 +202,21 @@ export function FloatingNavigation({
               level === 0 ? "w-8 h-8 bg-primary/10" : "w-6 h-6 bg-primary/5"
             )}
           >
-            <Icon
-              className={cn(
-                level === 0 ? "h-4 w-4" : "h-3 w-3",
-                "text-primary"
-              )}
-            />
+            {Icon ? (
+              <Icon
+                className={cn(
+                  level === 0 ? "h-4 w-4" : "h-3 w-3",
+                  "text-primary"
+                )}
+              />
+            ) : (
+              <div
+                className={cn(
+                  "rounded-full bg-primary",
+                  level === 0 ? "w-2 h-2" : "w-1.5 h-1.5"
+                )}
+              />
+            )}
           </div>
           <span>{item.name}</span>
         </div>

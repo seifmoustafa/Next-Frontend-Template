@@ -116,11 +116,19 @@ export function NavigationPanelSidebar({
                     </Badge>
                   )}
                   <span className="flex-1 text-right">{displayName}</span>
-                  {item.icon && <item.icon className="w-4 h-4" />}
+                  {item.icon ? (
+                    <item.icon className="w-4 h-4" />
+                  ) : (
+                    <div className="w-2 h-2 rounded-full bg-primary" />
+                  )}
                 </>
               ) : (
                 <>
-                  {item.icon && <item.icon className="w-4 h-4" />}
+                  {item.icon ? (
+                    <item.icon className="w-4 h-4" />
+                  ) : (
+                    <div className="w-2 h-2 rounded-full bg-primary" />
+                  )}
                   <span className="flex-1 text-left">{displayName}</span>
                   {item.badge && (
                     <Badge variant="secondary" className="ml-auto">
@@ -194,11 +202,19 @@ export function NavigationPanelSidebar({
                 </Badge>
               )}
               <span className="flex-1 text-right">{displayName}</span>
-              {item.icon && <item.icon className="w-4 h-4" />}
+              {item.icon ? (
+                <item.icon className="w-4 h-4" />
+              ) : (
+                <div className="w-2 h-2 rounded-full bg-primary" />
+              )}
             </>
           ) : (
             <>
-              {item.icon && <item.icon className="w-4 h-4" />}
+              {item.icon ? (
+                <item.icon className="w-4 h-4" />
+              ) : (
+                <div className="w-2 h-2 rounded-full bg-primary" />
+              )}
               <span className="flex-1 text-left">{displayName}</span>
               {item.badge && (
                 <Badge

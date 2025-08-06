@@ -10,7 +10,7 @@ import {
 export interface NavigationItem {
   name: string;
   href?: string;
-  icon: any;
+  icon?: any; // Make icon optional
   children?: NavigationItem[];
   badge?: string | number; // Optional badge for notifications
   disabled?: boolean; // Optional disabled state
@@ -49,7 +49,7 @@ export const navigation: NavigationItem[] = [
           {
             name: "UUUSSS",
             href: "/dashboard/usersx",
-            icon: Users,
+            // No icon property - will be null
           },
           {
             name: "UUUSSS",

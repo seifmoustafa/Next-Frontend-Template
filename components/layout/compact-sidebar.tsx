@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { X, ChevronDown, ChevronRight } from "lucide-react";
+import { X, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -130,13 +130,20 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                       : "bg-primary/10 group-hover:bg-primary/20"
                   )}
                 >
-                  <Icon
-                    className={cn(
-                      "w-4 h-4 flex-shrink-0 group-hover:scale-110",
-                      getAnimationClass(),
-                      isActive ? "text-white" : "text-primary"
-                    )}
-                  />
+                  {Icon ? (
+                    <Icon
+                      className={cn(
+                        "w-4 h-4 flex-shrink-0 group-hover:scale-110",
+                        getAnimationClass(),
+                        isActive ? "text-white" : "text-primary"
+                      )}
+                    />
+                  ) : (
+                    <div className={cn(
+                      "w-2 h-2 rounded-full",
+                      isActive ? "bg-white" : "bg-primary"
+                    )} />
+                  )}
                 </div>
                 <span className="truncate">{item.name}</span>
                 {item.badge && (
@@ -199,13 +206,20 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                 : "bg-primary/10 group-hover:bg-primary/20"
             )}
           >
-            <Icon
-              className={cn(
-                "w-4 h-4 flex-shrink-0 group-hover:scale-110",
-                getAnimationClass(),
-                isActive ? "text-white" : "text-primary"
-              )}
-            />
+            {Icon ? (
+              <Icon
+                className={cn(
+                  "w-4 h-4 flex-shrink-0 group-hover:scale-110",
+                  getAnimationClass(),
+                  isActive ? "text-white" : "text-primary"
+                )}
+              />
+            ) : (
+              <div className={cn(
+                "w-2 h-2 rounded-full",
+                isActive ? "bg-white" : "bg-primary"
+              )} />
+            )}
           </div>
           <span className="truncate">{item.name}</span>
         </div>
