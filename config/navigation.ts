@@ -1,12 +1,21 @@
-import { LayoutDashboard, Users, BarChart3, Settings, User } from "lucide-react"
+import {
+  LayoutDashboard,
+  Users,
+  BarChart3,
+  Settings,
+  User,
+  UserPlus,
+  UserCheck,
+  UserX,
+} from "lucide-react";
 
 export interface NavigationItem {
-  name: string
-  href?: string
-  icon: any
-  children?: NavigationItem[]
-  badge?: string | number // Optional badge for notifications
-  disabled?: boolean // Optional disabled state
+  name: string;
+  href?: string;
+  icon: any;
+  children?: NavigationItem[];
+  badge?: string | number; // Optional badge for notifications
+  disabled?: boolean; // Optional disabled state
 }
 
 /**
@@ -33,7 +42,30 @@ export const navigation: NavigationItem[] = [
   },
   {
     name: "nav.users", // Uses translation key
-    href: "/dashboard/users",
+    // href: "/dashboard/users",
+    children: [
+      {
+        name: "قائمة المستخدمين",
+        children: [
+          {
+            name: "المستخدمين النشطين",
+            href: "/dashboard/users/active",
+            icon: UserCheck,
+          },
+          {
+            name: "المستخدمين المحظورين",
+            href: "/dashboard/users/blocked",
+            icon: UserX,
+          },
+        ],
+        icon: Users,
+      },
+      {
+        name: "إضافة مستخدم",
+        href: "/dashboard/users/create",
+        icon: UserPlus,
+      },
+    ],
     icon: Users,
   },
   {
@@ -51,7 +83,7 @@ export const navigation: NavigationItem[] = [
     href: "/dashboard/settings",
     icon: Settings,
   },
-]
+];
 
 /* 
 ============================================================================
@@ -260,44 +292,53 @@ import { FileText, Download, Upload } from 'lucide-react'
  * Helper function to get navigation items with translation support
  * This can be used by sidebar components to get translated navigation items
  */
-export const getNavigationItems = (t: (key: string) => string): NavigationItem[] => {
+export const getNavigationItems = (
+  t: (key: string) => string
+): NavigationItem[] => {
   const translateItem = (item: NavigationItem): NavigationItem => ({
     ...item,
     name: item.name.startsWith("nav.") ? t(item.name) : item.name,
     children: item.children?.map(translateItem),
-  })
+  });
 
-  return navigation.map(translateItem)
-}
+  return navigation.map(translateItem);
+};
 
 /**
  * Helper function to check if a navigation item or its children are active
  */
-export const isNavigationItemActive = (item: NavigationItem, pathname: string): boolean => {
-  if (item.href && pathname === item.href) return true
+export const isNavigationItemActive = (
+  item: NavigationItem,
+  pathname: string
+): boolean => {
+  if (item.href && pathname === item.href) return true;
   if (item.children) {
-    return item.children.some((child) => isNavigationItemActive(child, pathname))
+    return item.children.some((child) =>
+      isNavigationItemActive(child, pathname)
+    );
   }
-  return false
-}
+  return false;
+};
 
 /**
  * Helper function to get all navigation items as a flat array (useful for search)
  */
-export const getFlatNavigationItems = (items: NavigationItem[] = navigation): NavigationItem[] => {
-  const flatItems: NavigationItem[] = []
+export const getFlatNavigationItems = (
+  items: NavigationItem[] = navigation
+): NavigationItem[] => {
+  const flatItems: NavigationItem[] = [];
 
   const flatten = (items: NavigationItem[]) => {
     items.forEach((item) => {
       if (item.href) {
-        flatItems.push(item)
+        flatItems.push(item);
       }
       if (item.children) {
-        flatten(item.children)
+        flatten(item.children);
       }
-    })
-  }
+    });
+  };
 
-  flatten(items)
-  return flatItems
-}
+  flatten(items);
+  return flatItems;
+};
