@@ -112,30 +112,22 @@ export function ModernSidebar({
                   />
                 </div>
 
-                {/* Text content - fade in/out without movement */}
-                <div
-                  className={cn(
-                    "flex-1 min-w-0 transition-opacity duration-300",
-                    isHovered ? "opacity-100" : "opacity-0 w-0 overflow-hidden"
-                  )}
-                >
-                  <span className="block truncate whitespace-nowrap">
-                    {item.name}
-                  </span>
-                </div>
+                {/* Text content - only visible when hovered */}
+                {isHovered && (
+                  <div className="flex-1 min-w-0">
+                    <span className="block truncate">{item.name}</span>
+                  </div>
+                )}
 
-                {/* Badge - fade in/out without movement */}
-                {item.badge && (
+                {/* Badge - only visible when hovered */}
+                {item.badge && isHovered && (
                   <Badge
                     variant="secondary"
                     className={cn(
-                      "text-xs flex-shrink-0 transition-opacity duration-300",
+                      "text-xs flex-shrink-0",
                       isActive
                         ? "bg-white/20 text-white"
-                        : "bg-primary/10 text-primary",
-                      isHovered
-                        ? "opacity-100"
-                        : "opacity-0 w-0 overflow-hidden"
+                        : "bg-primary/10 text-primary"
                     )}
                   >
                     {item.badge}
@@ -143,15 +135,16 @@ export function ModernSidebar({
                 )}
               </div>
 
-              {/* Chevron - fade in/out without movement */}
-              <ChevronDown
-                className={cn(
-                  "w-4 h-4 transition-all duration-300 flex-shrink-0 ml-2 rtl:ml-0 rtl:mr-2",
-                  isExpanded && "rotate-180",
-                  isActive ? "text-white" : "text-primary",
-                  isHovered ? "opacity-100" : "opacity-0 w-0 overflow-hidden"
-                )}
-              />
+              {/* Chevron - only visible when hovered */}
+              {isHovered && (
+                <ChevronDown
+                  className={cn(
+                    "w-4 h-4 transition-all duration-300 flex-shrink-0 ml-2 rtl:ml-0 rtl:mr-2",
+                    isExpanded && "rotate-180",
+                    isActive ? "text-white" : "text-primary"
+                  )}
+                />
+              )}
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-1">
@@ -199,26 +192,20 @@ export function ModernSidebar({
           />
         </div>
 
-        {/* Text content - fade in/out without movement */}
-        <div
-          className={cn(
-            "flex-1 min-w-0 transition-opacity duration-300",
-            isHovered ? "opacity-100" : "opacity-0 w-0 overflow-hidden"
-          )}
-        >
-          <span className="block truncate whitespace-nowrap">{item.name}</span>
-        </div>
+        {/* Text content - only visible when hovered */}
+        {isHovered && (
+          <div className="flex-1 min-w-0">
+            <span className="block truncate">{item.name}</span>
+          </div>
+        )}
 
-        {/* Badge - fade in/out without movement */}
-        {item.badge && (
+        {/* Badge - only visible when hovered */}
+        {item.badge && isHovered && (
           <Badge
             variant="secondary"
             className={cn(
-              "text-xs flex-shrink-0 transition-opacity duration-300",
-              isActive
-                ? "bg-white/20 text-white"
-                : "bg-primary/10 text-primary",
-              isHovered ? "opacity-100" : "opacity-0 w-0 overflow-hidden"
+              "text-xs flex-shrink-0",
+              isActive ? "bg-white/20 text-white" : "bg-primary/10 text-primary"
             )}
           >
             {item.badge}
@@ -232,8 +219,8 @@ export function ModernSidebar({
     <>
       <div
         className={cn(
-          "sidebar fixed inset-y-0 z-50 bg-gradient-to-b from-sidebar via-sidebar/98 to-sidebar border-r border-sidebar-border transform transition-all duration-300 ease-in-out lg:translate-x-0 custom-scrollbar overflow-y-auto sidebar-shadow",
-          "backdrop-blur-sm",
+          "sidebar fixed inset-y-0 z-50 bg-gradient-to-b from-sidebar via-sidebar/98 to-sidebar border-r border-sidebar-border transform transition-all duration-300 ease-in-out lg:translate-x-0 custom-scrollbar overflow-y-auto",
+          "shadow-2xl shadow-primary/10 backdrop-blur-sm",
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
@@ -259,26 +246,21 @@ export function ModernSidebar({
               >
                 <Logo size="sm" className="text-primary-foreground" />
               </div>
-              {/* Title - fade in/out without movement */}
-              <div
-                className={cn(
-                  "flex-1 min-w-0 transition-opacity duration-300",
-                  isHovered ? "opacity-100" : "opacity-0 w-0 overflow-hidden"
-                )}
-              >
-                <h1 className="text-lg font-bold text-sidebar-foreground leading-tight break-words hyphens-auto whitespace-normal">
-                  {t("app.title")}
-                </h1>
-                <p className="text-xs text-sidebar-foreground/60 flex items-center mt-1 break-words">
-                  <Logo
-                    size="sm"
-                    className="mr-1 rtl:mr-0 rtl:ml-1 flex-shrink-0"
-                  />
-                  <span className="break-words whitespace-normal">
-                    {t("app.modern")}
-                  </span>
-                </p>
-              </div>
+              {isHovered && (
+                <div className="flex-1 min-w-0">
+                  {/* Multi-line title with proper word wrapping */}
+                  <h1 className="text-lg font-bold text-sidebar-foreground leading-tight break-words hyphens-auto">
+                    {t("app.title")}
+                  </h1>
+                  <p className="text-xs text-sidebar-foreground/60 flex items-center mt-1 break-words">
+                    <Logo
+                      size="sm"
+                      className="mr-1 rtl:mr-0 rtl:ml-1 flex-shrink-0"
+                    />
+                    <span className="break-words">{t("app.modern")}</span>
+                  </p>
+                </div>
+              )}
             </div>
 
             <Button
@@ -331,20 +313,16 @@ export function ModernSidebar({
                     <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-600 rounded-full animate-pulse" />
                   </div>
                 </div>
-                {/* User info text - fade in/out without movement */}
-                <div
-                  className={cn(
-                    "flex-1 min-w-0 transition-opacity duration-300",
-                    isHovered ? "opacity-100" : "opacity-0 w-0 overflow-hidden"
-                  )}
-                >
-                  <p className="text-sidebar-foreground font-medium truncate text-sm whitespace-nowrap">
-                    {user.firstName} {user.lastName}
-                  </p>
-                  <p className="text-sidebar-foreground/60 text-xs truncate whitespace-nowrap">
-                    {user.adminTypeName}
-                  </p>
-                </div>
+                {isHovered && (
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sidebar-foreground font-medium truncate text-sm">
+                      {user.firstName} {user.lastName}
+                    </p>
+                    <p className="text-sidebar-foreground/60 text-xs truncate">
+                      {user.adminTypeName}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -380,17 +358,11 @@ export function ModernSidebar({
                   )}
                 />
               </div>
-              {/* Logout text - fade in/out without movement */}
-              <div
-                className={cn(
-                  "flex-1 min-w-0 transition-opacity duration-300",
-                  isHovered ? "opacity-100" : "opacity-0 w-0 overflow-hidden"
-                )}
-              >
-                <span className="block truncate whitespace-nowrap">
-                  {t("nav.logout")}
-                </span>
-              </div>
+              {isHovered && (
+                <div className="flex-1 min-w-0">
+                  <span className="block truncate">{t("nav.logout")}</span>
+                </div>
+              )}
             </Button>
           </div>
         </div>

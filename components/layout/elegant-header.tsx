@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { Search, Settings, Menu, Sun, Moon, Globe, Zap } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
+import { Search, Settings, Menu, Sun, Moon, Globe, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,21 +12,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useTheme } from "next-themes"
-import { useI18n } from "@/providers/i18n-provider"
-import { useAuth } from "@/providers/auth-provider"
-import { cn } from "@/lib/utils"
-import { Logo } from "@/components/ui/logo"
+} from "@/components/ui/dropdown-menu";
+import { useTheme } from "next-themes";
+import { useI18n } from "@/providers/i18n-provider";
+import { useAuth } from "@/providers/auth-provider";
+import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui/logo";
 
 interface ElegantHeaderProps {
-  onMenuClick: () => void
+  onMenuClick: () => void;
 }
 
 export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
-  const { theme, setTheme } = useTheme()
-  const { language, setLanguage, t, direction } = useI18n()
-  const { user } = useAuth()
+  const { theme, setTheme } = useTheme();
+  const { language, setLanguage, t, direction } = useI18n();
+  const { user } = useAuth();
 
   return (
     <header
@@ -37,7 +37,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
         "shadow-2xl shadow-primary/10",
         "transition-all duration-700 ease-out",
         "before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary/8 before:via-primary/4 before:to-primary/8 before:opacity-60",
-        "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary/50 after:to-transparent",
+        "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary/50 after:to-transparent"
       )}
     >
       <div className="relative flex items-center justify-between h-full px-6 lg:px-8 z-10">
@@ -63,7 +63,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               "transition-all duration-500 ease-out",
               "hover:scale-110 active:scale-95",
               "backdrop-blur-xl",
-              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
             )}
             onClick={onMenuClick}
           >
@@ -82,10 +82,14 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "hover:shadow-3xl hover:shadow-primary/50 hover:scale-110",
                 "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/25 before:via-white/10 before:to-transparent before:opacity-100",
                 "after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-br after:from-transparent after:via-white/15 after:to-transparent after:animate-pulse",
-                "group cursor-pointer",
+                "group cursor-pointer"
               )}
             >
-              <Logo size="lg" variant="default" className="relative z-10 group-hover:animate-spin transition-transform duration-700" />
+              <Logo
+                size="lg"
+                variant="default"
+                className="relative z-10 group-hover:animate-spin transition-transform duration-700"
+              />
               <Zap className="absolute top-1 right-1 w-4 h-4 text-primary-foreground/80 animate-pulse" />
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-transparent via-white/10 to-transparent animate-pulse opacity-50" />
             </div>
@@ -94,7 +98,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 className={cn(
                   "text-2xl font-bold tracking-tight",
                   "bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent",
-                  "animate-gradient-x drop-shadow-sm",
+                  "animate-gradient-x drop-shadow-sm"
                 )}
               >
                 {t("app.title")}
@@ -117,7 +121,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100",
                 "transition-all duration-500 ease-out",
                 "blur-lg group-hover:blur-sm group-focus-within:blur-sm",
-                "scale-105 group-hover:scale-100 group-focus-within:scale-100",
+                "scale-105 group-hover:scale-100 group-focus-within:scale-100"
               )}
             />
             <div
@@ -127,7 +131,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "backdrop-blur-xl border border-border/50",
                 "group-focus-within:border-primary/40 group-hover:border-primary/30",
                 "transition-all duration-500 ease-out",
-                "shadow-lg group-focus-within:shadow-xl group-focus-within:shadow-primary/20",
+                "shadow-lg group-focus-within:shadow-xl group-focus-within:shadow-primary/20"
               )}
             />
             <Search
@@ -136,7 +140,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "text-muted-foreground/60 group-focus-within:text-primary group-hover:text-primary/80",
                 "transition-all duration-500 ease-out",
                 "group-focus-within:scale-110",
-                direction === "rtl" ? "right-5" : "left-5",
+                direction === "rtl" ? "right-5" : "left-5"
               )}
             />
             <Input
@@ -147,7 +151,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "focus:ring-0 focus:outline-none",
                 "transition-all duration-500 ease-out",
                 "placeholder:text-muted-foreground/60 placeholder:font-medium",
-                direction === "rtl" ? "pr-14 text-right" : "pl-14",
+                direction === "rtl" ? "pr-14 text-right" : "pl-14"
               )}
             />
           </div>
@@ -168,7 +172,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               "transition-all duration-500 ease-out",
               "hover:scale-110 active:scale-95",
               "backdrop-blur-xl",
-              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
             )}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
@@ -189,14 +193,12 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               "transition-all duration-500 ease-out",
               "hover:scale-110 active:scale-95",
               "backdrop-blur-xl",
-              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+              "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
             )}
             onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
           >
             <Globe className="h-5 w-5 text-primary" />
           </Button>
-
-
 
           {/* User Menu - Enhanced */}
           <DropdownMenu>
@@ -212,7 +214,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                   "transition-all duration-500 ease-out",
                   "hover:scale-105 active:scale-95",
                   "backdrop-blur-xl",
-                  "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+                  "before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
                 )}
               >
                 <div className="flex items-center space-x-4 rtl:space-x-reverse">
@@ -222,14 +224,14 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                       "ring-2 ring-primary/40 hover:ring-primary/60",
                       "shadow-xl shadow-primary/30",
                       "transition-all duration-500",
-                      "hover:scale-110",
+                      "hover:scale-110"
                     )}
                   >
                     <AvatarFallback
                       className={cn(
                         "bg-gradient-to-br from-primary/25 via-primary/15 to-primary/10",
                         "text-primary font-bold text-sm",
-                        "border border-primary/20",
+                        "border border-primary/20"
                       )}
                     >
                       {user?.firstName.charAt(0)}
@@ -240,7 +242,9 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                     <p className="text-sm font-bold text-foreground">
                       {user?.firstName} {user?.lastName}
                     </p>
-                    <p className="text-xs text-muted-foreground/90 font-medium">{user?.adminTypeName}</p>
+                    <p className="text-xs text-muted-foreground/90 font-medium">
+                      {user?.adminTypeName}
+                    </p>
                   </div>
                 </div>
               </Button>
@@ -253,18 +257,20 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "border border-border/60",
                 "shadow-2xl shadow-primary/15",
                 "rounded-3xl",
-                "animate-in slide-in-from-top-2 duration-300",
+                "animate-in slide-in-from-top-2 duration-300"
               )}
               sideOffset={8}
             >
-              <DropdownMenuLabel className="text-lg font-bold px-2 py-3">{t("profile.title")}</DropdownMenuLabel>
+              <DropdownMenuLabel className="text-lg font-bold px-2 py-3">
+                {t("profile.title")}
+              </DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-border/60 to-transparent" />
               <DropdownMenuItem
                 className={cn(
                   "rounded-2xl p-4 my-2",
                   "hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary",
                   "transition-all duration-300",
-                  "cursor-pointer",
+                  "cursor-pointer"
                 )}
               >
                 <Settings className="mr-3 h-5 w-5 rtl:mr-0 rtl:ml-3" />
@@ -276,7 +282,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                   "rounded-2xl p-4 my-2",
                   "text-destructive hover:bg-gradient-to-r hover:from-destructive/10 hover:to-destructive/5",
                   "transition-all duration-300",
-                  "cursor-pointer",
+                  "cursor-pointer"
                 )}
               >
                 <span className="font-medium">{t("nav.logout")}</span>
@@ -286,5 +292,5 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
         </div>
       </div>
     </header>
-  )
+  );
 }

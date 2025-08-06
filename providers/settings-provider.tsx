@@ -24,17 +24,28 @@ export type ColorTheme =
   | "indigo"
   | "cyan";
 
-// Background theme types - New
-export type BackgroundTheme =
+// Background theme types - Separate for light and dark
+export type LightBackgroundTheme =
   | "default"
   | "warm"
   | "cool"
   | "neutral"
   | "soft"
+  | "cream"
+  | "mint"
+  | "lavender"
+  | "rose";
+
+export type DarkBackgroundTheme =
+  | "default"
   | "darker"
   | "pitch"
   | "slate"
-  | "warm-dark";
+  | "warm-dark"
+  | "forest"
+  | "ocean"
+  | "purple-dark"
+  | "crimson";
 
 // Shadow intensity types - New
 export type ShadowIntensity = "none" | "subtle" | "moderate" | "strong";
@@ -66,11 +77,14 @@ interface SettingsContextType {
   colorTheme: ColorTheme;
   setColorTheme: (theme: ColorTheme) => void;
 
-  // Background theme - New
-  backgroundTheme: BackgroundTheme;
-  setBackgroundTheme: (theme: BackgroundTheme) => void;
+  // Background themes - Separate for light and dark
+  lightBackgroundTheme: LightBackgroundTheme;
+  setLightBackgroundTheme: (theme: LightBackgroundTheme) => void;
 
-  // Shadow intensity - New
+  darkBackgroundTheme: DarkBackgroundTheme;
+  setDarkBackgroundTheme: (theme: DarkBackgroundTheme) => void;
+
+  // Shadow intensity
   shadowIntensity: ShadowIntensity;
   setShadowIntensity: (intensity: ShadowIntensity) => void;
 
@@ -105,7 +119,8 @@ interface SettingsContextType {
 const defaultSettings = {
   layoutTemplate: "classic" as LayoutTemplate,
   colorTheme: "purple" as ColorTheme,
-  backgroundTheme: "default" as BackgroundTheme,
+  lightBackgroundTheme: "default" as LightBackgroundTheme,
+  darkBackgroundTheme: "default" as DarkBackgroundTheme,
   shadowIntensity: "moderate" as ShadowIntensity,
   sidebarPosition: "right" as SidebarPosition,
   cardStyle: "glass" as CardStyle,
@@ -126,9 +141,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [colorTheme, setColorTheme] = useState<ColorTheme>(
     defaultSettings.colorTheme
   );
-  const [backgroundTheme, setBackgroundTheme] = useState<BackgroundTheme>(
-    defaultSettings.backgroundTheme
-  );
+  const [lightBackgroundTheme, setLightBackgroundTheme] =
+    useState<LightBackgroundTheme>(defaultSettings.lightBackgroundTheme);
+  const [darkBackgroundTheme, setDarkBackgroundTheme] =
+    useState<DarkBackgroundTheme>(defaultSettings.darkBackgroundTheme);
   const [shadowIntensity, setShadowIntensity] = useState<ShadowIntensity>(
     defaultSettings.shadowIntensity
   );
@@ -158,8 +174,13 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
           parsedSettings.layoutTemplate || defaultSettings.layoutTemplate
         );
         setColorTheme(parsedSettings.colorTheme || defaultSettings.colorTheme);
-        setBackgroundTheme(
-          parsedSettings.backgroundTheme || defaultSettings.backgroundTheme
+        setLightBackgroundTheme(
+          parsedSettings.lightBackgroundTheme ||
+            defaultSettings.lightBackgroundTheme
+        );
+        setDarkBackgroundTheme(
+          parsedSettings.darkBackgroundTheme ||
+            defaultSettings.darkBackgroundTheme
         );
         setShadowIntensity(
           parsedSettings.shadowIntensity || defaultSettings.shadowIntensity
@@ -188,7 +209,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     const settings = {
       layoutTemplate,
       colorTheme,
-      backgroundTheme,
+      lightBackgroundTheme,
+      darkBackgroundTheme,
       shadowIntensity,
       sidebarPosition,
       cardStyle,
@@ -201,7 +223,14 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
 
     // Apply CSS variables for the selected themes
     document.documentElement.setAttribute("data-theme", colorTheme);
-    document.documentElement.setAttribute("data-bg-theme", backgroundTheme);
+    document.documentElement.setAttribute(
+      "data-light-bg-theme",
+      lightBackgroundTheme
+    );
+    document.documentElement.setAttribute(
+      "data-dark-bg-theme",
+      darkBackgroundTheme
+    );
     document.documentElement.setAttribute("data-shadow", shadowIntensity);
     document.documentElement.setAttribute("data-layout", layoutTemplate);
     document.documentElement.setAttribute("data-card-style", cardStyle);
@@ -217,7 +246,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   }, [
     layoutTemplate,
     colorTheme,
-    backgroundTheme,
+    lightBackgroundTheme,
+    darkBackgroundTheme,
     shadowIntensity,
     sidebarPosition,
     cardStyle,
@@ -231,7 +261,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const resetSettings = () => {
     setLayoutTemplate(defaultSettings.layoutTemplate);
     setColorTheme(defaultSettings.colorTheme);
-    setBackgroundTheme(defaultSettings.backgroundTheme);
+    setLightBackgroundTheme(defaultSettings.lightBackgroundTheme);
+    setDarkBackgroundTheme(defaultSettings.darkBackgroundTheme);
     setShadowIntensity(defaultSettings.shadowIntensity);
     setSidebarPosition(defaultSettings.sidebarPosition);
     setCardStyle(defaultSettings.cardStyle);
@@ -253,8 +284,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         setLayoutTemplate,
         colorTheme,
         setColorTheme,
-        backgroundTheme,
-        setBackgroundTheme,
+        lightBackgroundTheme,
+        setLightBackgroundTheme,
+        darkBackgroundTheme,
+        setDarkBackgroundTheme,
         shadowIntensity,
         setShadowIntensity,
         sidebarPosition,

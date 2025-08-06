@@ -658,11 +658,12 @@ export function SettingsView() {
             <CardContent className="space-y-6">
               {/* Light Backgrounds */}
               <div>
-                <Label className="text-base font-semibold">
+                <Label className="text-base font-semibold flex items-center gap-2">
+                  <Sun className="h-4 w-4" />
                   Light Mode Backgrounds
                 </Label>
                 <p className="text-sm text-muted-foreground mb-4">
-                  These backgrounds only apply when using light theme
+                  Choose background theme for light mode
                 </p>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                   {lightBackgroundThemes.map((theme) => (
@@ -670,11 +671,11 @@ export function SettingsView() {
                       key={theme.value}
                       className={cn(
                         "relative flex flex-col items-center gap-2 rounded-lg border p-4 hover:border-primary cursor-pointer transition-all",
-                        settings.backgroundTheme === theme.value &&
+                        settings.lightBackgroundTheme === theme.value &&
                           "border-primary bg-primary/5"
                       )}
                       onClick={() =>
-                        settings.setBackgroundTheme(theme.value as any)
+                        settings.setLightBackgroundTheme(theme.value as any)
                       }
                     >
                       <div
@@ -691,7 +692,7 @@ export function SettingsView() {
                           {theme.description}
                         </p>
                       </div>
-                      {settings.backgroundTheme === theme.value && (
+                      {settings.lightBackgroundTheme === theme.value && (
                         <div className="absolute top-2 right-2 h-4 w-4 rounded-full bg-primary flex items-center justify-center">
                           <Check className="h-3 w-3 text-primary-foreground" />
                         </div>
@@ -705,11 +706,12 @@ export function SettingsView() {
 
               {/* Dark Backgrounds */}
               <div>
-                <Label className="text-base font-semibold">
+                <Label className="text-base font-semibold flex items-center gap-2">
+                  <Moon className="h-4 w-4" />
                   Dark Mode Backgrounds
                 </Label>
                 <p className="text-sm text-muted-foreground mb-4">
-                  These backgrounds only apply when using dark theme
+                  Choose background theme for dark mode
                 </p>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                   {darkBackgroundThemes.map((theme) => (
@@ -717,11 +719,11 @@ export function SettingsView() {
                       key={theme.value}
                       className={cn(
                         "relative flex flex-col items-center gap-2 rounded-lg border p-4 hover:border-primary cursor-pointer transition-all",
-                        settings.backgroundTheme === theme.value &&
+                        settings.darkBackgroundTheme === theme.value &&
                           "border-primary bg-primary/5"
                       )}
                       onClick={() =>
-                        settings.setBackgroundTheme(theme.value as any)
+                        settings.setDarkBackgroundTheme(theme.value as any)
                       }
                     >
                       <div
@@ -738,7 +740,7 @@ export function SettingsView() {
                           {theme.description}
                         </p>
                       </div>
-                      {settings.backgroundTheme === theme.value && (
+                      {settings.darkBackgroundTheme === theme.value && (
                         <div className="absolute top-2 right-2 h-4 w-4 rounded-full bg-primary flex items-center justify-center">
                           <Check className="h-3 w-3 text-primary-foreground" />
                         </div>

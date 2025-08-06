@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { Search, Settings, Menu, Sun, Moon, Globe } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
+import { Search, Settings, Menu, Sun, Moon, Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,27 +12,27 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useTheme } from "next-themes"
-import { useI18n } from "@/providers/i18n-provider"
-import { useAuth } from "@/providers/auth-provider"
-import { cn } from "@/lib/utils"
-import { Logo } from "@/components/ui/logo"
+} from "@/components/ui/dropdown-menu";
+import { useTheme } from "next-themes";
+import { useI18n } from "@/providers/i18n-provider";
+import { useAuth } from "@/providers/auth-provider";
+import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui/logo";
 
 interface CompactHeaderProps {
-  onMenuClick: () => void
+  onMenuClick: () => void;
 }
 
 export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
-  const { theme, setTheme } = useTheme()
-  const { language, setLanguage, t, direction } = useI18n()
-  const { user } = useAuth()
+  const { theme, setTheme } = useTheme();
+  const { language, setLanguage, t, direction } = useI18n();
+  const { user } = useAuth();
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 h-16 bg-gradient-to-r from-background via-background/98 to-background border-b border-border/80",
-        "shadow-lg shadow-primary/5 backdrop-blur-xl",
+        "shadow-lg shadow-primary/5 backdrop-blur-xl"
       )}
     >
       <div className="flex items-center justify-between h-full px-4">
@@ -44,7 +44,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             size="icon"
             className={cn(
               "lg:hidden h-9 w-9 rounded-xl hover:bg-primary/10 hover:text-primary",
-              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105",
+              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
             )}
             onClick={onMenuClick}
           >
@@ -68,7 +68,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             <Search
               className={cn(
                 "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors duration-300",
-                direction === "rtl" ? "right-3" : "left-3",
+                direction === "rtl" ? "right-3" : "left-3"
               )}
             />
             <Input
@@ -77,7 +77,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
                 "w-full h-9 rounded-xl border-0 bg-muted/50 shadow-sm",
                 "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
                 "transition-all duration-300",
-                direction === "rtl" ? "pr-9 text-right" : "pl-9",
+                direction === "rtl" ? "pr-9 text-right" : "pl-9"
               )}
             />
           </div>
@@ -91,7 +91,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             size="icon"
             className={cn(
               "h-9 w-9 rounded-xl hover:bg-primary/10 hover:text-primary",
-              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105",
+              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
             )}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
@@ -105,14 +105,12 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             size="icon"
             className={cn(
               "h-9 w-9 rounded-xl hover:bg-primary/10 hover:text-primary",
-              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105",
+              "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
             )}
             onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
           >
             <Globe className="h-4 w-4" />
           </Button>
-
-
 
           {/* User Menu */}
           <DropdownMenu>
@@ -121,7 +119,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
                 variant="ghost"
                 className={cn(
                   "h-9 px-2 rounded-xl hover:bg-primary/10",
-                  "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105",
+                  "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
                 )}
               >
                 <Avatar className="h-7 w-7 ring-1 ring-primary/20">
@@ -132,7 +130,10 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"} className="w-48 rounded-xl shadow-xl">
+            <DropdownMenuContent
+              align={direction === "rtl" ? "start" : "end"}
+              className="w-48 rounded-xl shadow-xl"
+            >
               <DropdownMenuLabel className="text-sm">
                 {user?.firstName} {user?.lastName}
               </DropdownMenuLabel>
@@ -142,11 +143,13 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
                 {t("nav.settings")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive text-sm rounded-lg">{t("nav.logout")}</DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive text-sm rounded-lg">
+                {t("nav.logout")}
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
     </header>
-  )
+  );
 }
