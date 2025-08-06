@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type {
   User,
   IUserService,
@@ -18,30 +18,39 @@ export function useUsersViewModel(userService: IUserService) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  const loadUsers = async (page = 1, search = "") => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response: UsersResponse = await userService.getUsers({
-        page,
-        pageSize: 10,
-        search,
-      });
-      setUsers(response.data);
-      setTotal(response.pagination.itemsCount);
-      setCurrentPage(page);
-      setSearchTerm(search);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "حدث خطأ");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Modal state
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+
+  const loadUsers = useCallback(
+    async (page = 1, search = "") => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response: UsersResponse = await userService.getUsers({
+          page,
+          pageSize: 10,
+          search,
+        });
+        setUsers(response.data);
+        setTotal(response.pagination.itemsCount);
+        setCurrentPage(page);
+        setSearchTerm(search);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "حدث خطأ");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [userService]
+  );
 
   const createUser = async (userData: CreateUserRequest) => {
     try {
       await userService.createUser(userData);
-      await loadUsers(currentPage, searchTerm); // Refresh the list
+      await loadUsers(currentPage, searchTerm);
+      setIsCreateModalOpen(false);
     } catch (err) {
       throw err;
     }
@@ -50,7 +59,9 @@ export function useUsersViewModel(userService: IUserService) {
   const updateUser = async (id: string, userData: UpdateUserRequest) => {
     try {
       await userService.updateUser(id, userData);
-      await loadUsers(currentPage, searchTerm); // Refresh the list
+      await loadUsers(currentPage, searchTerm);
+      setIsEditModalOpen(false);
+      setEditingUser(null);
     } catch (err) {
       throw err;
     }
@@ -58,8 +69,10 @@ export function useUsersViewModel(userService: IUserService) {
 
   const deleteUser = async (id: string) => {
     try {
-      await userService.deleteUser(id);
-      await loadUsers(currentPage, searchTerm); // Refresh the list
+      if (confirm("هل أنت متأكد من حذف هذا المستخدم؟")) {
+        await userService.deleteUser(id);
+        await loadUsers(currentPage, searchTerm);
+      }
     } catch (err) {
       throw err;
     }
@@ -68,9 +81,11 @@ export function useUsersViewModel(userService: IUserService) {
   const deleteSelectedUsers = async () => {
     try {
       if (selectedUsers.length === 0) return;
-      await userService.deleteSelectedUsers(selectedUsers);
-      setSelectedUsers([]);
-      await loadUsers(currentPage, searchTerm); // Refresh the list
+      if (confirm(`هل أنت متأكد من حذف ${selectedUsers.length} مستخدم؟`)) {
+        await userService.deleteSelectedUsers(selectedUsers);
+        setSelectedUsers([]);
+        await loadUsers(currentPage, searchTerm);
+      }
     } catch (err) {
       throw err;
     }
@@ -90,6 +105,16 @@ export function useUsersViewModel(userService: IUserService) {
     );
   };
 
+  const openEditModal = (user: User) => {
+    setEditingUser(user);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingUser(null);
+  };
+
   const searchUsers = (term: string) => {
     loadUsers(1, term);
   };
@@ -100,7 +125,7 @@ export function useUsersViewModel(userService: IUserService) {
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [loadUsers]);
 
   return {
     users,
@@ -110,12 +135,18 @@ export function useUsersViewModel(userService: IUserService) {
     currentPage,
     searchTerm,
     selectedUsers,
+    isCreateModalOpen,
+    isEditModalOpen,
+    editingUser,
     createUser,
     updateUser,
     deleteUser,
     deleteSelectedUsers,
     toggleUserSelection,
     toggleAllUsers,
+    openEditModal,
+    closeEditModal,
+    setIsCreateModalOpen,
     searchUsers,
     changePage,
     refreshUsers: () => loadUsers(currentPage, searchTerm),

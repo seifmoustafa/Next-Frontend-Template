@@ -5,6 +5,14 @@ import {
   Settings,
   User,
   UserX,
+  Shield,
+  UserPlus,
+  UserCheck,
+  Cog,
+  FileText,
+  TrendingUp,
+  PieChart,
+  BarChart,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -40,8 +48,19 @@ export const navigation: NavigationItem[] = [
   },
   {
     name: "nav.users", // Uses translation key
-    href: "/dashboard/users",
     icon: Users,
+    children: [
+      {
+        name: "قائمة المستخدمين",
+        href: "/dashboard/users",
+        icon: Users,
+      },
+      {
+        name: "أنواع المستخدمين",
+        href: "/dashboard/user-types",
+        icon: Shield,
+      },
+    ],
   },
   {
     name: "nav.analytics", // Uses translation key

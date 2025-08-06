@@ -115,7 +115,7 @@ export class UserService implements IUserService {
 
   async updateUser(id: string, data: UpdateUserRequest): Promise<User> {
     try {
-      const user = await this.apiService.put<User>(`/admins?id=${id}`, data);
+      const user = await this.apiService.put<User>(`/admins/${id}`, data);
       this.notificationService.success("تم تحديث المستخدم بنجاح");
       return user;
     } catch (error) {
