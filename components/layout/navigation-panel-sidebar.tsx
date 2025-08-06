@@ -1,181 +1,246 @@
-"use client";
+"use client"
 
-import type React from "react";
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ChevronRight, ChevronDown } from "lucide-react";
-import { useI18n } from "@/providers/i18n-provider";
-import { navigation } from "@/config/navigation";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import type React from "react"
+import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { ChevronRight, ChevronDown, ChevronLeft } from 'lucide-react'
+import { useI18n } from "@/providers/i18n-provider"
+import { useSettings } from "@/providers/settings-provider"
+import { navigation } from "@/config/navigation"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 
 interface NavigationPanelSidebarProps {
-  selectedMainItem: string;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  hasChildren: boolean;
+  selectedMainItem: string
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  hasChildren: boolean
 }
 
-export function NavigationPanelSidebar({
-  selectedMainItem,
-  open,
-  onOpenChange,
-  hasChildren,
+export function NavigationPanelSidebar({ 
+  selectedMainItem, 
+  open, 
+  onOpenChange, 
+  hasChildren 
 }: NavigationPanelSidebarProps) {
-  const pathname = usePathname();
-  const { direction, t } = useI18n();
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const pathname = usePathname()
+  const { direction, t } = useI18n()
+  const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings()
+  const [expandedItems, setExpandedItems] = useState<string[]>([])
 
   // Get the selected main navigation item
-  const selectedNavItem = navigation.find(
-    (item) => item.name === selectedMainItem
-  );
-  const children = selectedNavItem?.children || [];
+  const selectedNavItem = navigation.find(item => item.name === selectedMainItem)
+  
+  // Don't render if no children or not open
+  if (!selectedNavItem || !hasChildren || !open) {
+    return null
+  }
 
   const toggleExpanded = (itemName: string) => {
-    setExpandedItems((prev) =>
-      prev.includes(itemName)
-        ? prev.filter((name) => name !== itemName)
+    setExpandedItems(prev => 
+      prev.includes(itemName) 
+        ? prev.filter(name => name !== itemName)
         : [...prev, itemName]
-    );
-  };
+    )
+  }
 
-  const isItemActive = (item: any) => {
-    if (item.href && pathname === item.href) return true;
-    if (item.children) {
-      return item.children.some((child: any) => pathname === child.href);
+  const getBorderRadiusClass = () => {
+    switch (borderRadius) {
+      case 'none': return 'rounded-none'
+      case 'small': return 'rounded-sm'
+      case 'large': return 'rounded-lg'
+      case 'full': return 'rounded-full'
+      default: return 'rounded-md'
     }
-    return false;
-  };
+  }
+
+  const getAnimationClass = () => {
+    if (animationLevel === 'none') return ''
+    if (animationLevel === 'minimal') return 'transition-colors duration-200'
+    if (animationLevel === 'moderate') return 'transition-all duration-200'
+    return 'transition-all duration-300 hover:scale-[1.02]'
+  }
 
   const renderNavigationItem = (item: any, level: number = 0) => {
-    const isActive = isItemActive(item);
-    const hasChildren = item.children && item.children.length > 0;
-    const isExpanded = expandedItems.includes(item.name);
-    const displayName = t(item.name) || item.name;
+    const isActive = pathname === item.href
+    const hasSubChildren = item.children && item.children.length > 0
+    const isExpanded = expandedItems.includes(item.name)
+    const displayName = t(item.name) || item.name
 
-    if (hasChildren) {
+    if (hasSubChildren) {
       return (
-        <Collapsible
-          key={item.name}
-          open={isExpanded}
-          onOpenChange={() => toggleExpanded(item.name)}
-        >
+        <Collapsible key={item.name} open={isExpanded} onOpenChange={() => toggleExpanded(item.name)}>
           <CollapsibleTrigger asChild>
             <Button
               variant="ghost"
               className={cn(
-                "w-full justify-start text-left h-10 px-3 rounded-lg transition-all duration-200",
-                "hover:bg-slate-800/50 hover:text-white",
-                isActive &&
-                  "bg-blue-600/20 text-blue-400 border-r-2 border-blue-500",
-                level > 0 && "ml-4 w-[calc(100%-1rem)]"
+                "w-full gap-2 h-10 px-3",
+                // RTL/LTR alignment
+                direction === "rtl" ? "justify-end" : "justify-start",
+                getBorderRadiusClass(),
+                getAnimationClass(),
+                level > 0 && (direction === "rtl" ? "mr-4" : "ml-4"),
+                "hover:bg-accent hover:text-accent-foreground"
               )}
-              style={{ paddingLeft: `${12 + level * 16}px` }}
             >
-              <item.icon className="w-4 h-4 mr-3 flex-shrink-0" />
-              <span className="flex-1 truncate">{displayName}</span>
-              {item.badge && (
-                <Badge className="ml-2 h-5 px-1.5 text-xs bg-blue-600 text-white">
-                  {item.badge}
-                </Badge>
-              )}
-              {isExpanded ? (
-                <ChevronDown className="w-4 h-4 ml-2 flex-shrink-0" />
+              {/* RTL: Icon on the right, LTR: Icon on the left */}
+              {direction === "rtl" ? (
+                <>
+                  {isExpanded ? (
+                    <ChevronDown className="w-4 h-4" />
+                  ) : (
+                    <ChevronLeft className="w-4 h-4" />
+                  )}
+                  {item.badge && (
+                    <Badge variant="secondary" className="mr-auto">
+                      {item.badge}
+                    </Badge>
+                  )}
+                  <span className="flex-1 text-right">{displayName}</span>
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                </>
               ) : (
-                <ChevronRight className="w-4 h-4 ml-2 flex-shrink-0" />
+                <>
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                  <span className="flex-1 text-left">{displayName}</span>
+                  {item.badge && (
+                    <Badge variant="secondary" className="ml-auto">
+                      {item.badge}
+                    </Badge>
+                  )}
+                  {isExpanded ? (
+                    <ChevronDown className="w-4 h-4" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4" />
+                  )}
+                </>
               )}
             </Button>
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-1">
-            {item.children.map((child: any) =>
-              renderNavigationItem(child, level + 1)
-            )}
+            {item.children.map((child: any) => renderNavigationItem(child, level + 1))}
           </CollapsibleContent>
         </Collapsible>
-      );
+      )
     }
 
     return (
       <Button
         key={item.name}
         variant="ghost"
+        asChild
         className={cn(
-          "w-full justify-start text-left h-10 px-3 rounded-lg transition-all duration-200",
-          "hover:bg-slate-800/50 hover:text-white",
-          isActive && "bg-blue-600/20 text-blue-400 border-r-2 border-blue-500",
-          level > 0 && "ml-4 w-[calc(100%-1rem)]"
+          "w-full gap-2 h-10 px-3",
+          // RTL/LTR alignment
+          direction === "rtl" ? "justify-end" : "justify-start",
+          getBorderRadiusClass(),
+          getAnimationClass(),
+          level > 0 && (direction === "rtl" ? "mr-4" : "ml-4"),
+          isActive 
+            ? cn(
+                "text-white shadow-sm",
+                colorTheme === 'blue' && "bg-blue-500 hover:bg-blue-600",
+                colorTheme === 'purple' && "bg-purple-500 hover:bg-purple-600",
+                colorTheme === 'green' && "bg-green-500 hover:bg-green-600",
+                colorTheme === 'orange' && "bg-orange-500 hover:bg-orange-600",
+                colorTheme === 'red' && "bg-red-500 hover:bg-red-600",
+                colorTheme === 'teal' && "bg-teal-500 hover:bg-teal-600"
+              )
+            : "hover:bg-accent hover:text-accent-foreground",
+          item.disabled && "opacity-50 cursor-not-allowed"
         )}
-        style={{ paddingLeft: `${12 + level * 16}px` }}
-        asChild={!!item.href}
         disabled={item.disabled}
       >
-        {item.href ? (
-          <Link href={item.href}>
-            <item.icon className="w-4 h-4 mr-3 flex-shrink-0" />
-            <span className="flex-1 truncate">{displayName}</span>
-            {item.badge && (
-              <Badge className="ml-2 h-5 px-1.5 text-xs bg-blue-600 text-white">
-                {item.badge}
-              </Badge>
-            )}
-          </Link>
-        ) : (
-          <div className="flex items-center w-full">
-            <item.icon className="w-4 h-4 mr-3 flex-shrink-0" />
-            <span className="flex-1 truncate">{displayName}</span>
-            {item.badge && (
-              <Badge className="ml-2 h-5 px-1.5 text-xs bg-blue-600 text-white">
-                {item.badge}
-              </Badge>
-            )}
-          </div>
-        )}
+        <Link href={item.href || '#'} className={cn(
+          "flex items-center gap-2 w-full",
+          direction === "rtl" ? "justify-end" : "justify-start"
+        )}>
+          {/* RTL: Icon on the right, LTR: Icon on the left */}
+          {direction === "rtl" ? (
+            <>
+              {item.badge && (
+                <Badge variant={isActive ? "secondary" : "outline"} className="mr-auto">
+                  {item.badge}
+                </Badge>
+              )}
+              <span className="flex-1 text-right">{displayName}</span>
+              {item.icon && <item.icon className="w-4 h-4" />}
+            </>
+          ) : (
+            <>
+              {item.icon && <item.icon className="w-4 h-4" />}
+              <span className="flex-1 text-left">{displayName}</span>
+              {item.badge && (
+                <Badge variant={isActive ? "secondary" : "outline"} className="ml-auto">
+                  {item.badge}
+                </Badge>
+              )}
+            </>
+          )}
+        </Link>
       </Button>
-    );
-  };
-
-  // Don't render if no children or not open
-  if (!hasChildren || !open) {
-    return null;
+    )
   }
 
   return (
     <div
       className={cn(
-        "navigation-panel-sidebar fixed inset-y-0 z-40 w-64 bg-slate-900/95 backdrop-blur-sm border-r border-slate-800/50 transform transition-all duration-300 ease-in-out",
-        direction === "rtl" ? "right-16" : "left-16",
+        "navigation-panel-sidebar fixed inset-y-0 z-40 w-64 backdrop-blur-xl transform transition-all duration-300 ease-in-out",
+        cardStyle === 'glass' 
+          ? "bg-background/90 border-border/50" 
+          : cardStyle === 'solid'
+          ? "bg-background border-border"
+          : "bg-background/95 border-border/50",
+        // RTL/LTR positioning and borders
+        direction === "rtl" ? "right-16 border-l" : "left-16 border-r",
         "lg:translate-x-0"
       )}
     >
       <div className="flex flex-col h-full">
-        {/* Panel Header */}
-        <div className="p-4 border-b border-slate-800/50">
-          <h2 className="text-lg font-semibold text-white">
-            {t(selectedNavItem?.name || selectedMainItem) || selectedMainItem}
-          </h2>
-          {children.length > 0 && (
-            <p className="text-sm text-slate-400 mt-1">
-              {children.length} {t("layout.items") || "items"}
-            </p>
-          )}
+        {/* Header */}
+        <div className="p-4 border-b border-border/50">
+          <div className={cn(
+            "flex items-center gap-3",
+            direction === "rtl" && "flex-row-reverse"
+          )}>
+            {selectedNavItem.icon && (
+              <div className={cn(
+                "w-8 h-8 flex items-center justify-center text-white",
+                getBorderRadiusClass(),
+                colorTheme === 'blue' && "bg-gradient-to-br from-blue-500 to-blue-600",
+                colorTheme === 'purple' && "bg-gradient-to-br from-purple-500 to-purple-600",
+                colorTheme === 'green' && "bg-gradient-to-br from-green-500 to-green-600",
+                colorTheme === 'orange' && "bg-gradient-to-br from-orange-500 to-orange-600",
+                colorTheme === 'red' && "bg-gradient-to-br from-red-500 to-red-600",
+                colorTheme === 'teal' && "bg-gradient-to-br from-teal-500 to-teal-600"
+              )}>
+                <selectedNavItem.icon className="w-4 h-4" />
+              </div>
+            )}
+            <div className={cn(
+              direction === "rtl" && "text-right"
+            )}>
+              <h3 className="font-semibold text-sm">
+                {t(selectedNavItem.name) || selectedNavItem.name}
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                {selectedNavItem.children?.length || 0} {t('layout.items') || 'items'}
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Panel Content */}
-        <ScrollArea className="flex-1">
-          <div className="p-4 space-y-1">
-            {children.map((item) => renderNavigationItem(item))}
+        {/* Navigation Items */}
+        <ScrollArea className="flex-1 p-2">
+          <div className="space-y-1">
+            {selectedNavItem.children?.map((item: any) => renderNavigationItem(item))}
           </div>
         </ScrollArea>
       </div>
     </div>
-  );
+  )
 }

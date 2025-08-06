@@ -6,6 +6,7 @@ import { NavigationMainSidebar } from "@/components/layout/navigation-main-sideb
 import { NavigationPanelSidebar } from "@/components/layout/navigation-panel-sidebar";
 import { NavigationHeader } from "@/components/layout/navigation-header";
 import { useI18n } from "@/providers/i18n-provider";
+import { useSettings } from "@/providers/settings-provider";
 import { navigation } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +22,7 @@ export function NavigationLayout({
   onSidebarOpenChange,
 }: NavigationLayoutProps) {
   const { direction } = useI18n();
+  const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings();
   const [selectedMainItem, setSelectedMainItem] = useState<string>("dashboard");
   const [panelSidebarOpen, setPanelSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -50,7 +52,7 @@ export function NavigationLayout({
     }
   };
 
-  // Handle panel toggle
+  // Handle panel toggle - only works if current item has children
   const handlePanelToggle = () => {
     if (hasChildren) {
       setPanelSidebarOpen(!panelSidebarOpen);
@@ -101,10 +103,32 @@ export function NavigationLayout({
     };
   }, [onSidebarOpenChange, isMobile]);
 
+  const getBackgroundClass = () => {
+    switch (cardStyle) {
+      case "glass":
+        return "bg-gradient-to-br from-background/50 to-background/30 backdrop-blur-xl";
+      case "solid":
+        return "bg-background";
+      case "bordered":
+        return "bg-background border border-border";
+      default:
+        return "bg-gradient-to-br from-background/95 to-background/90";
+    }
+  };
+
+  const getAnimationClass = () => {
+    if (animationLevel === "none") return "";
+    if (animationLevel === "minimal") return "transition-colors duration-200";
+    if (animationLevel === "moderate") return "transition-all duration-300";
+    return "transition-all duration-500 ease-in-out";
+  };
+
   return (
     <div
       className={cn(
-        "min-h-screen bg-slate-950",
+        "min-h-screen",
+        getBackgroundClass(),
+        getAnimationClass(),
         direction === "rtl" ? "rtl" : "ltr"
       )}
     >
@@ -116,13 +140,15 @@ export function NavigationLayout({
         onItemSelect={handleMainItemSelect}
       />
 
-      {/* Panel Sidebar - Contextual Options */}
-      <NavigationPanelSidebar
-        selectedMainItem={selectedMainItem}
-        open={shouldShowPanel}
-        onOpenChange={setPanelSidebarOpen}
-        hasChildren={hasChildren}
-      />
+      {/* Panel Sidebar - Contextual Options - Only show if current item has children */}
+      {hasChildren && (
+        <NavigationPanelSidebar
+          selectedMainItem={selectedMainItem}
+          open={shouldShowPanel}
+          onOpenChange={setPanelSidebarOpen}
+          hasChildren={hasChildren}
+        />
+      )}
 
       {/* Navigation Header - FULL WIDTH */}
       <NavigationHeader
@@ -137,8 +163,9 @@ export function NavigationLayout({
       {/* Main Content Area */}
       <div
         className={cn(
-          "min-h-screen transition-all duration-300 ease-in-out pt-16",
-          // Dynamic margins based on sidebar states
+          "min-h-screen pt-16",
+          getAnimationClass(),
+          // Dynamic margins based on sidebar states and direction
           direction === "rtl"
             ? cn(
                 "lg:mr-16", // Always account for main sidebar on desktop
@@ -151,9 +178,24 @@ export function NavigationLayout({
         )}
       >
         {/* Main Content */}
-        <main className="min-h-screen bg-slate-900/30">
+        <main
+          className={cn(
+            "min-h-screen",
+            cardStyle === "glass"
+              ? "bg-gradient-to-br from-background/20 to-background/10"
+              : "bg-muted/20"
+          )}
+        >
           <div className="p-4 lg:p-6">
-            <div className="animate-fade-in">{children}</div>
+            <div
+              className={cn(
+                animationLevel === "high" && "animate-fade-in",
+                animationLevel === "moderate" &&
+                  "transition-opacity duration-300"
+              )}
+            >
+              {children}
+            </div>
           </div>
         </main>
       </div>
@@ -161,7 +203,11 @@ export function NavigationLayout({
       {/* Mobile Overlay */}
       {(sidebarOpen || (shouldShowPanel && isMobile)) && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
+          className={cn(
+            "fixed inset-0 z-40 lg:hidden backdrop-blur-sm",
+            cardStyle === "glass" ? "bg-black/20" : "bg-black/50",
+            getAnimationClass()
+          )}
           onClick={() => {
             onSidebarOpenChange(false);
             if (isMobile) setPanelSidebarOpen(false);
