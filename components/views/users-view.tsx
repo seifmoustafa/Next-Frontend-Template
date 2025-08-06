@@ -1,27 +1,35 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { GenericTable } from "@/components/ui/generic-table"
-import { GenericModal } from "@/components/ui/generic-modal"
-import { UserForm } from "@/components/forms/user-form"
-import { useUsersViewModel } from "@/viewmodels/users.viewmodel"
-import { useServices } from "@/providers/service-provider"
-import { useI18n } from "@/providers/i18n-provider"
-import { useAuth } from "@/providers/auth-provider"
-import type { User } from "@/services/user.service"
-import { Plus, Search, Filter, Download, UsersIcon, RefreshCw } from "lucide-react"
-import { LoadingSpinner } from "@/components/ui/loading-spinner"
-import { ErrorMessage } from "@/components/ui/error-message"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { GenericTable } from "@/components/ui/generic-table";
+import { GenericModal } from "@/components/ui/generic-modal";
+import { UserForm } from "@/components/forms/user-form";
+import { useUsersViewModel } from "@/viewmodels/users.viewmodel";
+import { useServices } from "@/providers/service-provider";
+import { useI18n } from "@/providers/i18n-provider";
+import { useAuth } from "@/providers/auth-provider";
+import type { User } from "@/services/user.service";
+import {
+  Plus,
+  Search,
+  Filter,
+  Download,
+  UsersIcon,
+  RefreshCw,
+  Trash2,
+} from "lucide-react";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { ErrorMessage } from "@/components/ui/error-message";
 
 export function UsersView() {
-  const { userService } = useServices()
-  const { t } = useI18n()
-  const { token } = useAuth()
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-  const [editingUser, setEditingUser] = useState<User | null>(null)
+  const { userService } = useServices();
+  const { t } = useI18n();
+  const { token } = useAuth();
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
 
   const {
     users,
@@ -30,13 +38,17 @@ export function UsersView() {
     total,
     currentPage,
     searchTerm,
+    selectedUsers,
     createUser,
     updateUser,
     deleteUser,
+    deleteSelectedUsers,
+    toggleUserSelection,
+    toggleAllUsers,
     searchUsers,
     changePage,
     refreshUsers,
-  } = useUsersViewModel(userService)
+  } = useUsersViewModel(userService);
 
   const columns = [
     {
@@ -74,15 +86,15 @@ export function UsersView() {
             value === "SuperAdmin"
               ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
               : value === "Admin"
-                ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
-                : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+              ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
+              : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
           }`}
         >
           {value}
         </span>
       ),
     },
-  ]
+  ];
 
   const actions = [
     {
@@ -93,19 +105,19 @@ export function UsersView() {
       label: t("common.delete"),
       onClick: (user: User) => {
         if (confirm("هل أنت متأكد من حذف هذا المستخدم؟")) {
-          deleteUser(user.id)
+          deleteUser(user.id);
         }
       },
       variant: "destructive" as const,
     },
-  ]
+  ];
 
   if (loading && users.length === 0) {
-    return <LoadingSpinner />
+    return <LoadingSpinner />;
   }
 
   if (error && users.length === 0) {
-    return <ErrorMessage message={error} onRetry={refreshUsers} />
+    return <ErrorMessage message={error} onRetry={refreshUsers} />;
   }
 
   return (
@@ -116,10 +128,29 @@ export function UsersView() {
           <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             {t("users.title")}
           </h1>
-          <p className="text-muted-foreground text-base sm:text-lg">إدارة المستخدمين والصلاحيات</p>
+          <p className="text-muted-foreground text-base sm:text-lg">
+            إدارة المستخدمين والصلاحيات
+          </p>
         </div>
 
         <div className="flex items-center gap-3 w-full sm:w-auto">
+          {selectedUsers.length > 0 && (
+            <Button
+              onClick={() => {
+                if (
+                  confirm(`هل أنت متأكد من حذف ${selectedUsers.length} مستخدم؟`)
+                ) {
+                  deleteSelectedUsers();
+                }
+              }}
+              variant="destructive"
+              size="lg"
+              className="flex-1 sm:flex-none"
+            >
+              <Trash2 className="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" />
+              حذف المحدد ({selectedUsers.length})
+            </Button>
+          )}
           <Button
             onClick={refreshUsers}
             variant="outline"
@@ -173,11 +204,19 @@ export function UsersView() {
               </div>
 
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="icon" className="hover-lift bg-transparent">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="hover-lift bg-transparent"
+                >
                   <Filter className="w-4 h-4" />
                 </Button>
 
-                <Button variant="outline" size="icon" className="hover-lift bg-transparent">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="hover-lift bg-transparent"
+                >
                   <Download className="w-4 h-4" />
                 </Button>
               </div>
@@ -196,18 +235,27 @@ export function UsersView() {
               totalPages: Math.ceil(total / 10),
               onPageChange: changePage,
             }}
+            selectable={true}
+            selectedItems={selectedUsers}
+            onSelectItem={toggleUserSelection}
+            onSelectAll={toggleAllUsers}
           />
         </CardContent>
       </Card>
 
       {/* Create User Modal */}
-      <GenericModal open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen} title={t("users.addUser")}>
+      <GenericModal
+        open={isCreateModalOpen}
+        onOpenChange={setIsCreateModalOpen}
+        title={t("users.addUser")}
+      >
         <UserForm
           onSubmit={async (data) => {
-            await createUser(data)
-            setIsCreateModalOpen(false)
+            await createUser(data);
+            setIsCreateModalOpen(false);
           }}
           onCancel={() => setIsCreateModalOpen(false)}
+          isEdit={false}
         />
       </GenericModal>
 
@@ -221,13 +269,14 @@ export function UsersView() {
           <UserForm
             initialData={editingUser}
             onSubmit={async (data) => {
-              await updateUser(editingUser.id, data)
-              setEditingUser(null)
+              await updateUser(editingUser.id, data);
+              setEditingUser(null);
             }}
             onCancel={() => setEditingUser(null)}
+            isEdit={true}
           />
         )}
       </GenericModal>
     </div>
-  )
+  );
 }
