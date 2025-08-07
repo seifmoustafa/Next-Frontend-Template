@@ -5,8 +5,9 @@ import { useState } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, ChevronLeft, ChevronRight, ArrowUpDown } from "lucide-react"
+import { MoreHorizontal, ChevronLeft, ChevronRight, ArrowUpDown } from 'lucide-react'
 import { useI18n } from "@/providers/i18n-provider"
+import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
 
 interface Column<T> {
@@ -45,6 +46,7 @@ export function GenericTable<T extends Record<string, any>>({
   pagination,
 }: GenericTableProps<T>) {
   const { t, direction } = useI18n()
+  const settings = useSettings()
   const [sortColumn, setSortColumn] = useState<keyof T | null>(null)
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
 
@@ -68,6 +70,52 @@ export function GenericTable<T extends Record<string, any>>({
     return 0
   })
 
+  // Get table style classes based on settings
+  const getTableClasses = () => {
+    const baseClasses = "rounded-lg border overflow-hidden"
+    
+    switch (settings.tableStyle) {
+      case "striped":
+        return cn(baseClasses, "bg-card")
+      case "bordered":
+        return cn(baseClasses, "border-2")
+      case "minimal":
+        return cn(baseClasses, "border-0 shadow-none")
+      default:
+        return baseClasses
+    }
+  }
+
+  const getRowClasses = (index: number) => {
+    const baseClasses = "transition-colors"
+    
+    switch (settings.tableStyle) {
+      case "striped":
+        return cn(baseClasses, index % 2 === 0 ? "bg-muted/30" : "bg-card", "hover:bg-muted/50")
+      case "bordered":
+        return cn(baseClasses, "border-b-2 hover:bg-muted/30")
+      case "minimal":
+        return cn(baseClasses, "border-b-0 hover:bg-muted/20")
+      default:
+        return cn(baseClasses, "hover:bg-muted/30")
+    }
+  }
+
+  const getHeaderClasses = () => {
+    const baseClasses = "font-semibold text-foreground h-12"
+    
+    switch (settings.tableStyle) {
+      case "striped":
+        return cn(baseClasses, "bg-muted/70")
+      case "bordered":
+        return cn(baseClasses, "bg-muted/50 border-b-2")
+      case "minimal":
+        return cn(baseClasses, "bg-transparent border-b")
+      default:
+        return cn(baseClasses, "bg-muted/50")
+    }
+  }
+
   if (loading) {
     return (
       <div className="space-y-3">
@@ -86,7 +134,14 @@ export function GenericTable<T extends Record<string, any>>({
           <div className="text-center py-12 text-muted-foreground">{t("common.noData")}</div>
         ) : (
           sortedData.map((row, index) => (
-            <div key={index} className="bg-card border rounded-lg p-4 space-y-3">
+            <div key={index} className={cn(
+              "border rounded-lg p-4 space-y-3 transition-all",
+              settings.cardStyle === "glass" && "bg-white/10 backdrop-blur border-white/20",
+              settings.cardStyle === "solid" && "bg-muted border-0",
+              settings.cardStyle === "bordered" && "border-2",
+              settings.cardStyle === "elevated" && "shadow-lg border-0",
+              settings.cardStyle === "default" && "bg-card"
+            )}>
               {columns.map((column) => (
                 <div key={String(column.key)} className="flex justify-between items-center">
                   <span className="text-sm font-medium text-muted-foreground">{column.label}:</span>
@@ -123,11 +178,11 @@ export function GenericTable<T extends Record<string, any>>({
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden md:block rounded-lg border overflow-hidden">
+      <div className={cn("hidden md:block", getTableClasses())}>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="bg-muted/50">
+              <TableRow className={getHeaderClasses()}>
                 {columns.map((column) => (
                   <TableHead
                     key={String(column.key)}
@@ -173,7 +228,7 @@ export function GenericTable<T extends Record<string, any>>({
                 </TableRow>
               ) : (
                 sortedData.map((row, index) => (
-                  <TableRow key={index} className="hover:bg-muted/30 transition-colors">
+                  <TableRow key={index} className={getRowClasses(index)}>
                     {columns.map((column) => (
                       <TableCell
                         key={String(column.key)}

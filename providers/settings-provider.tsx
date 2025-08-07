@@ -69,6 +69,11 @@ export type LogoType = "sparkles" | "shield" | "image" | "custom";
 export type LogoAnimation = "none" | "spin" | "pulse" | "fancy";
 export type LogoSize = "xs" | "sm" | "md" | "lg" | "xl";
 
+export type FormStyle = "default" | "compact" | "spacious" | "inline";
+export type LoadingStyle = "spinner" | "dots" | "bars" | "pulse";
+export type TooltipStyle = "default" | "rounded" | "sharp" | "bubble";
+export type ModalStyle = "default" | "centered" | "fullscreen" | "drawer";
+
 interface SettingsContextType {
   // Existing settings
   colorTheme: ColorTheme;
@@ -114,6 +119,12 @@ interface SettingsContextType {
   autoSave: boolean;
   showLogo: boolean;
 
+  // New settings
+  formStyle: FormStyle;
+  loadingStyle: LoadingStyle;
+  tooltipStyle: TooltipStyle;
+  modalStyle: ModalStyle;
+
   // Setters
   setColorTheme: (theme: ColorTheme) => void;
   setLightBackgroundTheme: (theme: LightBackgroundTheme) => void;
@@ -152,6 +163,11 @@ interface SettingsContextType {
   setShowFooter: (show: boolean) => void;
   setAutoSave: (autoSave: boolean) => void;
   setShowLogo: (show: boolean) => void;
+
+  setFormStyle: (style: FormStyle) => void;
+  setLoadingStyle: (style: LoadingStyle) => void;
+  setTooltipStyle: (style: TooltipStyle) => void;
+  setModalStyle: (style: ModalStyle) => void;
 
   // Utility functions
   resetSettings: () => void;
@@ -200,6 +216,10 @@ const defaultSettings = {
   showFooter: true,
   autoSave: true,
   showLogo: true,
+  formStyle: "default" as FormStyle,
+  loadingStyle: "spinner" as LoadingStyle,
+  tooltipStyle: "default" as TooltipStyle,
+  modalStyle: "default" as ModalStyle,
 };
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
@@ -263,33 +283,60 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       root.setAttribute("data-logo-size", settings.logoSize);
       root.setAttribute("data-compact-mode", settings.compactMode.toString());
       root.setAttribute("data-high-contrast", settings.highContrast.toString());
-      root.setAttribute("data-reduced-motion", settings.reducedMotion.toString());
+      root.setAttribute(
+        "data-reduced-motion",
+        settings.reducedMotion.toString()
+      );
       root.setAttribute("data-sticky-header", settings.stickyHeader.toString());
 
+      root.setAttribute("data-form-style", settings.formStyle);
+      root.setAttribute("data-loading-style", settings.loadingStyle);
+      root.setAttribute("data-tooltip-style", settings.tooltipStyle);
+      root.setAttribute("data-modal-style", settings.modalStyle);
+
       // Apply CSS custom properties for responsive design
-      root.style.setProperty('--font-size-base', 
-        settings.fontSize === 'small' ? '14px' : 
-        settings.fontSize === 'large' ? '18px' : '16px'
-      );
-      
-      root.style.setProperty('--spacing-unit', 
-        settings.spacingSize === 'compact' ? '0.5rem' : 
-        settings.spacingSize === 'comfortable' ? '1.5rem' :
-        settings.spacingSize === 'spacious' ? '2rem' : '1rem'
+      root.style.setProperty(
+        "--font-size-base",
+        settings.fontSize === "small"
+          ? "14px"
+          : settings.fontSize === "large"
+          ? "18px"
+          : "16px"
       );
 
-      root.style.setProperty('--border-radius', 
-        settings.borderRadius === 'none' ? '0' : 
-        settings.borderRadius === 'small' ? '0.25rem' :
-        settings.borderRadius === 'large' ? '0.75rem' :
-        settings.borderRadius === 'full' ? '9999px' : '0.5rem'
+      root.style.setProperty(
+        "--spacing-unit",
+        settings.spacingSize === "compact"
+          ? "0.5rem"
+          : settings.spacingSize === "comfortable"
+          ? "1.5rem"
+          : settings.spacingSize === "spacious"
+          ? "2rem"
+          : "1rem"
       );
 
-      root.style.setProperty('--shadow-intensity', 
-        settings.shadowIntensity === 'none' ? 'none' : 
-        settings.shadowIntensity === 'subtle' ? '0 1px 2px 0 rgb(0 0 0 / 0.05)' :
-        settings.shadowIntensity === 'strong' ? '0 25px 50px -12px rgb(0 0 0 / 0.25)' : 
-        '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+      root.style.setProperty(
+        "--border-radius",
+        settings.borderRadius === "none"
+          ? "0"
+          : settings.borderRadius === "small"
+          ? "0.25rem"
+          : settings.borderRadius === "large"
+          ? "0.75rem"
+          : settings.borderRadius === "full"
+          ? "9999px"
+          : "0.5rem"
+      );
+
+      root.style.setProperty(
+        "--shadow-intensity",
+        settings.shadowIntensity === "none"
+          ? "none"
+          : settings.shadowIntensity === "subtle"
+          ? "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+          : settings.shadowIntensity === "strong"
+          ? "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+          : "0 4px 6px -1px rgb(0 0 0 / 0.1)"
       );
     }
   }, [settings, isHydrated]);
@@ -357,10 +404,15 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setHighContrast: (contrast) => updateSetting("highContrast", contrast),
     setReducedMotion: (reduced) => updateSetting("reducedMotion", reduced),
     setStickyHeader: (sticky) => updateSetting("stickyHeader", sticky),
-    setCollapsibleSidebar: (collapsible) => updateSetting("collapsibleSidebar", collapsible),
+    setCollapsibleSidebar: (collapsible) =>
+      updateSetting("collapsibleSidebar", collapsible),
     setShowFooter: (show) => updateSetting("showFooter", show),
     setAutoSave: (autoSave) => updateSetting("autoSave", autoSave),
     setShowLogo: (show) => updateSetting("showLogo", show),
+    setFormStyle: (style) => updateSetting("formStyle", style),
+    setLoadingStyle: (style) => updateSetting("loadingStyle", style),
+    setTooltipStyle: (style) => updateSetting("tooltipStyle", style),
+    setModalStyle: (style) => updateSetting("modalStyle", style),
     resetSettings,
     exportSettings,
     importSettings,

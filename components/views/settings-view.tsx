@@ -18,32 +18,10 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSettings } from "@/providers/settings-provider";
 import { Logo } from "@/components/ui/logo";
-import {
-  Palette,
-  Layout,
-  SettingsIcon,
-  Globe,
-  Zap,
-  Image,
-  Download,
-  Upload,
-  RotateCcw,
-  Eye,
-  EyeOff,
-  Sparkles,
-  Shield,
-  Type,
-  Check,
-  Home,
-  Users,
-  BarChart3,
-  Settings,
-  Square,
-  Circle,
-  User,
-} from "lucide-react";
+import { Palette, Layout, SettingsIcon, Globe, Zap, Image, Download, Upload, RotateCcw, Eye, EyeOff, Sparkles, Shield, Type, Check, Home, Users, BarChart3, Settings, Square, Circle, User } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { GenericTable } from "../ui/generic-table";
 
 export function SettingsView() {
   const settings = useSettings();
@@ -962,32 +940,34 @@ export function SettingsView() {
 
         {/* Components Tab */}
         <TabsContent value="components" className="space-y-6">
-          {/* Component Preview */}
+          {/* Enhanced Component Preview */}
           <Card>
             <CardHeader>
-              <CardTitle>Component Preview</CardTitle>
+              <CardTitle>Live Component Preview</CardTitle>
               <CardDescription>
-                See how your component styles look in action
+                See how your component styles look in real-time
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Button Preview */}
                 <div className="space-y-3">
                   <Label>Buttons</Label>
                   <div className="space-y-2">
-                    <Button>Primary Button</Button>
-                    <Button variant="outline">Outline Button</Button>
-                    <Button variant="secondary">Secondary Button</Button>
+                    <Button className="w-full">Primary Button</Button>
+                    <Button variant="outline" className="w-full">Outline Button</Button>
+                    <Button variant="secondary" className="w-full">Secondary Button</Button>
+                    <Button variant="ghost" className="w-full">Ghost Button</Button>
                   </div>
                 </div>
 
                 {/* Input Preview */}
                 <div className="space-y-3">
-                  <Label>Inputs</Label>
+                  <Label>Input Fields</Label>
                   <div className="space-y-2">
-                    <Input placeholder="Sample input field" />
-                    <Input placeholder="Another input" />
+                    <Input placeholder="Default input" />
+                    <Input placeholder="Another input field" />
+                    <Input placeholder="Disabled input" disabled />
                   </div>
                 </div>
 
@@ -998,6 +978,7 @@ export function SettingsView() {
                     <Badge>Default</Badge>
                     <Badge variant="secondary">Secondary</Badge>
                     <Badge variant="outline">Outline</Badge>
+                    <Badge variant="destructive">Destructive</Badge>
                   </div>
                 </div>
 
@@ -1005,16 +986,71 @@ export function SettingsView() {
                 <div className="space-y-3">
                   <Label>Avatars</Label>
                   <div className="flex gap-2">
-                    <Avatar>
-                      <AvatarFallback>JD</AvatarFallback>
+                    <Avatar size="sm">
+                      <AvatarFallback>SM</AvatarFallback>
                     </Avatar>
                     <Avatar>
-                      <AvatarFallback>AB</AvatarFallback>
+                      <AvatarFallback>MD</AvatarFallback>
                     </Avatar>
-                    <Avatar>
-                      <AvatarFallback>CD</AvatarFallback>
+                    <Avatar size="lg">
+                      <AvatarFallback>LG</AvatarFallback>
                     </Avatar>
                   </div>
+                </div>
+
+                {/* Card Preview */}
+                <div className="space-y-3">
+                  <Label>Cards</Label>
+                  <Card className="p-4">
+                    <CardHeader className="p-0 pb-2">
+                      <CardTitle className="text-base">Sample Card</CardTitle>
+                      <CardDescription>This is how cards look</CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                      <p className="text-sm">Card content goes here</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Separator Preview */}
+                <div className="space-y-3">
+                  <Label>Separators</Label>
+                  <div className="space-y-2">
+                    <div className="text-sm">Above separator</div>
+                    <Separator />
+                    <div className="text-sm">Below separator</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Table Preview */}
+              <div className="space-y-3">
+                <Label>Table Preview</Label>
+                <div className="border rounded-lg overflow-hidden">
+                  <GenericTable
+                    data={[
+                      { id: 1, name: "John Doe", email: "john@example.com", status: "Active" },
+                      { id: 2, name: "Jane Smith", email: "jane@example.com", status: "Inactive" },
+                      { id: 3, name: "Bob Johnson", email: "bob@example.com", status: "Active" },
+                    ]}
+                    columns={[
+                      { key: "name", label: "Name", sortable: true },
+                      { key: "email", label: "Email", sortable: true },
+                      { 
+                        key: "status", 
+                        label: "Status", 
+                        render: (value) => (
+                          <Badge variant={value === "Active" ? "default" : "secondary"}>
+                            {value}
+                          </Badge>
+                        )
+                      },
+                    ]}
+                    actions={[
+                      { label: "Edit", onClick: () => {} },
+                      { label: "Delete", onClick: () => {}, variant: "destructive" },
+                    ]}
+                  />
                 </div>
               </div>
             </CardContent>
@@ -1250,6 +1286,106 @@ export function SettingsView() {
                     }
                     size="sm"
                     onClick={() => settings.setTableStyle(style as any)}
+                    className="capitalize"
+                  >
+                    {style}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Form Styles */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Form Style</CardTitle>
+              <CardDescription>Choose how forms should appear</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {["default", "compact", "spacious", "inline"].map((style) => (
+                  <Button
+                    key={style}
+                    variant={
+                      settings.formStyle === style ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => settings.setFormStyle && settings.setFormStyle(style as any)}
+                    className="capitalize"
+                  >
+                    {style}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Loading Style */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Loading Style</CardTitle>
+              <CardDescription>Choose how loading indicators should appear</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {["spinner", "dots", "bars", "pulse"].map((style) => (
+                  <Button
+                    key={style}
+                    variant={
+                      settings.loadingStyle === style ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => settings.setLoadingStyle && settings.setLoadingStyle(style as any)}
+                    className="capitalize"
+                  >
+                    {style}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Tooltip Style */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Tooltip Style</CardTitle>
+              <CardDescription>Choose how tooltips should appear</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {["default", "rounded", "sharp", "bubble"].map((style) => (
+                  <Button
+                    key={style}
+                    variant={
+                      settings.tooltipStyle === style ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => settings.setTooltipStyle && settings.setTooltipStyle(style as any)}
+                    className="capitalize"
+                  >
+                    {style}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Modal Style */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Modal Style</CardTitle>
+              <CardDescription>Choose how modals should appear</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {["default", "centered", "fullscreen", "drawer"].map((style) => (
+                  <Button
+                    key={style}
+                    variant={
+                      settings.modalStyle === style ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => settings.setModalStyle && settings.setModalStyle(style as any)}
                     className="capitalize"
                   >
                     {style}
