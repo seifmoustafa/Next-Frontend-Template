@@ -9,28 +9,26 @@ const Card = React.forwardRef<
   const settings = useSettings()
   
   const getCardClasses = () => {
+    const baseClasses = "rounded-lg text-card-foreground transition-all duration-200"
+    
     switch (settings.cardStyle) {
       case "glass":
-        return "bg-white/10 backdrop-blur border border-white/20 shadow-lg"
+        return cn(baseClasses, "bg-white/10 backdrop-blur border border-white/20")
       case "solid":
-        return "bg-muted border-0 shadow-sm"
+        return cn(baseClasses, "bg-muted border-0")
       case "bordered":
-        return "border-2 bg-card shadow-sm"
+        return cn(baseClasses, "border-2 bg-card")
       case "elevated":
-        return "shadow-lg bg-card border-0"
+        return cn(baseClasses, "shadow-lg border-0 bg-card")
       default:
-        return "border bg-card text-card-foreground shadow-sm"
+        return cn(baseClasses, "border bg-card shadow-sm")
     }
   }
 
   return (
     <div
       ref={ref}
-      className={cn(
-        "rounded-lg",
-        getCardClasses(),
-        className
-      )}
+      className={cn(getCardClasses(), className)}
       {...props}
     />
   )
@@ -43,16 +41,23 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const settings = useSettings()
   
+  const getPadding = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "p-4"
+      case "comfortable":
+        return "p-8"
+      case "spacious":
+        return "p-10"
+      default:
+        return "p-6"
+    }
+  }
+
   return (
     <div
       ref={ref}
-      className={cn(
-        "flex flex-col space-y-1.5",
-        settings.spacingSize === "compact" ? "p-4" :
-        settings.spacingSize === "comfortable" ? "p-8" :
-        settings.spacingSize === "spacious" ? "p-10" : "p-6",
-        className
-      )}
+      className={cn("flex flex-col space-y-1.5", getPadding(), className)}
       {...props}
     />
   )
@@ -65,13 +70,23 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const settings = useSettings()
   
+  const getFontSize = () => {
+    switch (settings.fontSize) {
+      case "small":
+        return "text-lg"
+      case "large":
+        return "text-3xl"
+      default:
+        return "text-2xl"
+    }
+  }
+
   return (
     <h3
       ref={ref}
       className={cn(
         "font-semibold leading-none tracking-tight",
-        settings.fontSize === "small" ? "text-lg" :
-        settings.fontSize === "large" ? "text-2xl" : "text-xl",
+        getFontSize(),
         className
       )}
       {...props}
@@ -86,15 +101,21 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const settings = useSettings()
   
+  const getFontSize = () => {
+    switch (settings.fontSize) {
+      case "small":
+        return "text-xs"
+      case "large":
+        return "text-base"
+      default:
+        return "text-sm"
+    }
+  }
+
   return (
     <p
       ref={ref}
-      className={cn(
-        "text-muted-foreground",
-        settings.fontSize === "small" ? "text-xs" :
-        settings.fontSize === "large" ? "text-base" : "text-sm",
-        className
-      )}
+      className={cn(getFontSize(), "text-muted-foreground", className)}
       {...props}
     />
   )
@@ -107,17 +128,21 @@ const CardContent = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const settings = useSettings()
   
+  const getPadding = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "p-4 pt-0"
+      case "comfortable":
+        return "p-8 pt-0"
+      case "spacious":
+        return "p-10 pt-0"
+      default:
+        return "p-6 pt-0"
+    }
+  }
+
   return (
-    <div
-      ref={ref}
-      className={cn(
-        settings.spacingSize === "compact" ? "p-4 pt-0" :
-        settings.spacingSize === "comfortable" ? "p-8 pt-0" :
-        settings.spacingSize === "spacious" ? "p-10 pt-0" : "p-6 pt-0",
-        className
-      )}
-      {...props}
-    />
+    <div ref={ref} className={cn(getPadding(), className)} {...props} />
   )
 })
 CardContent.displayName = "CardContent"
@@ -128,16 +153,23 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const settings = useSettings()
   
+  const getPadding = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "p-4 pt-0"
+      case "comfortable":
+        return "p-8 pt-0"
+      case "spacious":
+        return "p-10 pt-0"
+      default:
+        return "p-6 pt-0"
+    }
+  }
+
   return (
     <div
       ref={ref}
-      className={cn(
-        "flex items-center",
-        settings.spacingSize === "compact" ? "p-4 pt-0" :
-        settings.spacingSize === "comfortable" ? "p-8 pt-0" :
-        settings.spacingSize === "spacious" ? "p-10 pt-0" : "p-6 pt-0",
-        className
-      )}
+      className={cn("flex items-center", getPadding(), className)}
       {...props}
     />
   )
