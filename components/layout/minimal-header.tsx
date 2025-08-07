@@ -17,7 +17,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
-import { useSettings } from "@/providers/settings-provider";
+import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { getNavigationItems } from "@/config/navigation";
@@ -26,52 +26,37 @@ import { Logo } from "@/components/ui/logo";
 export function MinimalHeader() {
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t, direction } = useI18n();
-  const { headerStyle, animationLevel, buttonStyle } = useSettings();
+  const {
+    getHeaderStyleClass,
+    getAnimationClass,
+    getButtonStyleClass,
+  } = useLayoutStyles();
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Get navigation items with translations from centralized config
   const navigation = getNavigationItems(t);
 
-  const getHeaderStyleClass = () => {
-    switch (headerStyle) {
-      case "compact":
-        return "py-3";
-      case "elevated":
-        return "py-4 shadow-lg";
-      case "transparent":
-        return "py-4 bg-transparent backdrop-blur-md";
-      default:
-        return "py-4";
-    }
-  };
+  const headerClass = getHeaderStyleClass({
+    compact: "py-3",
+    elevated: "py-4 shadow-lg",
+    transparent: "py-4 bg-transparent backdrop-blur-md",
+    default: "py-4",
+  });
 
-  const getAnimationClass = () => {
-    if (animationLevel === "none") return "";
-    if (animationLevel === "minimal") return "transition-colors duration-200";
-    if (animationLevel === "moderate") return "transition-all duration-300";
-    return "transition-all duration-500";
-  };
+  const animationClass = getAnimationClass();
 
-  const getButtonStyleClass = () => {
-    switch (buttonStyle) {
-      case "rounded":
-        return "rounded-full";
-      case "sharp":
-        return "rounded-none";
-      case "modern":
-        return "rounded-2xl";
-      default:
-        return "rounded-md";
-    }
-  };
+  const buttonClass = getButtonStyleClass({
+    modern: "rounded-2xl",
+    default: "rounded-md",
+  });
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-40 glass border-b border-border",
-        getHeaderStyleClass(),
-        getAnimationClass()
+        headerClass,
+        animationClass
       )}
     >
       <div className="flex items-center justify-between px-6">
@@ -81,7 +66,7 @@ export function MinimalHeader() {
             <div
               className={cn(
                 "w-10 h-10 bg-primary flex items-center justify-center shadow-md",
-                getButtonStyleClass()
+                buttonClass
               )}
             >
               <Logo size="sm" className="text-primary-foreground" />
@@ -103,8 +88,8 @@ export function MinimalHeader() {
                     href={item.href!}
                     className={cn(
                       "px-3 py-2 text-sm font-medium relative",
-                      getButtonStyleClass(),
-                      getAnimationClass(),
+                      buttonClass,
+                      animationClass,
                       isActive
                         ? "bg-primary text-primary-foreground"
                         : "text-foreground/70 hover:bg-accent hover:text-accent-foreground"
@@ -127,7 +112,7 @@ export function MinimalHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className={cn(getButtonStyleClass(), getAnimationClass())}
+                className={cn(buttonClass, animationClass)}
               >
                 <Menu className="h-5 w-5" />
               </Button>
@@ -178,8 +163,8 @@ export function MinimalHeader() {
               size="icon"
               className={cn(
                 "absolute right-0 top-0",
-                getButtonStyleClass(),
-                getAnimationClass(),
+                buttonClass,
+                animationClass,
                 searchOpen && "opacity-0"
               )}
               onClick={() => setSearchOpen(true)}
@@ -190,8 +175,8 @@ export function MinimalHeader() {
               placeholder={t("common.search")}
               className={cn(
                 "pl-4 pr-10 h-10 bg-muted/50 border-0 focus:bg-background",
-                getButtonStyleClass(),
-                getAnimationClass(),
+                buttonClass,
+                animationClass,
                 searchOpen ? "opacity-100 w-full" : "opacity-0 w-0"
               )}
               onBlur={() => setSearchOpen(false)}
@@ -207,8 +192,8 @@ export function MinimalHeader() {
                 size="icon"
                 className={cn(
                   "hover-lift",
-                  getButtonStyleClass(),
-                  getAnimationClass()
+                  buttonClass,
+                  animationClass
                 )}
               >
                 <Globe className="w-5 h-5" />
@@ -232,8 +217,8 @@ export function MinimalHeader() {
                 size="icon"
                 className={cn(
                   "hover-lift",
-                  getButtonStyleClass(),
-                  getAnimationClass()
+                  buttonClass,
+                  animationClass
                 )}
               >
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

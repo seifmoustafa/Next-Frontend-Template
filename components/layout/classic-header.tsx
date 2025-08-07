@@ -13,7 +13,7 @@ import {
 import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
-import { useSettings } from "@/providers/settings-provider";
+import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 
@@ -26,81 +26,31 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
   const { language, setLanguage, t, direction } = useI18n();
   const { user } = useAuth();
   const {
-    headerStyle,
-    spacingSize,
-    borderRadius,
-    animationLevel,
-    shadowIntensity,
-  } = useSettings();
+    getSpacingClass,
+    getHeaderStyleClass,
+    getShadowClass,
+    getAnimationClass,
+    getBorderRadiusClass,
+  } = useLayoutStyles();
 
-  const getSpacingClass = () => {
-    switch (spacingSize) {
-      case "compact":
-        return "px-4 py-2";
-      case "comfortable":
-        return "px-10 py-6";
-      case "spacious":
-        return "px-12 py-8";
-      default:
-        return "px-8 py-4";
-    }
-  };
+  const animationClass = getAnimationClass();
 
-  const getHeaderStyleClass = () => {
-    switch (headerStyle) {
-      case "compact":
-        return "h-14 bg-background/95 border-b";
-      case "elevated":
-        return "bg-gradient-to-r from-background via-background/98 to-background border-b-2 border-border/80 shadow-xl shadow-primary/10";
-      case "transparent":
-        return "bg-transparent backdrop-blur-xl border-b border-border/30";
-      default:
-        return "bg-gradient-to-r from-background via-background/95 to-background border-b-2 border-border/80 shadow-lg shadow-primary/5 backdrop-blur-sm";
-    }
-  };
-
-  const getShadowClass = () => {
-    switch (shadowIntensity) {
-      case "none":
-        return "";
-      case "subtle":
-        return "shadow-sm";
-      case "strong":
-        return "shadow-2xl";
-      default:
-        return "shadow-lg";
-    }
-  };
-
-  const getAnimationClass = () => {
-    if (animationLevel === "none") return "";
-    if (animationLevel === "minimal") return "transition-colors duration-200";
-    if (animationLevel === "moderate") return "transition-all duration-300";
-    return "transition-all duration-500 ease-in-out";
-  };
-
-  const getBorderRadiusClass = () => {
-    switch (borderRadius) {
-      case "none":
-        return "rounded-none";
-      case "small":
-        return "rounded-sm";
-      case "large":
-        return "rounded-lg";
-      case "full":
-        return "rounded-full";
-      default:
-        return "rounded-xl";
-    }
-  };
+  const headerClass = getHeaderStyleClass({
+    compact: "h-14 bg-background/95 border-b",
+    elevated:
+      "bg-gradient-to-r from-background via-background/98 to-background border-b-2 border-border/80 shadow-xl shadow-primary/10",
+    transparent: "bg-transparent backdrop-blur-xl border-b border-border/30",
+    default:
+      "bg-gradient-to-r from-background via-background/95 to-background border-b-2 border-border/80 shadow-lg shadow-primary/5 backdrop-blur-sm",
+  });
 
   return (
     <header
       className={cn(
         "sticky top-0 z-40",
-        getHeaderStyleClass(),
+        headerClass,
         getShadowClass(),
-        getAnimationClass()
+        animationClass
       )}
     >
       <div
@@ -114,7 +64,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
             className={cn(
               "lg:hidden hover:bg-primary/10 hover:text-primary",
               getBorderRadiusClass(),
-              getAnimationClass(),
+              animationClass,
               "shadow-md hover:shadow-lg hover:scale-105"
             )}
             onClick={onMenuClick}
@@ -133,7 +83,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
               className={cn(
                 "pl-10 rtl:pl-4 rtl:pr-10 w-64 bg-muted/50 border-0 focus:bg-background",
                 getBorderRadiusClass(),
-                getAnimationClass(),
+                animationClass,
                 "shadow-sm focus:shadow-md hover:shadow-md"
               )}
             />
@@ -148,7 +98,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
                 className={cn(
                   "hover:bg-primary/10 hover:text-primary",
                   getBorderRadiusClass(),
-                  getAnimationClass(),
+                  animationClass,
                   "shadow-md hover:shadow-lg hover:scale-105"
                 )}
               >
@@ -183,7 +133,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
                 className={cn(
                   "hover:bg-primary/10 hover:text-primary",
                   getBorderRadiusClass(),
-                  getAnimationClass(),
+                  animationClass,
                   "shadow-md hover:shadow-lg hover:scale-105"
                 )}
               >

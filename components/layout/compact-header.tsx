@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
-import { useSettings } from "@/providers/settings-provider";
+import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
@@ -17,47 +17,28 @@ interface CompactHeaderProps {
 export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t, direction } = useI18n();
-  const { headerStyle, animationLevel, buttonStyle } = useSettings();
+  const {
+    getHeaderStyleClass,
+    getAnimationClass,
+    getButtonStyleClass,
+  } = useLayoutStyles();
 
-  const getHeaderStyleClass = () => {
-    switch (headerStyle) {
-      case "compact":
-        return "h-14 px-3";
-      case "elevated":
-        return "h-16 px-4 shadow-lg";
-      case "transparent":
-        return "h-16 px-4 bg-transparent backdrop-blur-md";
-      default:
-        return "h-16 px-4";
-    }
-  };
-
-  const getAnimationClass = () => {
-    if (animationLevel === "none") return "";
-    if (animationLevel === "minimal") return "transition-colors duration-200";
-    if (animationLevel === "moderate") return "transition-all duration-300";
-    return "transition-all duration-500";
-  };
-
-  const getButtonStyleClass = () => {
-    switch (buttonStyle) {
-      case "rounded":
-        return "rounded-full";
-      case "sharp":
-        return "rounded-none";
-      case "modern":
-        return "rounded-2xl";
-      default:
-        return "rounded-xl";
-    }
-  };
+  const buttonClass = getButtonStyleClass({
+    modern: "rounded-2xl",
+    default: "rounded-xl",
+  });
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-background via-background/98 to-background border-b border-border/80",
         "shadow-lg shadow-primary/5 backdrop-blur-xl",
-        getHeaderStyleClass(),
+        getHeaderStyleClass({
+          compact: "h-14 px-3",
+          elevated: "h-16 px-4 shadow-lg",
+          transparent: "h-16 px-4 bg-transparent backdrop-blur-md",
+          default: "h-16 px-4",
+        }),
         getAnimationClass()
       )}
     >
@@ -81,7 +62,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             className={cn(
               "lg:hidden h-8 w-8 hover:bg-primary/10",
               "shadow-sm hover:shadow-md hover:scale-105",
-              getButtonStyleClass(),
+              buttonClass,
               getAnimationClass()
             )}
             onClick={() => onchange(false)}
@@ -98,7 +79,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             className={cn(
               "lg:hidden h-9 w-9 hover:bg-primary/10 hover:text-primary",
               "shadow-sm hover:shadow-md hover:scale-105",
-              getButtonStyleClass(),
+              buttonClass,
               getAnimationClass()
             )}
             onClick={onMenuClick}
@@ -123,7 +104,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
                 "w-full h-9 border-0 bg-muted/50 shadow-sm",
                 "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
                 getAnimationClass(),
-                getButtonStyleClass(),
+                buttonClass,
                 direction === "rtl" ? "pr-9 text-right" : "pl-9"
               )}
             />
@@ -139,7 +120,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             className={cn(
               "h-9 w-9 hover:bg-primary/10 hover:text-primary",
               "shadow-sm hover:shadow-md hover:scale-105",
-              getButtonStyleClass(),
+              buttonClass,
               getAnimationClass()
             )}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -155,7 +136,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             className={cn(
               "h-9 w-9 hover:bg-primary/10 hover:text-primary",
               "shadow-sm hover:shadow-md hover:scale-105",
-              getButtonStyleClass(),
+              buttonClass,
               getAnimationClass()
             )}
             onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
