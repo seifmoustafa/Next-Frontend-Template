@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { X, ChevronDown, ChevronRight, Crown, Star } from 'lucide-react';
+import { X, ChevronDown, ChevronRight, Crown, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -98,6 +98,7 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
     const isExpanded = expandedItems.includes(item.name);
     const hasChildren = item.children && item.children.length > 0;
     const Icon = item.icon;
+    const indent = level * 16; // 16px per level
 
     if (hasChildren) {
       return (
@@ -112,7 +113,6 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
                 "group flex items-center justify-between w-full px-5 py-5 text-sm font-semibold cursor-pointer relative overflow-hidden",
                 getButtonStyleClass(),
                 getAnimationClass(),
-                level > 0 && "ml-6 rtl:ml-0 rtl:mr-6",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? "bg-gradient-to-r from-primary via-primary/95 to-primary/85 text-primary-foreground shadow-2xl shadow-primary/40"
@@ -120,6 +120,7 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
                 "before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/15 before:via-white/5 before:to-white/15 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500",
                 "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary/30 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-500"
               )}
+              style={{ paddingLeft: `${20 + indent}px` }}
             >
               <div className="flex items-center space-x-5 rtl:space-x-reverse relative z-10">
                 <div
@@ -145,11 +146,13 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
                       )}
                     />
                   ) : (
-                    <div className={cn(
-                      "rounded-full relative z-10",
-                      level === 0 ? "w-3 h-3" : "w-2 h-2",
-                      isActive ? "bg-white" : "bg-primary"
-                    )} />
+                    <div
+                      className={cn(
+                        "rounded-full relative z-10",
+                        level === 0 ? "w-3 h-3" : "w-2 h-2",
+                        isActive ? "bg-white" : "bg-primary"
+                      )}
+                    />
                   )}
                 </div>
                 <span className="truncate font-bold tracking-wide">
@@ -196,7 +199,6 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
           "group flex items-center justify-between px-5 py-5 text-sm font-semibold relative overflow-hidden",
           getButtonStyleClass(),
           getAnimationClass(),
-          level > 0 && "ml-6 rtl:ml-0 rtl:mr-6",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? "bg-gradient-to-r from-primary via-primary/95 to-primary/85 text-primary-foreground shadow-2xl shadow-primary/40"
@@ -204,6 +206,7 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
           "before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/15 before:via-white/5 before:to-white/15 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500",
           "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary/30 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-500"
         )}
+        style={{ paddingLeft: `${20 + indent}px` }}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-5 rtl:space-x-reverse relative z-10">
@@ -230,11 +233,13 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
                 )}
               />
             ) : (
-              <div className={cn(
-                "rounded-full relative z-10",
-                level === 0 ? "w-3 h-3" : "w-2 h-2",
-                isActive ? "bg-white" : "bg-primary"
-              )} />
+              <div
+                className={cn(
+                  "rounded-full relative z-10",
+                  level === 0 ? "w-3 h-3" : "w-2 h-2",
+                  isActive ? "bg-white" : "bg-primary"
+                )}
+              />
             )}
           </div>
           <span className="truncate font-bold tracking-wide">{item.name}</span>

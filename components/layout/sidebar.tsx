@@ -54,6 +54,7 @@ export function Sidebar({
     const isExpanded = expandedItems.includes(item.name);
     const hasChildren = item.children && item.children.length > 0;
     const Icon = item.icon;
+    const indent = level * 16; // 16px per level
 
     if (hasChildren) {
       return (
@@ -66,12 +67,12 @@ export function Sidebar({
             <div
               className={cn(
                 "group flex items-center justify-between w-full px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 cursor-pointer",
-                level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
                   : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
               )}
+              style={{ paddingLeft: `${16 + indent}px` }}
             >
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <div
@@ -129,12 +130,12 @@ export function Sidebar({
         href={item.href || "#"}
         className={cn(
           "group flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300",
-          level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
             : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
         )}
+        style={{ paddingLeft: `${16 + indent}px` }}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse">

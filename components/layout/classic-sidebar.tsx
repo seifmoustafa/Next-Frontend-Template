@@ -108,6 +108,7 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
     const isExpanded = expandedItems.includes(item.name);
     const hasChildren = item.children && item.children.length > 0;
     const Icon = item.icon;
+    const indent = level * 16; // 16px per level
 
     if (hasChildren) {
       return (
@@ -122,7 +123,6 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                 "group flex items-center justify-between w-full px-6 py-4 text-base font-medium cursor-pointer",
                 getBorderRadiusClass(),
                 getAnimationClass(),
-                level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? cn(
@@ -148,6 +148,7 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                     )
                   : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md"
               )}
+              style={{ paddingLeft: `${24 + indent}px` }}
             >
               <div className="flex items-center space-x-4 rtl:space-x-reverse">
                 <div
@@ -217,7 +218,6 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           "group flex items-center justify-between px-6 py-4 text-base font-medium",
           getBorderRadiusClass(),
           getAnimationClass(),
-          level > 0 && "ml-6 rtl:ml-0 rtl:mr-6 py-3 text-sm",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? cn(
@@ -243,6 +243,7 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
               )
             : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md"
         )}
+        style={{ paddingLeft: `${24 + indent}px` }}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-4 rtl:space-x-reverse">

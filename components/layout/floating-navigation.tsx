@@ -103,6 +103,7 @@ export function FloatingNavigation({
     const isExpanded = expandedItems.includes(item.name);
     const hasChildren = item.children && item.children.length > 0;
     const Icon = item.icon;
+    const indent = level * 16; // 16px per level
 
     if (hasChildren) {
       return (
@@ -117,12 +118,12 @@ export function FloatingNavigation({
                 "group flex items-center justify-between w-full px-4 py-3 text-sm font-medium cursor-pointer",
                 getButtonStyleClass(),
                 getAnimationClass(),
-                level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? "bg-gradient-to-r from-primary/20 to-primary/10 text-primary shadow-md"
                   : "bg-background/60 text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
               )}
+              style={{ paddingLeft: `${16 + indent}px` }}
             >
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <div
@@ -186,12 +187,12 @@ export function FloatingNavigation({
           "group flex items-center justify-between px-4 py-3 text-sm font-medium",
           getButtonStyleClass(),
           getAnimationClass(),
-          level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? "bg-gradient-to-r from-primary/20 to-primary/10 text-primary shadow-md"
             : "bg-background/60 text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
         )}
+        style={{ paddingLeft: `${16 + indent}px` }}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse">

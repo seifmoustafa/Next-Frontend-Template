@@ -81,6 +81,7 @@ export function NavigationPanelSidebar({
     const hasSubChildren = item.children && item.children.length > 0;
     const isExpanded = expandedItems.includes(item.name);
     const displayName = t(item.name) || item.name;
+    const indent = level * 16; // 16px per level
 
     if (hasSubChildren) {
       return (
@@ -98,9 +99,13 @@ export function NavigationPanelSidebar({
                 direction === "rtl" ? "justify-end" : "justify-start",
                 getBorderRadiusClass(),
                 getAnimationClass(),
-                level > 0 && (direction === "rtl" ? "mr-4" : "ml-4"),
                 "hover:bg-accent hover:text-accent-foreground"
               )}
+              style={
+                direction === "rtl"
+                  ? { paddingRight: `${12 + indent}px` }
+                  : { paddingLeft: `${12 + indent}px` }
+              }
             >
               {/* RTL: Icon on the right, LTR: Icon on the left */}
               {direction === "rtl" ? (
@@ -164,7 +169,6 @@ export function NavigationPanelSidebar({
           direction === "rtl" ? "justify-end" : "justify-start",
           getBorderRadiusClass(),
           getAnimationClass(),
-          level > 0 && (direction === "rtl" ? "mr-4" : "ml-4"),
           isActive
             ? cn(
                 "text-white shadow-sm",
@@ -181,6 +185,11 @@ export function NavigationPanelSidebar({
             : "hover:bg-accent hover:text-accent-foreground",
           item.disabled && "opacity-50 cursor-not-allowed"
         )}
+        style={
+          direction === "rtl"
+            ? { paddingRight: `${12 + indent}px` }
+            : { paddingLeft: `${12 + indent}px` }
+        }
         disabled={item.disabled}
       >
         <Link

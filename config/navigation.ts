@@ -13,7 +13,6 @@ import {
   TrendingUp,
   PieChart,
   BarChart,
-  icons,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -44,7 +43,7 @@ export interface NavigationItem {
 export const navigation: NavigationItem[] = [
   {
     name: "nav.dashboard", // Uses translation key
-    href: "/dashboard",
+    href: "/",
     icon: LayoutDashboard,
   },
   {
@@ -53,66 +52,29 @@ export const navigation: NavigationItem[] = [
     children: [
       {
         name: "قائمة المستخدمين",
-        // href: "/dashboard/users",
-        // icon: Users,
-        children: [
-          {
-            name: "انواع",
-            href: "/dashboard/users",
-            icon: Users,
-          },
-        ],
+        href: "/users",
+        icon: Users,
       },
       {
         name: "أنواع المستخدمين",
-        href: "/dashboard/user-types",
+        href: "/user-types",
         icon: Shield,
       },
     ],
   },
   {
     name: "nav.analytics", // Uses translation key
-    // href: "/dashboard/analytics",
+    href: "/analytics",
     icon: BarChart3,
-    children: [
-      {
-        name: "1",
-        href: "/dashboard/analytics",
-      },
-      {
-        name: "2",
-        href: "/dashboard/analtics",
-        children: [
-          {
-            name: "3",
-            href: "/dashboard/aaltics",
-          },
-          {
-            name: "4",
-            href: "/dashboard/anltics",
-            children: [
-              {
-                name: "7",
-                href: "/dashboard/anltics",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        name: "5",
-        href: "/dashboard/analtics",
-      },
-    ],
   },
   {
     name: "الملف الشخصي", // Direct Arabic text
-    href: "/dashboard/profile",
+    href: "/profile",
     icon: User,
   },
   {
     name: "nav.settings", // Uses translation key
-    href: "/dashboard/settings",
+    href: "/settings",
     icon: Settings,
   },
 ];
@@ -127,7 +89,7 @@ To add nested/children menu items, modify the navigation array above like this:
 export const navigation: NavigationItem[] = [
   {
     name: "nav.dashboard",
-    href: "/dashboard",
+    href: "/",
     icon: LayoutDashboard,
   },
   {
@@ -136,12 +98,12 @@ export const navigation: NavigationItem[] = [
     children: [
       {
         name: "قائمة المستخدمين",
-        href: "/dashboard/users",
+        href: "/users",
         icon: Users,
       },
       {
         name: "إضافة مستخدم",
-        href: "/dashboard/users/create",
+        href: "/users/create",
         icon: UserPlus,
       },
       {
@@ -150,12 +112,12 @@ export const navigation: NavigationItem[] = [
         children: [  // 3rd level nesting
           {
             name: "عرض الأدوار",
-            href: "/dashboard/users/roles",
+            href: "/users/roles",
             icon: UserCheck,
           },
           {
             name: "إنشاء دور جديد",
-            href: "/dashboard/users/roles/create",
+            href: "/users/roles/create",
             icon: UserPlus,
           },
           {
@@ -164,12 +126,12 @@ export const navigation: NavigationItem[] = [
             children: [  // 4th level nesting
               {
                 name: "صلاحيات النظام",
-                href: "/dashboard/users/permissions/system",
+                href: "/users/permissions/system",
                 icon: Cog,
               },
               {
                 name: "صلاحيات المحتوى",
-                href: "/dashboard/users/permissions/content",
+                href: "/users/permissions/content",
                 icon: FileText,
               },
             ],
@@ -178,13 +140,13 @@ export const navigation: NavigationItem[] = [
       },
       {
         name: "المستخدمين النشطين",
-        href: "/dashboard/users/active",
+        href: "/users/active",
         icon: UserCheck,
         badge: 12, // Shows notification badge
       },
       {
         name: "المستخدمين المحظورين",
-        href: "/dashboard/users/blocked",
+        href: "/users/blocked",
         icon: UserX,
         disabled: true, // Disabled state
       },
@@ -196,12 +158,12 @@ export const navigation: NavigationItem[] = [
     children: [
       {
         name: "نظرة عامة",
-        href: "/dashboard/analytics",
+        href: "/analytics",
         icon: BarChart3,
       },
       {
         name: "الاتجاهات",
-        href: "/dashboard/analytics/trends",
+        href: "/analytics/trends",
         icon: TrendingUp,
         badge: "جديد", // Text badge
       },
@@ -211,12 +173,12 @@ export const navigation: NavigationItem[] = [
         children: [  // 3rd level nesting
           {
             name: "تقرير المبيعات الشهري",
-            href: "/dashboard/analytics/reports/monthly-sales",
+            href: "/analytics/reports/monthly-sales",
             icon: BarChart,
           },
           {
             name: "تحليل سلوك المستخدمين",
-            href: "/dashboard/analytics/reports/user-behavior",
+            href: "/analytics/reports/user-behavior",
             icon: Users,
           },
           {
@@ -225,12 +187,12 @@ export const navigation: NavigationItem[] = [
             children: [  // 4th level nesting
               {
                 name: "إنشاء تقرير جديد",
-                href: "/dashboard/analytics/reports/custom/create",
+                href: "/analytics/reports/custom/create",
                 icon: UserPlus,
               },
               {
                 name: "قوالب التقارير",
-                href: "/dashboard/analytics/reports/custom/templates",
+                href: "/analytics/reports/custom/templates",
                 icon: FileText,
               },
             ],
@@ -241,7 +203,7 @@ export const navigation: NavigationItem[] = [
   },
   {
     name: "الملف الشخصي",
-    href: "/dashboard/profile",
+    href: "/profile",
     icon: User,
   },
   {
@@ -250,17 +212,17 @@ export const navigation: NavigationItem[] = [
     children: [
       {
         name: "الإعدادات العامة",
-        href: "/dashboard/settings",
+        href: "/settings",
         icon: Cog,
       },
       {
         name: "إعدادات المظهر",
-        href: "/dashboard/settings/appearance",
+        href: "/settings/appearance",
         icon: Palette,
       },
       {
         name: "إعدادات الإشعارات",
-        href: "/dashboard/settings/notifications",
+        href: "/settings/notifications",
         icon: Bell,
         badge: 3, // Notification count
       },
@@ -300,17 +262,17 @@ import { FileText, Download, Upload } from 'lucide-react'
   children: [
     {
       name: "عرض التقارير",
-      href: "/dashboard/reports",
+      href: "/reports",
       icon: FileText,
     },
     {
       name: "تصدير البيانات",
-      href: "/dashboard/reports/export",
+      href: "/reports/export",
       icon: Download,
     },
     {
       name: "استيراد البيانات",
-      href: "/dashboard/reports/import",
+      href: "/reports/import",
       icon: Upload,
       badge: "قريباً",
     },

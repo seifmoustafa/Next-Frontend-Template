@@ -17,7 +17,7 @@ export const ar = {
   "nav.logout": "تسجيل الخروج",
 
   // Layout & App
-  "app.title": "منظومة إدارة العقود والسيطة علي مخزون العالم كله",
+  "app.title": "نموذج إدارة",
   "app.subtitle": "الإدارية",
   "app.modern": "العصرية",
   "app.classic": "الكلاسيكية",

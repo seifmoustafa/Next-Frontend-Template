@@ -98,6 +98,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
     const isExpanded = expandedItems.includes(item.name);
     const hasChildren = item.children && item.children.length > 0;
     const Icon = item.icon;
+    const indent = level * 16; // 16px per level
 
     if (hasChildren) {
       return (
@@ -112,12 +113,12 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                 "group flex items-center justify-between w-full px-3 py-2 text-sm font-medium cursor-pointer",
                 getButtonStyleClass(),
                 getAnimationClass(),
-                level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
                   : "text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
               )}
+              style={{ paddingLeft: `${12 + indent}px` }}
             >
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <div
@@ -189,12 +190,12 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           "group flex items-center justify-between px-3 py-2 text-sm font-medium",
           getButtonStyleClass(),
           getAnimationClass(),
-          level > 0 && "ml-4 rtl:ml-0 rtl:mr-4",
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
             : "text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
         )}
+        style={{ paddingLeft: `${12 + indent}px` }}
         onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
