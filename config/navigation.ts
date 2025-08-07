@@ -13,6 +13,7 @@ import {
   TrendingUp,
   PieChart,
   BarChart,
+  icons,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -52,8 +53,15 @@ export const navigation: NavigationItem[] = [
     children: [
       {
         name: "قائمة المستخدمين",
-        href: "/dashboard/users",
-        icon: Users,
+        // href: "/dashboard/users",
+        // icon: Users,
+        children: [
+          {
+            name: "انواع",
+            href: "/dashboard/users",
+            icon: Users,
+          },
+        ],
       },
       {
         name: "أنواع المستخدمين",
@@ -64,8 +72,38 @@ export const navigation: NavigationItem[] = [
   },
   {
     name: "nav.analytics", // Uses translation key
-    href: "/dashboard/analytics",
+    // href: "/dashboard/analytics",
     icon: BarChart3,
+    children: [
+      {
+        name: "1",
+        href: "/dashboard/analytics",
+      },
+      {
+        name: "2",
+        href: "/dashboard/analtics",
+        children: [
+          {
+            name: "3",
+            href: "/dashboard/aaltics",
+          },
+          {
+            name: "4",
+            href: "/dashboard/anltics",
+            children: [
+              {
+                name: "7",
+                href: "/dashboard/anltics",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "5",
+        href: "/dashboard/analtics",
+      },
+    ],
   },
   {
     name: "الملف الشخصي", // Direct Arabic text

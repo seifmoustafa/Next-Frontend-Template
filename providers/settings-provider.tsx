@@ -13,6 +13,7 @@ export type ColorTheme =
   | "pink"
   | "indigo"
   | "cyan";
+
 export type LightBackgroundTheme =
   | "default"
   | "warm"
@@ -23,6 +24,7 @@ export type LightBackgroundTheme =
   | "mint"
   | "lavender"
   | "rose";
+
 export type DarkBackgroundTheme =
   | "default"
   | "darker"
@@ -33,7 +35,9 @@ export type DarkBackgroundTheme =
   | "ocean"
   | "purple-dark"
   | "crimson";
+
 export type ShadowIntensity = "none" | "subtle" | "moderate" | "strong";
+
 export type LayoutTemplate =
   | "modern"
   | "minimal"
@@ -42,6 +46,7 @@ export type LayoutTemplate =
   | "floating"
   | "elegant"
   | "navigation";
+
 export type CardStyle = "default" | "glass" | "solid" | "bordered" | "elevated";
 export type AnimationLevel = "none" | "minimal" | "moderate" | "high";
 export type FontSize = "small" | "default" | "large";
@@ -55,6 +60,10 @@ export type ButtonStyle = "default" | "rounded" | "sharp" | "modern";
 export type NavigationStyle = "default" | "pills" | "underline" | "sidebar";
 export type SpacingSize = "compact" | "default" | "comfortable" | "spacious";
 export type IconStyle = "outline" | "filled" | "duotone" | "minimal";
+
+export type LogoType = "sparkles" | "shield" | "image" | "custom";
+export type LogoAnimation = "none" | "spin" | "pulse" | "fancy";
+export type LogoSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 interface SettingsContextType {
   // Existing settings
@@ -77,6 +86,25 @@ interface SettingsContextType {
   spacingSize: SpacingSize;
   iconStyle: IconStyle;
 
+  // Logo settings
+  logoType: LogoType;
+  logoAnimation: LogoAnimation;
+  logoSize: LogoSize;
+  logoText: string;
+  logoImagePath: string;
+
+  // Additional app control settings
+  showBreadcrumbs: boolean;
+  showUserAvatar: boolean;
+  showNotifications: boolean;
+  compactMode: boolean;
+  highContrast: boolean;
+  reducedMotion: boolean;
+  stickyHeader: boolean;
+  collapsibleSidebar: boolean;
+  showFooter: boolean;
+  autoSave: boolean;
+
   // Setters
   setColorTheme: (theme: ColorTheme) => void;
   setLightBackgroundTheme: (theme: LightBackgroundTheme) => void;
@@ -95,8 +123,24 @@ interface SettingsContextType {
   setSpacingSize: (size: SpacingSize) => void;
   setIconStyle: (style: IconStyle) => void;
 
+  setLogoType: (type: LogoType) => void;
+  setLogoAnimation: (animation: LogoAnimation) => void;
+  setLogoSize: (size: LogoSize) => void;
+  setLogoText: (text: string) => void;
+  setLogoImagePath: (path: string) => void;
+  setShowBreadcrumbs: (show: boolean) => void;
+  setShowUserAvatar: (show: boolean) => void;
+  setShowNotifications: (show: boolean) => void;
+  setCompactMode: (compact: boolean) => void;
+  setHighContrast: (contrast: boolean) => void;
+  setReducedMotion: (reduced: boolean) => void;
+  setStickyHeader: (sticky: boolean) => void;
+  setCollapsibleSidebar: (collapsible: boolean) => void;
+  setShowFooter: (show: boolean) => void;
+  setAutoSave: (autoSave: boolean) => void;
+
   // Utility functions
-  resetToDefaults: () => void;
+  resetSettings: () => void;
   exportSettings: () => string;
   importSettings: (settings: string) => boolean;
 }
@@ -122,6 +166,21 @@ const defaultSettings = {
   navigationStyle: "default" as NavigationStyle,
   spacingSize: "default" as SpacingSize,
   iconStyle: "outline" as IconStyle,
+  logoType: "sparkles" as LogoType,
+  logoAnimation: "none" as LogoAnimation,
+  logoSize: "md" as LogoSize,
+  logoText: "SA",
+  logoImagePath: "/placeholder-logo.png",
+  showBreadcrumbs: true,
+  showUserAvatar: true,
+  showNotifications: true,
+  compactMode: false,
+  highContrast: false,
+  reducedMotion: false,
+  stickyHeader: true,
+  collapsibleSidebar: true,
+  showFooter: true,
+  autoSave: true,
 };
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
@@ -176,6 +235,61 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       root.setAttribute("data-navigation-style", settings.navigationStyle);
       root.setAttribute("data-spacing", settings.spacingSize);
       root.setAttribute("data-icon-style", settings.iconStyle);
+      root.setAttribute("data-logo-type", settings.logoType);
+      root.setAttribute("data-logo-animation", settings.logoAnimation);
+      root.setAttribute("data-logo-size", settings.logoSize);
+      root.setAttribute("data-compact-mode", settings.compactMode.toString());
+      root.setAttribute("data-high-contrast", settings.highContrast.toString());
+      root.setAttribute(
+        "data-reduced-motion",
+        settings.reducedMotion.toString()
+      );
+      root.setAttribute("data-sticky-header", settings.stickyHeader.toString());
+
+      // Apply CSS custom properties for responsive design
+      root.style.setProperty(
+        "--font-size-base",
+        settings.fontSize === "small"
+          ? "14px"
+          : settings.fontSize === "large"
+          ? "18px"
+          : "16px"
+      );
+
+      root.style.setProperty(
+        "--spacing-unit",
+        settings.spacingSize === "compact"
+          ? "0.5rem"
+          : settings.spacingSize === "comfortable"
+          ? "1.5rem"
+          : settings.spacingSize === "spacious"
+          ? "2rem"
+          : "1rem"
+      );
+
+      root.style.setProperty(
+        "--border-radius",
+        settings.borderRadius === "none"
+          ? "0"
+          : settings.borderRadius === "small"
+          ? "0.25rem"
+          : settings.borderRadius === "large"
+          ? "0.75rem"
+          : settings.borderRadius === "full"
+          ? "9999px"
+          : "0.5rem"
+      );
+
+      root.style.setProperty(
+        "--shadow-intensity",
+        settings.shadowIntensity === "none"
+          ? "none"
+          : settings.shadowIntensity === "subtle"
+          ? "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+          : settings.shadowIntensity === "strong"
+          ? "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+          : "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+      );
     }
   }, [settings, isHydrated]);
 
@@ -186,7 +300,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
-  const resetToDefaults = () => {
+  const resetSettings = () => {
     setSettings(defaultSettings);
   };
 
@@ -226,14 +340,30 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setNavigationStyle: (style) => updateSetting("navigationStyle", style),
     setSpacingSize: (size) => updateSetting("spacingSize", size),
     setIconStyle: (style) => updateSetting("iconStyle", style),
-    resetToDefaults,
+    setLogoType: (type) => updateSetting("logoType", type),
+    setLogoAnimation: (animation) => updateSetting("logoAnimation", animation),
+    setLogoSize: (size) => updateSetting("logoSize", size),
+    setLogoText: (text) => updateSetting("logoText", text),
+    setLogoImagePath: (path) => updateSetting("logoImagePath", path),
+    setShowBreadcrumbs: (show) => updateSetting("showBreadcrumbs", show),
+    setShowUserAvatar: (show) => updateSetting("showUserAvatar", show),
+    setShowNotifications: (show) => updateSetting("showNotifications", show),
+    setCompactMode: (compact) => updateSetting("compactMode", compact),
+    setHighContrast: (contrast) => updateSetting("highContrast", contrast),
+    setReducedMotion: (reduced) => updateSetting("reducedMotion", reduced),
+    setStickyHeader: (sticky) => updateSetting("stickyHeader", sticky),
+    setCollapsibleSidebar: (collapsible) =>
+      updateSetting("collapsibleSidebar", collapsible),
+    setShowFooter: (show) => updateSetting("showFooter", show),
+    setAutoSave: (autoSave) => updateSetting("autoSave", autoSave),
+    resetSettings,
     exportSettings,
     importSettings,
   };
 
   // Don't render until hydrated to prevent hydration mismatches
   if (!isHydrated) {
-    return null;
+    return <div className="min-h-screen bg-background animate-pulse" />;
   }
 
   return (

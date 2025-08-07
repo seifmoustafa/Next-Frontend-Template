@@ -1,132 +1,95 @@
-import { Sparkles, Shield } from "lucide-react";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { logoConfig } from "@/config/logo";
-import { useSettings } from "@/providers/settings-provider";
+'use client'
+
+import React from 'react'
+import { Sparkles, Shield } from 'lucide-react'
+import { useSettings } from '@/providers/settings-provider'
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 interface LogoProps {
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  variant?: "default" | "gradient" | "outline";
-  className?: string;
-  /**
-   * Animation for icon logos: 'none' (default), 'spin', 'pulse', or 'fancy' (strong effect).
-   */
-  animation?: "none" | "spin" | "pulse" | "fancy";
+  className?: string
+  showText?: boolean
 }
 
-export function Logo({ size = "md", variant = "default", className, animation = "none" }: LogoProps) {
-  const settings = useSettings();
-  const logoType = settings?.logoType || logoConfig.type;
-  const logoImage = logoConfig.imagePath;
-  const logoText = logoConfig.text;
-  
+export function Logo({ className, showText = true }: LogoProps) {
+  const settings = useSettings()
+
   const sizeClasses = {
-    xs: "w-4 h-4",
-    sm: "w-6 h-6",
-    md: "w-8 h-8", 
-    lg: "w-10 h-10",
-    xl: "w-32 h-32" // 128px for extra large
-  };
-  
-  const variantClasses = {
-    default: "text-primary",
-    gradient: "bg-gradient-to-br from-primary to-primary/80 text-primary-foreground",
-    outline: "border-2 border-primary text-primary"
-  };
+    xs: 'h-4 w-4',
+    sm: 'h-5 w-5', 
+    md: 'h-6 w-6',
+    lg: 'h-8 w-8',
+    xl: 'h-10 w-10'
+  }
 
-  const renderLogo = () => {
-    switch (logoType) {
-      case "sparkles":
+  const textSizeClasses = {
+    xs: 'text-sm',
+    sm: 'text-base',
+    md: 'text-lg', 
+    lg: 'text-xl',
+    xl: 'text-2xl'
+  }
+
+  const animationClasses = {
+    none: '',
+    spin: 'animate-spin',
+    pulse: 'animate-pulse',
+    fancy: 'hover:scale-110 hover:rotate-12 transition-transform duration-300'
+  }
+
+  const renderIcon = () => {
+    const iconClass = cn(
+      sizeClasses[settings.logoSize],
+      animationClasses[settings.logoAnimation],
+      'transition-all duration-200'
+    )
+
+    switch (settings.logoType) {
+      case 'sparkles':
+        return <Sparkles className={iconClass} />
+      case 'shield':
+        return <Shield className={iconClass} />
+      case 'image':
+        return (
+          <div className={cn(sizeClasses[settings.logoSize], 'relative')}>
+            <Image
+              src={settings.logoImagePath || '/placeholder.svg?height=32&width=32'}
+              alt="Logo"
+              fill
+              className={cn('object-contain', animationClasses[settings.logoAnimation])}
+              onError={(e) => {
+                // Fallback to sparkles icon if image fails to load
+                e.currentTarget.style.display = 'none'
+              }}
+            />
+          </div>
+        )
+      case 'custom':
         return (
           <div className={cn(
-            "flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary shadow-lg",
-            sizeClasses[size],
-            className
+            textSizeClasses[settings.logoSize],
+            animationClasses[settings.logoAnimation],
+            'font-bold'
           )}>
-            <div className={cn(
-              "flex items-center justify-center rounded-full bg-background",
-              // Slightly smaller to create a border effect
-              size === "xs" ? "w-3 h-3" : size === "sm" ? "w-5 h-5" : size === "md" ? "w-7 h-7" : size === "lg" ? "w-9 h-9" : "w-28 h-28"
-            )}>
-              <Sparkles className={cn(
-                size === "xs" ? "w-3 h-3" : size === "sm" ? "w-4 h-4" : 
-                size === "md" ? "w-5 h-5" :
-                size === "lg" ? "w-6 h-6" : "w-7 h-7",
-                animation === "spin" && "animate-spin",
-                animation === "pulse" && "animate-pulse",
-                animation === "fancy" && "animate-spin animate-pulse shadow-[0_0_32px_theme('colors.primary.DEFAULT')] text-primary drop-shadow-lg",
-              )} />
-            </div>
+            {settings.logoText || 'SA'}
           </div>
-        );
-        
-      case "shield":
-        return (
-          <div className={cn(
-            "flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary shadow-lg",
-            sizeClasses[size],
-            className
-          )}>
-            <div className={cn(
-              "flex items-center justify-center rounded-full bg-background",
-              size === "xs" ? "w-3 h-3" : size === "sm" ? "w-5 h-5" : size === "md" ? "w-7 h-7" : size === "lg" ? "w-9 h-9" : "w-28 h-28"
-            )}>
-              <Shield className={cn(
-                size === "xs" ? "w-3 h-3" : size === "sm" ? "w-4 h-4" : 
-                size === "md" ? "w-5 h-5" :
-                size === "lg" ? "w-6 h-6" : "w-7 h-7",
-                animation === "spin" && "animate-spin",
-                animation === "pulse" && "animate-pulse",
-                animation === "fancy" && "animate-spin animate-pulse shadow-[0_0_32px_theme('colors.primary.DEFAULT')] text-primary drop-shadow-lg",
-              )} />
-            </div>
-          </div>
-        );
-        
-      case "image":
-        return (
-          <Image
-            src={logoImage}
-            alt="Logo"
-            width={size === "xs" ? 16 : size === "sm" ? 32 : size === "md" ? 46 : size === "lg" ? 72 : 128}
-            height={size === "xs" ? 16 : size === "sm" ? 32 : size === "md" ? 46 : size === "lg" ? 72 : 128}
-            className={cn(
-              "object-cover rounded-full",
-              sizeClasses[size],
-              className
-            )}
-          />
-        );
-        
-      case "custom":
-        return (
-          <div className={cn(
-            "flex items-center justify-center rounded-full font-bold text-primary-foreground",
-            sizeClasses[size],
-            variantClasses[variant],
-            className
-          )}>
-            {logoText}
-          </div>
-        );
-        
+        )
       default:
-        return (
-          <div className={cn(
-            "flex items-center justify-center rounded-full",
-            sizeClasses[size],
-            variantClasses[variant],
-            className
-          )}>
-            <Sparkles className={cn(
-              size === "xs" ? "w-3 h-3" : size === "sm" ? "w-4 h-4" : 
-              size === "md" ? "w-5 h-5" :
-              size === "lg" ? "w-6 h-6" : "w-7 h-7"
-            )} />
-          </div>
-        );
+        return <Sparkles className={iconClass} />
     }
-  };
+  }
 
-  return renderLogo();
-} 
+  return (
+    <div className={cn('flex items-center gap-2', className)}>
+      {renderIcon()}
+      {showText && settings.logoType !== 'custom' && (
+        <span className={cn(
+          'font-semibold',
+          textSizeClasses[settings.logoSize]
+        )}>
+          {settings.logoText}
+        </span>
+      )}
+    </div>
+  )
+}

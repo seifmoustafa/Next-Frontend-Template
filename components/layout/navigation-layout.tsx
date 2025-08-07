@@ -22,7 +22,7 @@ export function NavigationLayout({
   onSidebarOpenChange,
 }: NavigationLayoutProps) {
   const { direction } = useI18n();
-  const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings();
+  const settings = useSettings();
   const [selectedMainItem, setSelectedMainItem] = useState<string>("dashboard");
   const [panelSidebarOpen, setPanelSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -104,7 +104,7 @@ export function NavigationLayout({
   }, [onSidebarOpenChange, isMobile]);
 
   const getBackgroundClass = () => {
-    switch (cardStyle) {
+    switch (settings.cardStyle) {
       case "glass":
         return "bg-gradient-to-br from-background/50 to-background/30 backdrop-blur-xl";
       case "solid":
@@ -117,10 +117,62 @@ export function NavigationLayout({
   };
 
   const getAnimationClass = () => {
-    if (animationLevel === "none") return "";
-    if (animationLevel === "minimal") return "transition-colors duration-200";
-    if (animationLevel === "moderate") return "transition-all duration-300";
+    if (settings.animationLevel === "none") return "";
+    if (settings.animationLevel === "minimal") return "transition-colors duration-200";
+    if (settings.animationLevel === "moderate") return "transition-all duration-300";
     return "transition-all duration-500 ease-in-out";
+  };
+
+  const getSpacingClass = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "p-2 lg:p-3";
+      case "comfortable":
+        return "p-6 lg:p-8";
+      case "spacious":
+        return "p-8 lg:p-12";
+      default:
+        return "p-4 lg:p-6";
+    }
+  };
+
+  const getFontSizeClass = () => {
+    switch (settings.fontSize) {
+      case "small":
+        return "text-sm";
+      case "large":
+        return "text-lg";
+      default:
+        return "text-base";
+    }
+  };
+
+  const getBorderRadiusClass = () => {
+    switch (settings.borderRadius) {
+      case "none":
+        return "rounded-none";
+      case "small":
+        return "rounded-sm";
+      case "large":
+        return "rounded-lg";
+      case "full":
+        return "rounded-full";
+      default:
+        return "rounded-md";
+    }
+  };
+
+  const getShadowClass = () => {
+    switch (settings.shadowIntensity) {
+      case "none":
+        return "";
+      case "subtle":
+        return "shadow-sm";
+      case "strong":
+        return "shadow-lg";
+      default:
+        return "shadow-md";
+    }
   };
 
   return (
@@ -129,8 +181,15 @@ export function NavigationLayout({
         "min-h-screen",
         getBackgroundClass(),
         getAnimationClass(),
-        direction === "rtl" ? "rtl" : "ltr"
+        getFontSizeClass(),
+        direction === "rtl" ? "rtl" : "ltr",
+        settings.compactMode && "compact-mode",
+        settings.highContrast && "high-contrast",
+        settings.reducedMotion && "reduce-motion"
       )}
+      style={{
+        fontSize: `var(--font-size-base)`,
+      }}
     >
       {/* Main Sidebar - Primary Navigation */}
       <NavigationMainSidebar
@@ -163,7 +222,8 @@ export function NavigationLayout({
       {/* Main Content Area */}
       <div
         className={cn(
-          "min-h-screen pt-16",
+          "min-h-screen",
+          settings.stickyHeader ? "pt-16" : "pt-4",
           getAnimationClass(),
           // Dynamic margins based on sidebar states and direction
           direction === "rtl"
@@ -181,18 +241,27 @@ export function NavigationLayout({
         <main
           className={cn(
             "min-h-screen",
-            cardStyle === "glass"
+            settings.cardStyle === "glass"
               ? "bg-gradient-to-br from-background/20 to-background/10"
               : "bg-muted/20"
           )}
         >
-          <div className="p-4 lg:p-6">
+          <div className={cn(getSpacingClass())}>
             <div
               className={cn(
-                animationLevel === "high" && "animate-fade-in",
-                animationLevel === "moderate" &&
-                  "transition-opacity duration-300"
+                settings.animationLevel === "high" && "animate-fade-in",
+                settings.animationLevel === "moderate" &&
+                  "transition-opacity duration-300",
+                getBorderRadiusClass(),
+                getShadowClass(),
+                settings.cardStyle === "bordered" && "border border-border",
+                settings.cardStyle === "elevated" && "bg-card shadow-lg"
               )}
+              style={{
+                borderRadius: `var(--border-radius)`,
+                boxShadow: `var(--shadow-intensity)`,
+                padding: `var(--spacing-unit)`,
+              }}
             >
               {children}
             </div>
@@ -205,7 +274,7 @@ export function NavigationLayout({
         <div
           className={cn(
             "fixed inset-0 z-40 lg:hidden backdrop-blur-sm",
-            cardStyle === "glass" ? "bg-black/20" : "bg-black/50",
+            settings.cardStyle === "glass" ? "bg-black/20" : "bg-black/50",
             getAnimationClass()
           )}
           onClick={() => {
