@@ -24,11 +24,13 @@ interface UserProfileDropdownProps {
     | "elegant"
     | "floating"
     | "navigation";
+  showName?: boolean;
   className?: string;
 }
 
 export function UserProfileDropdown({
   variant = "default",
+  showName = true,
   className,
 }: UserProfileDropdownProps) {
   const { user, logout } = useAuth();
@@ -39,9 +41,18 @@ export function UserProfileDropdown({
   if (!user) return null;
 
   const getInitials = () => {
-    const firstInitial = user.firstName?.charAt(0)?.toUpperCase() || "";
-    const lastInitial = user.lastName?.charAt(0)?.toUpperCase() || "";
-    return `${firstInitial}${lastInitial}`;
+    // Safe handling of user name
+    const firstName = user.firstName || "";
+    const lastName = user.lastName || "";
+    const firstInitial = firstName.charAt(0)?.toUpperCase() || "";
+    const lastInitial = lastName.charAt(0)?.toUpperCase() || "";
+    return `${firstInitial}${lastInitial}` || "U";
+  };
+
+  const getDisplayName = () => {
+    const firstName = user.firstName || "";
+    const lastName = user.lastName || "";
+    return `${firstName} ${lastName}`.trim() || user.username || "User";
   };
 
   const handleProfileClick = () => {
@@ -68,7 +79,7 @@ export function UserProfileDropdown({
       case "floating":
         return "h-9 w-9";
       case "navigation":
-        return "h-10 w-10";
+        return "h-8 w-8";
       default:
         return "h-9 w-9";
     }
@@ -89,16 +100,14 @@ export function UserProfileDropdown({
     }
   };
 
-  const showUserInfo = variant !== "minimal" && variant !== "compact";
-
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           className={cn(
-            "flex items-center gap-3 p-2 hover:bg-accent/50 transition-colors",
-            variant === "navigation" && "w-full justify-start",
+            "flex items-center gap-2 p-2 hover:bg-accent/50 transition-colors h-10",
+            variant === "navigation" && "h-9",
             variant === "floating" && "rounded-full",
             className
           )}
@@ -109,19 +118,24 @@ export function UserProfileDropdown({
             </AvatarFallback>
           </Avatar>
 
-          {showUserInfo && (
+          {showName && (
             <div className="flex items-center gap-2 min-w-0">
               <div className="text-right rtl:text-left min-w-0">
-                <p className={cn("font-medium truncate", getTextSize())}>
-                  {user.firstName} {user.lastName}
+                <p
+                  className={cn(
+                    "font-medium truncate max-w-[120px]",
+                    getTextSize()
+                  )}
+                >
+                  {getDisplayName()}
                 </p>
                 <p
                   className={cn(
-                    "text-muted-foreground truncate",
+                    "text-muted-foreground truncate max-w-[120px]",
                     variant === "navigation" ? "text-xs" : "text-xs"
                   )}
                 >
-                  {user.adminTypeName || "مستخدم"}
+                  {user.adminTypeName || user.role || "مستخدم"}
                 </p>
               </div>
               <ChevronDown
@@ -139,7 +153,7 @@ export function UserProfileDropdown({
       <DropdownMenuContent
         align="end"
         className="w-56 p-2"
-        side={variant === "navigation" ? "right" : "bottom"}
+        side={variant === "navigation" ? "bottom" : "bottom"}
       >
         <div className="flex items-center gap-3 p-2 mb-2">
           <Avatar className="h-10 w-10 border-2 border-primary/20">
@@ -148,11 +162,9 @@ export function UserProfileDropdown({
             </AvatarFallback>
           </Avatar>
           <div className="text-right rtl:text-left min-w-0">
-            <p className="font-medium text-sm truncate">
-              {user.firstName} {user.lastName}
-            </p>
+            <p className="font-medium text-sm truncate">{getDisplayName()}</p>
             <p className="text-xs text-muted-foreground truncate">
-              {user.adminTypeName || "مستخدم"}
+              {user.adminTypeName || user.role || "مستخدم"}
             </p>
           </div>
         </div>

@@ -10,6 +10,7 @@ import {
   Globe,
   Sun,
   Moon,
+  Monitor,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
@@ -27,7 +28,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 
 interface NavigationHeaderProps {
   onMenuClick: () => void;
@@ -66,12 +67,12 @@ export function NavigationHeader({
           : "bg-background/95 border-border/50"
       )}
     >
-      {/* Header Content Container - This is what adapts to sidebar states */}
+      {/* Header Content Container */}
       <div
         className={cn(
-          "h-full flex items-center justify-between px-4 lg:px-6 gap-4 transition-all duration-300",
+          "h-full flex items-center justify-between px-4 lg:px-6 transition-all duration-300",
           animationLevel !== "none" && "transition-all duration-300",
-          // Dynamic margins based on sidebar states - content starts after sidebars
+          // Dynamic margins based on sidebar states
           direction === "rtl"
             ? cn(
                 isMobile ? "mr-0" : "mr-16", // Account for main sidebar on desktop
@@ -83,8 +84,8 @@ export function NavigationHeader({
               )
         )}
       >
-        {/* Left Section */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        {/* Left Section - Mobile Menu + Panel Toggle + Title */}
+        <div className="flex items-center gap-4 flex-shrink-0">
           {/* Mobile Menu Button */}
           <Button
             variant="ghost"
@@ -141,14 +142,17 @@ export function NavigationHeader({
               )}
             </Button>
           )}
+
+          {/* App Title */}
+          <div className="flex items-center">
+            <h1 className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              {t("app.title")}
+            </h1>
+          </div>
         </div>
-        <div className="flex items-start space-x-3 rtl:space-x-reverse">
-          <h1 className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-            {t("app.title")}
-          </h1>
-        </div>
+
         {/* Center Section - Search */}
-        <div className="flex-1 max-w-md min-w-0">
+        <div className="flex-1 max-w-md mx-8 min-w-0 hidden md:block">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
@@ -168,24 +172,46 @@ export function NavigationHeader({
           </div>
         </div>
 
-        {/* Right Section */}
+        {/* Right Section - Theme, Language, Profile */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          {/* Theme Toggle */}
+          {/* Search Button for Mobile */}
           <Button
             variant="ghost"
             size="icon"
-            onClick={toggleTheme}
-            className="hover:bg-accent hover:text-accent-foreground"
-            title={
-              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
-            }
+            className="hover:bg-accent hover:text-accent-foreground md:hidden"
+            title="Search"
           >
-            {theme === "dark" ? (
-              <Sun className="w-5 h-5" />
-            ) : (
-              <Moon className="w-5 h-5" />
-            )}
+            <Search className="w-5 h-5" />
           </Button>
+
+          {/* Theme Toggle */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-accent hover:text-accent-foreground"
+                title="Change Theme"
+              >
+                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                <Sun className="mr-2 h-4 w-4" />
+                فاتح
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <Moon className="mr-2 h-4 w-4" />
+                داكن
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                <Monitor className="mr-2 h-4 w-4" />
+                النظام
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* Language Switcher */}
           <DropdownMenu>
@@ -194,6 +220,7 @@ export function NavigationHeader({
                 variant="ghost"
                 size="icon"
                 className="hover:bg-accent hover:text-accent-foreground"
+                title="Change Language"
               >
                 <Globe className="w-5 h-5" />
               </Button>
@@ -208,23 +235,23 @@ export function NavigationHeader({
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => setLanguage("en")}
-                className="hover:bg-accent hover:text-accent-foreground"
+                className="hover:bg-accent hover:text-accent-foreground cursor-pointer"
               >
                 🇺🇸 English
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => setLanguage("ar")}
-                className="hover:bg-accent hover:text-accent-foreground"
+                className="hover:bg-accent hover:text-accent-foreground cursor-pointer"
               >
                 🇸🇦 العربية
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* User Menu */}
+          {/* User Profile Dropdown */}
           <UserProfileDropdown
             variant="navigation"
-            showName={true}
+            showName={!isMobile}
             className="flex-shrink-0"
           />
         </div>

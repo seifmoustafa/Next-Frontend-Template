@@ -1,61 +1,80 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useAuth } from "@/providers/auth-provider"
-import { useI18n } from "@/providers/i18n-provider"
-import { Loader2, Eye, EyeOff, Globe, Sun, Moon, Monitor } from "lucide-react"
-import { Logo } from "@/components/ui/logo"
-import { useTheme } from "next-themes"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useAuth } from "@/providers/auth-provider";
+import { useI18n } from "@/providers/i18n-provider";
+import { Loader2, Eye, EyeOff, Globe, Sun, Moon, Monitor } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
+import { useTheme } from "next-themes";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const { login, isAuthenticated } = useAuth()
-  const { t, language, setLanguage } = useI18n()
-  const { theme, setTheme } = useTheme()
-  const router = useRouter()
+  const { login, isAuthenticated } = useAuth();
+  const { t, language, setLanguage } = useI18n();
+  const { theme, setTheme } = useTheme();
+  const router = useRouter();
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/dashboard")
+      // Use replace instead of push to avoid back button issues
+      router.replace("/");
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
-    console.log("Login attempt with:", { username, password: "***" }) // Debug log
+    console.log("Login attempt with:", { username, password: "***" }); // Debug log
 
     try {
-      const success = await login(username, password)
+      const success = await login(username, password);
 
       if (success) {
-        console.log("Login successful, redirecting...")
-        router.push("/dashboard")
+        console.log("Login successful, redirecting...");
+        // Use replace to avoid navigation issues
+        router.replace("/");
       } else {
-        console.log("Login failed")
-        setError(t("auth.loginError"))
+        console.log("Login failed");
+        setError(t("auth.loginError") || "خطأ في تسجيل الدخول");
       }
     } catch (error) {
-      console.error("Login submission error:", error)
-      setError("خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.")
+      console.error("Login submission error:", error);
+      setError("خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.");
     }
 
-    setIsLoading(false)
+    setIsLoading(false);
+  };
+
+  // Don't render login form if already authenticated
+  if (isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/20 via-background to-secondary/20">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p>جاري التحويل...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -67,19 +86,31 @@ export default function LoginPage() {
       <div className="absolute top-4 right-4 flex items-center gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="glass bg-transparent">
+            <Button
+              variant="outline"
+              size="icon"
+              className="glass bg-transparent"
+            >
               <Globe className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setLanguage("ar")}>🇸🇦 العربية</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setLanguage("en")}>🇺🇸 English</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage("ar")}>
+              🇸🇦 العربية
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage("en")}>
+              🇺🇸 English
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="glass bg-transparent">
+            <Button
+              variant="outline"
+              size="icon"
+              className="glass bg-transparent"
+            >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             </Button>
@@ -108,7 +139,9 @@ export default function LoginPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold">{t("auth.welcome")}</h1>
-            <p className="text-muted-foreground mt-2">{t("auth.pleaseLogin")}</p>
+            <p className="text-muted-foreground mt-2">
+              {t("auth.pleaseLogin")}
+            </p>
           </div>
         </CardHeader>
 
@@ -146,7 +179,11 @@ export default function LoginPage() {
                   className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -157,7 +194,11 @@ export default function LoginPage() {
               </div>
             )}
 
-            <Button type="submit" className="w-full h-12 gradient-primary" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full h-12 gradient-primary"
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -175,7 +216,10 @@ export default function LoginPage() {
               <p>
                 <strong>Debug Info:</strong>
               </p>
-              <p>API URL: {process.env.NEXT_PUBLIC_API_URL || "Not set - using default"}</p>
+              <p>
+                API URL:{" "}
+                {process.env.NEXT_PUBLIC_API_URL || "Not set - using default"}
+              </p>
               <p>
                 Login URL:{" "}
                 {`${process.env.NEXT_PUBLIC_API_URL}/Authentication/login/admin`}
@@ -185,5 +229,5 @@ export default function LoginPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

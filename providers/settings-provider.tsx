@@ -60,6 +60,10 @@ export type ButtonStyle = "default" | "rounded" | "sharp" | "modern";
 export type NavigationStyle = "default" | "pills" | "underline" | "sidebar";
 export type SpacingSize = "compact" | "default" | "comfortable" | "spacious";
 export type IconStyle = "outline" | "filled" | "duotone" | "minimal";
+export type InputStyle = "default" | "rounded" | "underlined" | "filled";
+export type TableStyle = "default" | "striped" | "bordered" | "minimal";
+export type BadgeStyle = "default" | "rounded" | "square" | "pill";
+export type AvatarStyle = "default" | "rounded" | "square" | "hexagon";
 
 export type LogoType = "sparkles" | "shield" | "image" | "custom";
 export type LogoAnimation = "none" | "spin" | "pulse" | "fancy";
@@ -85,6 +89,10 @@ interface SettingsContextType {
   navigationStyle: NavigationStyle;
   spacingSize: SpacingSize;
   iconStyle: IconStyle;
+  inputStyle: InputStyle;
+  tableStyle: TableStyle;
+  badgeStyle: BadgeStyle;
+  avatarStyle: AvatarStyle;
 
   // Logo settings
   logoType: LogoType;
@@ -104,6 +112,7 @@ interface SettingsContextType {
   collapsibleSidebar: boolean;
   showFooter: boolean;
   autoSave: boolean;
+  showLogo: boolean;
 
   // Setters
   setColorTheme: (theme: ColorTheme) => void;
@@ -122,6 +131,10 @@ interface SettingsContextType {
   setNavigationStyle: (style: NavigationStyle) => void;
   setSpacingSize: (size: SpacingSize) => void;
   setIconStyle: (style: IconStyle) => void;
+  setInputStyle: (style: InputStyle) => void;
+  setTableStyle: (style: TableStyle) => void;
+  setBadgeStyle: (style: BadgeStyle) => void;
+  setAvatarStyle: (style: AvatarStyle) => void;
 
   setLogoType: (type: LogoType) => void;
   setLogoAnimation: (animation: LogoAnimation) => void;
@@ -138,6 +151,7 @@ interface SettingsContextType {
   setCollapsibleSidebar: (collapsible: boolean) => void;
   setShowFooter: (show: boolean) => void;
   setAutoSave: (autoSave: boolean) => void;
+  setShowLogo: (show: boolean) => void;
 
   // Utility functions
   resetSettings: () => void;
@@ -166,6 +180,10 @@ const defaultSettings = {
   navigationStyle: "default" as NavigationStyle,
   spacingSize: "default" as SpacingSize,
   iconStyle: "outline" as IconStyle,
+  inputStyle: "default" as InputStyle,
+  tableStyle: "default" as TableStyle,
+  badgeStyle: "default" as BadgeStyle,
+  avatarStyle: "default" as AvatarStyle,
   logoType: "sparkles" as LogoType,
   logoAnimation: "none" as LogoAnimation,
   logoSize: "md" as LogoSize,
@@ -181,6 +199,7 @@ const defaultSettings = {
   collapsibleSidebar: true,
   showFooter: true,
   autoSave: true,
+  showLogo: true,
 };
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
@@ -235,60 +254,42 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       root.setAttribute("data-navigation-style", settings.navigationStyle);
       root.setAttribute("data-spacing", settings.spacingSize);
       root.setAttribute("data-icon-style", settings.iconStyle);
+      root.setAttribute("data-input-style", settings.inputStyle);
+      root.setAttribute("data-table-style", settings.tableStyle);
+      root.setAttribute("data-badge-style", settings.badgeStyle);
+      root.setAttribute("data-avatar-style", settings.avatarStyle);
       root.setAttribute("data-logo-type", settings.logoType);
       root.setAttribute("data-logo-animation", settings.logoAnimation);
       root.setAttribute("data-logo-size", settings.logoSize);
       root.setAttribute("data-compact-mode", settings.compactMode.toString());
       root.setAttribute("data-high-contrast", settings.highContrast.toString());
-      root.setAttribute(
-        "data-reduced-motion",
-        settings.reducedMotion.toString()
-      );
+      root.setAttribute("data-reduced-motion", settings.reducedMotion.toString());
       root.setAttribute("data-sticky-header", settings.stickyHeader.toString());
 
       // Apply CSS custom properties for responsive design
-      root.style.setProperty(
-        "--font-size-base",
-        settings.fontSize === "small"
-          ? "14px"
-          : settings.fontSize === "large"
-          ? "18px"
-          : "16px"
+      root.style.setProperty('--font-size-base', 
+        settings.fontSize === 'small' ? '14px' : 
+        settings.fontSize === 'large' ? '18px' : '16px'
+      );
+      
+      root.style.setProperty('--spacing-unit', 
+        settings.spacingSize === 'compact' ? '0.5rem' : 
+        settings.spacingSize === 'comfortable' ? '1.5rem' :
+        settings.spacingSize === 'spacious' ? '2rem' : '1rem'
       );
 
-      root.style.setProperty(
-        "--spacing-unit",
-        settings.spacingSize === "compact"
-          ? "0.5rem"
-          : settings.spacingSize === "comfortable"
-          ? "1.5rem"
-          : settings.spacingSize === "spacious"
-          ? "2rem"
-          : "1rem"
+      root.style.setProperty('--border-radius', 
+        settings.borderRadius === 'none' ? '0' : 
+        settings.borderRadius === 'small' ? '0.25rem' :
+        settings.borderRadius === 'large' ? '0.75rem' :
+        settings.borderRadius === 'full' ? '9999px' : '0.5rem'
       );
 
-      root.style.setProperty(
-        "--border-radius",
-        settings.borderRadius === "none"
-          ? "0"
-          : settings.borderRadius === "small"
-          ? "0.25rem"
-          : settings.borderRadius === "large"
-          ? "0.75rem"
-          : settings.borderRadius === "full"
-          ? "9999px"
-          : "0.5rem"
-      );
-
-      root.style.setProperty(
-        "--shadow-intensity",
-        settings.shadowIntensity === "none"
-          ? "none"
-          : settings.shadowIntensity === "subtle"
-          ? "0 1px 2px 0 rgb(0 0 0 / 0.05)"
-          : settings.shadowIntensity === "strong"
-          ? "0 25px 50px -12px rgb(0 0 0 / 0.25)"
-          : "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+      root.style.setProperty('--shadow-intensity', 
+        settings.shadowIntensity === 'none' ? 'none' : 
+        settings.shadowIntensity === 'subtle' ? '0 1px 2px 0 rgb(0 0 0 / 0.05)' :
+        settings.shadowIntensity === 'strong' ? '0 25px 50px -12px rgb(0 0 0 / 0.25)' : 
+        '0 4px 6px -1px rgb(0 0 0 / 0.1)'
       );
     }
   }, [settings, isHydrated]);
@@ -340,6 +341,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setNavigationStyle: (style) => updateSetting("navigationStyle", style),
     setSpacingSize: (size) => updateSetting("spacingSize", size),
     setIconStyle: (style) => updateSetting("iconStyle", style),
+    setInputStyle: (style) => updateSetting("inputStyle", style),
+    setTableStyle: (style) => updateSetting("tableStyle", style),
+    setBadgeStyle: (style) => updateSetting("badgeStyle", style),
+    setAvatarStyle: (style) => updateSetting("avatarStyle", style),
     setLogoType: (type) => updateSetting("logoType", type),
     setLogoAnimation: (animation) => updateSetting("logoAnimation", animation),
     setLogoSize: (size) => updateSetting("logoSize", size),
@@ -352,10 +357,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setHighContrast: (contrast) => updateSetting("highContrast", contrast),
     setReducedMotion: (reduced) => updateSetting("reducedMotion", reduced),
     setStickyHeader: (sticky) => updateSetting("stickyHeader", sticky),
-    setCollapsibleSidebar: (collapsible) =>
-      updateSetting("collapsibleSidebar", collapsible),
+    setCollapsibleSidebar: (collapsible) => updateSetting("collapsibleSidebar", collapsible),
     setShowFooter: (show) => updateSetting("showFooter", show),
     setAutoSave: (autoSave) => updateSetting("autoSave", autoSave),
+    setShowLogo: (show) => updateSetting("showLogo", show),
     resetSettings,
     exportSettings,
     importSettings,
