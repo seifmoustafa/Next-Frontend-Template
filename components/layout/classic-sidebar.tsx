@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
 import { useSettings } from "@/providers/settings-provider";
+import { useLayoutStyles } from "./use-layout-styles";
 import { cn } from "@/lib/utils";
 import {
   Collapsible,
@@ -32,14 +33,22 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
   const { user } = useAuth();
+  const { colorTheme } = useSettings();
   const {
-    colorTheme,
-    sidebarStyle,
-    spacingSize,
-    borderRadius,
-    animationLevel,
-    shadowIntensity,
-  } = useSettings();
+    getSpacingClass,
+    getBorderRadiusClass,
+    getShadowClass,
+    getAnimationClass,
+  } = useLayoutStyles();
+  const borderRadiusClass = getBorderRadiusClass({
+    large: "rounded-2xl",
+    full: "rounded-3xl",
+    default: "rounded-xl",
+  });
+  const animationClass = getAnimationClass({
+    high: "transition-all duration-500 ease-in-out",
+  });
+  const shadowClass = getShadowClass();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations and filter out profile, settings, logout
@@ -55,53 +64,7 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
     );
   };
 
-  const getSpacingClass = () => {
-    switch (spacingSize) {
-      case "compact":
-        return "p-2 space-y-1";
-      case "comfortable":
-        return "p-8 space-y-6";
-      case "spacious":
-        return "p-12 space-y-8";
-      default:
-        return "p-6 space-y-4";
-    }
-  };
-
-  const getBorderRadiusClass = () => {
-    switch (borderRadius) {
-      case "none":
-        return "rounded-none";
-      case "small":
-        return "rounded-sm";
-      case "large":
-        return "rounded-2xl";
-      case "full":
-        return "rounded-3xl";
-      default:
-        return "rounded-xl";
-    }
-  };
-
-  const getShadowClass = () => {
-    switch (shadowIntensity) {
-      case "none":
-        return "";
-      case "subtle":
-        return "shadow-sm";
-      case "strong":
-        return "shadow-2xl";
-      default:
-        return "shadow-lg";
-    }
-  };
-
-  const getAnimationClass = () => {
-    if (animationLevel === "none") return "";
-    if (animationLevel === "minimal") return "transition-colors duration-200";
-    if (animationLevel === "moderate") return "transition-all duration-300";
-    return "transition-all duration-500 ease-in-out";
-  };
+  
 
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
     const isActive = isNavigationItemActive(item, pathname);
@@ -121,8 +84,8 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
             <div
               className={cn(
                 "group flex items-center justify-between w-full px-6 py-4 text-base font-medium cursor-pointer",
-                getBorderRadiusClass(),
-                getAnimationClass(),
+                borderRadiusClass,
+                animationClass,
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? cn(
@@ -216,8 +179,8 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
         href={item.href || "#"}
         className={cn(
           "group flex items-center justify-between px-6 py-4 text-base font-medium",
-          getBorderRadiusClass(),
-          getAnimationClass(),
+          borderRadiusClass,
+          animationClass,
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? cn(
@@ -296,8 +259,8 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
         className={cn(
           "sidebar fixed inset-y-0 z-50 w-80 bg-gradient-to-b from-sidebar via-sidebar/98 to-sidebar border-r-2 border-sidebar-border transform lg:translate-x-0 custom-scrollbar overflow-y-auto",
           "backdrop-blur-sm",
-          getShadowClass(),
-          getAnimationClass(),
+          shadowClass,
+          animationClass,
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
@@ -313,8 +276,8 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
               <div
                 className={cn(
                   "w-12 h-12 bg-primary flex items-center justify-center shadow-lg",
-                  getBorderRadiusClass(),
-                  getAnimationClass(),
+                  borderRadiusClass,
+                  animationClass,
                   "hover:scale-105 hover:shadow-xl"
                 )}
               >
@@ -336,8 +299,8 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
               size="icon"
               className={cn(
                 "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent",
-                getBorderRadiusClass(),
-                getAnimationClass(),
+                borderRadiusClass,
+                animationClass,
                 "shadow-md hover:shadow-lg hover:scale-105"
               )}
               onClick={() => onOpenChange(false)}
@@ -353,9 +316,9 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                 className={cn(
                   "flex items-center space-x-4 rtl:space-x-reverse p-4",
                   "bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
-                  getBorderRadiusClass(),
-                  getShadowClass(),
-                  getAnimationClass(),
+                  borderRadiusClass,
+                  shadowClass,
+                  animationClass,
                   "hover:shadow-xl"
                 )}
               >
@@ -363,7 +326,7 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
                   <Avatar
                     className={cn(
                       "h-16 w-16 ring-2 ring-primary/30 shadow-lg",
-                      getAnimationClass(),
+                      animationClass,
                       "hover:scale-105"
                     )}
                   >
@@ -418,9 +381,19 @@ export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
           )}
 
           {/* Navigation */}
-          <nav className={cn("flex-1 overflow-y-auto", getSpacingClass())}>
-            {navigation.map((item) => renderNavigationItem(item))}
-          </nav>
+        <nav
+          className={cn(
+            "flex-1 overflow-y-auto",
+            getSpacingClass({
+              compact: "p-2 space-y-1",
+              comfortable: "p-8 space-y-6",
+              spacious: "p-12 space-y-8",
+              default: "p-6 space-y-4",
+            })
+          )}
+        >
+          {navigation.map((item) => renderNavigationItem(item))}
+        </nav>
         </div>
       </div>
     </>

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
-import { useSettings } from "@/providers/settings-provider";
+import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
@@ -17,40 +17,29 @@ interface ElegantHeaderProps {
 export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t, direction } = useI18n();
-  const { headerStyle, animationLevel, buttonStyle } = useSettings();
+  const {
+    getHeaderStyleClass,
+    getAnimationClass,
+    getButtonStyleClass,
+  } = useLayoutStyles();
 
-  const getHeaderStyleClass = () => {
-    switch (headerStyle) {
-      case "compact":
-        return "h-16";
-      case "elevated":
-        return "h-20 shadow-2xl shadow-primary/15";
-      case "transparent":
-        return "h-20 bg-transparent backdrop-blur-3xl";
-      default:
-        return "h-20";
-    }
-  };
+  const headerClass = getHeaderStyleClass({
+    compact: "h-16",
+    elevated: "h-20 shadow-2xl shadow-primary/15",
+    transparent: "h-20 bg-transparent backdrop-blur-3xl",
+    default: "h-20",
+  });
 
-  const getAnimationClass = () => {
-    if (animationLevel === "none") return "";
-    if (animationLevel === "minimal") return "transition-colors duration-300";
-    if (animationLevel === "moderate") return "transition-all duration-500";
-    return "transition-all duration-700 ease-out";
-  };
+  const animationClass = getAnimationClass({
+    minimal: "transition-colors duration-300",
+    moderate: "transition-all duration-500",
+    default: "transition-all duration-700 ease-out",
+  });
 
-  const getButtonStyleClass = () => {
-    switch (buttonStyle) {
-      case "rounded":
-        return "rounded-full";
-      case "sharp":
-        return "rounded-none";
-      case "modern":
-        return "rounded-3xl";
-      default:
-        return "rounded-3xl";
-    }
-  };
+  const buttonClass = getButtonStyleClass({
+    modern: "rounded-3xl",
+    default: "rounded-3xl",
+  });
 
   return (
     <header
@@ -59,8 +48,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
         "bg-gradient-to-r from-background/98 via-background/95 to-background/98",
         "backdrop-blur-3xl border-b border-gradient-to-r from-transparent via-border/60 to-transparent",
         "shadow-2xl shadow-primary/10",
-        getHeaderStyleClass(),
-        getAnimationClass(),
+        headerClass,
+        animationClass,
         "before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary/8 before:via-primary/4 before:to-primary/8 before:opacity-60",
         "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary/50 after:to-transparent"
       )}
@@ -91,8 +80,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
             className={cn(
               "lg:hidden h-8 w-8 hover:bg-primary/10",
               "shadow-sm hover:shadow-md hover:scale-105",
-              getButtonStyleClass(),
-              getAnimationClass()
+              buttonClass,
+              animationClass
             )}
             onClick={() => onchange(false)}
           >
@@ -114,8 +103,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               "hover:scale-110 active:scale-95",
               "backdrop-blur-xl",
               "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
-              getButtonStyleClass(),
-              getAnimationClass()
+              buttonClass,
+              animationClass
             )}
             onClick={onMenuClick}
           >
@@ -133,8 +122,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100",
                 "blur-lg group-hover:blur-sm group-focus-within:blur-sm",
                 "scale-105 group-hover:scale-100 group-focus-within:scale-100",
-                getButtonStyleClass(),
-                getAnimationClass()
+                buttonClass,
+                animationClass
               )}
             />
             <div
@@ -144,8 +133,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "backdrop-blur-xl border border-border/50",
                 "group-focus-within:border-primary/40 group-hover:border-primary/30",
                 "shadow-lg group-focus-within:shadow-xl group-focus-within:shadow-primary/20",
-                getButtonStyleClass(),
-                getAnimationClass()
+                buttonClass,
+                animationClass
               )}
             />
             <Search
@@ -153,7 +142,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "absolute top-1/2 -translate-y-1/2 h-5 w-5 z-10",
                 "text-muted-foreground/60 group-focus-within:text-primary group-hover:text-primary/80",
                 "group-focus-within:scale-110",
-                getAnimationClass(),
+                animationClass,
                 direction === "rtl" ? "right-5" : "left-5"
               )}
             />
@@ -164,8 +153,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 "text-base font-medium",
                 "focus:ring-0 focus:outline-none",
                 "placeholder:text-muted-foreground/60 placeholder:font-medium",
-                getButtonStyleClass(),
-                getAnimationClass(),
+                buttonClass,
+                animationClass,
                 direction === "rtl" ? "pr-14 text-right" : "pl-14"
               )}
             />
@@ -187,8 +176,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               "hover:scale-110 active:scale-95",
               "backdrop-blur-xl",
               "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
-              getButtonStyleClass(),
-              getAnimationClass()
+              buttonClass,
+              animationClass
             )}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
@@ -209,8 +198,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               "hover:scale-110 active:scale-95",
               "backdrop-blur-xl",
               "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
-              getButtonStyleClass(),
-              getAnimationClass()
+              buttonClass,
+              animationClass
             )}
             onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
           >

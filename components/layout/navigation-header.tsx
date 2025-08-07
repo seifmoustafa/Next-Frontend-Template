@@ -16,6 +16,7 @@ import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
 import { useSettings } from "@/providers/settings-provider";
+import { useLayoutStyles } from "./use-layout-styles";
 import { navigation } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -50,7 +51,9 @@ export function NavigationHeader({
   const { theme, setTheme } = useTheme();
   const { language, direction, t, setLanguage } = useI18n();
   const { user, logout } = useAuth();
-  const { colorTheme, cardStyle, animationLevel } = useSettings();
+  const { colorTheme, cardStyle } = useSettings();
+  const { getAnimationClass } = useLayoutStyles();
+  const animationClass = getAnimationClass();
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -59,7 +62,8 @@ export function NavigationHeader({
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-30 h-16 backdrop-blur-xl border-b transition-all duration-300 header-shadow",
+        "fixed top-0 left-0 right-0 z-30 h-16 backdrop-blur-xl border-b header-shadow",
+        animationClass,
         cardStyle === "glass"
           ? "bg-background/80 border-border/30"
           : cardStyle === "solid"
@@ -70,8 +74,8 @@ export function NavigationHeader({
       {/* Header Content Container */}
       <div
         className={cn(
-          "h-full flex items-center justify-between px-4 lg:px-6 transition-all duration-300",
-          animationLevel !== "none" && "transition-all duration-300",
+          "h-full flex items-center justify-between px-4 lg:px-6",
+          animationClass,
           // Dynamic margins based on sidebar states
           direction === "rtl"
             ? cn(

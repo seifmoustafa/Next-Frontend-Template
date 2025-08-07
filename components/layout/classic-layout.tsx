@@ -6,6 +6,7 @@ import { ClassicHeader } from "./classic-header"
 import { useI18n } from "@/providers/i18n-provider"
 import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
+import { useLayoutStyles } from "./use-layout-styles"
 
 interface ClassicLayoutProps {
   children: React.ReactNode
@@ -16,19 +17,27 @@ interface ClassicLayoutProps {
 export function ClassicLayout({ children, sidebarOpen, onSidebarOpenChange }: ClassicLayoutProps) {
   const { direction } = useI18n()
   const settings = useSettings()
-
-  const getSpacingClass = () => {
-    switch (settings.spacingSize) {
-      case "compact":
-        return "p-4"
-      case "comfortable":
-        return "p-10"
-      case "spacious":
-        return "p-12"
-      default:
-        return "p-8"
-    }
-  }
+  const {
+    getSpacingClass,
+    getAnimationClass,
+    getBorderRadiusClass,
+    getShadowClass,
+  } = useLayoutStyles()
+  const spacingClass = getSpacingClass({
+    compact: "p-4",
+    comfortable: "p-10",
+    spacious: "p-12",
+    default: "p-8",
+  })
+  const animationClass = getAnimationClass({
+    high: "transition-all duration-500 ease-in-out",
+  })
+  const borderRadiusClass = getBorderRadiusClass()
+  const shadowClass = getShadowClass({
+    moderate: "shadow-md",
+    strong: "shadow-lg",
+    default: "shadow-md",
+  })
 
   const getFontSizeClass = () => {
     switch (settings.fontSize) {
@@ -41,40 +50,7 @@ export function ClassicLayout({ children, sidebarOpen, onSidebarOpenChange }: Cl
     }
   }
 
-  const getAnimationClass = () => {
-    if (settings.animationLevel === "none") return ""
-    if (settings.animationLevel === "minimal") return "transition-colors duration-200"
-    if (settings.animationLevel === "moderate") return "transition-all duration-300"
-    return "transition-all duration-500 ease-in-out"
-  }
-
-  const getBorderRadiusClass = () => {
-    switch (settings.borderRadius) {
-      case "none":
-        return "rounded-none"
-      case "small":
-        return "rounded-sm"
-      case "large":
-        return "rounded-lg"
-      case "full":
-        return "rounded-full"
-      default:
-        return "rounded-md"
-    }
-  }
-
-  const getShadowClass = () => {
-    switch (settings.shadowIntensity) {
-      case "none":
-        return ""
-      case "subtle":
-        return "shadow-sm"
-      case "strong":
-        return "shadow-lg"
-      default:
-        return "shadow-md"
-    }
-  }
+  
 
   return (
     <div 
@@ -95,19 +71,19 @@ export function ClassicLayout({ children, sidebarOpen, onSidebarOpenChange }: Cl
 
       <div 
         className={cn(
-          getAnimationClass(),
+          animationClass,
           direction === "rtl" ? "lg:mr-80" : "lg:ml-80"
         )}
       >
         {/* Classic header - simpler with fewer elements */}
         <ClassicHeader onMenuClick={() => onSidebarOpenChange(true)} />
 
-        <main className={cn(getSpacingClass())}>
+        <main className={cn(spacingClass)}>
           <div 
             className={cn(
               "animate-fade-in",
-              getBorderRadiusClass(),
-              getShadowClass(),
+              borderRadiusClass,
+              shadowClass,
               settings.cardStyle === "bordered" && "border border-border",
               settings.cardStyle === "elevated" && "bg-card shadow-lg",
               settings.cardStyle === "glass" && "bg-background/80 backdrop-blur-sm"
@@ -128,7 +104,7 @@ export function ClassicLayout({ children, sidebarOpen, onSidebarOpenChange }: Cl
         <div
           className={cn(
             "fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm",
-            getAnimationClass()
+            animationClass
           )}
           onClick={() => onSidebarOpenChange(false)}
         />
