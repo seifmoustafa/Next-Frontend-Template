@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Menu, Sun, Moon, Globe } from "lucide-react";
+import { Search, Menu, Sun, Moon, Globe, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
@@ -8,6 +8,7 @@ import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
+import { Logo } from "../ui/logo";
 
 interface CompactHeaderProps {
   onMenuClick: () => void;
@@ -61,6 +62,33 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
       )}
     >
       <div className="flex items-center justify-between h-full">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+          <div className="flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
+              <Logo size="xs" className="text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-sidebar-foreground">
+                {t("app.title")}
+              </h1>
+            </div>
+          </div>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "lg:hidden h-8 w-8 hover:bg-primary/10",
+              "shadow-sm hover:shadow-md hover:scale-105",
+              getButtonStyleClass(),
+              getAnimationClass()
+            )}
+            onClick={() => onchange(false)}
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
         {/* Left Section */}
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           {/* Mobile Menu Button */}

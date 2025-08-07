@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { X, ChevronDown, ChevronRight } from 'lucide-react';
+import { X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -139,10 +139,12 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                       )}
                     />
                   ) : (
-                    <div className={cn(
-                      "w-2 h-2 rounded-full",
-                      isActive ? "bg-white" : "bg-primary"
-                    )} />
+                    <div
+                      className={cn(
+                        "w-2 h-2 rounded-full",
+                        isActive ? "bg-white" : "bg-primary"
+                      )}
+                    />
                   )}
                 </div>
                 <span className="truncate">{item.name}</span>
@@ -215,10 +217,12 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                 )}
               />
             ) : (
-              <div className={cn(
-                "w-2 h-2 rounded-full",
-                isActive ? "bg-white" : "bg-primary"
-              )} />
+              <div
+                className={cn(
+                  "w-2 h-2 rounded-full",
+                  isActive ? "bg-white" : "bg-primary"
+                )}
+              />
             )}
           </div>
           <span className="truncate">{item.name}</span>
@@ -264,42 +268,11 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
             ? "translate-x-0"
             : direction === "rtl"
             ? "translate-x-full"
-            : "-translate-x-full"
+            : "-translate-x-full",
+          "mt-16"
         )}
       >
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
-            <div className="flex items-center space-x-3 rtl:space-x-reverse">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
-                <Logo size="xs" className="text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-sidebar-foreground">
-                  {t("app.title")}
-                </h1>
-                <p className="text-xs text-sidebar-foreground/60 flex items-center">
-                  <Logo size="xs" className="mr-1 rtl:mr-0 rtl:ml-1" />
-                  {t("app.compact")}
-                </p>
-              </div>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "lg:hidden h-8 w-8 hover:bg-primary/10",
-                "shadow-sm hover:shadow-md hover:scale-105",
-                getButtonStyleClass(),
-                getAnimationClass()
-              )}
-              onClick={() => onOpenChange(false)}
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
-
+        <div className="flex flex-col h-full ">
           {/* User Info */}
           {user && (
             <div className="p-4 border-b border-border/80">
