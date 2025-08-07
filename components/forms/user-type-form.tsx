@@ -5,17 +5,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type {
-  UserType,
-  CreateUserTypeRequest,
-  UpdateUserTypeRequest,
-} from "@/services/user-type.service";
+import { Separator } from "@/components/ui/separator";
+import type { UserType, CreateUserTypeRequest, UpdateUserTypeRequest } from "@/services/user-type.service";
+import { useSettings } from "@/providers/settings-provider";
+import { cn } from "@/lib/utils";
 
 interface UserTypeFormProps {
   initialData?: UserType;
-  onSubmit: (
-    data: CreateUserTypeRequest | UpdateUserTypeRequest
-  ) => Promise<void>;
+  onSubmit: (data: CreateUserTypeRequest | UpdateUserTypeRequest) => Promise<void>;
   onCancel: () => void;
 }
 
@@ -24,6 +21,7 @@ export function UserTypeForm({
   onSubmit,
   onCancel,
 }: UserTypeFormProps) {
+  const settings = useSettings();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     adminTypeName: initialData?.adminTypeName || "",
@@ -42,39 +40,118 @@ export function UserTypeForm({
     }
   };
 
+  const getFormSpacing = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "space-y-3";
+      case "comfortable":
+        return "space-y-6";
+      case "spacious":
+        return "space-y-8";
+      default:
+        return "space-y-4";
+    }
+  };
+
+  const getFieldSpacing = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "space-y-1";
+      case "comfortable":
+        return "space-y-3";
+      case "spacious":
+        return "space-y-4";
+      default:
+        return "space-y-2";
+    }
+  };
+
+  const getGridGap = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "gap-3";
+      case "comfortable":
+        return "gap-6";
+      case "spacious":
+        return "gap-8";
+      default:
+        return "gap-4";
+    }
+  };
+
+  const getInputHeight = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "h-9";
+      case "comfortable":
+        return "h-12";
+      case "spacious":
+        return "h-14";
+      default:
+        return "h-10";
+    }
+  };
+
+  const getButtonSize = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "sm";
+      case "comfortable":
+      case "spacious":
+        return "lg";
+      default:
+        return "default";
+    }
+  };
+
+  const getSeparatorSpacing = () => {
+    switch (settings.spacingSize) {
+      case "compact":
+        return "pt-4 mt-4";
+      case "comfortable":
+        return "pt-8 mt-8";
+      case "spacious":
+        return "pt-10 mt-10";
+      default:
+        return "pt-6 mt-6";
+    }
+  };
+
   return (
     <div className="w-full">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="adminTypeName" className="text-sm font-medium">
+      <form onSubmit={handleSubmit} className={getFormSpacing()}>
+        <div className={getFieldSpacing()}>
+          <Label htmlFor="adminTypeName" className="font-medium">
             اسم نوع المستخدم
           </Label>
           <Input
             id="adminTypeName"
             value={formData.adminTypeName}
-            onChange={(e) =>
-              setFormData({ ...formData, adminTypeName: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, adminTypeName: e.target.value })}
             required
-            className="h-10"
+            className={getInputHeight()}
             placeholder="أدخل اسم نوع المستخدم"
           />
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t mt-6">
+        <Separator />
+
+        <div className={cn("flex flex-col sm:flex-row justify-end", getGridGap(), getSeparatorSpacing())}>
           <Button
             type="button"
             variant="outline"
             onClick={onCancel}
-            className="h-10 order-2 sm:order-1"
+            className={cn(getInputHeight(), "order-2 sm:order-1")}
             disabled={loading}
+            size={getButtonSize()}
           >
             إلغاء
           </Button>
           <Button
             type="submit"
             disabled={loading}
-            className="h-10 gradient-primary order-1 sm:order-2"
+            className={cn(getInputHeight(), "gradient-primary order-1 sm:order-2")}
+            size={getButtonSize()}
           >
             {loading ? "جاري الحفظ..." : "حفظ"}
           </Button>

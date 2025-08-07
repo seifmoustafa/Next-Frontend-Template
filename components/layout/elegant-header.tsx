@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Menu, Sun, Moon, Globe } from "lucide-react";
+import { Search, Menu, Sun, Moon, Globe, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
@@ -8,6 +8,7 @@ import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
+import { Logo } from "../ui/logo";
 
 interface ElegantHeaderProps {
   onMenuClick: () => void;
@@ -71,7 +72,33 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
           <div className="absolute -top-4 -right-10 w-40 h-40 bg-gradient-to-bl from-primary/12 to-transparent rounded-full blur-3xl animate-pulse delay-1000" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-2 bg-gradient-to-r from-transparent via-primary/10 to-transparent blur-sm animate-pulse delay-2000" />
         </div>
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+          <div className="flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md">
+              <Logo className="text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-sidebar-foreground">
+                {t("app.title")}
+              </h1>
+            </div>
+          </div>
 
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "lg:hidden h-8 w-8 hover:bg-primary/10",
+              "shadow-sm hover:shadow-md hover:scale-105",
+              getButtonStyleClass(),
+              getAnimationClass()
+            )}
+            onClick={() => onchange(false)}
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
         {/* Left Section */}
         <div className="relative flex items-center space-x-4 rtl:space-x-reverse z-20">
           {/* Mobile Menu Button */}

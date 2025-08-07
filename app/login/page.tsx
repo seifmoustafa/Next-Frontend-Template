@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/auth-provider";
 import { useI18n } from "@/providers/i18n-provider";
-import { Loader2, Eye, EyeOff, Globe, Sun, Moon, Monitor } from "lucide-react";
+import { Loader2, Eye, EyeOff, Globe, Sun, Moon, Monitor } from 'lucide-react';
 import { Logo } from "@/components/ui/logo";
 import { useTheme } from "next-themes";
 import {
@@ -19,6 +19,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -70,8 +71,8 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/20 via-background to-secondary/20">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-          <p>جاري التحويل...</p>
+          <LoadingSpinner size="md" showText={false} />
+          <p className="mt-4">جاري التحويل...</p>
         </div>
       </div>
     );
@@ -157,6 +158,7 @@ export default function LoginPage() {
                 required
                 className="h-12"
                 placeholder="superadmin"
+                disabled={isLoading}
               />
             </div>
 
@@ -171,6 +173,7 @@ export default function LoginPage() {
                   required
                   className="h-12 pr-10"
                   placeholder="••••••••"
+                  disabled={isLoading}
                 />
                 <Button
                   type="button"
@@ -178,6 +181,7 @@ export default function LoginPage() {
                   size="icon"
                   className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8"
                   onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
@@ -200,10 +204,10 @@ export default function LoginPage() {
               disabled={isLoading}
             >
               {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t("common.loading")}
-                </>
+                <div className="flex items-center gap-2">
+                  <LoadingSpinner size="inline" showText={false} />
+                  <span>{t("common.loading")}</span>
+                </div>
               ) : (
                 t("auth.loginButton")
               )}
