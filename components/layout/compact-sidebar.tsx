@@ -9,8 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
-import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
+import { useSettings } from "@/providers/settings-provider";
+import { useLayoutStyles } from "./use-layout-styles";
 import {
   Collapsible,
   CollapsibleContent,
@@ -32,8 +33,21 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
   const { user } = useAuth();
-  const { sidebarStyle, animationLevel, buttonStyle, spacingSize } =
-    useSettings();
+  const { spacingSize } = useSettings();
+  const {
+    getSidebarStyleClass,
+    getAnimationClass,
+    getButtonStyleClass,
+    getSpacingClass,
+  } = useLayoutStyles();
+  const sidebarStyleClass = getSidebarStyleClass({
+    compact: "w-56",
+    floating: "w-64 m-2 rounded-2xl shadow-2xl",
+    minimal: "w-60 border-r-0 shadow-lg",
+    default: "w-64",
+  });
+  const animationClass = getAnimationClass();
+  const buttonStyleClass = getButtonStyleClass({ modern: "rounded-2xl" });
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations
@@ -47,51 +61,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
     );
   };
 
-  const getSidebarStyleClass = () => {
-    switch (sidebarStyle) {
-      case "compact":
-        return "w-56";
-      case "floating":
-        return "w-64 m-2 rounded-2xl shadow-2xl";
-      case "minimal":
-        return "w-60 border-r-0 shadow-lg";
-      default:
-        return "w-64";
-    }
-  };
-
-  const getAnimationClass = () => {
-    if (animationLevel === "none") return "";
-    if (animationLevel === "minimal") return "transition-colors duration-200";
-    if (animationLevel === "moderate") return "transition-all duration-300";
-    return "transition-all duration-500";
-  };
-
-  const getButtonStyleClass = () => {
-    switch (buttonStyle) {
-      case "rounded":
-        return "rounded-full";
-      case "sharp":
-        return "rounded-none";
-      case "modern":
-        return "rounded-2xl";
-      default:
-        return "rounded-lg";
-    }
-  };
-
-  const getSpacingClass = () => {
-    switch (spacingSize) {
-      case "compact":
-        return "space-y-1 p-2";
-      case "comfortable":
-        return "space-y-3 p-4";
-      case "spacious":
-        return "space-y-4 p-6";
-      default:
-        return "space-y-2 p-3";
-    }
-  };
+  
 
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
     const isActive = isNavigationItemActive(item, pathname);
@@ -111,8 +81,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
             <div
               className={cn(
                 "group flex items-center justify-between w-full px-3 py-2 text-sm font-medium cursor-pointer",
-                getButtonStyleClass(),
-                getAnimationClass(),
+                buttonStyleClass,
+                animationClass,
                 item.disabled && "opacity-50 cursor-not-allowed",
                 isActive
                   ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
@@ -124,7 +94,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                 <div
                   className={cn(
                     "flex items-center justify-center rounded-lg",
-                    getAnimationClass(),
+                    animationClass,
                     "w-8 h-8",
                     isActive
                       ? "bg-white/20"
@@ -135,7 +105,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                     <Icon
                       className={cn(
                         "w-4 h-4 flex-shrink-0 group-hover:scale-110",
-                        getAnimationClass(),
+                        animationClass,
                         isActive ? "text-white" : "text-primary"
                       )}
                     />
@@ -166,7 +136,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
               <ChevronDown
                 className={cn(
                   "w-4 h-4",
-                  getAnimationClass(),
+                  animationClass,
                   isExpanded && "rotate-180",
                   isActive ? "text-white" : "text-primary"
                 )}
@@ -188,8 +158,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
         href={item.href || "#"}
         className={cn(
           "group flex items-center justify-between px-3 py-2 text-sm font-medium",
-          getButtonStyleClass(),
-          getAnimationClass(),
+          buttonStyleClass,
+          animationClass,
           item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
           isActive
             ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
@@ -202,7 +172,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           <div
             className={cn(
               "flex items-center justify-center rounded-lg",
-              getAnimationClass(),
+              animationClass,
               "w-8 h-8",
               isActive
                 ? "bg-white/20"
@@ -213,7 +183,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
               <Icon
                 className={cn(
                   "w-4 h-4 flex-shrink-0 group-hover:scale-110",
-                  getAnimationClass(),
+                  animationClass,
                   isActive ? "text-white" : "text-primary"
                 )}
               />
@@ -246,7 +216,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
             <ChevronRight
               className={cn(
                 "w-3 h-3 opacity-0 group-hover:opacity-100",
-                getAnimationClass(),
+                animationClass,
                 isActive ? "text-white" : "text-primary"
               )}
             />
@@ -262,8 +232,8 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
         className={cn(
           "fixed inset-y-0 z-40 bg-gradient-to-b from-background via-background/98 to-background border-r border-border/80 transform lg:translate-x-0 overflow-y-auto sidebar-shadow",
           "backdrop-blur-sm",
-          getSidebarStyleClass(),
-          getAnimationClass(),
+          sidebarStyleClass,
+          animationClass,
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
@@ -280,7 +250,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
               <div
                 className={cn(
                   "flex items-center rounded-xl",
-                  getAnimationClass(),
+                  animationClass,
                   "bg-gradient-to-br from-primary/5 to-primary/2 border border-primary/10",
                   "shadow-sm hover:shadow-md",
                   spacingSize === "compact"
@@ -296,7 +266,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
                   <Avatar
                     className={cn(
                       "ring-1 ring-primary/20 shadow-md hover:scale-105",
-                      getAnimationClass(),
+                      animationClass,
                       spacingSize === "compact"
                         ? "h-8 w-8"
                         : spacingSize === "spacious"
@@ -327,7 +297,17 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           )}
 
           {/* Navigation */}
-          <nav className={cn("flex-1 overflow-y-auto", getSpacingClass())}>
+          <nav
+            className={cn(
+              "flex-1 overflow-y-auto",
+              getSpacingClass({
+                compact: "space-y-1 p-2",
+                comfortable: "space-y-3 p-4",
+                spacious: "space-y-4 p-6",
+                default: "space-y-2 p-3",
+              })
+            )}
+          >
             {navigation.map((item) => renderNavigationItem(item))}
           </nav>
 

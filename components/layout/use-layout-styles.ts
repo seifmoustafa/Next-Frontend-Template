@@ -4,6 +4,7 @@ import type {
   BorderRadius,
   ButtonStyle,
   HeaderStyle,
+  SidebarStyle,
   ShadowIntensity,
   SpacingSize,
 } from "@/providers/settings-provider";
@@ -12,6 +13,7 @@ import type {
 export function useLayoutStyles() {
   const {
     headerStyle,
+    sidebarStyle,
     spacingSize,
     borderRadius,
     animationLevel,
@@ -41,6 +43,10 @@ export function useLayoutStyles() {
   const getHeaderStyleClass = (
     mapping: Record<HeaderStyle | "default", string>
   ) => merge(headerStyle, mapping);
+
+  const getSidebarStyleClass = (
+    mapping: Record<SidebarStyle | "default", string>
+  ) => merge(sidebarStyle, mapping);
 
   const getShadowClass = (
     overrides?: Partial<Record<ShadowIntensity | "default", string>>
@@ -88,6 +94,7 @@ export function useLayoutStyles() {
   return {
     getSpacingClass,
     getHeaderStyleClass,
+    getSidebarStyleClass,
     getShadowClass,
     getAnimationClass,
     getBorderRadiusClass,
