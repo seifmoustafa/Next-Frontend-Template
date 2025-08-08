@@ -807,9 +807,9 @@ export function SettingsView() {
                 {/* Light Background Themes */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Light Background Theme</CardTitle>
+                    <CardTitle>{t("settings.lightBackgroundTheme")}</CardTitle>
                     <CardDescription>
-                      Choose the light mode background style
+                      {t("settings.lightBackgroundThemeDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -850,9 +850,9 @@ export function SettingsView() {
                 {/* Dark Background Themes */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Dark Background Theme</CardTitle>
+                    <CardTitle>{t("settings.darkBackgroundTheme")}</CardTitle>
                     <CardDescription>
-                      Choose the dark mode background style
+                      {t("settings.darkBackgroundThemeDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -893,9 +893,9 @@ export function SettingsView() {
                 {/* Shadow Intensity */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Shadow Intensity</CardTitle>
+                    <CardTitle>{t("settings.shadowIntensity")}</CardTitle>
                     <CardDescription>
-                      Adjust the depth and intensity of shadows
+                      {t("settings.shadowIntensityDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -936,9 +936,9 @@ export function SettingsView() {
                 {/* Animation Level */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Animation Level</CardTitle>
+                    <CardTitle>{t("settings.animationLevel")}</CardTitle>
                     <CardDescription>
-                      Control the amount of animations and transitions
+                      {t("settings.animationLevelDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -987,9 +987,9 @@ export function SettingsView() {
                 {/* Layout Templates */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Layout Template</CardTitle>
+                    <CardTitle>{t("settings.layoutTemplate")}</CardTitle>
                     <CardDescription>
-                      Choose your preferred layout style
+                      {t("settings.layoutTemplateDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1030,9 +1030,9 @@ export function SettingsView() {
                 {/* Header Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Header Style</CardTitle>
+                    <CardTitle>{t("settings.headerStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how the header should appear
+                      {t("settings.headerStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1079,9 +1079,9 @@ export function SettingsView() {
                 {/* Sidebar Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Sidebar Style</CardTitle>
+                    <CardTitle>{t("settings.sidebarStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how the sidebar should appear
+                      {t("settings.sidebarStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1133,9 +1133,9 @@ export function SettingsView() {
                 {/* Card Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Card Style</CardTitle>
+                    <CardTitle>{t("settings.cardStyleSection")}</CardTitle>
                     <CardDescription>
-                      Choose how cards should appear throughout the app
+                      {t("settings.cardStyleSectionDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1181,9 +1181,9 @@ export function SettingsView() {
                 {/* Button Styles - UPDATED WITH MORE OPTIONS */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Button Style</CardTitle>
+                    <CardTitle>{t("settings.buttonStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how buttons should appear throughout the app
+                      {t("settings.buttonStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1234,9 +1234,9 @@ export function SettingsView() {
                 {/* Navigation Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Navigation Style</CardTitle>
+                    <CardTitle>{t("settings.navigationStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how navigation should appear
+                      {t("settings.navigationStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1300,9 +1300,9 @@ export function SettingsView() {
                 {/* Icon Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Icon Style</CardTitle>
+                    <CardTitle>{t("settings.iconStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how icons should appear throughout the app
+                      {t("settings.iconStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1345,9 +1345,9 @@ export function SettingsView() {
                 {/* Input Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Input Style</CardTitle>
+                    <CardTitle>{t("settings.inputStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how input fields should appear
+                      {t("settings.inputStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1390,9 +1390,9 @@ export function SettingsView() {
                 {/* Table Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Table Style</CardTitle>
+                    <CardTitle>{t("settings.tableStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how tables should appear throughout the app
+                      {t("settings.tableStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1462,9 +1462,9 @@ export function SettingsView() {
                 {/* Badge Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Badge Style</CardTitle>
+                    <CardTitle>{t("settings.badgeStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how badges should appear throughout the app
+                      {t("settings.badgeStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1509,9 +1509,9 @@ export function SettingsView() {
                 {/* Avatar Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Avatar Style</CardTitle>
+                    <CardTitle>{t("settings.avatarStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how avatars should appear throughout the app
+                      {t("settings.avatarStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1559,9 +1559,9 @@ export function SettingsView() {
                 {/* Font Sizes */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Font Size</CardTitle>
+                    <CardTitle>{t("settings.fontSizeSection")}</CardTitle>
                     <CardDescription>
-                      Adjust the base font size for better readability
+                      {t("settings.fontSizeSectionDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1607,9 +1607,9 @@ export function SettingsView() {
                 {/* Border Radius */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Border Radius</CardTitle>
+                    <CardTitle>{t("settings.borderRadiusSection")}</CardTitle>
                     <CardDescription>
-                      Choose how rounded corners should appear
+                      {t("settings.borderRadiusSectionDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1651,9 +1651,9 @@ export function SettingsView() {
                 {/* Spacing */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Spacing</CardTitle>
+                    <CardTitle>{t("settings.spacing")}</CardTitle>
                     <CardDescription>
-                      Control the spacing between elements
+                      {t("settings.spacingDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1691,9 +1691,9 @@ export function SettingsView() {
                 {/* Form Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Form Style</CardTitle>
+                    <CardTitle>{t("settings.formStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how forms should be laid out
+                      {t("settings.formStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1743,9 +1743,9 @@ export function SettingsView() {
                 {/* Loading Styles - UPDATED WITH ACTUAL COMPONENTS */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Loading Style</CardTitle>
+                    <CardTitle>{t("settings.loadingStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how loading indicators should appear
+                      {t("settings.loadingStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1786,9 +1786,9 @@ export function SettingsView() {
                 {/* Tooltip Styles - UPDATED WITH ACTUAL TOOLTIPS */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Tooltip Style</CardTitle>
+                    <CardTitle>{t("settings.tooltipStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how tooltips should appear
+                      {t("settings.tooltipStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1841,9 +1841,9 @@ export function SettingsView() {
                 {/* Modal Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Modal Style</CardTitle>
+                    <CardTitle>{t("settings.modalStyle")}</CardTitle>
                     <CardDescription>
-                      Choose how modals should appear
+                      {t("settings.modalStyleDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -2093,7 +2093,7 @@ export function SettingsView() {
                             onChange={(e) =>
                               settings.setLogoImagePath(e.target.value)
                             }
-                            placeholder="/path/to/your/logo.png"
+                            placeholder={t("settings.logoImagePathPlaceholder")}
                             className="max-w-xs"
                           />
                           <p className="text-xs text-muted-foreground">
@@ -2193,9 +2193,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Compact Mode</Label>
+                          <Label>{t("settings.compactMode")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Reduce spacing throughout the app
+                            {t("settings.compactModeDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2208,9 +2208,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>High Contrast</Label>
+                          <Label>{t("settings.highContrast")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Increase contrast for accessibility
+                            {t("settings.highContrastDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2223,9 +2223,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Reduced Motion</Label>
+                          <Label>{t("settings.reducedMotion")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Minimize animations and transitions
+                            {t("settings.reducedMotionDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2238,9 +2238,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Sticky Header</Label>
+                          <Label>{t("settings.stickyHeader")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Keep header fixed at top of page
+                            {t("settings.stickyHeaderDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2253,9 +2253,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Collapsible Sidebar</Label>
+                          <Label>{t("settings.collapsibleSidebar")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Allow sidebar to be collapsed
+                            {t("settings.collapsibleSidebarDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2268,9 +2268,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Footer</Label>
+                          <Label>{t("settings.showFooter")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Display footer at bottom of pages
+                            {t("settings.showFooterDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2283,9 +2283,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Auto Save</Label>
+                          <Label>{t("settings.autoSave")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Automatically save settings changes
+                            {t("settings.autoSaveDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2308,22 +2308,22 @@ export function SettingsView() {
                   <Eye className="w-5 h-5" />
                   Live Preview
                 </CardTitle>
-                <CardDescription>See your changes in real-time</CardDescription>
+                <CardDescription>{t("settings.previewDescription")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Sample Components */}
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Buttons</Label>
+                  <Label className="text-sm font-semibold">{t("settings.buttons")}</Label>
                   <div className="space-y-2">
                     <Button size="sm" className="w-full">
-                      Small Button
+                      {t("settings.smallButton")}
                     </Button>
-                    <Button className="w-full">Default Button</Button>
+                    <Button className="w-full">{t("settings.defaultButton")}</Button>
                     <Button variant="outline" className="w-full">
-                      Outline Button
+                      {t("settings.outlineButton")}
                     </Button>
                     <Button variant="secondary" className="w-full">
-                      Secondary
+                      {t("settings.secondaryButton")}
                     </Button>
                   </div>
                 </div>
@@ -2331,28 +2331,28 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Badges</Label>
+                  <Label className="text-sm font-semibold">{t("settings.badges")}</Label>
                   <div className="flex flex-wrap gap-2">
-                    <Badge>Default</Badge>
-                    <Badge variant="secondary">Secondary</Badge>
-                    <Badge variant="outline">Outline</Badge>
-                    <Badge variant="destructive">Error</Badge>
+                    <Badge>{t("settings.badgeDefault")}</Badge>
+                    <Badge variant="secondary">{t("settings.badgeSecondary")}</Badge>
+                    <Badge variant="outline">{t("settings.badgeOutline")}</Badge>
+                    <Badge variant="destructive">{t("settings.badgeError")}</Badge>
                   </div>
                 </div>
 
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Avatars</Label>
+                  <Label className="text-sm font-semibold">{t("settings.avatars")}</Label>
                   <div className="flex gap-2">
                     <Avatar className="h-8 w-8">
-                      <AvatarFallback className="text-xs">SM</AvatarFallback>
+                      <AvatarFallback className="text-xs">{t("settings.avatarSmall")}</AvatarFallback>
                     </Avatar>
                     <Avatar>
-                      <AvatarFallback>MD</AvatarFallback>
+                      <AvatarFallback>{t("settings.avatarMedium")}</AvatarFallback>
                     </Avatar>
                     <Avatar className="h-12 w-12">
-                      <AvatarFallback>LG</AvatarFallback>
+                      <AvatarFallback>{t("settings.avatarLarge")}</AvatarFallback>
                     </Avatar>
                   </div>
                 </div>
@@ -2360,15 +2360,15 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Input</Label>
-                  <Input placeholder="Sample input field..." />
+                  <Label className="text-sm font-semibold">{t("settings.input")}</Label>
+                  <Input placeholder={t("settings.sampleInputPlaceholder")} />
                 </div>
 
                 <Separator />
 
                 <div className="space-y-3">
                   <Label className="text-sm font-semibold">
-                    Loading Spinner
+                    {t("settings.loadingSpinner")}
                   </Label>
                   <div className="flex justify-center py-4">
                     <div className="scale-50">
@@ -2380,16 +2380,16 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Tooltip</Label>
+                  <Label className="text-sm font-semibold">{t("settings.tooltip")}</Label>
                   <div className="flex justify-center">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button variant="outline" size="sm">
-                          Hover me
+                          {t("settings.hoverMe")}
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>This is a sample tooltip</p>
+                        <p>{t("settings.sampleTooltip")}</p>
                       </TooltipContent>
                     </Tooltip>
                   </div>
@@ -2398,7 +2398,7 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Table Preview</Label>
+                  <Label className="text-sm font-semibold">{t("settings.tablePreview")}</Label>
                   <div className="text-xs">
                     <GenericTable
                       data={sampleTableData}
@@ -2411,17 +2411,17 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Card Preview</Label>
+                  <Label className="text-sm font-semibold">{t("settings.cardPreview")}</Label>
                   <Card className="p-3">
                     <CardHeader className="p-0 pb-2">
-                      <CardTitle className="text-sm">Sample Card</CardTitle>
+                      <CardTitle className="text-sm">{t("settings.sampleCard")}</CardTitle>
                       <CardDescription className="text-xs">
-                        This shows how cards look
+                        {t("settings.cardPreviewText")}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="p-0">
                       <p className="text-xs text-muted-foreground">
-                        Card content goes here with current styling applied.
+                        {t("settings.cardContentSample")}
                       </p>
                     </CardContent>
                   </Card>
@@ -2430,12 +2430,11 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Typography</Label>
+                  <Label className="text-sm font-semibold">{t("settings.typography")}</Label>
                   <div className="space-y-1">
-                    <h4 className="font-semibold">Heading Sample</h4>
+                    <h4 className="font-semibold">{t("settings.headingSample")}</h4>
                     <p className="text-sm text-muted-foreground">
-                      This is sample paragraph text showing current font size
-                      and spacing.
+                      {t("settings.typographySample")}
                     </p>
                   </div>
                 </div>

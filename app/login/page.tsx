@@ -157,7 +157,7 @@ export default function LoginPage() {
                 onChange={(e) => setUsername(e.target.value)}
                 required
                 className="h-12"
-                placeholder="superadmin"
+                placeholder={t("auth.usernamePlaceholder")}
                 disabled={isLoading}
               />
             </div>
@@ -172,7 +172,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   className="h-12 pr-10"
-                  placeholder="••••••••"
+                  placeholder={t("auth.passwordPlaceholder")}
                   disabled={isLoading}
                 />
                 <Button
