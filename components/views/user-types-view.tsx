@@ -9,6 +9,7 @@ import { UserTypeForm } from "@/components/forms/user-type-form";
 import { useUserTypesViewModel } from "@/viewmodels/user-types.viewmodel";
 import { useServices } from "@/providers/service-provider";
 import { useSettings } from "@/providers/settings-provider";
+import { useI18n } from "@/providers/i18n-provider";
 import type { UserType } from "@/services/user-type.service";
 import { Plus, Shield, RefreshCw, Trash2, Edit } from "lucide-react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
@@ -18,6 +19,7 @@ import { cn } from "@/lib/utils";
 export function UserTypesView() {
   const { userTypeService } = useServices();
   const settings = useSettings();
+  const { t } = useI18n();
 
   const viewModel = useUserTypesViewModel(userTypeService);
   const {
@@ -43,19 +45,19 @@ export function UserTypesView() {
   const columns = [
     {
       key: "adminTypeName",
-      label: "اسم نوع المستخدم",
+      label: t("userTypes.typeName"),
       sortable: true,
     },
   ];
 
   const actions = [
     {
-      label: "تعديل",
+      label: t("common.edit"),
       onClick: (userType: UserType) => openEditModal(userType),
       variant: "ghost" as const,
     },
     {
-      label: "حذف",
+      label: t("common.delete"),
       onClick: (userType: UserType) => deleteUserType(userType.id),
       variant: "ghost" as const,
       className: "text-red-600 hover:text-red-700",
@@ -135,7 +137,7 @@ export function UserTypesView() {
                 : "text-3xl sm:text-4xl"
             )}
           >
-            أنواع المستخدمين
+            {t("userTypes.title")}
           </h1>
           <p
             className={cn(
@@ -147,7 +149,7 @@ export function UserTypesView() {
                 : "text-base sm:text-lg"
             )}
           >
-            إدارة أنواع المستخدمين والصلاحيات
+            {t("userTypes.description")}
           </p>
         </div>
 
@@ -160,7 +162,7 @@ export function UserTypesView() {
               className="flex-1 sm:flex-none"
             >
               <Trash2 className="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" />
-              حذف المحدد ({selectedUserTypes.length})
+              {t("userTypes.deleteSelected")} ({selectedUserTypes.length})
             </Button>
           )}
           <Button
@@ -170,7 +172,7 @@ export function UserTypesView() {
             className="hover-lift bg-transparent flex-1 sm:flex-none"
           >
             <RefreshCw className="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" />
-            تحديث
+            {t("common.refresh")}
           </Button>
           <Button
             onClick={() => setIsCreateModalOpen(true)}
@@ -178,7 +180,7 @@ export function UserTypesView() {
             size={getButtonSize()}
           >
             <Plus className="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" />
-            إضافة نوع جديد
+            {t("userTypes.addType")}
           </Button>
         </div>
       </div>
@@ -235,7 +237,7 @@ export function UserTypesView() {
               >
                 {userTypes.length}
               </p>
-              <p className="text-muted-foreground">إجمالي أنواع المستخدمين</p>
+              <p className="text-muted-foreground">{t("userTypes.totalLabel")}</p>
             </div>
           </div>
         </CardContent>
@@ -253,7 +255,7 @@ export function UserTypesView() {
                 : "text-xl"
             )}
           >
-            أنواع المستخدمين ({userTypes.length})
+            {t("userTypes.listTitle")} ({userTypes.length})
           </CardTitle>
         </CardHeader>
 
@@ -281,7 +283,7 @@ export function UserTypesView() {
       <GenericModal
         open={isCreateModalOpen}
         onOpenChange={setIsCreateModalOpen}
-        title="إضافة نوع مستخدم جديد"
+        title={t("userTypes.addType")}
         size="md"
       >
         <UserTypeForm
@@ -294,7 +296,7 @@ export function UserTypesView() {
       <GenericModal
         open={isEditModalOpen}
         onOpenChange={closeEditModal}
-        title={`تعديل ${editingUserType?.adminTypeName}`}
+        title={`${t("userTypes.editType")} ${editingUserType?.adminTypeName}`}
         size="md"
       >
         {editingUserType && (

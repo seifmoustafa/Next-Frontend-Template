@@ -7,6 +7,7 @@ import { UserService } from "@/services/user.service";
 import { UserTypeService } from "@/services/user-type.service";
 import { AnalyticsService } from "@/services/analytics.service";
 import { NotificationService } from "@/services/notification.service";
+import { useI18n } from "@/providers/i18n-provider";
 
 interface Services {
   apiService: ApiService;
@@ -19,10 +20,11 @@ interface Services {
 const ServiceContext = createContext<Services | null>(null);
 
 export function ServiceProvider({ children }: { children: React.ReactNode }) {
+  const { t } = useI18n();
   const notificationService = new NotificationService();
-  const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "");
-  const userService = new UserService(apiService, notificationService);
-  const userTypeService = new UserTypeService(apiService, notificationService);
+  const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "", t);
+  const userService = new UserService(apiService, notificationService, t);
+  const userTypeService = new UserTypeService(apiService, notificationService, t);
   const analyticsService = new AnalyticsService(apiService);
 
   const services: Services = {

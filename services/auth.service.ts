@@ -30,9 +30,11 @@ export interface IAuthService {
 
 export class AuthService implements IAuthService {
   private apiService: IApiService;
+  private t?: (key: string, params?: Record<string, any>) => string;
 
-  constructor(apiService?: IApiService) {
-    this.apiService = apiService || new ApiService();
+  constructor(apiService?: IApiService, t?: (key: string, params?: Record<string, any>) => string) {
+    this.apiService = apiService || new ApiService(undefined, t);
+    this.t = t;
   }
 
   async login(credentials: LoginRequest): Promise<LoginResponse> {
@@ -54,7 +56,7 @@ export class AuthService implements IAuthService {
       return response;
     } catch (error) {
       console.error("AuthService: Login failed:", error);
-      throw new Error("فشل في تسجيل الدخول. يرجى التحقق من بيانات الاعتماد.");
+      throw new Error(this.t ? this.t("auth.loginError") : "Login failed. Please check your credentials.");
     }
   }
 
@@ -92,7 +94,7 @@ export class AuthService implements IAuthService {
       return user;
     } catch (error) {
       console.error("AuthService: Failed to get current user:", error);
-      throw new Error("فشل في جلب بيانات المستخدم.");
+      throw new Error(this.t ? this.t("auth.fetchUserError") : "Failed to fetch user data.");
     }
   }
 
@@ -118,7 +120,7 @@ export class AuthService implements IAuthService {
       return response;
     } catch (error) {
       console.error("AuthService: Token refresh failed:", error);
-      throw new Error("فشل في تحديث الجلسة.");
+      throw new Error(this.t ? this.t("auth.refreshError") : "Failed to refresh session.");
     }
   }
 }

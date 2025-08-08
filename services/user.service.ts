@@ -67,7 +67,8 @@ export interface IUserService {
 export class UserService implements IUserService {
   constructor(
     private apiService: IApiService,
-    private notificationService: INotificationService
+    private notificationService: INotificationService,
+    private t: (key: string, params?: Record<string, any>) => string
   ) {}
 
   async getUsers(params?: {
@@ -87,7 +88,7 @@ export class UserService implements IUserService {
       );
       return response;
     } catch (error) {
-      this.notificationService.error("فشل في جلب المستخدمين");
+      this.notificationService.error(this.t("users.fetchError"));
       throw error;
     }
   }
@@ -97,7 +98,7 @@ export class UserService implements IUserService {
       const user = await this.apiService.get<User>(`/admins/${id}`);
       return user;
     } catch (error) {
-      this.notificationService.error("فشل في جلب بيانات المستخدم");
+      this.notificationService.error(this.t("users.fetchUserError"));
       throw error;
     }
   }
@@ -105,10 +106,10 @@ export class UserService implements IUserService {
   async createUser(data: CreateUserRequest): Promise<User> {
     try {
       const user = await this.apiService.post<User>("/admins", data);
-      this.notificationService.success("تم إنشاء المستخدم بنجاح");
+      this.notificationService.success(this.t("users.createSuccess"));
       return user;
     } catch (error) {
-      this.notificationService.error("فشل في إنشاء المستخدم");
+      this.notificationService.error(this.t("users.createError"));
       throw error;
     }
   }
@@ -116,10 +117,10 @@ export class UserService implements IUserService {
   async updateUser(id: string, data: UpdateUserRequest): Promise<User> {
     try {
       const user = await this.apiService.put<User>(`/admins/${id}`, data);
-      this.notificationService.success("تم تحديث المستخدم بنجاح");
+      this.notificationService.success(this.t("users.updateSuccess"));
       return user;
     } catch (error) {
-      this.notificationService.error("فشل في تحديث المستخدم");
+      this.notificationService.error(this.t("users.updateError"));
       throw error;
     }
   }
@@ -127,9 +128,9 @@ export class UserService implements IUserService {
   async deleteUser(id: string): Promise<void> {
     try {
       await this.apiService.delete(`/admins/${id}`);
-      this.notificationService.success("تم حذف المستخدم بنجاح");
+      this.notificationService.success(this.t("users.deleteSuccess"));
     } catch (error) {
-      this.notificationService.error("فشل في حذف المستخدم");
+      this.notificationService.error(this.t("users.deleteError"));
       throw error;
     }
   }
@@ -144,10 +145,12 @@ export class UserService implements IUserService {
           usersIds: userIds,
         }
       );
-      this.notificationService.success(`تم حذف ${response.count} مستخدم بنجاح`);
+      this.notificationService.success(
+        this.t("users.deleteSelectedSuccess", { count: response.count })
+      );
       return response;
     } catch (error) {
-      this.notificationService.error("فشل في حذف المستخدمين المحددين");
+      this.notificationService.error(this.t("users.deleteSelectedError"));
       throw error;
     }
   }

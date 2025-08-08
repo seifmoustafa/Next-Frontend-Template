@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronRight, Settings } from "lucide-react";
 import { useI18n } from "@/providers/i18n-provider";
+import { useAuth } from "@/providers/auth-provider";
 import {
   navigation,
   isNavigationItemActive,
@@ -27,7 +28,8 @@ export function NavigationSidebar({
   onOpenChange,
 }: NavigationSidebarProps) {
   const pathname = usePathname();
-  const { t, language, direction } = useI18n();
+  const { t, direction } = useI18n();
+  const { user } = useAuth();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   const toggleExpanded = (itemName: string) => {
@@ -144,13 +146,9 @@ export function NavigationSidebar({
             <Logo className="w-8 h-8" />
             <div className="flex-1 min-w-0">
               <h1 className="text-white font-semibold text-lg leading-tight break-words">
-                {language === "ar"
-                  ? "منظومة إدارة العقود والسيطرة علي مخزون العالم كله"
-                  : "Contract Management System"}
+                {t("app.title")}
               </h1>
-              <p className="text-slate-400 text-sm">
-                {language === "ar" ? "العربية" : "Dashboard"}
-              </p>
+              <p className="text-slate-400 text-sm">{t("app.description")}</p>
             </div>
           </div>
 
@@ -170,10 +168,12 @@ export function NavigationSidebar({
               </Avatar>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-medium text-sm truncate">
-                  {language === "ar" ? "سيف مصطفى" : "Seif Moustafa"}
+                  {user?.firstName && user?.lastName
+                    ? `${user.firstName} ${user.lastName}`
+                    : user?.username || t("common.user")}
                 </p>
                 <p className="text-slate-400 text-xs truncate">
-                  {language === "ar" ? "مدير النظام" : "SuperAdmin"}
+                  {user?.adminTypeName || user?.role || t("common.user")}
                 </p>
               </div>
               <div className="w-3 h-3 bg-green-500 rounded-full ring-2 ring-slate-950" />
@@ -187,7 +187,7 @@ export function NavigationSidebar({
             >
               <Link href="/dashboard/settings">
                 <Settings className="w-4 h-4" />
-                {language === "ar" ? "الإعدادات" : "Settings"}
+                {t("nav.settings")}
               </Link>
             </Button>
           </div>

@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { useI18n } from '@/providers/i18n-provider'
 import { AuthService, type IAuthService, type LoginRequest } from '@/services/auth.service'
 
 export interface LoginViewModelState {
@@ -20,7 +21,8 @@ export interface LoginViewModelActions {
 export type LoginViewModel = LoginViewModelState & LoginViewModelActions
 
 export function useLoginViewModel(authService?: IAuthService): LoginViewModel {
-  const service = authService || new AuthService()
+  const service = authService || new AuthService(undefined, t)
+  const { t } = useI18n()
 
   const [state, setState] = useState<LoginViewModelState>({
     username: '',
@@ -48,7 +50,7 @@ export function useLoginViewModel(authService?: IAuthService): LoginViewModel {
 
   const handleLogin = useCallback(async (onSuccess: () => void) => {
     if (!state.username.trim() || !state.password.trim()) {
-      setState(prev => ({ ...prev, error: 'يرجى إدخال اسم المستخدم وكلمة المرور' }))
+      setState(prev => ({ ...prev, error: t('auth.missingCredentials') }))
       return
     }
 
@@ -66,7 +68,7 @@ export function useLoginViewModel(authService?: IAuthService): LoginViewModel {
       const loginResponse = await service.login(credentials)
 
       if (!loginResponse.success || !loginResponse.accessToken) {
-        throw new Error('استجابة تسجيل دخول غير صالحة')
+        throw new Error(t('auth.invalidResponse'))
       }
 
       // Store tokens
@@ -86,7 +88,7 @@ export function useLoginViewModel(authService?: IAuthService): LoginViewModel {
     } catch (error) {
       console.error('LoginViewModel: Login failed:', error)
       
-      let errorMessage = 'خطأ في تسجيل الدخول'
+      let errorMessage = t('auth.loginFailed')
       
       if (error instanceof Error) {
         errorMessage = error.message

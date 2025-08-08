@@ -9,13 +9,18 @@ export interface IApiService {
 export class ApiService implements IApiService {
   private baseUrl: string
   private defaultHeaders: Record<string, string>
+  private t?: (key: string, params?: Record<string, any>) => string
 
-  constructor(baseUrl: string = process.env.NEXT_PUBLIC_API_URL || "/api") {
+  constructor(
+    baseUrl: string = process.env.NEXT_PUBLIC_API_URL || "/api",
+    t?: (key: string, params?: Record<string, any>) => string
+  ) {
     this.baseUrl = baseUrl
     this.defaultHeaders = {
       "Content-Type": "application/json",
       Accept: "application/json",
     }
+    this.t = t
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
@@ -71,7 +76,11 @@ export class ApiService implements IApiService {
       console.error("API request failed:", error)
 
       if (error instanceof TypeError && error.message.includes("fetch")) {
-        throw new Error("خطأ في الاتصال بالخادم. تأكد من اتصال الإنترنت.")
+        throw new Error(
+          this.t
+            ? this.t("api.networkError")
+            : "Network error. Please check your internet connection."
+        )
       }
 
       throw error

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useI18n } from "@/providers/i18n-provider";
 import type {
   UserType,
   IUserTypeService,
@@ -18,6 +19,7 @@ export function useUserTypesViewModel(userTypeService: IUserTypeService) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingUserType, setEditingUserType] = useState<UserType | null>(null);
+  const { t } = useI18n();
 
   const loadUserTypes = useCallback(async () => {
     try {
@@ -26,7 +28,7 @@ export function useUserTypesViewModel(userTypeService: IUserTypeService) {
       const response = await userTypeService.getUserTypes();
       setUserTypes(response);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "حدث خطأ");
+      setError(err instanceof Error ? err.message : t("common.error"));
     } finally {
       setLoading(false);
     }
@@ -55,7 +57,7 @@ export function useUserTypesViewModel(userTypeService: IUserTypeService) {
 
   const deleteUserType = async (id: string) => {
     try {
-      if (confirm("هل أنت متأكد من حذف هذا النوع؟")) {
+      if (confirm(t("userTypes.confirmDelete"))) {
         await userTypeService.deleteUserType(id);
         await loadUserTypes();
       }
@@ -67,7 +69,7 @@ export function useUserTypesViewModel(userTypeService: IUserTypeService) {
   const deleteSelectedUserTypes = async () => {
     try {
       if (selectedUserTypes.length === 0) return;
-      if (confirm(`هل أنت متأكد من حذف ${selectedUserTypes.length} نوع؟`)) {
+      if (confirm(t("userTypes.confirmDeleteMany", { count: selectedUserTypes.length }))) {
         for (const id of selectedUserTypes) {
           await userTypeService.deleteUserType(id);
         }

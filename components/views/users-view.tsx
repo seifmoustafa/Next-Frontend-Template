@@ -199,7 +199,7 @@ export function UsersView() {
             settings.fontSize === "large" ? "text-lg sm:text-xl" :
             "text-base sm:text-lg"
           )}>
-            إدارة المستخدمين والصلاحيات
+            {t("users.manageDescription")}
           </p>
         </div>
 
@@ -212,7 +212,7 @@ export function UsersView() {
               className="flex-1 sm:flex-none"
             >
               <Trash2 className="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" />
-              حذف المحدد ({selectedUsers.length})
+              {t("users.deleteSelected")} ({selectedUsers.length})
             </Button>
           )}
           <Button
@@ -222,7 +222,7 @@ export function UsersView() {
             className="hover-lift bg-transparent flex-1 sm:flex-none"
           >
             <RefreshCw className="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" />
-            تحديث
+            {t("common.refresh")}
           </Button>
           <Button
             onClick={() => setIsCreateModalOpen(true)}
@@ -266,7 +266,7 @@ export function UsersView() {
                 settings.fontSize === "large" ? "text-3xl" :
                 "text-2xl"
               )}>{total}</p>
-              <p className="text-muted-foreground">إجمالي المستخدمين</p>
+              <p className="text-muted-foreground">{t("users.totalUsers")}</p>
             </div>
           </div>
         </CardContent>
@@ -280,7 +280,7 @@ export function UsersView() {
               settings.fontSize === "small" ? "text-lg" :
               settings.fontSize === "large" ? "text-2xl" :
               "text-xl"
-            )}>المستخدمون ({total})</CardTitle>
+            )}>{t("nav.users")} ({total})</CardTitle>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
               <div className="relative">
@@ -357,7 +357,7 @@ export function UsersView() {
       <GenericModal
         open={isEditModalOpen}
         onOpenChange={closeEditModal}
-        title={`تعديل ${editingUser?.firstName} ${editingUser?.lastName}`}
+        title={`${t("users.editUser")} ${editingUser?.firstName} ${editingUser?.lastName}`}
         size="lg"
       >
         {editingUser && (

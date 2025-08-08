@@ -56,11 +56,11 @@ export default function LoginPage() {
         router.replace("/");
       } else {
         console.log("Login failed");
-        setError(t("auth.loginError") || "خطأ في تسجيل الدخول");
+        setError(t("auth.loginError"));
       }
     } catch (error) {
       console.error("Login submission error:", error);
-      setError("خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.");
+      setError(t("auth.serverError"));
     }
 
     setIsLoading(false);
@@ -72,7 +72,7 @@ export default function LoginPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/20 via-background to-secondary/20">
         <div className="text-center">
           <LoadingSpinner size="md" showText={false} />
-          <p className="mt-4">جاري التحويل...</p>
+          <p className="mt-4">{t("common.redirecting")}</p>
         </div>
       </div>
     );
@@ -97,10 +97,10 @@ export default function LoginPage() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => setLanguage("ar")}>
-              🇸🇦 العربية
+              🇸🇦 {t("language.arabic")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setLanguage("en")}>
-              🇺🇸 English
+              🇺🇸 {t("language.english")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -119,15 +119,15 @@ export default function LoginPage() {
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => setTheme("light")}>
               <Sun className="mr-2 h-4 w-4" />
-              فاتح
+              {t("theme.light")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme("dark")}>
               <Moon className="mr-2 h-4 w-4" />
-              داكن
+              {t("theme.dark")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme("system")}>
               <Monitor className="mr-2 h-4 w-4" />
-              النظام
+              {t("theme.system")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

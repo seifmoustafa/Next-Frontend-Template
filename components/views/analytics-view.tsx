@@ -21,13 +21,13 @@ export function AnalyticsView() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">{t("nav.analytics")}</h1>
-        <p className="text-muted-foreground mt-2">Detailed analytics and insights</p>
+        <p className="text-muted-foreground mt-2">{t("analytics.description")}</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>User Growth</CardTitle>
+            <CardTitle>{t("analytics.userGrowth")}</CardTitle>
           </CardHeader>
           <CardContent>
             <GenericChart data={chartData} type="line" dataKey="users" height={300} />
@@ -36,7 +36,7 @@ export function AnalyticsView() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Revenue Trend</CardTitle>
+            <CardTitle>{t("analytics.revenueTrend")}</CardTitle>
           </CardHeader>
           <CardContent>
             <GenericChart data={chartData} type="bar" dataKey="revenue" height={300} />
@@ -46,7 +46,7 @@ export function AnalyticsView() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Combined Analytics</CardTitle>
+          <CardTitle>{t("analytics.combinedAnalytics")}</CardTitle>
         </CardHeader>
         <CardContent>
           <GenericChart
@@ -54,8 +54,8 @@ export function AnalyticsView() {
             type="line"
             height={400}
             multiple={[
-              { dataKey: "users", color: "#8884d8", name: "Users" },
-              { dataKey: "revenue", color: "#82ca9d", name: "Revenue" },
+              { dataKey: "users", color: "#8884d8", name: t("analytics.users") },
+              { dataKey: "revenue", color: "#82ca9d", name: t("analytics.revenue") },
             ]}
           />
         </CardContent>

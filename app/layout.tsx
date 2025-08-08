@@ -7,6 +7,7 @@ import { I18nProvider } from "@/providers/i18n-provider"
 import { ServiceProvider } from "@/providers/service-provider"
 import { AuthProvider } from "@/providers/auth-provider"
 import { SettingsProvider } from "@/providers/settings-provider"
+import { ar } from "@/locales/ar"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,8 +21,8 @@ const cairo = Cairo({
 })
 
 export const metadata: Metadata = {
-  title: "لوحة التحكم الإدارية",
-  description: "لوحة تحكم إدارية احترافية مع دعم متعدد اللغات",
+  title: ar["app.title"],
+  description: ar["app.description"],
 }
 
 export default function RootLayout({
@@ -33,13 +34,13 @@ export default function RootLayout({
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body className={`${inter.variable} ${cairo.variable} antialiased font-arabic`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
-          <ServiceProvider>
-            <SettingsProvider>
-              <I18nProvider>
+          <SettingsProvider>
+            <I18nProvider>
+              <ServiceProvider>
                 <AuthProvider>{children}</AuthProvider>
-              </I18nProvider>
-            </SettingsProvider>
-          </ServiceProvider>
+              </ServiceProvider>
+            </I18nProvider>
+          </SettingsProvider>
         </ThemeProvider>
       </body>
     </html>
