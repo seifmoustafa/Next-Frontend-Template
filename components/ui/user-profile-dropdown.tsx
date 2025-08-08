@@ -52,7 +52,7 @@ export function UserProfileDropdown({
   const getDisplayName = () => {
     const firstName = user.firstName || "";
     const lastName = user.lastName || "";
-    return `${firstName} ${lastName}`.trim() || user.username || "User";
+    return `${firstName} ${lastName}`.trim() || user.username || t("common.user");
   };
 
   const handleProfileClick = () => {
@@ -135,7 +135,7 @@ export function UserProfileDropdown({
                     variant === "navigation" ? "text-xs" : "text-xs"
                   )}
                 >
-                  {user.adminTypeName || user.role || "مستخدم"}
+                  {user.adminTypeName || user.role || t("common.user")}
                 </p>
               </div>
               <ChevronDown
@@ -164,7 +164,7 @@ export function UserProfileDropdown({
           <div className="text-right rtl:text-left min-w-0">
             <p className="font-medium text-sm truncate">{getDisplayName()}</p>
             <p className="text-xs text-muted-foreground truncate">
-              {user.adminTypeName || user.role || "مستخدم"}
+              {user.adminTypeName || user.role || t("common.user")}
             </p>
           </div>
         </div>
@@ -176,7 +176,7 @@ export function UserProfileDropdown({
           className="flex items-center gap-3 p-3 cursor-pointer hover:bg-accent/50 rounded-md"
         >
           <User className="h-4 w-4" />
-          <span>الملف الشخصي</span>
+          <span>{t("nav.profile")}</span>
         </DropdownMenuItem>
 
         <DropdownMenuItem
@@ -184,7 +184,7 @@ export function UserProfileDropdown({
           className="flex items-center gap-3 p-3 cursor-pointer hover:bg-accent/50 rounded-md"
         >
           <Settings className="h-4 w-4" />
-          <span>الإعدادات</span>
+          <span>{t("nav.settings")}</span>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
@@ -194,7 +194,7 @@ export function UserProfileDropdown({
           className="flex items-center gap-3 p-3 cursor-pointer hover:bg-destructive/10 text-destructive rounded-md"
         >
           <LogOut className="h-4 w-4" />
-          <span>تسجيل الخروج</span>
+          <span>{t("nav.logout")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

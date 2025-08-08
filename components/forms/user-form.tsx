@@ -194,14 +194,14 @@ export function UserForm({
             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
             required
             className={getInputHeight()}
-            placeholder="أدخل اسم المستخدم"
+            placeholder={t("users.enterUsername")}
           />
         </div>
 
         {!isEdit && (
           <div className={getFieldSpacing()}>
             <Label htmlFor="password" className="font-medium">
-              كلمة المرور
+              {t("auth.password")}
             </Label>
             <Input
               id="password"
@@ -210,7 +210,7 @@ export function UserForm({
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               required
               className={getInputHeight()}
-              placeholder="أدخل كلمة المرور"
+              placeholder={t("users.enterPassword")}
             />
           </div>
         )}
@@ -226,7 +226,7 @@ export function UserForm({
               onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
               required
               className={getInputHeight()}
-              placeholder="الاسم الأول"
+                  placeholder={t("users.firstNamePlaceholder")}
             />
           </div>
 
@@ -240,7 +240,7 @@ export function UserForm({
               onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
               required
               className={getInputHeight()}
-              placeholder="اسم العائلة"
+                  placeholder={t("users.lastNamePlaceholder")}
             />
           </div>
         </div>
@@ -255,7 +255,7 @@ export function UserForm({
             onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
             required
             className={getInputHeight()}
-            placeholder="رقم الهاتف"
+            placeholder={t("users.phonePlaceholder")}
           />
         </div>
 
@@ -274,7 +274,7 @@ export function UserForm({
             }
           >
             <SelectTrigger className={getInputHeight()}>
-              <SelectValue placeholder="اختر نوع المستخدم" />
+              <SelectValue placeholder={t("users.selectUserType")} />
             </SelectTrigger>
             <SelectContent>
               {userTypes.map((type) => (

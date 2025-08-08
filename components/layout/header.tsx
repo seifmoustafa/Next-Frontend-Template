@@ -60,8 +60,12 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align={direction === "rtl" ? "start" : "end"}>
-              <DropdownMenuItem onClick={() => setLanguage("ar")}>🇸🇦 العربية</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage("en")}>🇺🇸 English</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage("ar")}>
+                🇸🇦 {t("language.arabic")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage("en")}>
+                🇺🇸 {t("language.english")}
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -76,15 +80,15 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
             <DropdownMenuContent align={direction === "rtl" ? "start" : "end"}>
               <DropdownMenuItem onClick={() => setTheme("light")}>
                 <Sun className="mr-2 h-4 w-4" />
-                فاتح
+                {t("theme.light")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("dark")}>
                 <Moon className="mr-2 h-4 w-4" />
-                داكن
+                {t("theme.dark")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("system")}>
                 <Monitor className="mr-2 h-4 w-4" />
-                النظام
+                {t("theme.system")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -114,9 +118,9 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
               </div>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/profile">الملف الشخصي</Link>
+                <Link href="/dashboard/profile">{t("nav.profile")}</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>الإعدادات</DropdownMenuItem>
+              <DropdownMenuItem>{t("nav.settings")}</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout} className="text-destructive">
                 {t("nav.logout")}

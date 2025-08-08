@@ -179,7 +179,7 @@ export function NavigationHeader({
             variant="ghost"
             size="icon"
             className="hover:bg-accent hover:text-accent-foreground md:hidden"
-            title="Search"
+            title={t("layout.search")}
           >
             <Search className="w-5 h-5" />
           </Button>
@@ -191,7 +191,7 @@ export function NavigationHeader({
                 variant="ghost"
                 size="icon"
                 className="hover:bg-accent hover:text-accent-foreground"
-                title="Change Theme"
+                title={t("layout.changeTheme")}
               >
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -200,15 +200,15 @@ export function NavigationHeader({
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setTheme("light")}>
                 <Sun className="mr-2 h-4 w-4" />
-                فاتح
+                {t("theme.light")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("dark")}>
                 <Moon className="mr-2 h-4 w-4" />
-                داكن
+                {t("theme.dark")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("system")}>
                 <Monitor className="mr-2 h-4 w-4" />
-                النظام
+                {t("theme.system")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -220,7 +220,7 @@ export function NavigationHeader({
                 variant="ghost"
                 size="icon"
                 className="hover:bg-accent hover:text-accent-foreground"
-                title="Change Language"
+                title={t("layout.changeLanguage")}
               >
                 <Globe className="w-5 h-5" />
               </Button>
@@ -230,20 +230,20 @@ export function NavigationHeader({
               className="bg-popover border-border"
             >
               <DropdownMenuLabel>
-                {t("layout.language") || "Language"}
+                {t("layout.language")}
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => setLanguage("en")}
                 className="hover:bg-accent hover:text-accent-foreground cursor-pointer"
               >
-                🇺🇸 English
+                🇺🇸 {t("language.english")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => setLanguage("ar")}
                 className="hover:bg-accent hover:text-accent-foreground cursor-pointer"
               >
-                🇸🇦 العربية
+                🇸🇦 {t("language.arabic")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -25,6 +25,7 @@ import {
 import { useSettings } from "@/providers/settings-provider";
 import { Logo } from "@/components/ui/logo";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { useI18n } from "@/providers/i18n-provider";
 import {
   Palette,
   Layout,
@@ -66,6 +67,7 @@ import { GenericTable } from "@/components/ui/generic-table";
 export function SettingsView() {
   const settings = useSettings();
   const { toast } = useToast();
+  const { t } = useI18n();
   const [activeTab, setActiveTab] = useState("appearance");
 
   const handleExportSettings = () => {
@@ -80,8 +82,8 @@ export function SettingsView() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     toast({
-      title: "Settings Exported",
-      description: "Your settings have been exported successfully.",
+      title: t("settings.exportSuccessTitle"),
+      description: t("settings.exportSuccessDesc"),
     });
   };
 
@@ -95,17 +97,16 @@ export function SettingsView() {
           const success = settings.importSettings(settingsJson);
           if (success) {
             toast({
-              title: "Settings Imported",
-              description: "Your settings have been imported successfully.",
+              title: t("settings.importSuccessTitle"),
+              description: t("settings.importSuccessDesc"),
             });
           } else {
             throw new Error("Invalid format");
           }
         } catch (error) {
           toast({
-            title: "Import Failed",
-            description:
-              "Failed to import settings. Please check the file format.",
+            title: t("settings.importFailedTitle"),
+            description: t("settings.importFailedDesc"),
             variant: "destructive",
           });
         }
@@ -117,8 +118,8 @@ export function SettingsView() {
   const handleResetSettings = () => {
     settings.resetSettings();
     toast({
-      title: "Settings Reset",
-      description: "All settings have been reset to default values.",
+      title: t("settings.resetTitle"),
+      description: t("settings.resetDesc"),
     });
   };
 
@@ -126,50 +127,55 @@ export function SettingsView() {
   const colorThemes = [
     {
       value: "purple",
-      name: "Purple",
+      name: t("color.purple"),
       color: "bg-purple-500",
       accent: "bg-purple-100",
     },
     {
       value: "blue",
-      name: "Blue",
+      name: t("color.blue"),
       color: "bg-blue-500",
       accent: "bg-blue-100",
     },
     {
       value: "green",
-      name: "Green",
+      name: t("color.green"),
       color: "bg-green-500",
       accent: "bg-green-100",
     },
     {
       value: "orange",
-      name: "Orange",
+      name: t("color.orange"),
       color: "bg-orange-500",
       accent: "bg-orange-100",
     },
-    { value: "red", name: "Red", color: "bg-red-500", accent: "bg-red-100" },
+    {
+      value: "red",
+      name: t("color.red"),
+      color: "bg-red-500",
+      accent: "bg-red-100",
+    },
     {
       value: "teal",
-      name: "Teal",
+      name: t("color.teal"),
       color: "bg-teal-500",
       accent: "bg-teal-100",
     },
     {
       value: "pink",
-      name: "Pink",
+      name: t("color.pink"),
       color: "bg-pink-500",
       accent: "bg-pink-100",
     },
     {
       value: "indigo",
-      name: "Indigo",
+      name: t("color.indigo"),
       color: "bg-indigo-500",
       accent: "bg-indigo-100",
     },
     {
       value: "cyan",
-      name: "Cyan",
+      name: t("color.cyan"),
       color: "bg-cyan-500",
       accent: "bg-cyan-100",
     },
@@ -690,7 +696,7 @@ export function SettingsView() {
       <div className="container mx-auto p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Settings</h1>
+            <h1 className="text-3xl font-bold">{t("settings.title")}</h1>
             <p className="text-muted-foreground">
               Customize your application experience
             </p>
@@ -731,23 +737,23 @@ export function SettingsView() {
               <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="appearance">
                   <Palette className="h-4 w-4 mr-2" />
-                  Appearance
+                  {t("settings.appearance")}
                 </TabsTrigger>
                 <TabsTrigger value="layout">
                   <Layout className="h-4 w-4 mr-2" />
-                  Layout
+                  {t("settings.layout")}
                 </TabsTrigger>
                 <TabsTrigger value="components">
                   <SettingsIcon className="h-4 w-4 mr-2" />
-                  Components
+                  {t("settings.components")}
                 </TabsTrigger>
                 <TabsTrigger value="typography">
                   <Type className="h-4 w-4 mr-2" />
-                  Typography
+                  {t("settings.typography")}
                 </TabsTrigger>
                 <TabsTrigger value="behavior">
                   <Eye className="h-4 w-4 mr-2" />
-                  Behavior
+                  {t("settings.behavior")}
                 </TabsTrigger>
               </TabsList>
 
@@ -756,9 +762,9 @@ export function SettingsView() {
                 {/* Color Themes */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Color Theme</CardTitle>
+                    <CardTitle>{t("settings.colorTheme")}</CardTitle>
                     <CardDescription>
-                      Choose your preferred color scheme
+                      {t("settings.colorThemeDescription")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1889,15 +1895,15 @@ export function SettingsView() {
                 {/* Logo Settings */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Logo Settings</CardTitle>
+                    <CardTitle>{t("settings.logoSettings")}</CardTitle>
                     <CardDescription>
-                      Customize your application logo appearance
+                      {t("settings.logoDescription")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {/* Logo Type */}
                     <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Logo Type</Label>
+                      <Label className="text-sm font-semibold">{t("settings.logoType")}</Label>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {[
                           {
@@ -1943,7 +1949,7 @@ export function SettingsView() {
 
                     {/* Logo Size */}
                     <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Logo Size</Label>
+                      <Label className="text-sm font-semibold">{t("settings.logoSize")}</Label>
                       <div className="grid grid-cols-5 gap-4">
                         {[
                           { value: "xs", name: "XS", size: "h-4 w-4" },
@@ -1987,7 +1993,7 @@ export function SettingsView() {
                     {/* Logo Animation */}
                     <div className="space-y-3">
                       <Label className="text-sm font-semibold">
-                        Logo Animation
+                        {t("settings.logoAnimation")}
                       </Label>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {[
@@ -2061,15 +2067,15 @@ export function SettingsView() {
 
                     {/* Logo Text */}
                     <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Logo Text</Label>
+                      <Label className="text-sm font-semibold">{t("settings.logoText")}</Label>
                       <Input
                         value={settings.logoText}
                         onChange={(e) => settings.setLogoText(e.target.value)}
-                        placeholder="Enter logo text..."
+                        placeholder={t("settings.logoTextPlaceholder")}
                         className="max-w-xs"
                       />
                       <p className="text-xs text-muted-foreground">
-                        Text displayed next to the logo icon or as custom logo
+                        {t("settings.logoTextDesc")}
                       </p>
                     </div>
 
@@ -2080,7 +2086,7 @@ export function SettingsView() {
                       <>
                         <div className="space-y-3">
                           <Label className="text-sm font-semibold">
-                            Logo Image Path
+                            {t("settings.logoImagePath")}
                           </Label>
                           <Input
                             value={settings.logoImagePath}
@@ -2091,7 +2097,7 @@ export function SettingsView() {
                             className="max-w-xs"
                           />
                           <p className="text-xs text-muted-foreground">
-                            Path to your custom logo image file
+                            {t("settings.logoImagePathDesc")}
                           </p>
                         </div>
                         <Separator />
@@ -2101,13 +2107,13 @@ export function SettingsView() {
                     {/* Logo Preview */}
                     <div className="space-y-3">
                       <Label className="text-sm font-semibold">
-                        Logo Preview
+                        {t("settings.logoPreview")}
                       </Label>
                       <div className="flex items-center justify-center p-6 border rounded-lg bg-muted/20">
                         <Logo showText={true} />
                       </div>
                       <p className="text-xs text-muted-foreground text-center">
-                        Live preview of your logo with current settings
+                        {t("settings.logoPreviewDesc")}
                       </p>
                     </div>
                   </CardContent>
@@ -2118,18 +2124,18 @@ export function SettingsView() {
               <TabsContent value="behavior" className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>UI Behavior</CardTitle>
+                    <CardTitle>{t("settings.uiBehavior")}</CardTitle>
                     <CardDescription>
-                      Control how the interface behaves
+                      {t("settings.uiBehaviorDesc")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Breadcrumbs</Label>
+                          <Label>{t("settings.showBreadcrumbs")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Display navigation breadcrumbs
+                            {t("settings.showBreadcrumbsDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2142,9 +2148,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show User Avatar</Label>
+                          <Label>{t("settings.showUserAvatar")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Display user avatar in header
+                            {t("settings.showUserAvatarDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2157,9 +2163,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Notifications</Label>
+                          <Label>{t("settings.showNotifications")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Display notification bell in header
+                            {t("settings.showNotificationsDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2172,9 +2178,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Logo</Label>
+                          <Label>{t("settings.showLogo")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Display logo in sidebar and header
+                            {t("settings.showLogoDesc")}
                           </p>
                         </div>
                         <Switch

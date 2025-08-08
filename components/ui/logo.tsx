@@ -5,6 +5,7 @@ import { Sparkles, Shield } from 'lucide-react'
 import { useSettings } from '@/providers/settings-provider'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { useI18n } from '@/providers/i18n-provider'
 
 interface LogoProps {
   className?: string
@@ -13,6 +14,7 @@ interface LogoProps {
 
 export function Logo({ className, showText = true }: LogoProps) {
   const settings = useSettings()
+  const { t } = useI18n()
 
   const sizeClasses = {
     xs: 'h-4 w-4',
@@ -54,7 +56,7 @@ export function Logo({ className, showText = true }: LogoProps) {
           <div className={cn(sizeClasses[settings.logoSize], 'relative')}>
             <Image
               src={settings.logoImagePath || '/placeholder.svg?height=32&width=32'}
-              alt="Logo"
+              alt={t('app.logoAlt')}
               fill
               className={cn('object-contain', animationClasses[settings.logoAnimation])}
               onError={(e) => {

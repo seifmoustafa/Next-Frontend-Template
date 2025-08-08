@@ -216,10 +216,10 @@ export function MinimalHeader() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align={direction === "rtl" ? "start" : "end"}>
               <DropdownMenuItem onClick={() => setLanguage("ar")}>
-                🇸🇦 العربية
+                🇸🇦 {t("language.arabic")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLanguage("en")}>
-                🇺🇸 English
+                🇺🇸 {t("language.english")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

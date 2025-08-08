@@ -25,7 +25,8 @@ export interface IUserTypeService {
 export class UserTypeService implements IUserTypeService {
   constructor(
     private apiService: IApiService,
-    private notificationService: INotificationService
+    private notificationService: INotificationService,
+    private t: (key: string, params?: Record<string, any>) => string
   ) {}
 
   async getUserTypes(): Promise<UserType[]> {
@@ -33,7 +34,7 @@ export class UserTypeService implements IUserTypeService {
       const response = await this.apiService.get<UserType[]>("/admin-types");
       return response;
     } catch (error) {
-      this.notificationService.error("فشل في جلب أنواع المستخدمين");
+      this.notificationService.error(this.t("userTypes.fetchError"));
       throw error;
     }
   }
@@ -45,7 +46,7 @@ export class UserTypeService implements IUserTypeService {
       );
       return userType;
     } catch (error) {
-      this.notificationService.error("فشل في جلب بيانات نوع المستخدم");
+      this.notificationService.error(this.t("userTypes.fetchOneError"));
       throw error;
     }
   }
@@ -56,10 +57,10 @@ export class UserTypeService implements IUserTypeService {
         "/admin-types",
         data
       );
-      this.notificationService.success("تم إنشاء نوع المستخدم بنجاح");
+      this.notificationService.success(this.t("userTypes.createSuccess"));
       return userType;
     } catch (error) {
-      this.notificationService.error("فشل في إنشاء نوع المستخدم");
+      this.notificationService.error(this.t("userTypes.createError"));
       throw error;
     }
   }
@@ -73,10 +74,10 @@ export class UserTypeService implements IUserTypeService {
         `/admin-types/${id}`,
         data
       );
-      this.notificationService.success("تم تحديث نوع المستخدم بنجاح");
+      this.notificationService.success(this.t("userTypes.updateSuccess"));
       return userType;
     } catch (error) {
-      this.notificationService.error("فشل في تحديث نوع المستخدم");
+      this.notificationService.error(this.t("userTypes.updateError"));
       throw error;
     }
   }
@@ -84,9 +85,9 @@ export class UserTypeService implements IUserTypeService {
   async deleteUserType(id: string): Promise<void> {
     try {
       await this.apiService.delete(`/admin-types/${id}`);
-      this.notificationService.success("تم حذف نوع المستخدم بنجاح");
+      this.notificationService.success(this.t("userTypes.deleteSuccess"));
     } catch (error) {
-      this.notificationService.error("فشل في حذف نوع المستخدم");
+      this.notificationService.error(this.t("userTypes.deleteError"));
       throw error;
     }
   }
