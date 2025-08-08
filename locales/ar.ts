@@ -13,9 +13,11 @@ export const ar = {
   "auth.loginFailed": "فشل في تسجيل الدخول",
   "auth.fetchUserError": "فشل في جلب بيانات المستخدم",
   "auth.refreshError": "فشل في تحديث الجلسة",
+  "auth.noRefreshToken": "لا يوجد رمز تحديث متاح",
 
   // API
   "api.networkError": "خطأ في الاتصال بالخادم. تأكد من اتصال الإنترنت.",
+  "api.unauthorized": "غير مصرح - يرجى تسجيل الدخول مرة أخرى.",
 
   // Navigation
   "nav.dashboard": "لوحة التحكم",
@@ -58,6 +60,7 @@ export const ar = {
   "analytics.combinedAnalytics": "تحليلات مجمعة",
   "analytics.users": "المستخدمون",
   "analytics.revenue": "الإيرادات",
+  "analytics.fetchError": "فشل في جلب بيانات التحليلات",
 
   // Users
   "users.title": "إدارة المستخدمين",
@@ -195,6 +198,20 @@ export const ar = {
   "layout.minimalDesc": "تصميم بسيط مع شريط علوي فقط وقوائم منسدلة",
   "layout.compactDesc": "تصميم مدمج مع عناصر صغيرة لتوفير مساحة أكبر للمحتوى",
   "layout.floatingDesc": "تصميم عائم مع بطاقات منفصلة وتأثيرات ثلاثية الأبعاد",
+
+  // Months
+  "months.jan": "يناير",
+  "months.feb": "فبراير",
+  "months.mar": "مارس",
+  "months.apr": "أبريل",
+  "months.may": "مايو",
+  "months.jun": "يونيو",
+  "months.jul": "يوليو",
+  "months.aug": "أغسطس",
+  "months.sep": "سبتمبر",
+  "months.oct": "أكتوبر",
+  "months.nov": "نوفمبر",
+  "months.dec": "ديسمبر",
 
   // Color Themes
   "color.purple": "أرجواني",

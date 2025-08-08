@@ -57,11 +57,17 @@ export class ApiService implements IApiService {
       if (!response.ok) {
         if (response.status === 401) {
           // Token expired or invalid, redirect to login
-          console.error("Unauthorized - redirecting to login")
+          console.error(
+            this.t ? this.t("api.unauthorized") : "Unauthorized - redirecting to login"
+          )
           localStorage.removeItem("accessToken")
           localStorage.removeItem("refreshToken")
           window.location.href = "/login"
-          throw new Error("Unauthorized - please login again")
+          throw new Error(
+            this.t
+              ? this.t("api.unauthorized")
+              : "Unauthorized - please login again"
+          )
         }
 
         const errorText = await response.text()

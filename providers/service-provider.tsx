@@ -25,7 +25,7 @@ export function ServiceProvider({ children }: { children: React.ReactNode }) {
   const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "", t);
   const userService = new UserService(apiService, notificationService, t);
   const userTypeService = new UserTypeService(apiService, notificationService, t);
-  const analyticsService = new AnalyticsService(apiService);
+  const analyticsService = new AnalyticsService(apiService, t);
 
   const services: Services = {
     apiService,

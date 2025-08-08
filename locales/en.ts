@@ -13,9 +13,11 @@ export const en = {
   "auth.loginFailed": "Login failed",
   "auth.fetchUserError": "Failed to fetch user data.",
   "auth.refreshError": "Failed to refresh session.",
+  "auth.noRefreshToken": "No refresh token available.",
 
   // API
   "api.networkError": "Network error. Please check your internet connection.",
+  "api.unauthorized": "Unauthorized - please login again.",
 
   // Navigation
   "nav.dashboard": "Dashboard",
@@ -58,6 +60,7 @@ export const en = {
   "analytics.combinedAnalytics": "Combined Analytics",
   "analytics.users": "Users",
   "analytics.revenue": "Revenue",
+  "analytics.fetchError": "Failed to fetch analytics data.",
 
   // Users
   "users.title": "User Management",
@@ -198,6 +201,20 @@ export const en = {
   "layout.compactDesc":
     "Compact design with small elements to maximize content space",
   "layout.floatingDesc": "Floating design with separate cards and 3D effects",
+
+  // Months
+  "months.jan": "Jan",
+  "months.feb": "Feb",
+  "months.mar": "Mar",
+  "months.apr": "Apr",
+  "months.may": "May",
+  "months.jun": "Jun",
+  "months.jul": "Jul",
+  "months.aug": "Aug",
+  "months.sep": "Sep",
+  "months.oct": "Oct",
+  "months.nov": "Nov",
+  "months.dec": "Dec",
 
   // Color Themes
   "color.purple": "Purple",

@@ -103,7 +103,11 @@ export class AuthService implements IAuthService {
       const refreshToken = localStorage.getItem("refreshToken");
 
       if (!refreshToken) {
-        throw new Error("No refresh token available");
+        throw new Error(
+          this.t
+            ? this.t("auth.noRefreshToken")
+            : "No refresh token available"
+        );
       }
 
       console.log("AuthService: Attempting token refresh");

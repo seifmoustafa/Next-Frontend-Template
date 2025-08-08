@@ -9,12 +9,12 @@ export function AnalyticsView() {
 
   // Mock data for demonstration
   const chartData = [
-    { name: "Jan", users: 400, revenue: 2400 },
-    { name: "Feb", users: 300, revenue: 1398 },
-    { name: "Mar", users: 600, revenue: 9800 },
-    { name: "Apr", users: 800, revenue: 3908 },
-    { name: "May", users: 700, revenue: 4800 },
-    { name: "Jun", users: 900, revenue: 3800 },
+    { name: t("months.jan"), users: 400, revenue: 2400 },
+    { name: t("months.feb"), users: 300, revenue: 1398 },
+    { name: t("months.mar"), users: 600, revenue: 9800 },
+    { name: t("months.apr"), users: 800, revenue: 3908 },
+    { name: t("months.may"), users: 700, revenue: 4800 },
+    { name: t("months.jun"), users: 900, revenue: 3800 },
   ]
 
   return (

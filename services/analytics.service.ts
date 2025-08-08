@@ -17,7 +17,10 @@ export interface IAnalyticsService {
 }
 
 export class AnalyticsService implements IAnalyticsService {
-  constructor(private apiService: IApiService) {}
+  constructor(
+    private apiService: IApiService,
+    private t?: (key: string, params?: Record<string, any>) => string
+  ) {}
 
   async getDashboardAnalytics(): Promise<AnalyticsData> {
     try {
@@ -31,12 +34,12 @@ export class AnalyticsService implements IAnalyticsService {
         orders: 890,
         growth: 12.5,
         chartData: [
-          { name: "Jan", value: 400 },
-          { name: "Feb", value: 300 },
-          { name: "Mar", value: 600 },
-          { name: "Apr", value: 800 },
-          { name: "May", value: 700 },
-          { name: "Jun", value: 900 },
+          { name: this.t ? this.t("months.jan") : "Jan", value: 400 },
+          { name: this.t ? this.t("months.feb") : "Feb", value: 300 },
+          { name: this.t ? this.t("months.mar") : "Mar", value: 600 },
+          { name: this.t ? this.t("months.apr") : "Apr", value: 800 },
+          { name: this.t ? this.t("months.may") : "May", value: 700 },
+          { name: this.t ? this.t("months.jun") : "Jun", value: 900 },
         ],
       }
     }
@@ -48,7 +51,11 @@ export class AnalyticsService implements IAnalyticsService {
       return data
     } catch (error) {
       console.error("Failed to fetch user analytics:", error)
-      throw error
+      throw new Error(
+        this.t
+          ? this.t("analytics.fetchError")
+          : "Failed to fetch analytics data."
+      )
     }
   }
 }
