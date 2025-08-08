@@ -1,22 +1,21 @@
 "use client";
 
-import { Search, Menu, Sun, Moon, Globe, X } from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
+import { LanguageSwitcher, ThemeSwitcher } from "./common";
 
 interface ElegantHeaderProps {
   onMenuClick: () => void;
 }
 
 export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
-  const { theme, setTheme } = useTheme();
-  const { language, setLanguage, t, direction } = useI18n();
+  const { t, direction } = useI18n();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -163,11 +162,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
 
         {/* Right Section - Enhanced buttons */}
         <div className="relative flex items-center space-x-4 rtl:space-x-reverse z-20">
-          {/* Theme Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
+          <ThemeSwitcher
+            buttonClassName={cn(
               "h-12 w-12",
               "bg-gradient-to-br from-muted/60 via-muted/40 to-muted/20",
               "hover:from-primary/15 hover:via-primary/10 hover:to-primary/5",
@@ -179,17 +175,10 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               buttonClass,
               animationClass
             )}
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all duration-700 dark:-rotate-180 dark:scale-0 text-primary" />
-            <Moon className="absolute h-5 w-5 rotate-180 scale-0 transition-all duration-700 dark:rotate-0 dark:scale-100 text-primary" />
-          </Button>
+          />
 
-          {/* Language Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
+          <LanguageSwitcher
+            buttonClassName={cn(
               "h-12 w-12",
               "bg-gradient-to-br from-muted/60 via-muted/40 to-muted/20",
               "hover:from-primary/15 hover:via-primary/10 hover:to-primary/5",
@@ -201,10 +190,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
               buttonClass,
               animationClass
             )}
-            onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
-          >
-            <Globe className="h-5 w-5 text-primary" />
-          </Button>
+          />
 
           {/* User Profile Dropdown */}
           <UserProfileDropdown variant="elegant" showName={true} />

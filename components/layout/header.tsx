@@ -1,22 +1,12 @@
 "use client"
 
-import { Menu, Search, Sun, Moon, Globe, Monitor } from "lucide-react"
+import { Menu, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { useTheme } from "next-themes"
 import { useI18n } from "@/providers/i18n-provider"
-import { useAuth } from "@/providers/auth-provider"
-import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { LanguageSwitcher, ThemeSwitcher } from "./common"
+import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown"
 
 interface HeaderProps {
   onMenuClick: () => void
@@ -24,16 +14,19 @@ interface HeaderProps {
 }
 
 export function Header({ onMenuClick, isModern = false }: HeaderProps) {
-  const { theme, setTheme } = useTheme()
-  const { language, setLanguage, t, direction } = useI18n()
-  const { user, logout } = useAuth()
+  const { t } = useI18n()
 
   return (
-    <header className={cn("sticky top-0 z-40 glass border-b border-border", isModern && "h-20 flex items-center")}>
-      <div className={cn("flex items-center justify-between px-6", isModern ? "py-6" : "py-4")}>
+    <header className={cn("sticky top-0 z-40 glass border-b border-border", isModern && "h-20 flex items-center")}> 
+      <div className={cn("flex items-center justify-between px-6", isModern ? "py-6" : "py-4")}> 
         {/* Left side */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
-          <Button variant="ghost" size="icon" className="lg:hidden hover-lift sidebar-trigger" onClick={onMenuClick}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden hover-lift sidebar-trigger"
+            onClick={onMenuClick}
+          >
             <Menu className="w-5 h-5" />
           </Button>
 
@@ -52,77 +45,9 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
 
         {/* Right side */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
-          {/* Language Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hover-lift">
-                <Globe className="w-5 h-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"}>
-              <DropdownMenuItem onClick={() => setLanguage("ar")}>🇸🇦 العربية</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage("en")}>🇺🇸 English</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Theme Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hover-lift">
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"}>
-              <DropdownMenuItem onClick={() => setTheme("light")}>
-                <Sun className="mr-2 h-4 w-4" />
-                فاتح
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
-                <Moon className="mr-2 h-4 w-4" />
-                داكن
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                <Monitor className="mr-2 h-4 w-4" />
-                النظام
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-
-
-          {/* User Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full hover-lift">
-                <Avatar className="h-10 w-10">
-                  <AvatarFallback className="bg-primary text-primary-foreground">
-                    {user?.firstName.charAt(0)}
-                    {user?.lastName.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"} className="w-56">
-              <div className="flex items-center justify-start gap-2 p-2">
-                <div className="flex flex-col space-y-1 leading-none">
-                  <p className="font-medium">
-                    {user?.firstName} {user?.lastName}
-                  </p>
-                  <p className="w-[200px] truncate text-sm text-muted-foreground">{user?.adminTypeName}</p>
-                </div>
-              </div>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/profile">الملف الشخصي</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>الإعدادات</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout} className="text-destructive">
-                {t("nav.logout")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <LanguageSwitcher buttonClassName="hover-lift" />
+          <ThemeSwitcher buttonClassName="hover-lift" />
+          <UserProfileDropdown showName={false} />
         </div>
       </div>
     </header>

@@ -1,22 +1,21 @@
 "use client";
 
-import { Search, Menu, Sun, Moon, Globe } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
+import { LanguageSwitcher, ThemeSwitcher } from "./common";
 
 interface FloatingHeaderProps {
   onMenuClick: () => void;
 }
 
 export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
-  const { theme, setTheme } = useTheme();
-  const { language, setLanguage, t, direction } = useI18n();
+  const { t, direction } = useI18n();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -117,36 +116,23 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
 
         {/* Right Section */}
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          {/* Theme Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
+          <ThemeSwitcher
+            buttonClassName={cn(
               "h-10 w-10 hover:bg-primary/10 hover:text-primary",
               "shadow-md hover:shadow-lg hover:scale-105",
               buttonClass,
               animationClass
             )}
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </Button>
+          />
 
-          {/* Language Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
+          <LanguageSwitcher
+            buttonClassName={cn(
               "h-10 w-10 hover:bg-primary/10 hover:text-primary",
               "shadow-md hover:shadow-lg hover:scale-105",
               buttonClass,
               animationClass
             )}
-            onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
-          >
-            <Globe className="h-4 w-4" />
-          </Button>
+          />
 
           {/* User Profile Dropdown */}
           <UserProfileDropdown variant="floating" showName={false} />
