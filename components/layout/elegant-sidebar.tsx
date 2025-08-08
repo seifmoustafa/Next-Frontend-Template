@@ -144,8 +144,7 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
                 isActive
                   ? "bg-gradient-to-r from-primary via-primary/95 to-primary/85 text-primary-foreground shadow-lg"
                   : "text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary",
-                "before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-white/5 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
-                "mt-12"
+                "before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-white/5 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
               )}
               style={{ paddingLeft: `${16 + indent}px` }}
             >
@@ -336,7 +335,8 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
               "bg-muted/60 hover:bg-primary/10",
               "border border-border/40 hover:border-primary/30",
               getButtonStyleClass(),
-              getAnimationClass()
+              getAnimationClass(),
+              "mt-12"
             )}
             onClick={() => onOpenChange(false)}
           >
@@ -352,7 +352,8 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
                   ? "mt-12 p-4"
                   : spacingSize === "spacious"
                   ? "mt-16 p-6"
-                  : "mt-14 p-5"
+                  : "mt-14 p-5",
+                "mt-24"
               )}
             >
               <div
