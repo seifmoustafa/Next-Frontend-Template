@@ -314,7 +314,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
           {/* Footer - Version only */}
           <div className="p-3 border-t border-border/80">
             <div className="text-xs text-muted-foreground text-center">
-              v2.1.0
+              {t("app.version")}
             </div>
           </div>
         </div>

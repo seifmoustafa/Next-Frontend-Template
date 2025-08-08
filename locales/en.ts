@@ -29,6 +29,8 @@ export const en = {
   "app.minimal": "Minimal",
   "app.compact": "Compact",
   "app.floating": "Floating",
+  "app.floatingDesign": "Floating Design",
+  "app.version": "v2.1.0",
 
   // Logo & Icons
   "logo.type": "sparkles", // Options: "sparkles", "shield", "image", "custom"
@@ -197,6 +199,9 @@ export const en = {
   "stats.fromLastMonth": "from last month",
   "stats.increase": "increase",
   "stats.decrease": "decrease",
+
+  // Status
+  "status.online": "Online",
 
   "nav.main_dashboard": "Main Dashboard",
   "nav.reports": "Reports",

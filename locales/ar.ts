@@ -29,6 +29,8 @@ export const ar = {
   "app.minimal": "البسيطة",
   "app.compact": "المدمجة",
   "app.floating": "العائمة",
+  "app.floatingDesign": "تصميم عائم",
+  "app.version": "v2.1.0",
 
   // Logo & Icons
   "logo.type": "sparkles", // Options: "sparkles", "shield", "image", "custom"
@@ -194,6 +196,9 @@ export const ar = {
   "stats.fromLastMonth": "من الشهر الماضي",
   "stats.increase": "زيادة",
   "stats.decrease": "انخفاض",
+
+  // Status
+  "status.online": "متصل",
 
   "nav.main_dashboard": "لوحة التحكم الرئيسية",
   "nav.reports": "التقارير",
