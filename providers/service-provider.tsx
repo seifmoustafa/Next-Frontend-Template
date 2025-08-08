@@ -44,8 +44,9 @@ export function ServiceProvider({ children }: { children: React.ReactNode }) {
 
 export function useServices() {
   const context = useContext(ServiceContext);
+  const { t } = useI18n();
   if (!context) {
-    throw new Error("useServices must be used within a ServiceProvider");
+    throw new Error(t("errors.useServices"));
   }
   return context;
 }

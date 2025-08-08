@@ -3,6 +3,7 @@
 import type React from "react";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/providers/i18n-provider";
 
 interface User {
   id: string;
@@ -27,6 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const { t } = useI18n();
 
   // Define baseUrl once for the whole provider
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -100,9 +102,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // More specific error handling
       if (error instanceof TypeError && error.message.includes("fetch")) {
-        console.error(
-          "Network error - check if API server is running and CORS is configured"
-        );
+        console.error(t("api.networkError"));
       }
 
       return false;
@@ -194,8 +194,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
+  const { t } = useI18n();
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error(t("errors.useAuth"));
   }
   return context;
 }

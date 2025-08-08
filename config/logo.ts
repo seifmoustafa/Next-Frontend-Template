@@ -11,7 +11,7 @@ export const defaultLogoConfig: LogoConfig = {
   type: "sparkles",
   size: "md",
   animation: "none",
-  customText: "My App",
+  customText: "",
   customImagePath: "/logo.png",
   showText: true,
 };

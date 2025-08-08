@@ -73,7 +73,7 @@ export function Logo({ className, showText = true }: LogoProps) {
             animationClasses[settings.logoAnimation],
             'font-bold'
           )}>
-            {settings.logoText || 'SA'}
+            {settings.logoText || t('logo.text')}
           </div>
         )
       default:

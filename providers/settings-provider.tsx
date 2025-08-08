@@ -1,6 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { logoConfig } from "@/config/logo";
+import { en } from "@/locales/en";
 
 // Define all possible setting types
 export type ColorTheme =
@@ -200,11 +202,11 @@ const defaultSettings = {
   tableStyle: "default" as TableStyle,
   badgeStyle: "default" as BadgeStyle,
   avatarStyle: "default" as AvatarStyle,
-  logoType: "sparkles" as LogoType,
-  logoAnimation: "none" as LogoAnimation,
-  logoSize: "md" as LogoSize,
-  logoText: "SA",
-  logoImagePath: "/placeholder-logo.png",
+  logoType: logoConfig.type as LogoType,
+  logoAnimation: logoConfig.animation as LogoAnimation,
+  logoSize: logoConfig.size as LogoSize,
+  logoText: logoConfig.customText,
+  logoImagePath: logoConfig.customImagePath,
   showBreadcrumbs: true,
   showUserAvatar: true,
   showNotifications: true,
@@ -433,7 +435,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
 export function useSettings() {
   const context = useContext(SettingsContext);
   if (context === undefined) {
-    throw new Error("useSettings must be used within a SettingsProvider");
+    throw new Error(en["errors.useSettings"]);
   }
   return context;
 }

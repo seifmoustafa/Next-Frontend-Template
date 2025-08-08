@@ -20,6 +20,7 @@ export const ar = {
   // API
   "api.networkError": "خطأ في الاتصال بالخادم. تأكد من اتصال الإنترنت.",
   "api.unauthorized": "غير مصرح - يرجى تسجيل الدخول مرة أخرى.",
+  "api.httpError": "خطأ في HTTP! الحالة: {status}",
 
   // Navigation
   "nav.dashboard": "لوحة التحكم",
@@ -193,6 +194,7 @@ export const ar = {
   "settings.importSuccessDesc": "تم استيراد إعداداتك بنجاح.",
   "settings.importFailedTitle": "فشل الاستيراد",
   "settings.importFailedDesc": "فشل استيراد الإعدادات. يرجى التحقق من تنسيق الملف.",
+  "settings.invalidFormat": "تنسيق غير صالح",
   "settings.resetTitle": "تمت إعادة الإعدادات",
   "settings.resetDesc": "تمت إعادة جميع الإعدادات إلى القيم الافتراضية.",
   "settings.components": "المكونات",
@@ -434,6 +436,16 @@ export const ar = {
   "common.previousSlide": "الشريحة السابقة",
   "common.nextSlide": "الشريحة التالية",
   "common.breadcrumb": "مسار التنقل",
+
+  // Errors
+  "errors.useAuth": "يجب استخدام useAuth داخل AuthProvider",
+  "errors.useServices": "يجب استخدام useServices داخل ServiceProvider",
+  "errors.useSettings": "يجب استخدام useSettings داخل SettingsProvider",
+  "errors.useI18n": "يجب استخدام useI18n داخل I18nProvider",
+  "errors.useCarousel": "يجب استخدام useCarousel داخل Carousel",
+  "errors.useChart": "يجب استخدام useChart داخل ChartContainer",
+  "errors.useSidebar": "يجب استخدام useSidebar داخل SidebarProvider",
+  "errors.useFormField": "يجب استخدام useFormField داخل FormField",
 
   // Languages
   "language.arabic": "العربية",

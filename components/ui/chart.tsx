@@ -4,6 +4,7 @@ import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
@@ -26,11 +27,10 @@ const ChartContext = React.createContext<ChartContextProps | null>(null)
 
 function useChart() {
   const context = React.useContext(ChartContext)
-
+  const t = useTranslations()
   if (!context) {
-    throw new Error("useChart must be used within a <ChartContainer />")
+    throw new Error(t("errors.useChart"))
   }
-
   return context
 }
 

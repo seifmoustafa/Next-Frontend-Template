@@ -72,7 +72,11 @@ export class ApiService implements IApiService {
 
         const errorText = await response.text()
         console.error("API Error Response:", errorText)
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`)
+        throw new Error(
+          this.t
+            ? this.t("api.httpError", { status: response.status })
+            : `HTTP error! status: ${response.status}`
+        )
       }
 
       const data = await response.json()

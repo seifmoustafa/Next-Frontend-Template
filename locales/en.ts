@@ -20,6 +20,7 @@ export const en = {
   // API
   "api.networkError": "Network error. Please check your internet connection.",
   "api.unauthorized": "Unauthorized - please login again.",
+  "api.httpError": "HTTP error! status: {status}",
 
   // Navigation
   "nav.dashboard": "Dashboard",
@@ -193,6 +194,7 @@ export const en = {
   "settings.importSuccessDesc": "Your settings have been imported successfully.",
   "settings.importFailedTitle": "Import Failed",
   "settings.importFailedDesc": "Failed to import settings. Please check the file format.",
+  "settings.invalidFormat": "Invalid format",
   "settings.resetTitle": "Settings Reset",
   "settings.resetDesc": "All settings have been reset to default values.",
   "settings.components": "Components",
@@ -437,6 +439,16 @@ export const en = {
   "common.previousSlide": "Previous slide",
   "common.nextSlide": "Next slide",
   "common.breadcrumb": "Breadcrumb",
+
+  // Errors
+  "errors.useAuth": "useAuth must be used within an AuthProvider",
+  "errors.useServices": "useServices must be used within a ServiceProvider",
+  "errors.useSettings": "useSettings must be used within a SettingsProvider",
+  "errors.useI18n": "useI18n must be used within an I18nProvider",
+  "errors.useCarousel": "useCarousel must be used within a Carousel",
+  "errors.useChart": "useChart must be used within a ChartContainer",
+  "errors.useSidebar": "useSidebar must be used within a SidebarProvider",
+  "errors.useFormField": "useFormField should be used within FormField",
 
   // Languages
   "language.arabic": "Arabic",

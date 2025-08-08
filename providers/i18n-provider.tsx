@@ -77,7 +77,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 export function useI18n() {
   const context = useContext(I18nContext)
   if (context === undefined) {
-    throw new Error("useI18n must be used within an I18nProvider")
+    throw new Error(en["errors.useI18n"])
   }
   return context
 }

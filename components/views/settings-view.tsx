@@ -101,7 +101,7 @@ export function SettingsView() {
               description: t("settings.importSuccessDesc"),
             });
           } else {
-            throw new Error("Invalid format");
+            throw new Error(t("settings.invalidFormat"));
           }
         } catch (error) {
           toast({
