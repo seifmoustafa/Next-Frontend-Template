@@ -144,13 +144,9 @@ export function NavigationSidebar({
             <Logo className="w-8 h-8" />
             <div className="flex-1 min-w-0">
               <h1 className="text-white font-semibold text-lg leading-tight break-words">
-                {language === "ar"
-                  ? "منظومة إدارة العقود والسيطرة علي مخزون العالم كله"
-                  : "Contract Management System"}
+                {t("app.tagline")}
               </h1>
-              <p className="text-slate-400 text-sm">
-                {language === "ar" ? "العربية" : "Dashboard"}
-              </p>
+              <p className="text-slate-400 text-sm">{t("nav.dashboard")}</p>
             </div>
           </div>
 
@@ -169,12 +165,8 @@ export function NavigationSidebar({
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-medium text-sm truncate">
-                  {language === "ar" ? "سيف مصطفى" : "Seif Moustafa"}
-                </p>
-                <p className="text-slate-400 text-xs truncate">
-                  {language === "ar" ? "مدير النظام" : "SuperAdmin"}
-                </p>
+                <p className="text-white font-medium text-sm truncate">{t("common.user")}</p>
+                <p className="text-slate-400 text-xs truncate">{t("nav.profile")}</p>
               </div>
               <div className="w-3 h-3 bg-green-500 rounded-full ring-2 ring-slate-950" />
             </div>
@@ -187,7 +179,7 @@ export function NavigationSidebar({
             >
               <Link href="/dashboard/settings">
                 <Settings className="w-4 h-4" />
-                {language === "ar" ? "الإعدادات" : "Settings"}
+                {t("nav.settings")}
               </Link>
             </Button>
           </div>

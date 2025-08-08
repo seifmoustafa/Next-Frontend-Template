@@ -15,10 +15,14 @@ export const ar = {
   "nav.profile": "الملف الشخصي",
   "nav.settings": "الإعدادات",
   "nav.logout": "تسجيل الخروج",
+  "nav.user_list": "قائمة المستخدمين",
+  "nav.user_types": "أنواع المستخدمين",
+  "nav.menu": "القائمة",
 
   // Layout & App
   "app.title": "نموذج إدارة",
   "app.subtitle": "الإدارية",
+  "app.tagline": "منظومة إدارة العقود والسيطرة علي مخزون العالم كله",
   "app.modern": "العصرية",
   "app.classic": "الكلاسيكية",
   "app.elegant": "الأنيقة",
@@ -93,6 +97,7 @@ export const ar = {
   "layout.minimalDesc": "تصميم بسيط مع شريط علوي فقط وقوائم منسدلة",
   "layout.compactDesc": "تصميم مدمج مع عناصر صغيرة لتوفير مساحة أكبر للمحتوى",
   "layout.floatingDesc": "تصميم عائم مع بطاقات منفصلة وتأثيرات ثلاثية الأبعاد",
+  "layout.items": "عناصر",
 
   // Color Themes
   "color.purple": "أرجواني",
@@ -156,6 +161,10 @@ export const ar = {
   "theme.dark": "داكن",
   "theme.system": "النظام",
 
+  // Language
+  "language.arabic": "العربية",
+  "language.english": "الإنجليزية",
+
   // Common
   "common.search": "البحث...",
   "common.filter": "تصفية",
@@ -171,6 +180,15 @@ export const ar = {
   "common.error": "حدث خطأ",
   "common.success": "تم بنجاح",
   "common.retry": "إعادة المحاولة",
+  "common.user": "مستخدم",
+
+  // Table
+  "table.select": "تحديد",
+  "table.actions": "الإجراءات",
+  "table.page": "صفحة",
+  "table.of": "من",
+  "table.previous": "السابق",
+  "table.next": "التالي",
 
   // Stats
   "stats.fromLastMonth": "من الشهر الماضي",

@@ -15,10 +15,14 @@ export const en = {
   "nav.profile": "Profile",
   "nav.settings": "Settings",
   "nav.logout": "Logout",
+  "nav.user_list": "User List",
+  "nav.user_types": "User Types",
+  "nav.menu": "Menu",
 
   // Layout & App
   "app.title": "Admin Dashboard",
   "app.subtitle": "Administrative",
+  "app.tagline": "Contract Management System",
   "app.modern": "Modern",
   "app.classic": "Classic",
   "app.elegant": "Elegant",
@@ -96,6 +100,7 @@ export const en = {
   "layout.compactDesc":
     "Compact design with small elements to maximize content space",
   "layout.floatingDesc": "Floating design with separate cards and 3D effects",
+  "layout.items": "items",
 
   // Color Themes
   "color.purple": "Purple",
@@ -159,6 +164,10 @@ export const en = {
   "theme.dark": "Dark",
   "theme.system": "System",
 
+  // Language
+  "language.arabic": "Arabic",
+  "language.english": "English",
+
   // Common
   "common.search": "Search...",
   "common.filter": "Filter",
@@ -174,6 +183,15 @@ export const en = {
   "common.error": "An error occurred",
   "common.success": "Success",
   "common.retry": "Try Again",
+  "common.user": "User",
+
+  // Table
+  "table.select": "Select",
+  "table.actions": "Actions",
+  "table.page": "Page",
+  "table.of": "of",
+  "table.previous": "Previous",
+  "table.next": "Next",
 
   // Stats
   "stats.fromLastMonth": "from last month",
