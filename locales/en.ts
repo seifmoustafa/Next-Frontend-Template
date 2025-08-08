@@ -7,6 +7,9 @@ export const en = {
   "auth.loginError": "Invalid username or password",
   "auth.welcome": "Welcome to Admin Dashboard",
   "auth.pleaseLogin": "Please sign in to continue",
+  "auth.usernamePlaceholder": "superadmin",
+  "auth.connectionError": "Server connection error. Please try again.",
+  "auth.redirecting": "Redirecting...",
 
   // Navigation
   "nav.dashboard": "Dashboard",

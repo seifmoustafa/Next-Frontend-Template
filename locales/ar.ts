@@ -7,6 +7,9 @@ export const ar = {
   "auth.loginError": "خطأ في اسم المستخدم أو كلمة المرور",
   "auth.welcome": "منظومة إدارة العقود",
   "auth.pleaseLogin": "يرجى تسجيل الدخول للمتابعة",
+  "auth.usernamePlaceholder": "المشرف العام",
+  "auth.connectionError": "خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.",
+  "auth.redirecting": "جاري التحويل...",
 
   // Navigation
   "nav.dashboard": "لوحة التحكم",
