@@ -1,13 +1,12 @@
 "use client";
 
-import { Menu, Search } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
-import { LanguageSwitcher, ThemeSwitcher } from "./common";
+import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
 
 interface ClassicHeaderProps {
   onMenuClick: () => void;
@@ -65,19 +64,17 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
 
         {/* Right side */}
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
-          {/* Search */}
-          <div className="relative hidden md:block">
-            <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder={t("common.search")}
-              className={cn(
-                "pl-10 rtl:pl-4 rtl:pr-10 w-64 bg-muted/50 border-0 focus:bg-background",
-                getBorderRadiusClass(),
-                animationClass,
-                "shadow-sm focus:shadow-md hover:shadow-md"
-              )}
-            />
-          </div>
+          <HeaderSearch
+            containerClassName="hidden md:block"
+            inputClassName={cn(
+              "w-64 bg-muted/50 border-0 focus:bg-background",
+              getBorderRadiusClass(),
+              animationClass,
+              "shadow-sm focus:shadow-md hover:shadow-md",
+              "pl-10 rtl:pl-4 rtl:pr-10"
+            )}
+            iconClassName="left-3 rtl:left-auto rtl:right-3"
+          />
 
           <LanguageSwitcher
             buttonClassName={cn(

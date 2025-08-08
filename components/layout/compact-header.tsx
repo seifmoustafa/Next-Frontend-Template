@@ -1,21 +1,20 @@
 "use client";
 
-import { Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
-import { LanguageSwitcher, ThemeSwitcher } from "./common";
+import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
 
 interface CompactHeaderProps {
   onMenuClick: () => void;
 }
 
 export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
-  const { t, direction } = useI18n();
+  const { t } = useI18n();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -87,27 +86,17 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
           </Button>
         </div>
 
-        {/* Center Section - Search */}
         <div className="flex-1 max-w-sm mx-4">
-          <div className="relative group">
-            <Search
-              className={cn(
-                "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary",
-                getAnimationClass(),
-                direction === "rtl" ? "right-3" : "left-3"
-              )}
-            />
-            <Input
-              placeholder={t("nav.search")}
-              className={cn(
-                "w-full h-9 border-0 bg-muted/50 shadow-sm",
-                "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
-                getAnimationClass(),
-                buttonClass,
-                direction === "rtl" ? "pr-9 text-right" : "pl-9"
-              )}
-            />
-          </div>
+          <HeaderSearch
+            containerClassName={cn("group", getAnimationClass())}
+            inputClassName={cn(
+              "w-full h-9 border-0 bg-muted/50 shadow-sm",
+              "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
+              getAnimationClass(),
+              buttonClass
+            )}
+            iconClassName={getAnimationClass()}
+          />
         </div>
 
         {/* Right Section */}

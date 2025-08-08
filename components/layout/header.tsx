@@ -1,11 +1,10 @@
 "use client"
 
-import { Menu, Search } from "lucide-react"
+import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { useI18n } from "@/providers/i18n-provider"
 import { cn } from "@/lib/utils"
-import { LanguageSwitcher, ThemeSwitcher } from "./common"
+import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common"
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown"
 
 interface HeaderProps {
@@ -30,17 +29,15 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
             <Menu className="w-5 h-5" />
           </Button>
 
-          {/* Search */}
-          <div className="relative hidden md:block">
-            <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder={t("common.search")}
-              className={cn(
-                "pl-10 rtl:pl-4 rtl:pr-10 bg-muted/50 border-0 focus:bg-background transition-colors",
-                isModern ? "w-96 h-12" : "w-80",
-              )}
-            />
-          </div>
+          <HeaderSearch
+            containerClassName="hidden md:block"
+            inputClassName={cn(
+              "bg-muted/50 border-0 focus:bg-background transition-colors",
+              isModern ? "w-96 h-12" : "w-80",
+              "pl-10 rtl:pl-4 rtl:pr-10"
+            )}
+            iconClassName="left-3 rtl:left-auto rtl:right-3"
+          />
         </div>
 
         {/* Right side */}

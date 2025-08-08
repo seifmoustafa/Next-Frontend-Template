@@ -1,14 +1,13 @@
 "use client";
 
-import { Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
-import { LanguageSwitcher, ThemeSwitcher } from "./common";
+import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
 
 interface ElegantHeaderProps {
   onMenuClick: () => void;
@@ -136,18 +135,8 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 animationClass
               )}
             />
-            <Search
-              className={cn(
-                "absolute top-1/2 -translate-y-1/2 h-5 w-5 z-10",
-                "text-muted-foreground/60 group-focus-within:text-primary group-hover:text-primary/80",
-                "group-focus-within:scale-110",
-                animationClass,
-                direction === "rtl" ? "right-5" : "left-5"
-              )}
-            />
-            <Input
-              placeholder={t("nav.search")}
-              className={cn(
+            <HeaderSearch
+              inputClassName={cn(
                 "relative w-full h-14 border-0 bg-transparent z-10",
                 "text-base font-medium",
                 "focus:ring-0 focus:outline-none",
@@ -155,6 +144,13 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 buttonClass,
                 animationClass,
                 direction === "rtl" ? "pr-14 text-right" : "pl-14"
+              )}
+              iconClassName={cn(
+                "top-1/2 -translate-y-1/2 h-5 w-5 z-10",
+                "text-muted-foreground/60 group-focus-within:text-primary group-hover:text-primary/80",
+                "group-focus-within:scale-110",
+                animationClass,
+                direction === "rtl" ? "right-5" : "left-5"
               )}
             />
           </div>
