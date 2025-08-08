@@ -56,14 +56,17 @@ export function GenericTable<T extends Record<string, any>>({
   selectable = false,
   selectedItems = [],
   onSelectionChange,
-  searchPlaceholder = "البحث...",
-  emptyMessage = "لا توجد بيانات",
+  searchPlaceholder,
+  emptyMessage,
 }: GenericTableProps<T>) {
   const { t, direction } = useI18n()
   const settings = useSettings()
   const [sortColumn, setSortColumn] = useState<keyof T | null>(null)
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
   const [searchTerm, setSearchTerm] = useState("")
+
+  const placeholder = searchPlaceholder ?? t("common.search")
+  const empty = emptyMessage ?? t("common.noData")
 
   const handleSort = (column: keyof T) => {
     if (sortColumn === column) {
@@ -210,7 +213,7 @@ export function GenericTable<T extends Record<string, any>>({
       <div className="relative">
         <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
-          placeholder={searchPlaceholder}
+          placeholder={placeholder}
           className="pl-10 rtl:pl-4 rtl:pr-10"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -220,7 +223,7 @@ export function GenericTable<T extends Record<string, any>>({
       {/* Mobile Cards View */}
       <div className="block md:hidden space-y-4">
         {sortedData.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground">{emptyMessage}</div>
+          <div className="text-center py-12 text-muted-foreground">{empty}</div>
         ) : (
           sortedData.map((row, index) => {
             const isSelected = selectable && selectedItems.includes(row.id)
@@ -239,7 +242,7 @@ export function GenericTable<T extends Record<string, any>>({
                         }
                       }}
                     />
-                    <span className="text-sm text-muted-foreground">تحديد</span>
+                    <span className="text-sm text-muted-foreground">{t("table.select")}</span>
                   </div>
                 )}
                 {columns.map((column) => (
@@ -337,8 +340,14 @@ export function GenericTable<T extends Record<string, any>>({
                   </TableHead>
                 ))}
                 {actions && actions.length > 0 && (
-                  <TableHead className={cn("w-16", getCellPadding(), direction === "rtl" ? "text-right" : "text-left")}>
-                    الإجراءات
+                  <TableHead
+                    className={cn(
+                      "w-16",
+                      getCellPadding(),
+                      direction === "rtl" ? "text-right" : "text-left"
+                    )}
+                  >
+                    {t("table.actions")}
                   </TableHead>
                 )}
               </TableRow>
@@ -350,7 +359,7 @@ export function GenericTable<T extends Record<string, any>>({
                     colSpan={columns.length + (actions ? 1 : 0) + (selectable ? 1 : 0)}
                     className="h-32 text-center text-muted-foreground"
                   >
-                    {emptyMessage}
+                    {empty}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -430,7 +439,7 @@ export function GenericTable<T extends Record<string, any>>({
             settings.fontSize === "small" ? "text-xs" :
             settings.fontSize === "large" ? "text-base" : "text-sm"
           )}>
-            صفحة {pagination.currentPage} من {pagination.totalPages}
+            {t("table.page")} {pagination.currentPage} {t("table.of")} {pagination.totalPages}
           </p>
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             <Button
@@ -441,7 +450,7 @@ export function GenericTable<T extends Record<string, any>>({
               className="hover-lift"
             >
               <ChevronRight className="h-4 w-4 rtl:rotate-180" />
-              السابق
+              {t("table.previous")}
             </Button>
             <Button
               variant="outline"
@@ -450,7 +459,7 @@ export function GenericTable<T extends Record<string, any>>({
               disabled={pagination.currentPage === pagination.totalPages}
               className="hover-lift"
             >
-              التالي
+              {t("table.next")}
               <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
             </Button>
           </div>

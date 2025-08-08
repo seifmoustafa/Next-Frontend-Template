@@ -62,6 +62,11 @@ export function DashboardView() {
     },
   ]
 
+  const chartData = data.chartData.map((item) => ({
+    ...item,
+    name: t(`months.${item.name}`),
+  }))
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -114,7 +119,7 @@ export function DashboardView() {
           <CardTitle className="text-xl">{t("dashboard.revenueOverview")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <GenericChart data={data.chartData} type="line" height={400} />
+          <GenericChart data={chartData} type="line" height={400} />
         </CardContent>
       </Card>
     </div>

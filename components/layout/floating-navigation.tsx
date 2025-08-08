@@ -337,7 +337,7 @@ export function FloatingNavigation({
                   <div className="flex items-center mt-1">
                     <div className="w-2 h-2 bg-green-500 rounded-full mr-2 rtl:mr-0 rtl:ml-2 animate-pulse" />
                     <span className="text-xs text-green-600 font-medium">
-                      Online
+                      {t("status.online")}
                     </span>
                   </div>
                 </div>
@@ -355,7 +355,7 @@ export function FloatingNavigation({
           {/* Footer - Version only */}
           <div className="p-4 border-t border-border/50">
             <div className="text-xs text-muted-foreground text-center">
-              v2.1.0 • Floating Design
+              {t("app.version")} • {t("app.floatingDesign")}
             </div>
           </div>
         </div>

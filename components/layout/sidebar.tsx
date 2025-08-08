@@ -277,7 +277,7 @@ export function Sidebar({
               isModern && "sidebar-text"
             )}
           >
-            v2.1.0
+            {t("app.version")}
           </div>
         </div>
       </div>

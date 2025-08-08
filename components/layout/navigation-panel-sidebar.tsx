@@ -32,7 +32,7 @@ export function NavigationPanelSidebar({
   hasChildren,
 }: NavigationPanelSidebarProps) {
   const pathname = usePathname();
-  const { language, direction, t, setLanguage } = useI18n();
+  const { direction, t } = useI18n();
   const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 

@@ -7,6 +7,9 @@ export const en = {
   "auth.loginError": "Invalid username or password",
   "auth.welcome": "Welcome to Admin Dashboard",
   "auth.pleaseLogin": "Please sign in to continue",
+  "auth.usernamePlaceholder": "superadmin",
+  "auth.connectionError": "Server connection error. Please try again.",
+  "auth.redirecting": "Redirecting...",
 
   // Navigation
   "nav.dashboard": "Dashboard",
@@ -15,16 +18,22 @@ export const en = {
   "nav.profile": "Profile",
   "nav.settings": "Settings",
   "nav.logout": "Logout",
+  "nav.user_list": "User List",
+  "nav.user_types": "User Types",
+  "nav.menu": "Menu",
 
   // Layout & App
   "app.title": "Admin Dashboard",
   "app.subtitle": "Administrative",
+  "app.tagline": "Contract Management System",
   "app.modern": "Modern",
   "app.classic": "Classic",
   "app.elegant": "Elegant",
   "app.minimal": "Minimal",
   "app.compact": "Compact",
   "app.floating": "Floating",
+  "app.floatingDesign": "Floating Design",
+  "app.version": "v2.1.0",
 
   // Logo & Icons
   "logo.type": "sparkles", // Options: "sparkles", "shield", "image", "custom"
@@ -39,6 +48,28 @@ export const en = {
   "dashboard.orders": "Orders",
   "dashboard.growth": "Growth",
   "dashboard.revenueOverview": "Revenue Overview",
+
+  // Analytics
+  "analytics.description": "Detailed analytics and insights",
+  "analytics.userGrowth": "User Growth",
+  "analytics.revenueTrend": "Revenue Trend",
+  "analytics.combined": "Combined Analytics",
+  "analytics.users": "Users",
+  "analytics.revenue": "Revenue",
+
+  // Months
+  "months.jan": "Jan",
+  "months.feb": "Feb",
+  "months.mar": "Mar",
+  "months.apr": "Apr",
+  "months.may": "May",
+  "months.jun": "Jun",
+  "months.jul": "Jul",
+  "months.aug": "Aug",
+  "months.sep": "Sep",
+  "months.oct": "Oct",
+  "months.nov": "Nov",
+  "months.dec": "Dec",
 
   // Users
   "users.title": "User Management",
@@ -96,6 +127,7 @@ export const en = {
   "layout.compactDesc":
     "Compact design with small elements to maximize content space",
   "layout.floatingDesc": "Floating design with separate cards and 3D effects",
+  "layout.items": "items",
 
   // Color Themes
   "color.purple": "Purple",
@@ -159,6 +191,10 @@ export const en = {
   "theme.dark": "Dark",
   "theme.system": "System",
 
+  // Language
+  "language.arabic": "Arabic",
+  "language.english": "English",
+
   // Common
   "common.search": "Search...",
   "common.filter": "Filter",
@@ -174,11 +210,23 @@ export const en = {
   "common.error": "An error occurred",
   "common.success": "Success",
   "common.retry": "Try Again",
+  "common.user": "User",
+
+  // Table
+  "table.select": "Select",
+  "table.actions": "Actions",
+  "table.page": "Page",
+  "table.of": "of",
+  "table.previous": "Previous",
+  "table.next": "Next",
 
   // Stats
   "stats.fromLastMonth": "from last month",
   "stats.increase": "increase",
   "stats.decrease": "decrease",
+
+  // Status
+  "status.online": "Online",
 
   "nav.main_dashboard": "Main Dashboard",
   "nav.reports": "Reports",

@@ -7,6 +7,9 @@ export const ar = {
   "auth.loginError": "خطأ في اسم المستخدم أو كلمة المرور",
   "auth.welcome": "منظومة إدارة العقود",
   "auth.pleaseLogin": "يرجى تسجيل الدخول للمتابعة",
+  "auth.usernamePlaceholder": "المشرف العام",
+  "auth.connectionError": "خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.",
+  "auth.redirecting": "جاري التحويل...",
 
   // Navigation
   "nav.dashboard": "لوحة التحكم",
@@ -15,16 +18,22 @@ export const ar = {
   "nav.profile": "الملف الشخصي",
   "nav.settings": "الإعدادات",
   "nav.logout": "تسجيل الخروج",
+  "nav.user_list": "قائمة المستخدمين",
+  "nav.user_types": "أنواع المستخدمين",
+  "nav.menu": "القائمة",
 
   // Layout & App
   "app.title": "نموذج إدارة",
   "app.subtitle": "الإدارية",
+  "app.tagline": "منظومة إدارة العقود والسيطرة علي مخزون العالم كله",
   "app.modern": "العصرية",
   "app.classic": "الكلاسيكية",
   "app.elegant": "الأنيقة",
   "app.minimal": "البسيطة",
   "app.compact": "المدمجة",
   "app.floating": "العائمة",
+  "app.floatingDesign": "تصميم عائم",
+  "app.version": "v2.1.0",
 
   // Logo & Icons
   "logo.type": "sparkles", // Options: "sparkles", "shield", "image", "custom"
@@ -39,6 +48,28 @@ export const ar = {
   "dashboard.orders": "الطلبات",
   "dashboard.growth": "النمو",
   "dashboard.revenueOverview": "نظرة عامة على الإيرادات",
+
+  // Analytics
+  "analytics.description": "تحليلات مفصلة ورؤى",
+  "analytics.userGrowth": "نمو المستخدمين",
+  "analytics.revenueTrend": "اتجاه الإيرادات",
+  "analytics.combined": "تحليلات مجمعة",
+  "analytics.users": "المستخدمون",
+  "analytics.revenue": "الإيرادات",
+
+  // Months
+  "months.jan": "يناير",
+  "months.feb": "فبراير",
+  "months.mar": "مارس",
+  "months.apr": "أبريل",
+  "months.may": "مايو",
+  "months.jun": "يونيو",
+  "months.jul": "يوليو",
+  "months.aug": "أغسطس",
+  "months.sep": "سبتمبر",
+  "months.oct": "أكتوبر",
+  "months.nov": "نوفمبر",
+  "months.dec": "ديسمبر",
 
   // Users
   "users.title": "إدارة المستخدمين",
@@ -93,6 +124,7 @@ export const ar = {
   "layout.minimalDesc": "تصميم بسيط مع شريط علوي فقط وقوائم منسدلة",
   "layout.compactDesc": "تصميم مدمج مع عناصر صغيرة لتوفير مساحة أكبر للمحتوى",
   "layout.floatingDesc": "تصميم عائم مع بطاقات منفصلة وتأثيرات ثلاثية الأبعاد",
+  "layout.items": "عناصر",
 
   // Color Themes
   "color.purple": "أرجواني",
@@ -156,6 +188,10 @@ export const ar = {
   "theme.dark": "داكن",
   "theme.system": "النظام",
 
+  // Language
+  "language.arabic": "العربية",
+  "language.english": "الإنجليزية",
+
   // Common
   "common.search": "البحث...",
   "common.filter": "تصفية",
@@ -171,11 +207,23 @@ export const ar = {
   "common.error": "حدث خطأ",
   "common.success": "تم بنجاح",
   "common.retry": "إعادة المحاولة",
+  "common.user": "مستخدم",
+
+  // Table
+  "table.select": "تحديد",
+  "table.actions": "الإجراءات",
+  "table.page": "صفحة",
+  "table.of": "من",
+  "table.previous": "السابق",
+  "table.next": "التالي",
 
   // Stats
   "stats.fromLastMonth": "من الشهر الماضي",
   "stats.increase": "زيادة",
   "stats.decrease": "انخفاض",
+
+  // Status
+  "status.online": "متصل",
 
   "nav.main_dashboard": "لوحة التحكم الرئيسية",
   "nav.reports": "التقارير",

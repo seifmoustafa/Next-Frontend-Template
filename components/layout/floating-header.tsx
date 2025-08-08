@@ -1,22 +1,20 @@
 "use client";
 
-import { Search, Menu, Sun, Moon, Globe } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
+import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
 
 interface FloatingHeaderProps {
   onMenuClick: () => void;
 }
 
 export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
-  const { theme, setTheme } = useTheme();
-  const { language, setLanguage, t, direction } = useI18n();
+  const { t } = useI18n();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -92,61 +90,38 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
           </div>
         </div>
 
-        {/* Center Section - Search */}
         <div className="flex-1 max-w-md mx-4 lg:mx-8">
-          <div className="relative group">
-            <Search
-              className={cn(
-                "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary",
-                animationClass,
-                direction === "rtl" ? "right-3" : "left-3"
-              )}
-            />
-            <Input
-              placeholder={t("nav.search")}
-              className={cn(
-                "w-full h-11 border-0 bg-muted/50 backdrop-blur-sm shadow-sm",
-                "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
-                buttonClass,
-                animationClass,
-                direction === "rtl" ? "pr-10 text-right" : "pl-10"
-              )}
-            />
-          </div>
+          <HeaderSearch
+            containerClassName={cn("group", animationClass)}
+            inputClassName={cn(
+              "w-full h-11 border-0 bg-muted/50 backdrop-blur-sm shadow-sm",
+              "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
+              buttonClass,
+              animationClass
+            )}
+            iconClassName={animationClass}
+          />
         </div>
 
         {/* Right Section */}
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          {/* Theme Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
+          <ThemeSwitcher
+            buttonClassName={cn(
               "h-10 w-10 hover:bg-primary/10 hover:text-primary",
               "shadow-md hover:shadow-lg hover:scale-105",
               buttonClass,
               animationClass
             )}
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </Button>
+          />
 
-          {/* Language Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
+          <LanguageSwitcher
+            buttonClassName={cn(
               "h-10 w-10 hover:bg-primary/10 hover:text-primary",
               "shadow-md hover:shadow-lg hover:scale-105",
               buttonClass,
               animationClass
             )}
-            onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
-          >
-            <Globe className="h-4 w-4" />
-          </Button>
+          />
 
           {/* User Profile Dropdown */}
           <UserProfileDropdown variant="floating" showName={false} />

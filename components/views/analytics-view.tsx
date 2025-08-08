@@ -9,25 +9,25 @@ export function AnalyticsView() {
 
   // Mock data for demonstration
   const chartData = [
-    { name: "Jan", users: 400, revenue: 2400 },
-    { name: "Feb", users: 300, revenue: 1398 },
-    { name: "Mar", users: 600, revenue: 9800 },
-    { name: "Apr", users: 800, revenue: 3908 },
-    { name: "May", users: 700, revenue: 4800 },
-    { name: "Jun", users: 900, revenue: 3800 },
+    { name: t("months.jan"), users: 400, revenue: 2400 },
+    { name: t("months.feb"), users: 300, revenue: 1398 },
+    { name: t("months.mar"), users: 600, revenue: 9800 },
+    { name: t("months.apr"), users: 800, revenue: 3908 },
+    { name: t("months.may"), users: 700, revenue: 4800 },
+    { name: t("months.jun"), users: 900, revenue: 3800 },
   ]
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">{t("nav.analytics")}</h1>
-        <p className="text-muted-foreground mt-2">Detailed analytics and insights</p>
+        <p className="text-muted-foreground mt-2">{t("analytics.description")}</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>User Growth</CardTitle>
+            <CardTitle>{t("analytics.userGrowth")}</CardTitle>
           </CardHeader>
           <CardContent>
             <GenericChart data={chartData} type="line" dataKey="users" height={300} />
@@ -36,7 +36,7 @@ export function AnalyticsView() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Revenue Trend</CardTitle>
+            <CardTitle>{t("analytics.revenueTrend")}</CardTitle>
           </CardHeader>
           <CardContent>
             <GenericChart data={chartData} type="bar" dataKey="revenue" height={300} />
@@ -46,7 +46,7 @@ export function AnalyticsView() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Combined Analytics</CardTitle>
+          <CardTitle>{t("analytics.combined")}</CardTitle>
         </CardHeader>
         <CardContent>
           <GenericChart
@@ -54,8 +54,8 @@ export function AnalyticsView() {
             type="line"
             height={400}
             multiple={[
-              { dataKey: "users", color: "#8884d8", name: "Users" },
-              { dataKey: "revenue", color: "#82ca9d", name: "Revenue" },
+              { dataKey: "users", color: "#8884d8", name: t("analytics.users") },
+              { dataKey: "revenue", color: "#82ca9d", name: t("analytics.revenue") },
             ]}
           />
         </CardContent>
