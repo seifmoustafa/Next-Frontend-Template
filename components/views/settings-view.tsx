@@ -61,12 +61,14 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/providers/i18n-provider";
 import { GenericTable } from "@/components/ui/generic-table";
 
 export function SettingsView() {
   const settings = useSettings();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("appearance");
+  const { t } = useI18n();
 
   const handleExportSettings = () => {
     const settingsJson = settings.exportSettings();
@@ -80,8 +82,8 @@ export function SettingsView() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     toast({
-      title: "Settings Exported",
-      description: "Your settings have been exported successfully.",
+      title: t("settings.exportSuccess"),
+      description: t("settings.exportSuccessDesc"),
     });
   };
 
@@ -95,17 +97,16 @@ export function SettingsView() {
           const success = settings.importSettings(settingsJson);
           if (success) {
             toast({
-              title: "Settings Imported",
-              description: "Your settings have been imported successfully.",
+              title: t("settings.importSuccess"),
+              description: t("settings.importSuccessDesc"),
             });
           } else {
             throw new Error("Invalid format");
           }
         } catch (error) {
           toast({
-            title: "Import Failed",
-            description:
-              "Failed to import settings. Please check the file format.",
+            title: t("settings.importFailed"),
+            description: t("settings.importFailedDesc"),
             variant: "destructive",
           });
         }
@@ -117,8 +118,8 @@ export function SettingsView() {
   const handleResetSettings = () => {
     settings.resetSettings();
     toast({
-      title: "Settings Reset",
-      description: "All settings have been reset to default values.",
+      title: t("settings.resetSuccess"),
+      description: t("settings.resetSuccessDesc"),
     });
   };
 
@@ -126,50 +127,55 @@ export function SettingsView() {
   const colorThemes = [
     {
       value: "purple",
-      name: "Purple",
+      name: t("settings.colors.purple"),
       color: "bg-purple-500",
       accent: "bg-purple-100",
     },
     {
       value: "blue",
-      name: "Blue",
+      name: t("settings.colors.blue"),
       color: "bg-blue-500",
       accent: "bg-blue-100",
     },
     {
       value: "green",
-      name: "Green",
+      name: t("settings.colors.green"),
       color: "bg-green-500",
       accent: "bg-green-100",
     },
     {
       value: "orange",
-      name: "Orange",
+      name: t("settings.colors.orange"),
       color: "bg-orange-500",
       accent: "bg-orange-100",
     },
-    { value: "red", name: "Red", color: "bg-red-500", accent: "bg-red-100" },
+    {
+      value: "red",
+      name: t("settings.colors.red"),
+      color: "bg-red-500",
+      accent: "bg-red-100",
+    },
     {
       value: "teal",
-      name: "Teal",
+      name: t("settings.colors.teal"),
       color: "bg-teal-500",
       accent: "bg-teal-100",
     },
     {
       value: "pink",
-      name: "Pink",
+      name: t("settings.colors.pink"),
       color: "bg-pink-500",
       accent: "bg-pink-100",
     },
     {
       value: "indigo",
-      name: "Indigo",
+      name: t("settings.colors.indigo"),
       color: "bg-indigo-500",
       accent: "bg-indigo-100",
     },
     {
       value: "cyan",
-      name: "Cyan",
+      name: t("settings.colors.cyan"),
       color: "bg-cyan-500",
       accent: "bg-cyan-100",
     },
@@ -179,47 +185,47 @@ export function SettingsView() {
   const lightBackgroundThemes = [
     {
       value: "default",
-      name: "Default",
+      name: t("settings.lightBg.default"),
       gradient: "bg-gradient-to-br from-white to-gray-50",
     },
     {
       value: "warm",
-      name: "Warm",
+      name: t("settings.lightBg.warm"),
       gradient: "bg-gradient-to-br from-orange-50 to-red-50",
     },
     {
       value: "cool",
-      name: "Cool",
+      name: t("settings.lightBg.cool"),
       gradient: "bg-gradient-to-br from-blue-50 to-cyan-50",
     },
     {
       value: "neutral",
-      name: "Neutral",
+      name: t("settings.lightBg.neutral"),
       gradient: "bg-gradient-to-br from-gray-50 to-slate-50",
     },
     {
       value: "soft",
-      name: "Soft",
+      name: t("settings.lightBg.soft"),
       gradient: "bg-gradient-to-br from-pink-50 to-purple-50",
     },
     {
       value: "cream",
-      name: "Cream",
+      name: t("settings.lightBg.cream"),
       gradient: "bg-gradient-to-br from-yellow-50 to-orange-50",
     },
     {
       value: "mint",
-      name: "Mint",
+      name: t("settings.lightBg.mint"),
       gradient: "bg-gradient-to-br from-green-50 to-emerald-50",
     },
     {
       value: "lavender",
-      name: "Lavender",
+      name: t("settings.lightBg.lavender"),
       gradient: "bg-gradient-to-br from-purple-50 to-indigo-50",
     },
     {
       value: "rose",
-      name: "Rose",
+      name: t("settings.lightBg.rose"),
       gradient: "bg-gradient-to-br from-rose-50 to-pink-50",
     },
   ];
@@ -228,47 +234,47 @@ export function SettingsView() {
   const darkBackgroundThemes = [
     {
       value: "default",
-      name: "Default",
+      name: t("settings.darkBg.default"),
       gradient: "bg-gradient-to-br from-gray-900 to-gray-800",
     },
     {
       value: "darker",
-      name: "Darker",
+      name: t("settings.darkBg.darker"),
       gradient: "bg-gradient-to-br from-gray-950 to-gray-900",
     },
     {
       value: "pitch",
-      name: "Pitch",
+      name: t("settings.darkBg.pitch"),
       gradient: "bg-gradient-to-br from-black to-gray-950",
     },
     {
       value: "slate",
-      name: "Slate",
+      name: t("settings.darkBg.slate"),
       gradient: "bg-gradient-to-br from-slate-900 to-slate-800",
     },
     {
       value: "warm-dark",
-      name: "Warm Dark",
+      name: t("settings.darkBg.warmDark"),
       gradient: "bg-gradient-to-br from-orange-950 to-red-950",
     },
     {
       value: "forest",
-      name: "Forest",
+      name: t("settings.darkBg.forest"),
       gradient: "bg-gradient-to-br from-green-950 to-emerald-950",
     },
     {
       value: "ocean",
-      name: "Ocean",
+      name: t("settings.darkBg.ocean"),
       gradient: "bg-gradient-to-br from-blue-950 to-cyan-950",
     },
     {
       value: "purple-dark",
-      name: "Purple Dark",
+      name: t("settings.darkBg.purpleDark"),
       gradient: "bg-gradient-to-br from-purple-950 to-indigo-950",
     },
     {
       value: "crimson",
-      name: "Crimson",
+      name: t("settings.darkBg.crimson"),
       gradient: "bg-gradient-to-br from-red-950 to-rose-950",
     },
   ];
@@ -468,18 +474,18 @@ export function SettingsView() {
 
   // Shadow intensity options
   const shadowOptions = [
-    { value: "none", name: "None", class: "shadow-none" },
-    { value: "subtle", name: "Subtle", class: "shadow-sm" },
-    { value: "moderate", name: "Moderate", class: "shadow-md" },
-    { value: "strong", name: "Strong", class: "shadow-lg" },
+    { value: "none", name: t("settings.shadow.none"), class: "shadow-none" },
+    { value: "subtle", name: t("settings.shadow.subtle"), class: "shadow-sm" },
+    { value: "moderate", name: t("settings.shadow.moderate"), class: "shadow-md" },
+    { value: "strong", name: t("settings.shadow.strong"), class: "shadow-lg" },
   ];
 
   // Animation level options
   const animationOptions = [
-    { value: "none", name: "None", description: "No animations" },
-    { value: "minimal", name: "Minimal", description: "Basic transitions" },
-    { value: "moderate", name: "Moderate", description: "Smooth animations" },
-    { value: "high", name: "High", description: "Rich animations" },
+    { value: "none", name: t("settings.animation.none"), description: t("settings.animation.noneDesc") },
+    { value: "minimal", name: t("settings.animation.minimal"), description: t("settings.animation.minimalDesc") },
+    { value: "moderate", name: t("settings.animation.moderate"), description: t("settings.animation.moderateDesc") },
+    { value: "high", name: t("settings.animation.high"), description: t("settings.animation.highDesc") },
   ];
 
   // Card style options
@@ -715,7 +721,7 @@ export function SettingsView() {
             />
             <Button variant="destructive" onClick={handleResetSettings}>
               <RotateCcw className="h-4 w-4 mr-2" />
-              Reset All
+              {t("settings.resetAll")}
             </Button>
           </div>
         </div>
@@ -731,23 +737,23 @@ export function SettingsView() {
               <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="appearance">
                   <Palette className="h-4 w-4 mr-2" />
-                  Appearance
+                  {t("settings.tabs.appearance")}
                 </TabsTrigger>
                 <TabsTrigger value="layout">
                   <Layout className="h-4 w-4 mr-2" />
-                  Layout
+                  {t("settings.tabs.layout")}
                 </TabsTrigger>
                 <TabsTrigger value="components">
                   <SettingsIcon className="h-4 w-4 mr-2" />
-                  Components
+                  {t("settings.tabs.components")}
                 </TabsTrigger>
                 <TabsTrigger value="typography">
                   <Type className="h-4 w-4 mr-2" />
-                  Typography
+                  {t("settings.tabs.typography")}
                 </TabsTrigger>
                 <TabsTrigger value="behavior">
                   <Eye className="h-4 w-4 mr-2" />
-                  Behavior
+                  {t("settings.tabs.behavior")}
                 </TabsTrigger>
               </TabsList>
 
@@ -756,9 +762,9 @@ export function SettingsView() {
                 {/* Color Themes */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Color Theme</CardTitle>
+                    <CardTitle>{t("settings.colorTheme.title")}</CardTitle>
                     <CardDescription>
-                      Choose your preferred color scheme
+                      {t("settings.colorTheme.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -801,9 +807,9 @@ export function SettingsView() {
                 {/* Light Background Themes */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Light Background Theme</CardTitle>
+                    <CardTitle>{t("settings.lightBackground.title")}</CardTitle>
                     <CardDescription>
-                      Choose the light mode background style
+                      {t("settings.lightBackground.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -844,9 +850,9 @@ export function SettingsView() {
                 {/* Dark Background Themes */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Dark Background Theme</CardTitle>
+                    <CardTitle>{t("settings.darkBackground.title")}</CardTitle>
                     <CardDescription>
-                      Choose the dark mode background style
+                      {t("settings.darkBackground.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -887,9 +893,9 @@ export function SettingsView() {
                 {/* Shadow Intensity */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Shadow Intensity</CardTitle>
+                    <CardTitle>{t("settings.shadowIntensity.title")}</CardTitle>
                     <CardDescription>
-                      Adjust the depth and intensity of shadows
+                      {t("settings.shadowIntensity.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -930,9 +936,9 @@ export function SettingsView() {
                 {/* Animation Level */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Animation Level</CardTitle>
+                    <CardTitle>{t("settings.animationLevel.title")}</CardTitle>
                     <CardDescription>
-                      Control the amount of animations and transitions
+                      {t("settings.animationLevel.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>

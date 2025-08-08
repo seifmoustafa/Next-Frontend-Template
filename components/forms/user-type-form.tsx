@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import type { UserType, CreateUserTypeRequest, UpdateUserTypeRequest } from "@/services/user-type.service";
 import { useSettings } from "@/providers/settings-provider";
+import { useI18n } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
 
 interface UserTypeFormProps {
@@ -22,6 +23,7 @@ export function UserTypeForm({
   onCancel,
 }: UserTypeFormProps) {
   const settings = useSettings();
+  const { t } = useI18n();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     adminTypeName: initialData?.adminTypeName || "",
@@ -122,7 +124,7 @@ export function UserTypeForm({
       <form onSubmit={handleSubmit} className={getFormSpacing()}>
         <div className={getFieldSpacing()}>
           <Label htmlFor="adminTypeName" className="font-medium">
-            اسم نوع المستخدم
+            {t("userTypes.form.name")}
           </Label>
           <Input
             id="adminTypeName"
@@ -130,7 +132,7 @@ export function UserTypeForm({
             onChange={(e) => setFormData({ ...formData, adminTypeName: e.target.value })}
             required
             className={getInputHeight()}
-            placeholder="أدخل اسم نوع المستخدم"
+            placeholder={t("userTypes.form.namePlaceholder")}
           />
         </div>
 
@@ -145,7 +147,7 @@ export function UserTypeForm({
             disabled={loading}
             size={getButtonSize()}
           >
-            إلغاء
+            {t("common.cancel")}
           </Button>
           <Button
             type="submit"
@@ -153,7 +155,7 @@ export function UserTypeForm({
             className={cn(getInputHeight(), "gradient-primary order-1 sm:order-2")}
             size={getButtonSize()}
           >
-            {loading ? "جاري الحفظ..." : "حفظ"}
+            {loading ? t("common.loading") : t("common.save")}
           </Button>
         </div>
       </form>

@@ -7,6 +7,9 @@ export const ar = {
   "auth.loginError": "خطأ في اسم المستخدم أو كلمة المرور",
   "auth.welcome": "منظومة إدارة العقود",
   "auth.pleaseLogin": "يرجى تسجيل الدخول للمتابعة",
+  "auth.usernamePlaceholder": "المشرف العام",
+  "auth.connectionError": "خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.",
+  "auth.redirecting": "جاري التحويل...",
 
   // Navigation
   "nav.dashboard": "لوحة التحكم",
@@ -15,16 +18,22 @@ export const ar = {
   "nav.profile": "الملف الشخصي",
   "nav.settings": "الإعدادات",
   "nav.logout": "تسجيل الخروج",
+  "nav.user_list": "قائمة المستخدمين",
+  "nav.user_types": "أنواع المستخدمين",
+  "nav.menu": "القائمة",
 
   // Layout & App
   "app.title": "نموذج إدارة",
   "app.subtitle": "الإدارية",
+  "app.tagline": "منظومة إدارة العقود والسيطرة علي مخزون العالم كله",
   "app.modern": "العصرية",
   "app.classic": "الكلاسيكية",
   "app.elegant": "الأنيقة",
   "app.minimal": "البسيطة",
   "app.compact": "المدمجة",
   "app.floating": "العائمة",
+  "app.floatingDesign": "تصميم عائم",
+  "app.version": "v2.1.0",
 
   // Logo & Icons
   "logo.type": "sparkles", // Options: "sparkles", "shield", "image", "custom"
@@ -40,6 +49,28 @@ export const ar = {
   "dashboard.growth": "النمو",
   "dashboard.revenueOverview": "نظرة عامة على الإيرادات",
 
+  // Analytics
+  "analytics.description": "تحليلات مفصلة ورؤى",
+  "analytics.userGrowth": "نمو المستخدمين",
+  "analytics.revenueTrend": "اتجاه الإيرادات",
+  "analytics.combined": "تحليلات مجمعة",
+  "analytics.users": "المستخدمون",
+  "analytics.revenue": "الإيرادات",
+
+  // Months
+  "months.jan": "يناير",
+  "months.feb": "فبراير",
+  "months.mar": "مارس",
+  "months.apr": "أبريل",
+  "months.may": "مايو",
+  "months.jun": "يونيو",
+  "months.jul": "يوليو",
+  "months.aug": "أغسطس",
+  "months.sep": "سبتمبر",
+  "months.oct": "أكتوبر",
+  "months.nov": "نوفمبر",
+  "months.dec": "ديسمبر",
+
   // Users
   "users.title": "إدارة المستخدمين",
   "users.addUser": "إضافة مستخدم",
@@ -50,6 +81,67 @@ export const ar = {
   "users.adminType": "نوع المدير",
   "users.actions": "الإجراءات",
   "users.search": "البحث في المستخدمين...",
+
+  "users.form.usernamePlaceholder": "أدخل اسم المستخدم",
+  "users.form.password": "كلمة المرور",
+  "users.form.passwordPlaceholder": "أدخل كلمة المرور",
+  "users.form.firstNamePlaceholder": "أدخل الاسم الأول",
+  "users.form.lastNamePlaceholder": "أدخل الاسم الأخير",
+  "users.form.phoneNumberPlaceholder": "أدخل رقم الهاتف",
+  "users.form.userTypePlaceholder": "اختر نوع المستخدم",
+
+  // User Types
+  "userTypes.title": "أنواع المستخدمين",
+  "userTypes.subtitle": "إدارة أنواع المستخدمين والصلاحيات",
+  "userTypes.name": "اسم نوع المستخدم",
+  "userTypes.deleteSelected": "حذف المحدد",
+  "userTypes.addType": "إضافة نوع جديد",
+  "userTypes.total": "إجمالي أنواع المستخدمين",
+  "userTypes.listTitle": "أنواع المستخدمين",
+  "userTypes.newTypeTitle": "إضافة نوع مستخدم جديد",
+  "userTypes.editType": "تعديل",
+  "userTypes.form.name": "اسم نوع المستخدم",
+  "userTypes.form.namePlaceholder": "أدخل اسم نوع المستخدم",
+
+  // Profile
+  "profile.title": "الملف الشخصي",
+  "profile.subtitle": "إدارة بياناتك الشخصية وكلمة المرور",
+  "profile.personalInfo.title": "المعلومات الشخصية",
+  "profile.personalInfo.description": "تحديث بياناتك الأساسية",
+  "profile.personalInfo.firstName": "الاسم الأول",
+  "profile.personalInfo.firstNamePlaceholder": "أدخل الاسم الأول",
+  "profile.personalInfo.lastName": "الاسم الأخير",
+  "profile.personalInfo.lastNamePlaceholder": "أدخل الاسم الأخير",
+  "profile.personalInfo.phoneNumber": "رقم الهاتف",
+  "profile.personalInfo.phoneNumberPlaceholder": "أدخل رقم الهاتف",
+  "profile.personalInfo.username": "اسم المستخدم",
+  "profile.personalInfo.usernameHint": "لا يمكن تغيير اسم المستخدم",
+  "profile.personalInfo.adminType": "نوع المدير",
+  "profile.personalInfo.success": "تم تحديث البيانات بنجاح!",
+  "profile.personalInfo.save": "حفظ التغييرات",
+  "profile.personalInfo.saving": "جاري الحفظ...",
+  "profile.password.title": "تغيير كلمة المرور",
+  "profile.password.description": "تحديث كلمة المرور الخاصة بك",
+  "profile.password.current": "كلمة المرور الحالية",
+  "profile.password.currentPlaceholder": "أدخل كلمة المرور الحالية",
+  "profile.password.new": "كلمة المرور الجديدة",
+  "profile.password.newPlaceholder": "أدخل كلمة المرور الجديدة",
+  "profile.password.confirm": "تأكيد كلمة المرور الجديدة",
+  "profile.password.confirmPlaceholder": "أعد إدخال كلمة المرور الجديدة",
+  "profile.password.requirements": "متطلبات كلمة المرور:",
+  "profile.password.requirementLength": "• على الأقل 6 أحرف",
+  "profile.password.requirementCase": "• يُفضل استخدام أحرف كبيرة وصغيرة",
+  "profile.password.requirementNumbers": "• يُفضل استخدام أرقام ورموز خاصة",
+  "profile.password.success": "تم تحديث كلمة المرور بنجاح!",
+  "profile.password.update": "تحديث كلمة المرور",
+  "profile.password.updating": "جاري التحديث...",
+  "profile.errors.fetch": "فشل في جلب بيانات الملف الشخصي",
+  "profile.errors.update": "فشل في تحديث البيانات",
+  "profile.errors.passwordMismatch": "كلمات المرور الجديدة غير متطابقة",
+  "profile.errors.passwordLength": "كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل",
+  "profile.errors.currentPassword": "كلمة المرور الحالية غير صحيحة",
+  "profile.errors.updatePassword": "فشل في تحديث كلمة المرور",
+  "profile.errors.unexpected": "حدث خطأ غير متوقع",
 
   // Settings
   "settings.appearance": "المظهر",
@@ -93,6 +185,7 @@ export const ar = {
   "layout.minimalDesc": "تصميم بسيط مع شريط علوي فقط وقوائم منسدلة",
   "layout.compactDesc": "تصميم مدمج مع عناصر صغيرة لتوفير مساحة أكبر للمحتوى",
   "layout.floatingDesc": "تصميم عائم مع بطاقات منفصلة وتأثيرات ثلاثية الأبعاد",
+  "layout.items": "عناصر",
 
   // Color Themes
   "color.purple": "أرجواني",
@@ -156,6 +249,10 @@ export const ar = {
   "theme.dark": "داكن",
   "theme.system": "النظام",
 
+  // Language
+  "language.arabic": "العربية",
+  "language.english": "الإنجليزية",
+
   // Common
   "common.search": "البحث...",
   "common.filter": "تصفية",
@@ -171,11 +268,23 @@ export const ar = {
   "common.error": "حدث خطأ",
   "common.success": "تم بنجاح",
   "common.retry": "إعادة المحاولة",
+  "common.user": "مستخدم",
+
+  // Table
+  "table.select": "تحديد",
+  "table.actions": "الإجراءات",
+  "table.page": "صفحة",
+  "table.of": "من",
+  "table.previous": "السابق",
+  "table.next": "التالي",
 
   // Stats
   "stats.fromLastMonth": "من الشهر الماضي",
   "stats.increase": "زيادة",
   "stats.decrease": "انخفاض",
+
+  // Status
+  "status.online": "متصل",
 
   "nav.main_dashboard": "لوحة التحكم الرئيسية",
   "nav.reports": "التقارير",
@@ -282,6 +391,76 @@ export const ar = {
   "settings.minimal_layout": "التخطيط البسيط",
   "settings.floating_layout": "التخطيط العائم",
   "settings.navigation_layout": "تخطيط التنقل",
+
+  "settings.tabs.appearance": "المظهر",
+  "settings.tabs.layout": "التخطيط",
+  "settings.tabs.components": "المكونات",
+  "settings.tabs.typography": "الخطوط",
+  "settings.tabs.behavior": "السلوك",
+  "settings.resetAll": "إعادة تعيين الكل",
+  "settings.exportSuccess": "تم تصدير الإعدادات",
+  "settings.exportSuccessDesc": "تم تصدير إعداداتك بنجاح.",
+  "settings.importSuccess": "تم استيراد الإعدادات",
+  "settings.importSuccessDesc": "تم استيراد إعداداتك بنجاح.",
+  "settings.importFailed": "فشل الاستيراد",
+  "settings.importFailedDesc": "فشل استيراد الإعدادات. يرجى التحقق من تنسيق الملف.",
+  "settings.resetSuccess": "تمت إعادة تعيين الإعدادات",
+  "settings.resetSuccessDesc": "تمت إعادة جميع الإعدادات إلى القيم الافتراضية.",
+
+  "settings.colorTheme.title": "سمة الألوان",
+  "settings.colorTheme.description": "اختر مخطط الألوان المفضل لديك",
+  "settings.lightBackground.title": "سمة الخلفية الفاتحة",
+  "settings.lightBackground.description": "اختر نمط الخلفية في الوضع الفاتح",
+  "settings.darkBackground.title": "سمة الخلفية الداكنة",
+  "settings.darkBackground.description": "اختر نمط الخلفية في الوضع الداكن",
+  "settings.shadowIntensity.title": "شدة الظل",
+  "settings.shadowIntensity.description": "اضبط عمق وشدة الظلال",
+  "settings.animationLevel.title": "مستوى الحركة",
+  "settings.animationLevel.description": "تحكم في مقدار الحركات والانتقالات",
+
+  "settings.colors.purple": "بنفسجي",
+  "settings.colors.blue": "أزرق",
+  "settings.colors.green": "أخضر",
+  "settings.colors.orange": "برتقالي",
+  "settings.colors.red": "أحمر",
+  "settings.colors.teal": "فيروزي",
+  "settings.colors.pink": "وردي",
+  "settings.colors.indigo": "نيلي",
+  "settings.colors.cyan": "سماوي",
+
+  "settings.lightBg.default": "افتراضي",
+  "settings.lightBg.warm": "دافئ",
+  "settings.lightBg.cool": "بارد",
+  "settings.lightBg.neutral": "محايد",
+  "settings.lightBg.soft": "ناعم",
+  "settings.lightBg.cream": "كريمي",
+  "settings.lightBg.mint": "نعناعي",
+  "settings.lightBg.lavender": "لافندر",
+  "settings.lightBg.rose": "وردي فاتح",
+
+  "settings.darkBg.default": "افتراضي",
+  "settings.darkBg.darker": "أكثر ظلاماً",
+  "settings.darkBg.pitch": "قاتم",
+  "settings.darkBg.slate": "رمادي غامق",
+  "settings.darkBg.warmDark": "دافئ داكن",
+  "settings.darkBg.forest": "غابة",
+  "settings.darkBg.ocean": "محيط",
+  "settings.darkBg.purpleDark": "بنفسجي داكن",
+  "settings.darkBg.crimson": "قرمزي",
+
+  "settings.shadow.none": "بدون",
+  "settings.shadow.subtle": "خفيف",
+  "settings.shadow.moderate": "متوسط",
+  "settings.shadow.strong": "قوي",
+
+  "settings.animation.none": "بدون",
+  "settings.animation.noneDesc": "بدون حركات",
+  "settings.animation.minimal": "بسيط",
+  "settings.animation.minimalDesc": "انتقالات أساسية",
+  "settings.animation.moderate": "متوسط",
+  "settings.animation.moderateDesc": "حركات سلسة",
+  "settings.animation.high": "كثيف",
+  "settings.animation.highDesc": "حركات غنية",
 
   // Common
   "common.create": "إنشاء",

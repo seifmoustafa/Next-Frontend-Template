@@ -51,12 +51,12 @@ export const navigation: NavigationItem[] = [
     icon: Users,
     children: [
       {
-        name: "قائمة المستخدمين",
+        name: "nav.user_list",
         href: "/users",
         icon: Users,
       },
       {
-        name: "أنواع المستخدمين",
+        name: "nav.user_types",
         href: "/user-types",
         icon: Shield,
       },
@@ -68,7 +68,7 @@ export const navigation: NavigationItem[] = [
     icon: BarChart3,
   },
   {
-    name: "الملف الشخصي", // Direct Arabic text
+    name: "nav.profile",
     href: "/profile",
     icon: User,
   },

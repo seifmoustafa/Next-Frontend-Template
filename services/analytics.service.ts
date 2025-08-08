@@ -31,12 +31,12 @@ export class AnalyticsService implements IAnalyticsService {
         orders: 890,
         growth: 12.5,
         chartData: [
-          { name: "Jan", value: 400 },
-          { name: "Feb", value: 300 },
-          { name: "Mar", value: 600 },
-          { name: "Apr", value: 800 },
-          { name: "May", value: 700 },
-          { name: "Jun", value: 900 },
+          { name: "jan", value: 400 },
+          { name: "feb", value: 300 },
+          { name: "mar", value: 600 },
+          { name: "apr", value: 800 },
+          { name: "may", value: 700 },
+          { name: "jun", value: 900 },
         ],
       }
     }

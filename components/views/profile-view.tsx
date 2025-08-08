@@ -86,7 +86,7 @@ export function ProfileView() {
       })
 
       if (!response.ok) {
-        throw new Error("فشل في جلب بيانات الملف الشخصي")
+        throw new Error(t("profile.errors.fetch"))
       }
 
       const userData = await response.json()
@@ -97,7 +97,7 @@ export function ProfileView() {
         phoneNumber: userData.phoneNumber,
       })
     } catch (err) {
-      setProfileError(err instanceof Error ? err.message : "حدث خطأ غير متوقع")
+      setProfileError(err instanceof Error ? err.message : t("profile.errors.unexpected"))
     } finally {
       setProfileLoading(false)
     }
@@ -124,7 +124,7 @@ export function ProfileView() {
       })
 
       if (!response.ok) {
-        throw new Error("فشل في تحديث البيانات")
+        throw new Error(t("profile.errors.update"))
       }
 
       const updatedUser = await response.json()
@@ -132,7 +132,7 @@ export function ProfileView() {
       setProfileSuccess(true)
       setTimeout(() => setProfileSuccess(false), 3000)
     } catch (err) {
-      setProfileUpdateError(err instanceof Error ? err.message : "حدث خطأ غير متوقع")
+      setProfileUpdateError(err instanceof Error ? err.message : t("profile.errors.unexpected"))
     } finally {
       setProfileUpdateLoading(false)
     }
@@ -147,14 +147,14 @@ export function ProfileView() {
 
     // Validate passwords match
     if (passwordFormData.newPassword !== passwordFormData.confirmPassword) {
-      setPasswordError("كلمات المرور الجديدة غير متطابقة")
+      setPasswordError(t("profile.errors.passwordMismatch"))
       setPasswordUpdateLoading(false)
       return
     }
 
     // Validate password strength
     if (passwordFormData.newPassword.length < 6) {
-      setPasswordError("كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل")
+      setPasswordError(t("profile.errors.passwordLength"))
       setPasswordUpdateLoading(false)
       return
     }
@@ -177,9 +177,9 @@ export function ProfileView() {
 
       if (!response.ok) {
         if (response.status === 400) {
-          throw new Error("كلمة المرور الحالية غير صحيحة")
+          throw new Error(t("profile.errors.currentPassword"))
         }
-        throw new Error("فشل في تحديث كلمة المرور")
+        throw new Error(t("profile.errors.updatePassword"))
       }
 
       // Reset form on success (204 response)
@@ -191,7 +191,7 @@ export function ProfileView() {
       setPasswordSuccess(true)
       setTimeout(() => setPasswordSuccess(false), 3000)
     } catch (err) {
-      setPasswordError(err instanceof Error ? err.message : "حدث خطأ غير متوقع")
+      setPasswordError(err instanceof Error ? err.message : t("profile.errors.unexpected"))
     } finally {
       setPasswordUpdateLoading(false)
     }
@@ -214,9 +214,9 @@ export function ProfileView() {
       {/* Header */}
       <div className="space-y-2">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-          الملف الشخصي
+          {t("profile.title")}
         </h1>
-        <p className="text-muted-foreground text-lg">إدارة بياناتك الشخصية وكلمة المرور</p>
+        <p className="text-muted-foreground text-lg">{t("profile.subtitle")}</p>
       </div>
 
       {/* Profile Overview Card */}
@@ -261,8 +261,8 @@ export function ProfileView() {
                 <User className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <CardTitle className="text-xl">المعلومات الشخصية</CardTitle>
-                <p className="text-muted-foreground text-sm">تحديث بياناتك الأساسية</p>
+                <CardTitle className="text-xl">{t("profile.personalInfo.title")}</CardTitle>
+                <p className="text-muted-foreground text-sm">{t("profile.personalInfo.description")}</p>
               </div>
             </div>
           </CardHeader>
@@ -271,64 +271,64 @@ export function ProfileView() {
             <form onSubmit={handleProfileSubmit} className="space-y-6">
               <div className="grid gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">الاسم الأول</Label>
+                  <Label htmlFor="firstName">{t("profile.personalInfo.firstName")}</Label>
                   <Input
                     id="firstName"
                     value={profileFormData.firstName}
                     onChange={(e) => setProfileFormData({ ...profileFormData, firstName: e.target.value })}
                     required
                     className="h-12"
-                    placeholder="أدخل الاسم الأول"
+                    placeholder={t("profile.personalInfo.firstNamePlaceholder")}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">الاسم الأخير</Label>
+                  <Label htmlFor="lastName">{t("profile.personalInfo.lastName")}</Label>
                   <Input
                     id="lastName"
                     value={profileFormData.lastName}
                     onChange={(e) => setProfileFormData({ ...profileFormData, lastName: e.target.value })}
                     required
                     className="h-12"
-                    placeholder="أدخل الاسم الأخير"
+                    placeholder={t("profile.personalInfo.lastNamePlaceholder")}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phoneNumber">رقم الهاتف</Label>
+                  <Label htmlFor="phoneNumber">{t("profile.personalInfo.phoneNumber")}</Label>
                   <Input
                     id="phoneNumber"
                     value={profileFormData.phoneNumber}
                     onChange={(e) => setProfileFormData({ ...profileFormData, phoneNumber: e.target.value })}
                     required
                     className="h-12"
-                    placeholder="أدخل رقم الهاتف"
+                    placeholder={t("profile.personalInfo.phoneNumberPlaceholder")}
                   />
                 </div>
 
                 <Separator />
 
                 <div className="space-y-2">
-                  <Label>اسم المستخدم</Label>
+                  <Label>{t("profile.personalInfo.username")}</Label>
                   <Input value={profile?.username || ""} disabled className="h-12 bg-muted/50" />
-                  <p className="text-xs text-muted-foreground">لا يمكن تغيير اسم المستخدم</p>
+                  <p className="text-xs text-muted-foreground">{t("profile.personalInfo.usernameHint")}</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label>نوع المدير</Label>
+                  <Label>{t("profile.personalInfo.adminType")}</Label>
                   <Input value={profile?.adminTypeName || ""} disabled className="h-12 bg-muted/50" />
                 </div>
               </div>
 
               {profileUpdateError && (
                 <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
-                  {profileUpdateError}
+                {profileUpdateError}
                 </div>
               )}
 
               {profileSuccess && (
                 <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-600 text-sm">
-                  تم تحديث البيانات بنجاح!
+                  {t("profile.personalInfo.success")}
                 </div>
               )}
 
@@ -336,12 +336,12 @@ export function ProfileView() {
                 {profileUpdateLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    جاري الحفظ...
+                    {t("profile.personalInfo.saving")}
                   </>
                 ) : (
                   <>
                     <Save className="mr-2 h-4 w-4" />
-                    حفظ التغييرات
+                    {t("profile.personalInfo.save")}
                   </>
                 )}
               </Button>
@@ -357,8 +357,8 @@ export function ProfileView() {
                 <Lock className="w-6 h-6 text-orange-500" />
               </div>
               <div>
-                <CardTitle className="text-xl">تغيير كلمة المرور</CardTitle>
-                <p className="text-muted-foreground text-sm">تحديث كلمة المرور الخاصة بك</p>
+                <CardTitle className="text-xl">{t("profile.password.title")}</CardTitle>
+                <p className="text-muted-foreground text-sm">{t("profile.password.description")}</p>
               </div>
             </div>
           </CardHeader>
@@ -366,7 +366,7 @@ export function ProfileView() {
           <CardContent>
             <form onSubmit={handlePasswordSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="currentPassword">كلمة المرور الحالية</Label>
+                <Label htmlFor="currentPassword">{t("profile.password.current")}</Label>
                 <div className="relative">
                   <Input
                     id="currentPassword"
@@ -375,7 +375,7 @@ export function ProfileView() {
                     onChange={(e) => setPasswordFormData({ ...passwordFormData, currentPassword: e.target.value })}
                     required
                     className="h-12 pr-10"
-                    placeholder="أدخل كلمة المرور الحالية"
+                    placeholder={t("profile.password.currentPlaceholder")}
                   />
                   <Button
                     type="button"
@@ -390,7 +390,7 @@ export function ProfileView() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="newPassword">كلمة المرور الجديدة</Label>
+                <Label htmlFor="newPassword">{t("profile.password.new")}</Label>
                 <div className="relative">
                   <Input
                     id="newPassword"
@@ -399,7 +399,7 @@ export function ProfileView() {
                     onChange={(e) => setPasswordFormData({ ...passwordFormData, newPassword: e.target.value })}
                     required
                     className="h-12 pr-10"
-                    placeholder="أدخل كلمة المرور الجديدة"
+                    placeholder={t("profile.password.newPlaceholder")}
                   />
                   <Button
                     type="button"
@@ -414,7 +414,7 @@ export function ProfileView() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">تأكيد كلمة المرور الجديدة</Label>
+                <Label htmlFor="confirmPassword">{t("profile.password.confirm")}</Label>
                 <div className="relative">
                   <Input
                     id="confirmPassword"
@@ -423,7 +423,7 @@ export function ProfileView() {
                     onChange={(e) => setPasswordFormData({ ...passwordFormData, confirmPassword: e.target.value })}
                     required
                     className="h-12 pr-10"
-                    placeholder="أعد إدخال كلمة المرور الجديدة"
+                    placeholder={t("profile.password.confirmPlaceholder")}
                   />
                   <Button
                     type="button"
@@ -438,11 +438,11 @@ export function ProfileView() {
               </div>
 
               <div className="p-3 rounded-lg bg-muted/50 text-sm text-muted-foreground">
-                <p className="font-medium mb-1">متطلبات كلمة المرور:</p>
+                <p className="font-medium mb-1">{t("profile.password.requirements")}</p>
                 <ul className="text-xs space-y-1">
-                  <li>• على الأقل 6 أحرف</li>
-                  <li>• يُفضل استخدام أحرف كبيرة وصغيرة</li>
-                  <li>• يُفضل استخدام أرقام ورموز خاصة</li>
+                  <li>{t("profile.password.requirementLength")}</li>
+                  <li>{t("profile.password.requirementCase")}</li>
+                  <li>{t("profile.password.requirementNumbers")}</li>
                 </ul>
               </div>
 
@@ -454,7 +454,7 @@ export function ProfileView() {
 
               {passwordSuccess && (
                 <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-600 text-sm">
-                  تم تحديث كلمة المرور بنجاح!
+                  {t("profile.password.success")}
                 </div>
               )}
 
@@ -466,12 +466,12 @@ export function ProfileView() {
                 {passwordUpdateLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    جاري التحديث...
+                    {t("profile.password.updating")}
                   </>
                 ) : (
                   <>
                     <Lock className="mr-2 h-4 w-4" />
-                    تحديث كلمة المرور
+                    {t("profile.password.update")}
                   </>
                 )}
               </Button>

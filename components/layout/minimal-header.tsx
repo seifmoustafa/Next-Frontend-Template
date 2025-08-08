@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, Sun, Moon, Globe, Monitor } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,17 +15,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { getNavigationItems } from "@/config/navigation";
 import { Logo } from "@/components/ui/logo";
+import { LanguageSwitcher, ThemeSwitcher } from "./common";
 
 export function MinimalHeader() {
-  const { theme, setTheme } = useTheme();
-  const { language, setLanguage, t, direction } = useI18n();
+  const { t, direction } = useI18n();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -184,62 +183,12 @@ export function MinimalHeader() {
             />
           </div>
 
-          {/* Language Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "hover-lift",
-                  buttonClass,
-                  animationClass
-                )}
-              >
-                <Globe className="w-5 h-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"}>
-              <DropdownMenuItem onClick={() => setLanguage("ar")}>
-                🇸🇦 العربية
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage("en")}>
-                🇺🇸 English
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Theme Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "hover-lift",
-                  buttonClass,
-                  animationClass
-                )}
-              >
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"}>
-              <DropdownMenuItem onClick={() => setTheme("light")}>
-                <Sun className="mr-2 h-4 w-4" />
-                {t("settings.light")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
-                <Moon className="mr-2 h-4 w-4" />
-                {t("settings.dark")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                <Monitor className="mr-2 h-4 w-4" />
-                {t("settings.system")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <LanguageSwitcher
+            buttonClassName={cn("hover-lift", buttonClass, animationClass)}
+          />
+          <ThemeSwitcher
+            buttonClassName={cn("hover-lift", buttonClass, animationClass)}
+          />
 
           {/* User Profile Dropdown */}
           <UserProfileDropdown variant="minimal" showName={false} />

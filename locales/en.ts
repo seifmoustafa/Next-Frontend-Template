@@ -7,6 +7,9 @@ export const en = {
   "auth.loginError": "Invalid username or password",
   "auth.welcome": "Welcome to Admin Dashboard",
   "auth.pleaseLogin": "Please sign in to continue",
+  "auth.usernamePlaceholder": "superadmin",
+  "auth.connectionError": "Server connection error. Please try again.",
+  "auth.redirecting": "Redirecting...",
 
   // Navigation
   "nav.dashboard": "Dashboard",
@@ -15,16 +18,22 @@ export const en = {
   "nav.profile": "Profile",
   "nav.settings": "Settings",
   "nav.logout": "Logout",
+  "nav.user_list": "User List",
+  "nav.user_types": "User Types",
+  "nav.menu": "Menu",
 
   // Layout & App
   "app.title": "Admin Dashboard",
   "app.subtitle": "Administrative",
+  "app.tagline": "Contract Management System",
   "app.modern": "Modern",
   "app.classic": "Classic",
   "app.elegant": "Elegant",
   "app.minimal": "Minimal",
   "app.compact": "Compact",
   "app.floating": "Floating",
+  "app.floatingDesign": "Floating Design",
+  "app.version": "v2.1.0",
 
   // Logo & Icons
   "logo.type": "sparkles", // Options: "sparkles", "shield", "image", "custom"
@@ -40,6 +49,28 @@ export const en = {
   "dashboard.growth": "Growth",
   "dashboard.revenueOverview": "Revenue Overview",
 
+  // Analytics
+  "analytics.description": "Detailed analytics and insights",
+  "analytics.userGrowth": "User Growth",
+  "analytics.revenueTrend": "Revenue Trend",
+  "analytics.combined": "Combined Analytics",
+  "analytics.users": "Users",
+  "analytics.revenue": "Revenue",
+
+  // Months
+  "months.jan": "Jan",
+  "months.feb": "Feb",
+  "months.mar": "Mar",
+  "months.apr": "Apr",
+  "months.may": "May",
+  "months.jun": "Jun",
+  "months.jul": "Jul",
+  "months.aug": "Aug",
+  "months.sep": "Sep",
+  "months.oct": "Oct",
+  "months.nov": "Nov",
+  "months.dec": "Dec",
+
   // Users
   "users.title": "User Management",
   "users.addUser": "Add User",
@@ -50,6 +81,67 @@ export const en = {
   "users.adminType": "Admin Type",
   "users.actions": "Actions",
   "users.search": "Search users...",
+
+  "users.form.usernamePlaceholder": "Enter username",
+  "users.form.password": "Password",
+  "users.form.passwordPlaceholder": "Enter password",
+  "users.form.firstNamePlaceholder": "Enter first name",
+  "users.form.lastNamePlaceholder": "Enter last name",
+  "users.form.phoneNumberPlaceholder": "Enter phone number",
+  "users.form.userTypePlaceholder": "Select user type",
+
+  // User Types
+  "userTypes.title": "User Types",
+  "userTypes.subtitle": "Manage user roles and permissions",
+  "userTypes.name": "User Type Name",
+  "userTypes.deleteSelected": "Delete selected",
+  "userTypes.addType": "Add new type",
+  "userTypes.total": "Total user types",
+  "userTypes.listTitle": "User Types",
+  "userTypes.newTypeTitle": "Add New User Type",
+  "userTypes.editType": "Edit",
+  "userTypes.form.name": "User Type Name",
+  "userTypes.form.namePlaceholder": "Enter user type name",
+
+  // Profile
+  "profile.title": "Profile",
+  "profile.subtitle": "Manage your personal info and password",
+  "profile.personalInfo.title": "Personal Information",
+  "profile.personalInfo.description": "Update your basic details",
+  "profile.personalInfo.firstName": "First Name",
+  "profile.personalInfo.firstNamePlaceholder": "Enter first name",
+  "profile.personalInfo.lastName": "Last Name",
+  "profile.personalInfo.lastNamePlaceholder": "Enter last name",
+  "profile.personalInfo.phoneNumber": "Phone Number",
+  "profile.personalInfo.phoneNumberPlaceholder": "Enter phone number",
+  "profile.personalInfo.username": "Username",
+  "profile.personalInfo.usernameHint": "Username cannot be changed",
+  "profile.personalInfo.adminType": "Admin Type",
+  "profile.personalInfo.success": "Profile updated successfully!",
+  "profile.personalInfo.save": "Save Changes",
+  "profile.personalInfo.saving": "Saving...",
+  "profile.password.title": "Change Password",
+  "profile.password.description": "Update your password",
+  "profile.password.current": "Current Password",
+  "profile.password.currentPlaceholder": "Enter current password",
+  "profile.password.new": "New Password",
+  "profile.password.newPlaceholder": "Enter new password",
+  "profile.password.confirm": "Confirm New Password",
+  "profile.password.confirmPlaceholder": "Re-enter new password",
+  "profile.password.requirements": "Password requirements:",
+  "profile.password.requirementLength": "• At least 6 characters",
+  "profile.password.requirementCase": "• Prefer uppercase and lowercase letters",
+  "profile.password.requirementNumbers": "• Prefer numbers and special characters",
+  "profile.password.success": "Password updated successfully!",
+  "profile.password.update": "Update Password",
+  "profile.password.updating": "Updating...",
+  "profile.errors.fetch": "Failed to load profile",
+  "profile.errors.update": "Failed to update profile",
+  "profile.errors.passwordMismatch": "New passwords do not match",
+  "profile.errors.passwordLength": "New password must be at least 6 characters",
+  "profile.errors.currentPassword": "Current password is incorrect",
+  "profile.errors.updatePassword": "Failed to update password",
+  "profile.errors.unexpected": "An unexpected error occurred",
 
   // Settings
   "settings.appearance": "Appearance",
@@ -96,6 +188,7 @@ export const en = {
   "layout.compactDesc":
     "Compact design with small elements to maximize content space",
   "layout.floatingDesc": "Floating design with separate cards and 3D effects",
+  "layout.items": "items",
 
   // Color Themes
   "color.purple": "Purple",
@@ -159,6 +252,10 @@ export const en = {
   "theme.dark": "Dark",
   "theme.system": "System",
 
+  // Language
+  "language.arabic": "Arabic",
+  "language.english": "English",
+
   // Common
   "common.search": "Search...",
   "common.filter": "Filter",
@@ -174,11 +271,23 @@ export const en = {
   "common.error": "An error occurred",
   "common.success": "Success",
   "common.retry": "Try Again",
+  "common.user": "User",
+
+  // Table
+  "table.select": "Select",
+  "table.actions": "Actions",
+  "table.page": "Page",
+  "table.of": "of",
+  "table.previous": "Previous",
+  "table.next": "Next",
 
   // Stats
   "stats.fromLastMonth": "from last month",
   "stats.increase": "increase",
   "stats.decrease": "decrease",
+
+  // Status
+  "status.online": "Online",
 
   "nav.main_dashboard": "Main Dashboard",
   "nav.reports": "Reports",
@@ -285,6 +394,76 @@ export const en = {
   "settings.minimal_layout": "Minimal Layout",
   "settings.floating_layout": "Floating Layout",
   "settings.navigation_layout": "Navigation Layout",
+
+  "settings.tabs.appearance": "Appearance",
+  "settings.tabs.layout": "Layout",
+  "settings.tabs.components": "Components",
+  "settings.tabs.typography": "Typography",
+  "settings.tabs.behavior": "Behavior",
+  "settings.resetAll": "Reset All",
+  "settings.exportSuccess": "Settings Exported",
+  "settings.exportSuccessDesc": "Your settings have been exported successfully.",
+  "settings.importSuccess": "Settings Imported",
+  "settings.importSuccessDesc": "Your settings have been imported successfully.",
+  "settings.importFailed": "Import Failed",
+  "settings.importFailedDesc": "Failed to import settings. Please check the file format.",
+  "settings.resetSuccess": "Settings Reset",
+  "settings.resetSuccessDesc": "All settings have been reset to default values.",
+
+  "settings.colorTheme.title": "Color Theme",
+  "settings.colorTheme.description": "Choose your preferred color scheme",
+  "settings.lightBackground.title": "Light Background Theme",
+  "settings.lightBackground.description": "Choose the light mode background style",
+  "settings.darkBackground.title": "Dark Background Theme",
+  "settings.darkBackground.description": "Choose the dark mode background style",
+  "settings.shadowIntensity.title": "Shadow Intensity",
+  "settings.shadowIntensity.description": "Adjust the depth and intensity of shadows",
+  "settings.animationLevel.title": "Animation Level",
+  "settings.animationLevel.description": "Control the amount of animations and transitions",
+
+  "settings.colors.purple": "Purple",
+  "settings.colors.blue": "Blue",
+  "settings.colors.green": "Green",
+  "settings.colors.orange": "Orange",
+  "settings.colors.red": "Red",
+  "settings.colors.teal": "Teal",
+  "settings.colors.pink": "Pink",
+  "settings.colors.indigo": "Indigo",
+  "settings.colors.cyan": "Cyan",
+
+  "settings.lightBg.default": "Default",
+  "settings.lightBg.warm": "Warm",
+  "settings.lightBg.cool": "Cool",
+  "settings.lightBg.neutral": "Neutral",
+  "settings.lightBg.soft": "Soft",
+  "settings.lightBg.cream": "Cream",
+  "settings.lightBg.mint": "Mint",
+  "settings.lightBg.lavender": "Lavender",
+  "settings.lightBg.rose": "Rose",
+
+  "settings.darkBg.default": "Default",
+  "settings.darkBg.darker": "Darker",
+  "settings.darkBg.pitch": "Pitch",
+  "settings.darkBg.slate": "Slate",
+  "settings.darkBg.warmDark": "Warm Dark",
+  "settings.darkBg.forest": "Forest",
+  "settings.darkBg.ocean": "Ocean",
+  "settings.darkBg.purpleDark": "Purple Dark",
+  "settings.darkBg.crimson": "Crimson",
+
+  "settings.shadow.none": "None",
+  "settings.shadow.subtle": "Subtle",
+  "settings.shadow.moderate": "Moderate",
+  "settings.shadow.strong": "Strong",
+
+  "settings.animation.none": "None",
+  "settings.animation.noneDesc": "No animations",
+  "settings.animation.minimal": "Minimal",
+  "settings.animation.minimalDesc": "Basic transitions",
+  "settings.animation.moderate": "Moderate",
+  "settings.animation.moderateDesc": "Smooth animations",
+  "settings.animation.high": "High",
+  "settings.animation.highDesc": "Rich animations",
 
   // Common
   "common.create": "Create",

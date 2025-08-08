@@ -440,8 +440,8 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
                   </p>
                   <div className="flex items-center mt-1">
                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2 rtl:mr-0 rtl:ml-2 animate-pulse" />
-                    <span className="text-xs text-green-600 font-medium">
-                      ONLINE
+                    <span className="text-xs text-green-600 font-medium uppercase">
+                      {t("status.online")}
                     </span>
                   </div>
                 </div>
@@ -468,7 +468,7 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
             )}
           >
             <div className="text-xs text-muted-foreground/60 text-center font-medium">
-              v2.1.0
+              {t("app.version")}
             </div>
           </div>
         </div>

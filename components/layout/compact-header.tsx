@@ -1,28 +1,26 @@
 "use client";
 
-import { Search, Menu, Sun, Moon, Globe, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useTheme } from "next-themes";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
+import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
 
 interface CompactHeaderProps {
   onMenuClick: () => void;
 }
 
 export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
-  const { theme, setTheme } = useTheme();
-  const { language, setLanguage, t, direction } = useI18n();
+  const { t } = useI18n();
   const {
     getHeaderStyleClass,
     getAnimationClass,
     getButtonStyleClass,
   } = useLayoutStyles();
-
+  const animationClass = getAnimationClass();
   const buttonClass = getButtonStyleClass({
     modern: "rounded-2xl",
     default: "rounded-xl",
@@ -88,61 +86,38 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
           </Button>
         </div>
 
-        {/* Center Section - Search */}
         <div className="flex-1 max-w-sm mx-4">
-          <div className="relative group">
-            <Search
-              className={cn(
-                "absolute top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary",
-                getAnimationClass(),
-                direction === "rtl" ? "right-3" : "left-3"
-              )}
-            />
-            <Input
-              placeholder={t("nav.search")}
-              className={cn(
-                "w-full h-9 border-0 bg-muted/50 shadow-sm",
-                "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
-                getAnimationClass(),
-                buttonClass,
-                direction === "rtl" ? "pr-9 text-right" : "pl-9"
-              )}
-            />
-          </div>
+          <HeaderSearch
+            containerClassName={cn("group", getAnimationClass())}
+            inputClassName={cn(
+              "w-full h-9 border-0 bg-muted/50 shadow-sm",
+              "focus:bg-background focus:ring-2 focus:ring-primary/20 focus:shadow-md",
+              getAnimationClass(),
+              buttonClass
+            )}
+            iconClassName={getAnimationClass()}
+          />
         </div>
 
         {/* Right Section */}
         <div className="flex items-center space-x-2 rtl:space-x-reverse">
-          {/* Theme Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
+          <ThemeSwitcher
+            buttonClassName={cn(
               "h-9 w-9 hover:bg-primary/10 hover:text-primary",
               "shadow-sm hover:shadow-md hover:scale-105",
               buttonClass,
-              getAnimationClass()
+              animationClass
             )}
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </Button>
+          />
 
-          {/* Language Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
+          <LanguageSwitcher
+            buttonClassName={cn(
               "h-9 w-9 hover:bg-primary/10 hover:text-primary",
               "shadow-sm hover:shadow-md hover:scale-105",
               buttonClass,
-              getAnimationClass()
+              animationClass
             )}
-            onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
-          >
-            <Globe className="h-4 w-4" />
-          </Button>
+          />
 
           {/* User Profile Dropdown */}
           <UserProfileDropdown variant="compact" showName={false} />
