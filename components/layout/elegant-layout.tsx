@@ -6,7 +6,6 @@ import { ElegantHeader } from "@/components/layout/elegant-header";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
-import { Footer } from "@/components/layout/footer";
 
 interface ElegantLayoutProps {
   children: React.ReactNode;
@@ -109,18 +108,14 @@ export function ElegantLayout({
       <ElegantHeader onMenuClick={() => onSidebarOpenChange(true)} />
 
       {/* Sidebar - Lower z-index than header */}
-      <ElegantSidebar
-        open={sidebarOpen}
-        onOpenChange={onSidebarOpenChange}
-        collapsible={settings.collapsibleSidebar}
-      />
+      <ElegantSidebar open={sidebarOpen} onOpenChange={onSidebarOpenChange} />
 
       {/* Main Content - Enhanced with better spacing and animations */}
-        <main
-          className={cn(
-            "relative",
-            getAnimationClass(),
-            settings.stickyHeader ? "pt-20" : "pt-4",
+      <main
+        className={cn(
+          "relative",
+          getAnimationClass(),
+          settings.stickyHeader ? "pt-20" : "pt-4",
           // Desktop margins
           direction === "rtl" ? "lg:mr-80 xl:mr-72" : "lg:ml-80 xl:ml-72",
           // Mobile - no margins when sidebar is closed
@@ -150,11 +145,10 @@ export function ElegantLayout({
             {children}
           </div>
         </div>
-        </main>
-        {settings.showFooter && <Footer />}
+      </main>
 
-        {/* Mobile overlay with enhanced blur and gradient */}
-        {sidebarOpen && settings.collapsibleSidebar && (
+      {/* Mobile overlay with enhanced blur and gradient */}
+      {sidebarOpen && (
         <div
           className={cn(
             "fixed inset-0 z-30 lg:hidden",
