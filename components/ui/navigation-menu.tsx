@@ -4,50 +4,38 @@ import { cva } from "class-variance-authority"
 import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { useSettings } from "@/providers/settings-provider"
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
->(({ className, children, ...props }, ref) => {
-  const { navigationStyle } = useSettings()
-
-  return (
-    <NavigationMenuPrimitive.Root
-      ref={ref}
-      className={cn(
-        "relative z-10 flex max-w-max flex-1 items-center justify-center",
-        navigationStyle === "sidebar" && "flex-col",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <NavigationMenuViewport />
-    </NavigationMenuPrimitive.Root>
-  )
-})
+>(({ className, children, ...props }, ref) => (
+  <NavigationMenuPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative z-10 flex max-w-max flex-1 items-center justify-center",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <NavigationMenuViewport />
+  </NavigationMenuPrimitive.Root>
+))
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
 
 const NavigationMenuList = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>
->(({ className, ...props }, ref) => {
-  const { navigationStyle } = useSettings()
-
-  return (
-    <NavigationMenuPrimitive.List
-      ref={ref}
-      className={cn(
-        "group flex flex-1 list-none items-center justify-center space-x-1",
-        navigationStyle === "sidebar" &&
-          "flex-col items-stretch space-x-0 space-y-1",
-        className
-      )}
-      {...props}
-    />
-  )
-})
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.List
+    ref={ref}
+    className={cn(
+      "group flex flex-1 list-none items-center justify-center space-x-1",
+      className
+    )}
+    {...props}
+  />
+))
 NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 
 const NavigationMenuItem = NavigationMenuPrimitive.Item
@@ -59,31 +47,19 @@ const navigationMenuTriggerStyle = cva(
 const NavigationMenuTrigger = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
->(({ className, children, ...props }, ref) => {
-  const { navigationStyle } = useSettings()
-
-  return (
-    <NavigationMenuPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        navigationMenuTriggerStyle(),
-        "group",
-        navigationStyle === "pills" && "rounded-full bg-muted/50",
-        navigationStyle === "underline" &&
-          "rounded-none border-b-2 border-transparent data-[state=open]:border-primary",
-        navigationStyle === "sidebar" && "w-full justify-start",
-        className
-      )}
-      {...props}
-    >
-      {children}{" "}
-      <ChevronDown
-        className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
-        aria-hidden="true"
-      />
-    </NavigationMenuPrimitive.Trigger>
-  )
-})
+>(({ className, children, ...props }, ref) => (
+  <NavigationMenuPrimitive.Trigger
+    ref={ref}
+    className={cn(navigationMenuTriggerStyle(), "group", className)}
+    {...props}
+  >
+    {children}{" "}
+    <ChevronDown
+      className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+      aria-hidden="true"
+    />
+  </NavigationMenuPrimitive.Trigger>
+))
 NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName
 
 const NavigationMenuContent = React.forwardRef<

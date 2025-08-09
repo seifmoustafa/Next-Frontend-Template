@@ -8,7 +8,6 @@ import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
-import { useSettings } from "@/providers/settings-provider";
 
 interface FloatingHeaderProps {
   onMenuClick: () => void;
@@ -16,7 +15,6 @@ interface FloatingHeaderProps {
 
 export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
   const { t } = useI18n();
-  const settings = useSettings();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -54,21 +52,19 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
         {/* Left Section */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
           {/* Mobile Menu Button */}
-          {settings.collapsibleSidebar && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "lg:hidden h-10 w-10 hover:bg-primary/10 hover:text-primary",
-                "shadow-md hover:shadow-lg hover:scale-105",
-                buttonClass,
-                animationClass
-              )}
-              onClick={onMenuClick}
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "lg:hidden h-10 w-10 hover:bg-primary/10 hover:text-primary",
+              "shadow-md hover:shadow-lg hover:scale-105",
+              buttonClass,
+              animationClass
+            )}
+            onClick={onMenuClick}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
 
           {/* Logo/Title - Keep this for floating layout */}
           <div className="flex items-center space-x-3 rtl:space-x-reverse">

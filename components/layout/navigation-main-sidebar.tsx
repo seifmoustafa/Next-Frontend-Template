@@ -4,6 +4,7 @@ import type React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/providers/i18n-provider";
+import { useSettings } from "@/providers/settings-provider";
 import { navigation } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -31,13 +32,7 @@ export function NavigationMainSidebar({
 }: NavigationMainSidebarProps) {
   const router = useRouter();
   const { direction, t } = useI18n();
-  const {
-    colorTheme,
-    cardStyle,
-    animationLevel,
-    borderRadius,
-  } = useSettings();
-
+  const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings();
 
   const getBorderRadiusClass = () => {
     switch (borderRadius) {

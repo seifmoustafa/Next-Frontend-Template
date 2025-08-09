@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, ArrowUpDown, Search } from 'lucide-react'
-import { Pagination as Pager, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
+import { MoreHorizontal, ChevronLeft, ChevronRight, ArrowUpDown, Search } from 'lucide-react'
 import { useI18n } from "@/providers/i18n-provider"
 import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
@@ -30,10 +29,8 @@ interface Action<T> {
 }
 
 interface Pagination {
-  itemCount: number
-  pageSize: number
   currentPage: number
-  pageCount: number
+  totalPages: number
   onPageChange: (page: number) => void
 }
 
@@ -435,68 +432,37 @@ export function GenericTable<T extends Record<string, any>>({
       </div>
 
       {/* Pagination */}
-      {pagination && pagination.pageCount > 1 && (
+      {pagination && pagination.totalPages > 1 && (
         <div className="flex items-center justify-between pt-4">
-          <p
-            className={cn(
-              "text-muted-foreground",
-              settings.fontSize === "small"
-                ? "text-xs"
-                : settings.fontSize === "large"
-                ? "text-base"
-                : "text-sm"
-            )}
-          >
-            {t("table.page")} {pagination.currentPage} {t("table.of")} {pagination.pageCount}
+          <p className={cn(
+            "text-muted-foreground",
+            settings.fontSize === "small" ? "text-xs" :
+            settings.fontSize === "large" ? "text-base" : "text-sm"
+          )}>
+            {t("table.page")} {pagination.currentPage} {t("table.of")} {pagination.totalPages}
           </p>
-          <Pager>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    pagination.onPageChange(pagination.currentPage - 1);
-                  }}
-                  className={
-                    pagination.currentPage === 1
-                      ? "pointer-events-none opacity-50"
-                      : ""
-                  }
-                />
-              </PaginationItem>
-              {Array.from({ length: pagination.pageCount }, (_, i) => i + 1).map(
-                (page) => (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      href="#"
-                      isActive={page === pagination.currentPage}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        pagination.onPageChange(page);
-                      }}
-                    >
-                      {page}
-                    </PaginationLink>
-                  </PaginationItem>
-                )
-              )}
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    pagination.onPageChange(pagination.currentPage + 1);
-                  }}
-                  className={
-                    pagination.currentPage === pagination.pageCount
-                      ? "pointer-events-none opacity-50"
-                      : ""
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pager>
+          <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => pagination.onPageChange(pagination.currentPage - 1)}
+              disabled={pagination.currentPage === 1}
+              className="hover-lift"
+            >
+              <ChevronRight className="h-4 w-4 rtl:rotate-180" />
+              {t("table.previous")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => pagination.onPageChange(pagination.currentPage + 1)}
+              disabled={pagination.currentPage === pagination.totalPages}
+              className="hover-lift"
+            >
+              {t("table.next")}
+              <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
+            </Button>
+          </div>
         </div>
       )}
     </div>

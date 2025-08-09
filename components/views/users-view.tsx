@@ -1,35 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GenericTable } from "@/components/ui/generic-table";
 import { GenericModal } from "@/components/ui/generic-modal";
-import { GenericForm, type FieldConfig } from "@/components/forms/generic-form";
+import { UserForm } from "@/components/forms/user-form";
 import { useUsersViewModel } from "@/viewmodels/users.viewmodel";
 import { useServices } from "@/providers/service-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
-import type { User, CreateUserRequest, UpdateUserRequest } from "@/services/user.service";
-import type { UserType } from "@/services/user-type.service";
+import type { User } from "@/services/user.service";
 import { Plus, Search, Filter, Download, UsersIcon, RefreshCw, Trash2, Edit } from 'lucide-react';
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { cn } from "@/lib/utils";
 
 export function UsersView() {
-  const { userService, userTypeService } = useServices();
+  const { userService } = useServices();
   const { t } = useI18n();
   const settings = useSettings();
-  const [userTypes, setUserTypes] = useState<UserType[]>([]);
 
   const viewModel = useUsersViewModel(userService);
   const {
     users,
     loading,
     error,
-    pagination,
+    total,
+    currentPage,
     searchTerm,
     selectedUsers,
     isCreateModalOpen,
@@ -48,109 +47,6 @@ export function UsersView() {
     changePage,
     refreshUsers,
   } = viewModel;
-
-  // Load user types for select options
-  useEffect(() => {
-    const loadTypes = async () => {
-      try {
-        const types = await userTypeService.getUserTypes();
-        setUserTypes(types);
-      } catch (error) {
-        console.error("Failed to load user types", error);
-      }
-    };
-    loadTypes();
-  }, [userTypeService]);
-
-  const userTypeOptions = userTypes.map((type) => ({
-    value: type.id,
-    label: type.adminTypeName,
-  }));
-
-  const createFields: FieldConfig[] = [
-    {
-      name: "username",
-      label: t("users.username"),
-      type: "text",
-      placeholder: t("users.form.usernamePlaceholder"),
-      required: true,
-    },
-    {
-      name: "password",
-      label: t("users.form.password"),
-      type: "password",
-      placeholder: t("users.form.passwordPlaceholder"),
-      required: true,
-    },
-    {
-      name: "firstName",
-      label: t("users.firstName"),
-      type: "text",
-      placeholder: t("users.form.firstNamePlaceholder"),
-      required: true,
-    },
-    {
-      name: "lastName",
-      label: t("users.lastName"),
-      type: "text",
-      placeholder: t("users.form.lastNamePlaceholder"),
-      required: true,
-    },
-    {
-      name: "phoneNumber",
-      label: t("users.phoneNumber"),
-      type: "text",
-      placeholder: t("users.form.phoneNumberPlaceholder"),
-      required: true,
-    },
-    {
-      name: "userTypeId",
-      label: t("users.adminType"),
-      type: "select",
-      options: userTypeOptions,
-      placeholder: t("users.form.userTypePlaceholder"),
-      required: true,
-    },
-  ];
-
-  const editFields: FieldConfig[] = [
-    {
-      name: "username",
-      label: t("users.username"),
-      type: "text",
-      placeholder: t("users.form.usernamePlaceholder"),
-      required: true,
-    },
-    {
-      name: "firstName",
-      label: t("users.firstName"),
-      type: "text",
-      placeholder: t("users.form.firstNamePlaceholder"),
-      required: true,
-    },
-    {
-      name: "lastName",
-      label: t("users.lastName"),
-      type: "text",
-      placeholder: t("users.form.lastNamePlaceholder"),
-      required: true,
-    },
-    {
-      name: "phoneNumber",
-      label: t("users.phoneNumber"),
-      type: "text",
-      placeholder: t("users.form.phoneNumberPlaceholder"),
-      required: true,
-    },
-    {
-      name: "adminTypeId",
-      label: t("users.adminType"),
-      type: "select",
-      options: userTypeOptions,
-      placeholder: t("users.form.userTypePlaceholder"),
-      required: true,
-    },
-  ];
 
   const columns = [
     {
@@ -369,7 +265,7 @@ export function UsersView() {
                 settings.fontSize === "small" ? "text-xl" :
                 settings.fontSize === "large" ? "text-3xl" :
                 "text-2xl"
-              )}>{pagination.itemCount}</p>
+              )}>{total}</p>
               <p className="text-muted-foreground">إجمالي المستخدمين</p>
             </div>
           </div>
@@ -384,7 +280,7 @@ export function UsersView() {
               settings.fontSize === "small" ? "text-lg" :
               settings.fontSize === "large" ? "text-2xl" :
               "text-xl"
-            )}>المستخدمون ({pagination.itemCount})</CardTitle>
+            )}>المستخدمون ({total})</CardTitle>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
               <div className="relative">
@@ -435,7 +331,8 @@ export function UsersView() {
             actions={actions}
             loading={loading}
             pagination={{
-              ...pagination,
+              currentPage,
+              totalPages: Math.ceil(total / 10),
               onPageChange: changePage,
             }}
           />
@@ -449,12 +346,10 @@ export function UsersView() {
         title={t("users.addUser")}
         size="lg"
       >
-        <GenericForm
-          fields={createFields}
-          onSubmit={async (data) => {
-            await createUser(data as unknown as CreateUserRequest);
-          }}
+        <UserForm
+          onSubmit={createUser}
           onCancel={() => setIsCreateModalOpen(false)}
+          isEdit={false}
         />
       </GenericModal>
 
@@ -466,22 +361,11 @@ export function UsersView() {
         size="lg"
       >
         {editingUser && (
-          <GenericForm
-            fields={editFields}
-            initialValues={{
-              username: editingUser.username,
-              firstName: editingUser.firstName,
-              lastName: editingUser.lastName,
-              phoneNumber: editingUser.phoneNumber,
-              adminTypeId:
-                userTypeOptions.find(
-                  (t) => t.label === editingUser.adminTypeName
-                )?.value || "",
-            }}
-            onSubmit={async (data) => {
-              await updateUser(editingUser.id, data as unknown as UpdateUserRequest);
-            }}
+          <UserForm
+            initialData={editingUser}
+            onSubmit={(data) => updateUser(editingUser.id, data)}
             onCancel={closeEditModal}
+            isEdit={true}
           />
         )}
       </GenericModal>

@@ -27,19 +27,13 @@ import { Logo } from "@/components/ui/logo";
 interface ClassicSidebarProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  collapsible?: boolean;
 }
 
-export function ClassicSidebar({
-  open,
-  onOpenChange,
-  collapsible = true,
-}: ClassicSidebarProps) {
+export function ClassicSidebar({ open, onOpenChange }: ClassicSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
   const { user } = useAuth();
   const { colorTheme } = useSettings();
-
   const {
     getSpacingClass,
     getBorderRadiusClass,
@@ -213,7 +207,7 @@ export function ClassicSidebar({
             : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md"
         )}
         style={{ paddingLeft: `${24 + indent}px` }}
-        onClick={() => !item.disabled && collapsible && onOpenChange(false)}
+        onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
           <div
@@ -300,7 +294,6 @@ export function ClassicSidebar({
               </div>
             </div>
 
-          {collapsible && (
             <Button
               variant="ghost"
               size="icon"
@@ -314,7 +307,6 @@ export function ClassicSidebar({
             >
               <X className="w-5 h-5" />
             </Button>
-          )}
           </div>
 
           {/* User Info */}
