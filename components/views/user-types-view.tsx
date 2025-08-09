@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GenericTable } from "@/components/ui/generic-table";
 import { GenericModal } from "@/components/ui/generic-modal";
-import { UserTypeForm } from "@/components/forms/user-type-form";
+import { GenericForm, type FieldConfig } from "@/components/forms/generic-form";
 import { useUserTypesViewModel } from "@/viewmodels/user-types.viewmodel";
 import { useServices } from "@/providers/service-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
-import type { UserType } from "@/services/user-type.service";
+import type { UserType, CreateUserTypeRequest, UpdateUserTypeRequest } from "@/services/user-type.service";
 import { Plus, Shield, RefreshCw, Trash2, Edit } from "lucide-react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ErrorMessage } from "@/components/ui/error-message";
@@ -41,6 +41,16 @@ export function UserTypesView() {
     setIsCreateModalOpen,
     refreshUserTypes,
   } = viewModel;
+
+  const formFields: FieldConfig[] = [
+    {
+      name: "adminTypeName",
+      label: t("userTypes.form.name"),
+      type: "text",
+      placeholder: t("userTypes.form.namePlaceholder"),
+      required: true,
+    },
+  ];
 
   const columns = [
     {
@@ -280,29 +290,40 @@ export function UserTypesView() {
       </Card>
 
       {/* Create User Type Modal */}
-        <GenericModal
-          open={isCreateModalOpen}
-          onOpenChange={setIsCreateModalOpen}
-          title={t("userTypes.newTypeTitle")}
-          size="md"
-        >
-        <UserTypeForm
-          onSubmit={createUserType}
+      <GenericModal
+        open={isCreateModalOpen}
+        onOpenChange={setIsCreateModalOpen}
+        title={t("userTypes.newTypeTitle")}
+        size="md"
+      >
+        <GenericForm
+          fields={formFields}
+          onSubmit={async (data) => {
+            await createUserType(data as unknown as CreateUserTypeRequest);
+          }}
           onCancel={() => setIsCreateModalOpen(false)}
         />
       </GenericModal>
 
       {/* Edit User Type Modal */}
-        <GenericModal
-          open={isEditModalOpen}
-          onOpenChange={closeEditModal}
-          title={`${t("userTypes.editType")} ${editingUserType?.adminTypeName}`}
-          size="md"
-        >
+      <GenericModal
+        open={isEditModalOpen}
+        onOpenChange={closeEditModal}
+        title={`${t("userTypes.editType")} ${editingUserType?.adminTypeName}`}
+        size="md"
+      >
         {editingUserType && (
-          <UserTypeForm
-            initialData={editingUserType}
-            onSubmit={(data) => updateUserType(editingUserType.id, data)}
+          <GenericForm
+            fields={formFields}
+            initialValues={{
+              adminTypeName: editingUserType.adminTypeName,
+            }}
+            onSubmit={async (data) => {
+              await updateUserType(
+                editingUserType.id,
+                data as unknown as UpdateUserTypeRequest
+              );
+            }}
             onCancel={closeEditModal}
           />
         )}

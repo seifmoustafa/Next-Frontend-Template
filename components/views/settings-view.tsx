@@ -58,6 +58,7 @@ import {
   Smartphone,
   Tablet,
   Info,
+  Save,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -121,6 +122,22 @@ export function SettingsView() {
       title: t("settings.resetSuccess"),
       description: t("settings.resetSuccessDesc"),
     });
+  };
+
+  const handleSaveSettings = () => {
+    try {
+      localStorage.setItem("dashboard-settings", settings.exportSettings());
+      toast({
+        title: "Settings saved",
+        description: "Your preferences have been stored",
+      });
+    } catch (error) {
+      toast({
+        title: "Save failed",
+        description: "Could not save settings", // simple message
+        variant: "destructive",
+      });
+    }
   };
 
   // Color theme options with visual previews
@@ -719,6 +736,14 @@ export function SettingsView() {
               className="hidden"
               onChange={handleImportSettings}
             />
+            <Button
+              variant="secondary"
+              onClick={handleSaveSettings}
+              disabled={settings.autoSave}
+            >
+              <Save className="h-4 w-4 mr-2" />
+              Save
+            </Button>
             <Button variant="destructive" onClick={handleResetSettings}>
               <RotateCcw className="h-4 w-4 mr-2" />
               {t("settings.resetAll")}
@@ -2066,38 +2091,31 @@ export function SettingsView() {
                     <Separator />
 
                     {/* Logo Text */}
-                    <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Logo Text</Label>
-                      <Input
-                        value={settings.logoText}
-                        onChange={(e) => settings.setLogoText(e.target.value)}
-                        placeholder="Enter logo text..."
-                        className="max-w-xs"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Text displayed next to the logo icon or as custom logo
-                      </p>
-                    </div>
-
-                    <Separator />
-
-                    {/* Logo Image Path */}
-                    {settings.logoType === "image" && (
+                    {settings.logoType === "custom" && (
                       <>
                         <div className="space-y-3">
                           <Label className="text-sm font-semibold">
-                            Logo Image Path
+                            Logo Text
                           </Label>
                           <Input
-                            value={settings.logoImagePath}
-                            onChange={(e) =>
-                              settings.setLogoImagePath(e.target.value)
-                            }
-                            placeholder="/path/to/your/logo.png"
+                            value={settings.logoText}
+                            onChange={(e) => settings.setLogoText(e.target.value)}
+                            placeholder="Enter logo text..."
                             className="max-w-xs"
                           />
                           <p className="text-xs text-muted-foreground">
-                            Path to your custom logo image file
+                            Text displayed as the logo
+                          </p>
+                        </div>
+                        <Separator />
+                      </>
+                    )}
+
+                    {settings.logoType === "image" && (
+                      <>
+                        <div className="space-y-3">
+                          <p className="text-sm text-muted-foreground">
+                            The image logo uses the file at /app-logo.png
                           </p>
                         </div>
                         <Separator />
