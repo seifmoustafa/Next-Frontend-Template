@@ -62,12 +62,16 @@ export function ModernSidebar({
    );
  };
 
- const renderNavigationItem = (item: NavigationItem, level = 0) => {
+  const renderNavigationItem = (item: NavigationItem, level = 0) => {
    const isActive = isNavigationItemActive(item, pathname);
    const isExpanded = expandedItems.includes(item.name);
    const hasChildren = item.children && item.children.length > 0;
    const Icon = item.icon;
    const indent = level * 16; // 16px per level
+   const paddingStyle =
+     direction === "rtl"
+       ? { paddingRight: `${12 + indent}px` }
+       : { paddingLeft: `${12 + indent}px` };
 
    if (hasChildren) {
      return (
@@ -86,7 +90,7 @@ export function ModernSidebar({
                 : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md",
               "px-3 py-3 space-x-3 rtl:space-x-reverse",
             )}
-             style={{ paddingInlineStart: `${12 + indent}px` }}
+             style={paddingStyle}
              >
               <div
                 className={cn(
@@ -178,7 +182,7 @@ export function ModernSidebar({
             : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md",
           "px-3 py-3 space-x-3 rtl:space-x-reverse"
         )}
-       style={{ paddingInlineStart: `${12 + indent}px` }}
+       style={paddingStyle}
        onClick={() => !item.disabled && collapsible && onOpenChange(false)}
      >
        {/* Icon - always visible */}
