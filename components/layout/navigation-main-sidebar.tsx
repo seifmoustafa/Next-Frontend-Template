@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Logo } from "@/components/ui/logo";
+import { useSettings } from "@/providers/settings-provider";
 
 interface NavigationMainSidebarProps {
   open: boolean;
