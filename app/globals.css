@@ -5,9 +5,7 @@
 :root {
   --font-inter: "Inter", sans-serif;
   --font-cairo: "Cairo", sans-serif;
-  --font-size-base: 16px;
-  --spacing-unit: 1rem;
-  
+
   /* Light theme colors - Default Purple */
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
@@ -43,10 +41,6 @@
   /* Shadow colors */
   --shadow-primary: 262 83% 58%;
   --shadow-secondary: 240 5% 64.9%;
-}
-
-html {
-  font-size: var(--font-size-base);
 }
 
 /* Primary Color Themes */
@@ -903,20 +897,4 @@ html {
 
 [data-layout="navigation"] .navigation-header {
   box-shadow: var(--shadow-sm);
-}
-
-/* Behavior toggles */
-html[data-reduced-motion="true"] *,
-html[data-reduced-motion="true"] *::before,
-html[data-reduced-motion="true"] *::after {
-  animation: none !important;
-  transition: none !important;
-}
-
-html[data-high-contrast="true"] {
-  filter: contrast(1.25) saturate(1.2);
-}
-
-html[data-compact-mode="true"] {
-  --spacing-unit: 0.5rem;
 }
