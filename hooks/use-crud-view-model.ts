@@ -91,6 +91,7 @@ export function useCrudViewModel<T extends { id: string }, CreateReq, UpdateReq>
     loading,
     error,
     selectedItems,
+    setSelectedItems,
     isCreateModalOpen,
     isEditModalOpen,
     editingItem,

@@ -86,16 +86,13 @@ export function ModernSidebar({
                 : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md",
               "px-3 py-3"
             )}
-            style={{ paddingLeft: `${12 + indent}px` }}
+           style={{ paddingInlineStart: `${12 + indent}px` }}
            >
-             <div
-               className={cn(
-                 "flex items-center",
-                 isHovered
-                   ? "flex-1 min-w-0 space-x-3 rtl:space-x-reverse"
-                   : ""
-               )}
-             >
+              <div
+                className={cn(
+                  "flex items-center flex-1 min-w-0 space-x-3 rtl:space-x-reverse"
+                )}
+              >
                {/* Icon - always visible */}
                <div
                  className={cn(
@@ -181,7 +178,7 @@ export function ModernSidebar({
             : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md",
           "px-3 py-3 space-x-3 rtl:space-x-reverse"
         )}
-       style={{ paddingLeft: `${12 + indent}px` }}
+       style={{ paddingInlineStart: `${12 + indent}px` }}
        onClick={() => !item.disabled && collapsible && onOpenChange(false)}
      >
        {/* Icon - always visible */}

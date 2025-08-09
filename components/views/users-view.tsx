@@ -86,8 +86,11 @@ export function UsersView() {
       createFields={createFields}
       editFields={editFields}
       viewModel={viewModel}
-      pagination={viewModel.pagination}
-      onPageChange={viewModel.changePage}
+      pagination={{
+        ...viewModel.pagination,
+        onPageChange: viewModel.changePage,
+        onPageSizeChange: viewModel.changePageSize,
+      }}
       searchComponent={searchComponent}
     />
   );

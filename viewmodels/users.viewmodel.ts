@@ -13,10 +13,10 @@ import { useCrudViewModel } from "@/hooks/use-crud-view-model";
 
 export function useUsersViewModel(userService: IUserService) {
   const [pagination, setPagination] = useState<PaginationInfo>({
-    itemCount: 0,
+    itemsCount: 0,
     pageSize: 10,
     currentPage: 1,
-    pageCount: 1,
+    pagesCount: 1,
   });
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -45,6 +45,10 @@ export function useUsersViewModel(userService: IUserService) {
     setPagination((prev) => ({ ...prev, currentPage: page }));
   };
 
+  const changePageSize = (size: number) => {
+    setPagination((prev) => ({ ...prev, pageSize: size, currentPage: 1 }));
+  };
+
   useEffect(() => {
     crud.refreshItems();
   }, [list]);
@@ -55,6 +59,7 @@ export function useUsersViewModel(userService: IUserService) {
     searchTerm,
     searchUsers,
     changePage,
+    changePageSize,
   };
 }
 

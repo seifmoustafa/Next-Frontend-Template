@@ -19,8 +19,10 @@ interface GenericCrudViewProps<T> {
   createFields: FieldConfig[];
   editFields?: FieldConfig[];
   viewModel: any;
-  pagination?: PaginationInfo;
-  onPageChange?: (page: number) => void;
+  pagination?: PaginationInfo & {
+    onPageChange: (page: number) => void;
+    onPageSizeChange?: (size: number) => void;
+  };
   searchComponent?: React.ReactNode;
 }
 
@@ -34,7 +36,6 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
     editFields,
     viewModel,
     pagination,
-    onPageChange,
     searchComponent,
   } = props;
   const settings = useSettings();
@@ -158,11 +159,11 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             data={viewModel.items}
             columns={columns}
             actions={actions}
-            selectedRows={viewModel.selectedItems}
-            onRowSelect={viewModel.toggleItemSelection}
-            onSelectAll={viewModel.toggleAllItems}
+            loading={viewModel.loading}
+            selectable
+            selectedItems={viewModel.selectedItems}
+            onSelectionChange={viewModel.setSelectedItems}
             pagination={pagination}
-            onPageChange={onPageChange}
           />
         </CardContent>
       </Card>

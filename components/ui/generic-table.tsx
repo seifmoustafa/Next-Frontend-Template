@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal, ArrowUpDown, Search } from 'lucide-react'
 import { Pagination as Pager, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useI18n } from "@/providers/i18n-provider"
 import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
@@ -30,11 +31,12 @@ interface Action<T> {
 }
 
 interface Pagination {
-  itemCount: number
+  itemsCount: number
   pageSize: number
   currentPage: number
-  pageCount: number
+  pagesCount: number
   onPageChange: (page: number) => void
+  onPageSizeChange?: (size: number) => void
 }
 
 interface GenericTableProps<T> {
@@ -435,8 +437,8 @@ export function GenericTable<T extends Record<string, any>>({
       </div>
 
       {/* Pagination */}
-      {pagination && pagination.pageCount > 1 && (
-        <div className="flex items-center justify-between pt-4">
+      {pagination && (
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 gap-2">
           <p
             className={cn(
               "text-muted-foreground",
@@ -444,59 +446,87 @@ export function GenericTable<T extends Record<string, any>>({
                 ? "text-xs"
                 : settings.fontSize === "large"
                 ? "text-base"
-                : "text-sm"
+                : "text-sm",
             )}
           >
-            {t("table.page")} {pagination.currentPage} {t("table.of")} {pagination.pageCount}
+            {(() => {
+              const start = (pagination.currentPage - 1) * pagination.pageSize + 1
+              const end = Math.min(
+                pagination.currentPage * pagination.pageSize,
+                pagination.itemsCount,
+              )
+              return `${start}-${end} of ${pagination.itemsCount}`
+            })()}
           </p>
-          <Pager>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    pagination.onPageChange(pagination.currentPage - 1);
-                  }}
-                  className={
-                    pagination.currentPage === 1
-                      ? "pointer-events-none opacity-50"
-                      : ""
-                  }
-                />
-              </PaginationItem>
-              {Array.from({ length: pagination.pageCount }, (_, i) => i + 1).map(
-                (page) => (
-                  <PaginationItem key={page}>
-                    <PaginationLink
+          <div className="flex items-center gap-2">
+            {pagination.onPageSizeChange && (
+              <Select
+                value={String(pagination.pageSize)}
+                onValueChange={(v) => pagination.onPageSizeChange?.(Number(v))}
+              >
+                <SelectTrigger className="w-[70px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {[10, 25, 50].map((size) => (
+                    <SelectItem key={size} value={String(size)}>
+                      {size}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+            {pagination.pagesCount > 1 && (
+              <Pager>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
                       href="#"
-                      isActive={page === pagination.currentPage}
                       onClick={(e) => {
-                        e.preventDefault();
-                        pagination.onPageChange(page);
+                        e.preventDefault()
+                        pagination.onPageChange(pagination.currentPage - 1)
                       }}
-                    >
-                      {page}
-                    </PaginationLink>
+                      className={
+                        pagination.currentPage === 1
+                          ? "pointer-events-none opacity-50"
+                          : ""
+                      }
+                    />
                   </PaginationItem>
-                )
-              )}
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    pagination.onPageChange(pagination.currentPage + 1);
-                  }}
-                  className={
-                    pagination.currentPage === pagination.pageCount
-                      ? "pointer-events-none opacity-50"
-                      : ""
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pager>
+                  {Array.from({ length: pagination.pagesCount }, (_, i) => i + 1).map(
+                    (page) => (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          href="#"
+                          isActive={page === pagination.currentPage}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            pagination.onPageChange(page)
+                          }}
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ),
+                  )}
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        pagination.onPageChange(pagination.currentPage + 1)
+                      }}
+                      className={
+                        pagination.currentPage === pagination.pagesCount
+                          ? "pointer-events-none opacity-50"
+                          : ""
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pager>
+            )}
+          </div>
         </div>
       )}
     </div>
