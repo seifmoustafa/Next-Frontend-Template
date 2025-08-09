@@ -1,56 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import type { UserType, CreateUserTypeRequest, UpdateUserTypeRequest } from "@/services/user-type.service";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
 
-export interface FieldOption {
-  value: string;
-  label: string;
-}
-
-export interface FieldConfig {
-  name: string;
-  label: string;
-  type: "text" | "password" | "select";
-  placeholder?: string;
-  required?: boolean;
-  options?: FieldOption[];
-}
-
-interface GenericFormProps {
-  fields: FieldConfig[];
-  initialValues?: Record<string, string>;
-  onSubmit: (data: Record<string, string>) => Promise<void>;
+interface UserTypeFormProps {
+  initialData?: UserType;
+  onSubmit: (data: CreateUserTypeRequest | UpdateUserTypeRequest) => Promise<void>;
   onCancel: () => void;
 }
 
-export function GenericForm({
-  fields,
-  initialValues = {},
+export function UserTypeForm({
+  initialData,
   onSubmit,
   onCancel,
-}: GenericFormProps) {
+}: UserTypeFormProps) {
   const settings = useSettings();
   const { t } = useI18n();
-  const [formData, setFormData] = useState<Record<string, string>>(initialValues);
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const [formData, setFormData] = useState({
+    adminTypeName: initialData?.adminTypeName || "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       await onSubmit(formData);
+    } catch (error) {
+      console.error("Form submission error:", error);
     } finally {
       setLoading(false);
     }
@@ -134,42 +120,21 @@ export function GenericForm({
   };
 
   return (
-    <div className="w-full max-h-[70vh] overflow-y-auto">
+    <div className="w-full">
       <form onSubmit={handleSubmit} className={getFormSpacing()}>
-        {fields.map((field) => (
-          <div key={field.name} className={getFieldSpacing()}>
-            <Label htmlFor={field.name} className="font-medium">
-              {field.label}
-            </Label>
-            {field.type === "select" ? (
-              <Select
-                value={formData[field.name] || ""}
-                onValueChange={(value) => handleChange(field.name, value)}
-              >
-                <SelectTrigger className={getInputHeight()}>
-                  <SelectValue placeholder={field.placeholder} />
-                </SelectTrigger>
-                <SelectContent>
-                  {field.options?.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <Input
-                id={field.name}
-                type={field.type}
-                value={formData[field.name] || ""}
-                onChange={(e) => handleChange(field.name, e.target.value)}
-                required={field.required}
-                className={getInputHeight()}
-                placeholder={field.placeholder}
-              />
-            )}
-          </div>
-        ))}
+        <div className={getFieldSpacing()}>
+          <Label htmlFor="adminTypeName" className="font-medium">
+            {t("userTypes.form.name")}
+          </Label>
+          <Input
+            id="adminTypeName"
+            value={formData.adminTypeName}
+            onChange={(e) => setFormData({ ...formData, adminTypeName: e.target.value })}
+            required
+            className={getInputHeight()}
+            placeholder={t("userTypes.form.namePlaceholder")}
+          />
+        </div>
 
         <Separator />
 

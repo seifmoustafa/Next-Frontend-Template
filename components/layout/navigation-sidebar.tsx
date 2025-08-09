@@ -30,7 +30,6 @@ export function NavigationSidebar({
   const { t, language, direction } = useI18n();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
-
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>
       prev.includes(itemName)

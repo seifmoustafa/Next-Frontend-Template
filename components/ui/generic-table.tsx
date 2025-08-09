@@ -1,15 +1,13 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, ArrowUpDown, Search } from 'lucide-react'
-import { Pagination as Pager, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { MoreHorizontal, ChevronLeft, ChevronRight, ArrowUpDown, Search } from 'lucide-react'
 import { useI18n } from "@/providers/i18n-provider"
 import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
@@ -31,12 +29,9 @@ interface Action<T> {
 }
 
 interface Pagination {
-  itemsCount: number
-  pageSize: number
   currentPage: number
-  pagesCount: number
+  totalPages: number
   onPageChange: (page: number) => void
-  onPageSizeChange?: (size: number) => void
 }
 
 interface GenericTableProps<T> {
@@ -50,8 +45,6 @@ interface GenericTableProps<T> {
   onSelectionChange?: (selected: string[]) => void
   searchPlaceholder?: string
   emptyMessage?: string
-  onSearch?: (term: string) => void
-  searchValue?: string
 }
 
 export function GenericTable<T extends Record<string, any>>({
@@ -65,26 +58,12 @@ export function GenericTable<T extends Record<string, any>>({
   onSelectionChange,
   searchPlaceholder,
   emptyMessage,
-  onSearch,
-  searchValue,
 }: GenericTableProps<T>) {
   const { t, direction } = useI18n()
   const settings = useSettings()
   const [sortColumn, setSortColumn] = useState<keyof T | null>(null)
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
-  const [searchTerm, setSearchTerm] = useState(searchValue ?? "")
-
-  useEffect(() => {
-    setSearchTerm(searchValue ?? "")
-  }, [searchValue])
-
-  useEffect(() => {
-    if (!onSearch) return
-    const handler = setTimeout(() => {
-      onSearch(searchTerm)
-    }, 500)
-    return () => clearTimeout(handler)
-  }, [searchTerm, onSearch])
+  const [searchTerm, setSearchTerm] = useState("")
 
   const placeholder = searchPlaceholder ?? t("common.search")
   const empty = emptyMessage ?? t("common.noData")
@@ -98,13 +77,11 @@ export function GenericTable<T extends Record<string, any>>({
     }
   }
 
-  const filteredData = onSearch
-    ? data
-    : data.filter(item =>
-        Object.values(item).some(value =>
-          String(value).toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      )
+  const filteredData = data.filter(item =>
+    Object.values(item).some(value =>
+      String(value).toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  )
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortColumn) return 0
@@ -455,95 +432,36 @@ export function GenericTable<T extends Record<string, any>>({
       </div>
 
       {/* Pagination */}
-      {pagination && (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 gap-2">
-          <p
-            className={cn(
-              "text-muted-foreground",
-              settings.fontSize === "small"
-                ? "text-xs"
-                : settings.fontSize === "large"
-                ? "text-base"
-                : "text-sm",
-            )}
-          >
-            {(() => {
-              const start = (pagination.currentPage - 1) * pagination.pageSize + 1
-              const end = Math.min(
-                pagination.currentPage * pagination.pageSize,
-                pagination.itemsCount,
-              )
-              return `${start}-${end} of ${pagination.itemsCount}`
-            })()}
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex items-center justify-between pt-4">
+          <p className={cn(
+            "text-muted-foreground",
+            settings.fontSize === "small" ? "text-xs" :
+            settings.fontSize === "large" ? "text-base" : "text-sm"
+          )}>
+            {t("table.page")} {pagination.currentPage} {t("table.of")} {pagination.totalPages}
           </p>
-          <div className="flex items-center gap-2">
-            {pagination.onPageSizeChange && (
-              <Select
-                value={String(pagination.pageSize)}
-                onValueChange={(v) => pagination.onPageSizeChange?.(Number(v))}
-              >
-                <SelectTrigger className="w-[70px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[10, 25, 50].map((size) => (
-                    <SelectItem key={size} value={String(size)}>
-                      {size}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-            {pagination.pagesCount > 1 && (
-              <Pager>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        pagination.onPageChange(pagination.currentPage - 1)
-                      }}
-                      className={
-                        pagination.currentPage === 1
-                          ? "pointer-events-none opacity-50"
-                          : ""
-                      }
-                    />
-                  </PaginationItem>
-                  {Array.from({ length: pagination.pagesCount }, (_, i) => i + 1).map(
-                    (page) => (
-                      <PaginationItem key={page}>
-                        <PaginationLink
-                          href="#"
-                          isActive={page === pagination.currentPage}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            pagination.onPageChange(page)
-                          }}
-                        >
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ),
-                  )}
-                  <PaginationItem>
-                    <PaginationNext
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        pagination.onPageChange(pagination.currentPage + 1)
-                      }}
-                      className={
-                        pagination.currentPage === pagination.pagesCount
-                          ? "pointer-events-none opacity-50"
-                          : ""
-                      }
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pager>
-            )}
+          <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => pagination.onPageChange(pagination.currentPage - 1)}
+              disabled={pagination.currentPage === 1}
+              className="hover-lift"
+            >
+              <ChevronRight className="h-4 w-4 rtl:rotate-180" />
+              {t("table.previous")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => pagination.onPageChange(pagination.currentPage + 1)}
+              disabled={pagination.currentPage === pagination.totalPages}
+              className="hover-lift"
+            >
+              {t("table.next")}
+              <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
+            </Button>
           </div>
         </div>
       )}
