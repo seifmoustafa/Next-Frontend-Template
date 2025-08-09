@@ -1,5 +1,5 @@
 import { ApiService, type IApiService } from "./api.service";
-import { API_ENDPOINTS } from "@/lib/constants";
+import { API_ENDPOINTS } from "@/lib/api-endpoints";
 
 export interface LoginRequest {
   username: string;
