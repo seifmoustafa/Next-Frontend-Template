@@ -8,7 +8,6 @@ import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
-import { useSettings } from "@/providers/settings-provider";
 
 interface CompactHeaderProps {
   onMenuClick: () => void;
@@ -16,7 +15,6 @@ interface CompactHeaderProps {
 
 export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
   const { t } = useI18n();
-  const settings = useSettings();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -56,40 +54,36 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
             </div>
           </div>
 
-          {settings.collapsibleSidebar && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "lg:hidden h-8 w-8 hover:bg-primary/10",
-                "shadow-sm hover:shadow-md hover:scale-105",
-                buttonClass,
-                getAnimationClass()
-              )}
-              onClick={() => onchange(false)}
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "lg:hidden h-8 w-8 hover:bg-primary/10",
+              "shadow-sm hover:shadow-md hover:scale-105",
+              buttonClass,
+              getAnimationClass()
+            )}
+            onClick={() => onchange(false)}
+          >
+            <X className="w-4 h-4" />
+          </Button>
         </div>
         {/* Left Section */}
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           {/* Mobile Menu Button */}
-          {settings.collapsibleSidebar && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "lg:hidden h-9 w-9 hover:bg-primary/10 hover:text-primary",
-                "shadow-sm hover:shadow-md hover:scale-105",
-                buttonClass,
-                getAnimationClass()
-              )}
-              onClick={onMenuClick}
-            >
-              <Menu className="h-4 w-4" />
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "lg:hidden h-9 w-9 hover:bg-primary/10 hover:text-primary",
+              "shadow-sm hover:shadow-md hover:scale-105",
+              buttonClass,
+              getAnimationClass()
+            )}
+            onClick={onMenuClick}
+          >
+            <Menu className="h-4 w-4" />
+          </Button>
         </div>
 
         <div className="flex-1 max-w-sm mx-4">

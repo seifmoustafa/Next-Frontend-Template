@@ -32,17 +32,7 @@ export function NavigationMainSidebar({
 }: NavigationMainSidebarProps) {
   const router = useRouter();
   const { direction, t } = useI18n();
-  const {
-    colorTheme,
-    cardStyle,
-    animationLevel,
-    borderRadius,
-    navigationStyle,
-  } = useSettings();
-
-  if (navigationStyle !== "sidebar") {
-    return null;
-  }
+  const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings();
 
   const getBorderRadiusClass = () => {
     switch (borderRadius) {
