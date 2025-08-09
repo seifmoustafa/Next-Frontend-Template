@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronRight, Settings } from "lucide-react";
 import { useI18n } from "@/providers/i18n-provider";
+import { useSettings } from "@/providers/settings-provider";
 import {
   navigation,
   isNavigationItemActive,
@@ -28,7 +29,12 @@ export function NavigationSidebar({
 }: NavigationSidebarProps) {
   const pathname = usePathname();
   const { t, language, direction } = useI18n();
+  const { navigationStyle } = useSettings();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
+  if (navigationStyle !== "sidebar") {
+    return null;
+  }
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>

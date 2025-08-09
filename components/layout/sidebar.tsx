@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
+import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
 import {
   Collapsible,
@@ -36,7 +37,12 @@ export function Sidebar({
   const pathname = usePathname();
   const { t, direction } = useI18n();
   const { logout, user } = useAuth();
+  const { navigationStyle } = useSettings();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
+  if (navigationStyle !== "sidebar") {
+    return null;
+  }
 
   // Get navigation items with translations
   const navigation = getNavigationItems(t);
