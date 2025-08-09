@@ -1,57 +1,82 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, ArrowUpDown, Search } from 'lucide-react'
-import { Pagination as Pager, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useI18n } from "@/providers/i18n-provider"
-import { useSettings } from "@/providers/settings-provider"
-import { cn } from "@/lib/utils"
+import type React from "react";
+import { useState, useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MoreHorizontal, ArrowUpDown, Search } from "lucide-react";
+import {
+  Pagination as Pager,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+} from "@/components/ui/pagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useI18n } from "@/providers/i18n-provider";
+import { useSettings } from "@/providers/settings-provider";
+import { cn } from "@/lib/utils";
 
 interface Column<T> {
-  key: keyof T
-  label: string
-  sortable?: boolean
-  width?: string
-  render?: (value: any, row: T) => React.ReactNode
+  key: keyof T;
+  label: string;
+  sortable?: boolean;
+  width?: string;
+  render?: (value: any, row: T) => React.ReactNode;
 }
 
 interface Action<T> {
-  label: string
-  icon?: React.ComponentType<{ className?: string }>
-  onClick: (row: T) => void
-  variant?: "default" | "destructive" | "ghost"
-  className?: string
+  label: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  onClick: (row: T) => void;
+  variant?: "default" | "destructive" | "ghost";
+  className?: string;
 }
 
 interface Pagination {
-  itemsCount: number
-  pageSize: number
-  currentPage: number
-  pagesCount: number
-  onPageChange: (page: number) => void
-  onPageSizeChange?: (size: number) => void
+  itemsCount: number;
+  pageSize: number;
+  currentPage: number;
+  pagesCount: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
 }
 
 interface GenericTableProps<T> {
-  data: T[]
-  columns: Column<T>[]
-  actions?: Action<T>[]
-  loading?: boolean
-  pagination?: Pagination
-  selectable?: boolean
-  selectedItems?: string[]
-  onSelectionChange?: (selected: string[]) => void
-  searchPlaceholder?: string
-  emptyMessage?: string
-  onSearch?: (term: string) => void
-  searchValue?: string
+  data: T[];
+  columns: Column<T>[];
+  actions?: Action<T>[];
+  loading?: boolean;
+  pagination?: Pagination;
+  selectable?: boolean;
+  selectedItems?: string[];
+  onSelectionChange?: (selected: string[]) => void;
+  searchPlaceholder?: string;
+  emptyMessage?: string;
+  onSearch?: (term: string) => void;
+  searchValue?: string;
 }
 
 export function GenericTable<T extends Record<string, any>>({
@@ -68,157 +93,159 @@ export function GenericTable<T extends Record<string, any>>({
   onSearch,
   searchValue,
 }: GenericTableProps<T>) {
-  const { t, direction } = useI18n()
-  const settings = useSettings()
-  const [sortColumn, setSortColumn] = useState<keyof T | null>(null)
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
-  const [searchTerm, setSearchTerm] = useState(searchValue ?? "")
+  const { t, direction } = useI18n();
+  const settings = useSettings();
+  const [sortColumn, setSortColumn] = useState<keyof T | null>(null);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [searchTerm, setSearchTerm] = useState(searchValue ?? "");
 
   useEffect(() => {
-    setSearchTerm(searchValue ?? "")
-  }, [searchValue])
+    setSearchTerm(searchValue ?? "");
+  }, [searchValue]);
 
   useEffect(() => {
-    if (!onSearch) return
+    if (!onSearch) return;
     const handler = setTimeout(() => {
-      onSearch(searchTerm)
-    }, 500)
-    return () => clearTimeout(handler)
-  }, [searchTerm, onSearch])
+      onSearch(searchTerm);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [searchTerm, onSearch]);
 
-  const placeholder = searchPlaceholder ?? t("common.search")
-  const empty = emptyMessage ?? t("common.noData")
+  const placeholder = searchPlaceholder ?? t("common.search");
+  const empty = emptyMessage ?? t("common.noData");
 
   const handleSort = (column: keyof T) => {
     if (sortColumn === column) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
-      setSortColumn(column)
-      setSortDirection("asc")
+      setSortColumn(column);
+      setSortDirection("asc");
     }
-  }
+  };
 
   const filteredData = onSearch
     ? data
-    : data.filter(item =>
-        Object.values(item).some(value =>
+    : data.filter((item) =>
+        Object.values(item).some((value) =>
           String(value).toLowerCase().includes(searchTerm.toLowerCase())
         )
-      )
+      );
 
   const sortedData = [...filteredData].sort((a, b) => {
-    if (!sortColumn) return 0
+    if (!sortColumn) return 0;
 
-    const aValue = a[sortColumn]
-    const bValue = b[sortColumn]
+    const aValue = a[sortColumn];
+    const bValue = b[sortColumn];
 
-    if (aValue < bValue) return sortDirection === "asc" ? -1 : 1
-    if (aValue > bValue) return sortDirection === "asc" ? 1 : -1
-    return 0
-  })
+    if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
+    if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+    return 0;
+  });
 
   // Get table style classes based on settings
   const getTableContainerClasses = () => {
-    const baseClasses = "overflow-hidden transition-all duration-200"
-    
+    const baseClasses = "overflow-hidden transition-all duration-200";
+
     switch (settings.tableStyle) {
       case "striped":
-        return cn(baseClasses, "rounded-lg border bg-card")
+        return cn(baseClasses, "rounded-lg border bg-card");
       case "bordered":
-        return cn(baseClasses, "rounded-lg border-2 border-border bg-card")
+        return cn(baseClasses, "rounded-lg border-2 border-border bg-card");
       case "minimal":
-        return cn(baseClasses, "rounded-none border-0 bg-transparent")
+        return cn(baseClasses, "rounded-none border-0 bg-transparent");
       default:
-        return cn(baseClasses, "rounded-lg border bg-card shadow-sm")
+        return cn(baseClasses, "rounded-lg border bg-card shadow-sm");
     }
-  }
+  };
 
   const getRowClasses = (index: number, isSelected: boolean = false) => {
-    const baseClasses = "transition-all duration-200 border-b"
-    
-    let styleClasses = ""
+    const baseClasses = "transition-all duration-200 border-b";
+
+    let styleClasses = "";
     switch (settings.tableStyle) {
       case "striped":
-        styleClasses = index % 2 === 0 
-          ? "bg-muted/30 hover:bg-muted/50" 
-          : "bg-card hover:bg-muted/30"
-        break
+        styleClasses =
+          index % 2 === 0
+            ? "bg-muted/30 hover:bg-muted/50"
+            : "bg-card hover:bg-muted/30";
+        break;
       case "bordered":
-        styleClasses = "border-b-2 hover:bg-muted/30 bg-card"
-        break
+        styleClasses = "border-b-2 hover:bg-muted/30 bg-card";
+        break;
       case "minimal":
-        styleClasses = "border-b-0 hover:bg-muted/20 bg-transparent"
-        break
+        styleClasses = "border-b-0 hover:bg-muted/20 bg-transparent";
+        break;
       default:
-        styleClasses = "hover:bg-muted/30 bg-card"
+        styleClasses = "hover:bg-muted/30 bg-card";
     }
 
     if (isSelected) {
-      styleClasses += " bg-primary/10 border-primary/20"
+      styleClasses += " bg-primary/10 border-primary/20";
     }
 
-    return cn(baseClasses, styleClasses)
-  }
+    return cn(baseClasses, styleClasses);
+  };
 
   const getHeaderClasses = () => {
-    const baseClasses = "font-semibold text-foreground transition-colors"
-    
-    let heightClass = ""
+    const baseClasses = "font-semibold text-foreground transition-colors";
+
+    let heightClass = "";
     switch (settings.spacingSize) {
       case "compact":
-        heightClass = "h-10"
-        break
+        heightClass = "h-10";
+        break;
       case "comfortable":
-        heightClass = "h-14"
-        break
+        heightClass = "h-14";
+        break;
       case "spacious":
-        heightClass = "h-16"
-        break
+        heightClass = "h-16";
+        break;
       default:
-        heightClass = "h-12"
+        heightClass = "h-12";
     }
-    
+
     switch (settings.tableStyle) {
       case "striped":
-        return cn(baseClasses, heightClass, "bg-muted/70 border-b-2")
+        return cn(baseClasses, heightClass, "bg-muted/70 border-b-2");
       case "bordered":
-        return cn(baseClasses, heightClass, "bg-muted/50 border-b-2")
+        return cn(baseClasses, heightClass, "bg-muted/50 border-b-2");
       case "minimal":
-        return cn(baseClasses, heightClass, "bg-transparent border-b")
+        return cn(baseClasses, heightClass, "bg-transparent border-b");
       default:
-        return cn(baseClasses, heightClass, "bg-muted/50 border-b")
+        return cn(baseClasses, heightClass, "bg-muted/50 border-b");
     }
-  }
+  };
 
   const getCellPadding = () => {
     switch (settings.spacingSize) {
       case "compact":
-        return "px-3 py-2"
+        return "px-3 py-2";
       case "comfortable":
-        return "px-6 py-4"
+        return "px-6 py-4";
       case "spacious":
-        return "px-8 py-6"
+        return "px-8 py-6";
       default:
-        return "px-4 py-3"
+        return "px-4 py-3";
     }
-  }
+  };
 
   const getCardClasses = () => {
-    const baseClasses = "border rounded-lg p-4 space-y-3 transition-all duration-200"
-    
+    const baseClasses =
+      "border rounded-lg p-4 space-y-3 transition-all duration-200";
+
     switch (settings.cardStyle) {
       case "glass":
-        return cn(baseClasses, "bg-white/10 backdrop-blur border-white/20")
+        return cn(baseClasses, "bg-white/10 backdrop-blur border-white/20");
       case "solid":
-        return cn(baseClasses, "bg-muted border-0")
+        return cn(baseClasses, "bg-muted border-0");
       case "bordered":
-        return cn(baseClasses, "border-2")
+        return cn(baseClasses, "border-2");
       case "elevated":
-        return cn(baseClasses, "shadow-lg border-0 bg-card")
+        return cn(baseClasses, "shadow-lg border-0 bg-card");
       default:
-        return cn(baseClasses, "bg-card")
+        return cn(baseClasses, "bg-card");
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -227,7 +254,7 @@ export function GenericTable<T extends Record<string, any>>({
           <div key={i} className="h-16 bg-muted/50 animate-pulse rounded-lg" />
         ))}
       </div>
-    )
+    );
   }
 
   return (
@@ -249,9 +276,15 @@ export function GenericTable<T extends Record<string, any>>({
           <div className="text-center py-12 text-muted-foreground">{empty}</div>
         ) : (
           sortedData.map((row, index) => {
-            const isSelected = selectable && selectedItems.includes(row.id)
+            const isSelected = selectable && selectedItems.includes(row.id);
             return (
-              <div key={index} className={cn(getCardClasses(), isSelected && "ring-2 ring-primary")}>
+              <div
+                key={index}
+                className={cn(
+                  getCardClasses(),
+                  isSelected && "ring-2 ring-primary"
+                )}
+              >
                 {selectable && (
                   <div className="flex items-center space-x-2 rtl:space-x-reverse pb-2 border-b">
                     <Checkbox
@@ -260,26 +293,45 @@ export function GenericTable<T extends Record<string, any>>({
                         if (onSelectionChange) {
                           const newSelected = checked
                             ? [...selectedItems, row.id]
-                            : selectedItems.filter(id => id !== row.id)
-                          onSelectionChange(newSelected)
+                            : selectedItems.filter((id) => id !== row.id);
+                          onSelectionChange(newSelected);
                         }
                       }}
                     />
-                    <span className="text-sm text-muted-foreground">{t("table.select")}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {t("table.select")}
+                    </span>
                   </div>
                 )}
                 {columns.map((column) => (
-                  <div key={String(column.key)} className="flex justify-between items-center">
-                    <span className={cn(
-                      "font-medium text-muted-foreground",
-                      settings.fontSize === "small" ? "text-xs" :
-                      settings.fontSize === "large" ? "text-base" : "text-sm"
-                    )}>{column.label}:</span>
-                    <span className={cn(
-                      settings.fontSize === "small" ? "text-xs" :
-                      settings.fontSize === "large" ? "text-base" : "text-sm"
-                    )}>
-                      {column.render ? column.render(row[column.key], row) : String(row[column.key])}
+                  <div
+                    key={String(column.key)}
+                    className="flex justify-between items-center"
+                  >
+                    <span
+                      className={cn(
+                        "font-medium text-muted-foreground",
+                        settings.fontSize === "small"
+                          ? "text-xs"
+                          : settings.fontSize === "large"
+                          ? "text-base"
+                          : "text-sm"
+                      )}
+                    >
+                      {column.label}:
+                    </span>
+                    <span
+                      className={cn(
+                        settings.fontSize === "small"
+                          ? "text-xs"
+                          : settings.fontSize === "large"
+                          ? "text-base"
+                          : "text-sm"
+                      )}
+                    >
+                      {column.render
+                        ? column.render(row[column.key], row)
+                        : String(row[column.key])}
                     </span>
                   </div>
                 ))}
@@ -296,9 +348,15 @@ export function GenericTable<T extends Record<string, any>>({
                           <DropdownMenuItem
                             key={actionIndex}
                             onClick={() => action.onClick(row)}
-                            className={action.variant === "destructive" ? "text-destructive focus:text-destructive" : ""}
+                            className={
+                              action.variant === "destructive"
+                                ? "text-destructive focus:text-destructive"
+                                : ""
+                            }
                           >
-                            {action.icon && <action.icon className="w-4 h-4 mr-2 rtl:mr-0 rtl:ml-2" />}
+                            {action.icon && (
+                              <action.icon className="w-4 h-4 mr-2 rtl:mr-0 rtl:ml-2" />
+                            )}
                             {action.label}
                           </DropdownMenuItem>
                         ))}
@@ -307,7 +365,7 @@ export function GenericTable<T extends Record<string, any>>({
                   </div>
                 )}
               </div>
-            )
+            );
           })
         )}
       </div>
@@ -321,13 +379,16 @@ export function GenericTable<T extends Record<string, any>>({
                 {selectable && (
                   <TableHead className={cn("w-12", getCellPadding())}>
                     <Checkbox
-                      checked={selectedItems.length === sortedData.length && sortedData.length > 0}
+                      checked={
+                        selectedItems.length === sortedData.length &&
+                        sortedData.length > 0
+                      }
                       onCheckedChange={(checked) => {
                         if (onSelectionChange) {
                           const newSelected = checked
-                            ? sortedData.map(row => row.id)
-                            : []
-                          onSelectionChange(newSelected)
+                            ? sortedData.map((row) => row.id)
+                            : [];
+                          onSelectionChange(newSelected);
                         }
                       }}
                     />
@@ -341,8 +402,11 @@ export function GenericTable<T extends Record<string, any>>({
                       getCellPadding(),
                       direction === "rtl" ? "text-right" : "text-left",
                       column.width && `w-${column.width}`,
-                      settings.fontSize === "small" ? "text-xs" :
-                      settings.fontSize === "large" ? "text-base" : "text-sm"
+                      settings.fontSize === "small"
+                        ? "text-xs"
+                        : settings.fontSize === "large"
+                        ? "text-base"
+                        : "text-sm"
                     )}
                   >
                     {column.sortable ? (
@@ -351,11 +415,16 @@ export function GenericTable<T extends Record<string, any>>({
                         onClick={() => handleSort(column.key)}
                         className={cn(
                           "h-auto p-0 font-semibold hover:bg-transparent",
-                          direction === "rtl" ? "justify-end" : "justify-start",
+                          direction === "rtl" ? "justify-end" : "justify-start"
                         )}
                       >
                         {column.label}
-                        <ArrowUpDown className={cn("h-4 w-4", direction === "rtl" ? "mr-2" : "ml-2")} />
+                        <ArrowUpDown
+                          className={cn(
+                            "h-4 w-4",
+                            direction === "rtl" ? "mr-2" : "ml-2"
+                          )}
+                        />
                       </Button>
                     ) : (
                       column.label
@@ -379,7 +448,9 @@ export function GenericTable<T extends Record<string, any>>({
               {sortedData.length === 0 ? (
                 <TableRow>
                   <TableCell
-                    colSpan={columns.length + (actions ? 1 : 0) + (selectable ? 1 : 0)}
+                    colSpan={
+                      columns.length + (actions ? 1 : 0) + (selectable ? 1 : 0)
+                    }
                     className="h-32 text-center text-muted-foreground"
                   >
                     {empty}
@@ -387,9 +458,13 @@ export function GenericTable<T extends Record<string, any>>({
                 </TableRow>
               ) : (
                 sortedData.map((row, index) => {
-                  const isSelected = selectable && selectedItems.includes(row.id)
+                  const isSelected =
+                    selectable && selectedItems.includes(row.id);
                   return (
-                    <TableRow key={index} className={getRowClasses(index, isSelected)}>
+                    <TableRow
+                      key={index}
+                      className={getRowClasses(index, isSelected)}
+                    >
                       {selectable && (
                         <TableCell className={getCellPadding()}>
                           <Checkbox
@@ -398,8 +473,8 @@ export function GenericTable<T extends Record<string, any>>({
                               if (onSelectionChange) {
                                 const newSelected = checked
                                   ? [...selectedItems, row.id]
-                                  : selectedItems.filter(id => id !== row.id)
-                                onSelectionChange(newSelected)
+                                  : selectedItems.filter((id) => id !== row.id);
+                                onSelectionChange(newSelected);
                               }
                             }}
                           />
@@ -412,11 +487,16 @@ export function GenericTable<T extends Record<string, any>>({
                             "align-middle",
                             getCellPadding(),
                             direction === "rtl" ? "text-right" : "text-left",
-                            settings.fontSize === "small" ? "text-xs" :
-                            settings.fontSize === "large" ? "text-base" : "text-sm"
+                            settings.fontSize === "small"
+                              ? "text-xs"
+                              : settings.fontSize === "large"
+                              ? "text-base"
+                              : "text-sm"
                           )}
                         >
-                          {column.render ? column.render(row[column.key], row) : String(row[column.key])}
+                          {column.render
+                            ? column.render(row[column.key], row)
+                            : String(row[column.key])}
                         </TableCell>
                       ))}
                       {actions && actions.length > 0 && (
@@ -427,17 +507,23 @@ export function GenericTable<T extends Record<string, any>>({
                                 <MoreHorizontal className="h-4 w-4" />
                               </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align={direction === "rtl" ? "start" : "end"}>
+                            <DropdownMenuContent
+                              align={direction === "rtl" ? "start" : "end"}
+                            >
                               {actions.map((action, actionIndex) => (
                                 <DropdownMenuItem
                                   key={actionIndex}
                                   onClick={() => action.onClick(row)}
                                   className={cn(
-                                    action.variant === "destructive" ? "text-destructive focus:text-destructive" : "",
+                                    action.variant === "destructive"
+                                      ? "text-destructive focus:text-destructive"
+                                      : "",
                                     action.className
                                   )}
                                 >
-                                  {action.icon && <action.icon className="w-4 h-4 mr-2 rtl:mr-0 rtl:ml-2" />}
+                                  {action.icon && (
+                                    <action.icon className="w-4 h-4 mr-2 rtl:mr-0 rtl:ml-2" />
+                                  )}
                                   {action.label}
                                 </DropdownMenuItem>
                               ))}
@@ -446,7 +532,7 @@ export function GenericTable<T extends Record<string, any>>({
                         </TableCell>
                       )}
                     </TableRow>
-                  )
+                  );
                 })
               )}
             </TableBody>
@@ -465,18 +551,20 @@ export function GenericTable<T extends Record<string, any>>({
                 : settings.fontSize === "large"
                 ? "text-base"
                 : "text-sm",
+              "m-8"
             )}
           >
             {(() => {
-              const start = (pagination.currentPage - 1) * pagination.pageSize + 1
+              const start =
+                (pagination.currentPage - 1) * pagination.pageSize + 1;
               const end = Math.min(
                 pagination.currentPage * pagination.pageSize,
-                pagination.itemsCount,
-              )
-              return `${start}-${end} of ${pagination.itemsCount}`
+                pagination.itemsCount
+              );
+              return `${start}-${end} of ${pagination.itemsCount}`;
             })()}
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 m-8">
             {pagination.onPageSizeChange && (
               <Select
                 value={String(pagination.pageSize)}
@@ -501,8 +589,8 @@ export function GenericTable<T extends Record<string, any>>({
                     <PaginationPrevious
                       href="#"
                       onClick={(e) => {
-                        e.preventDefault()
-                        pagination.onPageChange(pagination.currentPage - 1)
+                        e.preventDefault();
+                        pagination.onPageChange(pagination.currentPage - 1);
                       }}
                       className={
                         pagination.currentPage === 1
@@ -511,28 +599,29 @@ export function GenericTable<T extends Record<string, any>>({
                       }
                     />
                   </PaginationItem>
-                  {Array.from({ length: pagination.pagesCount }, (_, i) => i + 1).map(
-                    (page) => (
-                      <PaginationItem key={page}>
-                        <PaginationLink
-                          href="#"
-                          isActive={page === pagination.currentPage}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            pagination.onPageChange(page)
-                          }}
-                        >
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ),
-                  )}
+                  {Array.from(
+                    { length: pagination.pagesCount },
+                    (_, i) => i + 1
+                  ).map((page) => (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        href="#"
+                        isActive={page === pagination.currentPage}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          pagination.onPageChange(page);
+                        }}
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
                   <PaginationItem>
                     <PaginationNext
                       href="#"
                       onClick={(e) => {
-                        e.preventDefault()
-                        pagination.onPageChange(pagination.currentPage + 1)
+                        e.preventDefault();
+                        pagination.onPageChange(pagination.currentPage + 1);
                       }}
                       className={
                         pagination.currentPage === pagination.pagesCount
@@ -548,5 +637,5 @@ export function GenericTable<T extends Record<string, any>>({
         </div>
       )}
     </div>
-  )
+  );
 }
