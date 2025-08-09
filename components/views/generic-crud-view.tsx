@@ -173,15 +173,23 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
 
       <GenericModal
         open={viewModel.isCreateModalOpen}
-        onClose={() => viewModel.setIsCreateModalOpen(false)}
+        onOpenChange={viewModel.setIsCreateModalOpen}
         title={`إضافة ${title}`}
       >
-        <GenericForm fields={createFields} onSubmit={viewModel.createItem} />
+        <GenericForm
+          fields={createFields}
+          onSubmit={viewModel.createItem}
+          onCancel={() => viewModel.setIsCreateModalOpen(false)}
+        />
       </GenericModal>
 
       <GenericModal
         open={viewModel.isEditModalOpen}
-        onClose={viewModel.closeEditModal}
+        onOpenChange={(open) => {
+          if (!open) {
+            viewModel.closeEditModal();
+          }
+        }}
         title={`تعديل ${title}`}
       >
         <GenericForm
@@ -191,6 +199,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             viewModel.updateItem(viewModel.editingItem.id, data)
           }
           initialValues={viewModel.editingItem || {}}
+          onCancel={viewModel.closeEditModal}
         />
       </GenericModal>
     </div>
