@@ -26,14 +26,24 @@ import { Logo } from "@/components/ui/logo";
 interface ElegantSidebarProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  collapsible?: boolean;
 }
 
-export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
+export function ElegantSidebar({
+  open,
+  onOpenChange,
+  collapsible = true,
+}: ElegantSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
   const { user } = useAuth();
-  const { sidebarStyle, animationLevel, buttonStyle, spacingSize } =
-    useSettings();
+  const {
+    sidebarStyle,
+    animationLevel,
+    buttonStyle,
+    spacingSize,
+  } = useSettings();
+
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations
@@ -233,7 +243,7 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
           "before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-white/5 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
         )}
         style={{ paddingLeft: `${16 + indent}px` }}
-        onClick={() => !item.disabled && onOpenChange(false)}
+          onClick={() => !item.disabled && collapsible && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse relative z-10">
           <div
@@ -327,21 +337,23 @@ export function ElegantSidebar({ open, onOpenChange }: ElegantSidebarProps) {
           </div>
 
           {/* Close button for mobile */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "lg:hidden absolute top-3 right-3 h-8 w-8 z-50",
-              "bg-muted/60 hover:bg-primary/10",
-              "border border-border/40 hover:border-primary/30",
-              getButtonStyleClass(),
-              getAnimationClass(),
-              "mt-12"
-            )}
-            onClick={() => onOpenChange(false)}
-          >
-            <X className="w-4 h-4" />
-          </Button>
+          {collapsible && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "lg:hidden absolute top-3 right-3 h-8 w-8 z-50",
+                "bg-muted/60 hover:bg-primary/10",
+                "border border-border/40 hover:border-primary/30",
+                getButtonStyleClass(),
+                getAnimationClass(),
+                "mt-12"
+              )}
+              onClick={() => onOpenChange(false)}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          )}
 
           {/* Compact User Info */}
           {user && (
