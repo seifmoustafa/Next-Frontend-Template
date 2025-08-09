@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import type React from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 // Define all possible setting types
 export type ColorTheme =
@@ -83,6 +84,9 @@ export type LoadingStyle = "spinner" | "dots" | "bars" | "pulse";
 export type TooltipStyle = "default" | "rounded" | "sharp" | "bubble";
 export type ModalStyle = "default" | "centered" | "fullscreen" | "drawer";
 
+export type TreeStyle = "lines" | "cards" | "minimal" | "bubble";
+export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled";
+
 interface SettingsContextType {
   // Existing settings
   colorTheme: ColorTheme;
@@ -132,6 +136,17 @@ interface SettingsContextType {
   loadingStyle: LoadingStyle;
   tooltipStyle: TooltipStyle;
   modalStyle: ModalStyle;
+
+  treeStyle: TreeStyle;
+  setTreeStyle: (style: TreeStyle) => void;
+
+  // Toast settings
+  toastDesign: ToastDesign;
+  showToastIcons: boolean;
+  toastDuration: number;
+  setToastDesign: (design: ToastDesign) => void;
+  setShowToastIcons: (show: boolean) => void;
+  setToastDuration: (duration: number) => void;
 
   // Setters
   setColorTheme: (theme: ColorTheme) => void;
@@ -226,6 +241,12 @@ const defaultSettings = {
   loadingStyle: "spinner" as LoadingStyle,
   tooltipStyle: "default" as TooltipStyle,
   modalStyle: "default" as ModalStyle,
+  treeStyle: "lines" as TreeStyle,
+  
+  // Toast settings
+  toastDesign: "minimal" as ToastDesign,
+  showToastIcons: true,
+  toastDuration: 1000,
 };
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
@@ -299,6 +320,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       root.setAttribute("data-loading-style", settings.loadingStyle);
       root.setAttribute("data-tooltip-style", settings.tooltipStyle);
       root.setAttribute("data-modal-style", settings.modalStyle);
+      root.setAttribute("data-tree-style", settings.treeStyle);
 
       // Apply CSS custom properties for responsive design
       root.style.setProperty(
@@ -418,6 +440,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setLoadingStyle: (style) => updateSetting("loadingStyle", style),
     setTooltipStyle: (style) => updateSetting("tooltipStyle", style),
     setModalStyle: (style) => updateSetting("modalStyle", style),
+    setTreeStyle: (style) => updateSetting("treeStyle", style),
+    setToastDesign: (design) => updateSetting("toastDesign", design),
+    setShowToastIcons: (show) => updateSetting("showToastIcons", show),
+    setToastDuration: (duration) => updateSetting("toastDuration", duration),
     resetSettings,
     exportSettings,
     importSettings,

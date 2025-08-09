@@ -13,6 +13,8 @@ import {
   TrendingUp,
   PieChart,
   BarChart,
+  MapPin,
+  Store,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -42,41 +44,51 @@ export interface NavigationItem {
 
 export const navigation: NavigationItem[] = [
   {
-    name: "nav.dashboard", // Uses translation key
-    href: "/",
-    icon: LayoutDashboard,
+    name: "nav.sites",
+    href: "/sites",
+    icon: MapPin,
   },
   {
-    name: "nav.users", // Uses translation key
-    icon: Users,
-    children: [
-      {
-        name: "nav.user_list",
-        href: "/users",
-        icon: Users,
-      },
-      {
-        name: "nav.user_types",
-        href: "/user-types",
-        icon: Shield,
-      },
-    ],
+    name: "nav.vendors",
+    href: "/vendors",
+    icon: Store,
   },
-  {
-    name: "nav.analytics", // Uses translation key
-    href: "/analytics",
-    icon: BarChart3,
-  },
-  {
-    name: "nav.profile",
-    href: "/profile",
-    icon: User,
-  },
-  {
-    name: "nav.settings", // Uses translation key
-    href: "/settings",
-    icon: Settings,
-  },
+  // {
+  //   name: "nav.dashboard", // Uses translation key
+  //   href: "/",
+  //   icon: LayoutDashboard,
+  // },
+  // {
+  //   name: "nav.users", // Uses translation key
+  //   icon: Users,
+  //   children: [
+  //     {
+  //       name: "nav.user_list",
+  //       href: "/users",
+  //       icon: Users,
+  //     },
+  //     {
+  //       name: "nav.user_types",
+  //       href: "/user-types",
+  //       icon: Shield,
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "nav.analytics", // Uses translation key
+  //   href: "/analytics",
+  //   icon: BarChart3,
+  // },
+  // {
+  //   name: "nav.profile",
+  //   href: "/profile",
+  //   icon: User,
+  // },
+  // {
+  //   name: "nav.settings", // Uses translation key
+  //   href: "/settings",
+  //   icon: Settings,
+  // },
 ];
 
 /* 

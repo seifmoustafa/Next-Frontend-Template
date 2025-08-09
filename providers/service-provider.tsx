@@ -7,6 +7,8 @@ import { UserService } from "@/services/user.service";
 import { UserTypeService } from "@/services/user-type.service";
 import { AnalyticsService } from "@/services/analytics.service";
 import { NotificationService } from "@/services/notification.service";
+import { SiteService } from "@/services/site.service";
+import { VendorService } from "@/services/vendor.service";
 
 interface Services {
   apiService: ApiService;
@@ -14,6 +16,8 @@ interface Services {
   userTypeService: UserTypeService;
   analyticsService: AnalyticsService;
   notificationService: NotificationService;
+  siteService: SiteService;
+  vendorService: VendorService;
 }
 
 const ServiceContext = createContext<Services | null>(null);
@@ -24,13 +28,17 @@ export function ServiceProvider({ children }: { children: React.ReactNode }) {
   const userService = new UserService(apiService, notificationService);
   const userTypeService = new UserTypeService(apiService, notificationService);
   const analyticsService = new AnalyticsService(apiService);
+  const siteService = new SiteService(apiService, notificationService);
+  const vendorService = new VendorService(apiService, notificationService);
 
   const services: Services = {
     apiService,
     userService,
     userTypeService,
     analyticsService,
+    siteService,
     notificationService,
+    vendorService,
   };
 
   return (

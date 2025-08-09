@@ -9,7 +9,7 @@ import type {
   UsersResponse,
 } from "@/services/user.service";
 import type { PaginationInfo } from "@/lib/pagination";
-import { useCrudViewModel } from "@/hooks/use-crud-view-model";
+import { useEnhancedCrudViewModel } from "@/hooks/use-enhanced-crud-view-model";
 
 export function useUsersViewModel(userService: IUserService) {
   const [pagination, setPagination] = useState<PaginationInfo>({
@@ -40,7 +40,11 @@ export function useUsersViewModel(userService: IUserService) {
     [userService, list]
   );
 
-  const crud = useCrudViewModel<User, CreateUserRequest, UpdateUserRequest>(service);
+  const crud = useEnhancedCrudViewModel<User, CreateUserRequest, UpdateUserRequest>(service, {
+    itemTypeName: "User",
+    itemTypeNamePlural: "Users", 
+    getItemDisplayName: (user: User) => `${user.firstName} ${user.lastName}`,
+  });
 
   const searchUsers = (term: string) => {
     setPagination((prev) => ({ ...prev, currentPage: 1 }));

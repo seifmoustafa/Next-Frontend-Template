@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -15,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
@@ -29,38 +30,24 @@ import {
   Palette,
   Layout,
   SettingsIcon,
-  Globe,
-  Zap,
-  Image,
+  ImageIcon,
   Download,
   Upload,
   RotateCcw,
   Eye,
-  EyeOff,
   Sparkles,
   Shield,
   Type,
   Check,
   Home,
   Users,
-  BarChart3,
   Settings,
-  Square,
-  Circle,
   User,
-  Layers,
-  MousePointer,
-  Navigation,
-  BracketsIcon as Spacing,
-  Brush,
-  Sliders,
-  Monitor,
-  Smartphone,
-  Tablet,
   Info,
   Save,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useEnhancedToast } from "@/hooks/use-enhanced-toast";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/providers/i18n-provider";
 import { GenericTable } from "@/components/ui/generic-table";
@@ -68,6 +55,7 @@ import { GenericTable } from "@/components/ui/generic-table";
 export function SettingsView() {
   const settings = useSettings();
   const { toast } = useToast();
+  const { toast: enhancedToast } = useEnhancedToast();
   const [activeTab, setActiveTab] = useState("appearance");
   const { t } = useI18n();
 
@@ -493,16 +481,36 @@ export function SettingsView() {
   const shadowOptions = [
     { value: "none", name: t("settings.shadow.none"), class: "shadow-none" },
     { value: "subtle", name: t("settings.shadow.subtle"), class: "shadow-sm" },
-    { value: "moderate", name: t("settings.shadow.moderate"), class: "shadow-md" },
+    {
+      value: "moderate",
+      name: t("settings.shadow.moderate"),
+      class: "shadow-md",
+    },
     { value: "strong", name: t("settings.shadow.strong"), class: "shadow-lg" },
   ];
 
   // Animation level options
   const animationOptions = [
-    { value: "none", name: t("settings.animation.none"), description: t("settings.animation.noneDesc") },
-    { value: "minimal", name: t("settings.animation.minimal"), description: t("settings.animation.minimalDesc") },
-    { value: "moderate", name: t("settings.animation.moderate"), description: t("settings.animation.moderateDesc") },
-    { value: "high", name: t("settings.animation.high"), description: t("settings.animation.highDesc") },
+    {
+      value: "none",
+      name: t("settings.animation.none"),
+      description: t("settings.animation.noneDesc"),
+    },
+    {
+      value: "minimal",
+      name: t("settings.animation.minimal"),
+      description: t("settings.animation.minimalDesc"),
+    },
+    {
+      value: "moderate",
+      name: t("settings.animation.moderate"),
+      description: t("settings.animation.moderateDesc"),
+    },
+    {
+      value: "high",
+      name: t("settings.animation.high"),
+      description: t("settings.animation.highDesc"),
+    },
   ];
 
   // Card style options
@@ -561,6 +569,71 @@ export function SettingsView() {
       description: "Sidebar-style navigation",
     },
   ];
+
+  const treeStyles = [
+    {
+      value: "lines",
+      name: "Lines",
+      description: "Classic hierarchical connectors",
+      preview: (
+        <div className="p-3">
+          <div className="h-2 w-24 bg-muted rounded mb-2" />
+          <div className="border-l border-muted-foreground/30 ml-4 pl-3 space-y-2">
+            <div className="h-2 w-20 bg-muted rounded" />
+            <div className="h-2 w-16 bg-muted rounded" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "cards",
+      name: "Cards",
+      description: "Stacked cards with elevation",
+      preview: (
+        <div className="p-3 space-y-2">
+          <div className="h-6 w-28 bg-card border rounded shadow-sm" />
+          <div className="pl-6 space-y-2">
+            <div className="h-6 w-24 bg-card border rounded shadow-sm" />
+            <div className="h-6 w-20 bg-card border rounded shadow-sm" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "minimal",
+      name: "Minimal",
+      description: "Subtle dashed connectors",
+      preview: (
+        <div className="p-3">
+          <div className="h-2 w-24 bg-muted rounded mb-2" />
+          <div className="border-l border-dashed border-muted-foreground/30 ml-4 pl-3 space-y-2">
+            <div className="h-2 w-20 bg-muted rounded" />
+            <div className="h-2 w-16 bg-muted rounded" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "bubble",
+      name: "Bubbles",
+      description: "Chip-like groups with wrap",
+      preview: (
+        <div className="p-3">
+          <div className="inline-flex gap-2 flex-wrap">
+            <div className="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px]">
+              Parent
+            </div>
+            <div className="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px]">
+              Child 1
+            </div>
+            <div className="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px]">
+              Child 2
+            </div>
+          </div>
+        </div>
+      ),
+    },
+  ] as const;
 
   // Icon style options
   const iconStyles = [
@@ -1256,6 +1329,48 @@ export function SettingsView() {
                   </CardContent>
                 </Card>
 
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Tree Style</CardTitle>
+                    <CardDescription>
+                      Choose how hierarchical trees are rendered across the app
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      {treeStyles.map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.treeStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setTreeStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-2">
+                            <h4 className="font-semibold">{style.name}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {style.description}
+                            </p>
+                            <div className="bg-muted/30 rounded">
+                              {style.preview}
+                            </div>
+                          </div>
+                          {settings.treeStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
                 {/* Navigation Styles */}
                 <Card>
                   <CardHeader>
@@ -1937,7 +2052,7 @@ export function SettingsView() {
                             icon: Sparkles,
                           },
                           { value: "shield", name: "Shield", icon: Shield },
-                          { value: "image", name: "Image", icon: Image },
+                          { value: "image", name: "Image", icon: ImageIcon },
                           { value: "custom", name: "Custom Text", icon: Type },
                         ].map((type) => (
                           <div
@@ -2099,7 +2214,9 @@ export function SettingsView() {
                           </Label>
                           <Input
                             value={settings.logoText}
-                            onChange={(e) => settings.setLogoText(e.target.value)}
+                            onChange={(e) =>
+                              settings.setLogoText(e.target.value)
+                            }
                             placeholder="Enter logo text..."
                             className="max-w-xs"
                           />
@@ -2132,6 +2249,224 @@ export function SettingsView() {
                       </div>
                       <p className="text-xs text-muted-foreground text-center">
                         Live preview of your logo with current settings
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Toast Design Settings */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Toast Notifications</CardTitle>
+                    <CardDescription>
+                      Customize the appearance and behavior of toast notifications
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    {/* Toast Design */}
+                    <div className="space-y-3">
+                      <Label className="text-sm font-semibold">Toast Design</Label>
+                      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        {[
+                          {
+                            value: "minimal",
+                            name: "Minimal",
+                            description: "Clean and simple",
+                            preview: "border bg-background",
+                          },
+                          {
+                            value: "modern",
+                            name: "Modern",
+                            description: "Blur and transparency",
+                            preview: "backdrop-blur-sm bg-opacity-90 border",
+                          },
+                          {
+                            value: "gradient",
+                            name: "Gradient",
+                            description: "Colorful gradients",
+                            preview: "bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0",
+                          },
+                          {
+                            value: "outlined",
+                            name: "Outlined",
+                            description: "Bold borders",
+                            preview: "border-2 bg-transparent backdrop-blur-sm",
+                          },
+                          {
+                            value: "filled",
+                            name: "Filled",
+                            description: "Solid backgrounds",
+                            preview: "border-0 shadow-xl bg-primary text-primary-foreground",
+                          },
+                        ].map((design) => (
+                          <div
+                            key={design.value}
+                            className={cn(
+                              "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                              settings.toastDesign === design.value
+                                ? "border-primary ring-2 ring-primary/20"
+                                : "border-muted hover:border-muted-foreground/50"
+                            )}
+                            onClick={() =>
+                              settings.setToastDesign?.(design.value as any)
+                            }
+                          >
+                            <div className="space-y-3">
+                              <div
+                                className={cn(
+                                  "h-12 rounded p-2 text-xs flex items-center justify-center",
+                                  design.preview
+                                )}
+                              >
+                                Toast Preview
+                              </div>
+                              <div className="text-center">
+                                <p className="text-sm font-medium">{design.name}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {design.description}
+                                </p>
+                              </div>
+                            </div>
+                            {settings.toastDesign === design.value && (
+                              <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                                <Check className="h-3 w-3 text-primary-foreground" />
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Separator />
+
+                    {/* Toast Options */}
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                          <Label>Show Icons in Toasts</Label>
+                          <p className="text-sm text-muted-foreground">
+                            Display icons in toast notifications
+                          </p>
+                        </div>
+                        <Switch
+                          checked={settings.showToastIcons ?? true}
+                          onCheckedChange={settings.setShowToastIcons}
+                        />
+                      </div>
+
+                      <Separator />
+
+                      <div className="space-y-3">
+                        <Label className="text-sm font-semibold">Toast Duration</Label>
+                        <div className="grid grid-cols-4 gap-4">
+                          {[
+                            { value: 1000, name: "1s", description: "Quick" },
+                            { value: 3000, name: "3s", description: "Normal" },
+                            { value: 5000, name: "5s", description: "Long" },
+                            { value: 10000, name: "10s", description: "Extended" },
+                          ].map((duration) => (
+                            <div
+                              key={duration.value}
+                              className={cn(
+                                "relative cursor-pointer rounded-lg border-2 p-3 transition-all hover:scale-105",
+                                settings.toastDuration === duration.value
+                                  ? "border-primary ring-2 ring-primary/20"
+                                  : "border-muted hover:border-muted-foreground/50"
+                              )}
+                              onClick={() =>
+                                settings.setToastDuration?.(duration.value)
+                              }
+                            >
+                              <div className="text-center space-y-1">
+                                <p className="text-lg font-bold">{duration.name}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {duration.description}
+                                </p>
+                              </div>
+                              {settings.toastDuration === duration.value && (
+                                <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                                  <Check className="h-3 w-3 text-primary-foreground" />
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <Separator />
+
+                    {/* Toast Preview */}
+                    <div className="space-y-3">
+                      <Label className="text-sm font-semibold">Test Toasts</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <Button
+                          variant="default"
+                          size="sm"
+                          onClick={() => {
+                            enhancedToast({
+                              title: "Success!",
+                              description: "Operation completed successfully.",
+                              variant: "success",
+                              design: settings.toastDesign,
+                              showIcon: settings.showToastIcons,
+                              duration: settings.toastDuration,
+                            });
+                          }}
+                        >
+                          Success
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => {
+                            enhancedToast({
+                              title: "Error!",
+                              description: "Something went wrong.",
+                              variant: "destructive",
+                              design: settings.toastDesign,
+                              showIcon: settings.showToastIcons,
+                              duration: settings.toastDuration,
+                            });
+                          }}
+                        >
+                          Error
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            enhancedToast({
+                              title: "Warning!",
+                              description: "Please check your input.",
+                              variant: "warning",
+                              design: settings.toastDesign,
+                              showIcon: settings.showToastIcons,
+                              duration: settings.toastDuration,
+                            });
+                          }}
+                        >
+                          Warning
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => {
+                            enhancedToast({
+                              title: "Info",
+                              description: "Here's some information.",
+                              variant: "info",
+                              design: settings.toastDesign,
+                              showIcon: settings.showToastIcons,
+                              duration: settings.toastDuration,
+                            });
+                          }}
+                        >
+                          Info
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Click buttons to test different toast styles with your current settings
                       </p>
                     </div>
                   </CardContent>
@@ -2337,7 +2672,7 @@ export function SettingsView() {
                       Small Button
                     </Button>
                     <Button className="w-full">Default Button</Button>
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full bg-transparent">
                       Outline Button
                     </Button>
                     <Button variant="secondary" className="w-full">

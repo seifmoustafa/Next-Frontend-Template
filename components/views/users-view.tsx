@@ -59,31 +59,34 @@ export function UsersView() {
     },
     {
       label: t("common.delete"),
-      onClick: (item: User) => viewModel.deleteItem(item.id),
+      onClick: (item: User) => viewModel.deleteItem(item),
       variant: "ghost" as const,
       className: "text-red-600 hover:text-red-700",
     },
   ];
 
   return (
-    <GenericCrudView
-      title={t("users.title")}
-      subtitle={t("users.subtitle")}
-      columns={columns}
-      actions={actions}
-      createFields={createFields}
-      editFields={editFields}
-      viewModel={viewModel}
-      pagination={{
-        ...viewModel.pagination,
-        onPageChange: viewModel.changePage,
-        onPageSizeChange: viewModel.changePageSize,
-      }}
-      search={{
-        value: viewModel.searchTerm,
-        onChange: viewModel.searchUsers,
-      }}
-    />
+    <>
+      <GenericCrudView
+        title={t("users.title")}
+        subtitle={t("users.subtitle")}
+        columns={columns}
+        actions={actions}
+        createFields={createFields}
+        editFields={editFields}
+        viewModel={viewModel}
+        pagination={{
+          ...viewModel.pagination,
+          onPageChange: viewModel.changePage,
+          onPageSizeChange: viewModel.changePageSize,
+        }}
+        search={{
+          value: viewModel.searchTerm,
+          onChange: viewModel.searchUsers,
+        }}
+      />
+      <viewModel.ConfirmationDialog />
+    </>
   );
 }
 

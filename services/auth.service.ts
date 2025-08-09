@@ -1,15 +1,15 @@
 import { ApiService, type IApiService } from "./api.service";
+import { API_ENDPOINTS } from "@/lib/constants";
 
 export interface LoginRequest {
   username: string;
-  password: string;
+  password?: string;
 }
 
 export interface LoginResponse {
   success: boolean;
   accessToken: string;
   refreshToken: string;
-  message?: string;
 }
 
 export interface User {
@@ -21,104 +21,58 @@ export interface User {
   adminTypeName: string;
 }
 
-export interface IAuthService {
-  login(credentials: LoginRequest): Promise<LoginResponse>;
-  logout(): Promise<void>;
-  getCurrentUser(): Promise<User>;
-  refreshToken(): Promise<LoginResponse>;
-}
+export class AuthService {
+  constructor(private readonly apiService: IApiService) {}
 
-export class AuthService implements IAuthService {
-  private apiService: IApiService;
-
-  constructor(apiService?: IApiService) {
-    this.apiService = apiService || new ApiService();
-  }
-
-  async login(credentials: LoginRequest): Promise<LoginResponse> {
-    try {
-      console.log(
-        "AuthService: Attempting login for user:",
-        credentials.username
-      );
-
-      const response = await this.apiService.post<LoginResponse>(
-        "/admin/auth/login",
-        credentials
-      );
-
-      console.log("AuthService: Login response received:", {
-        success: response.success,
-      });
-
-      return response;
-    } catch (error) {
-      console.error("AuthService: Login failed:", error);
-      throw new Error("فشل في تسجيل الدخول. يرجى التحقق من بيانات الاعتماد.");
+  async login(credentials: LoginRequest): Promise<User> {
+    const response = await this.apiService.post<LoginResponse>(
+      API_ENDPOINTS.LOGIN,
+      credentials
+    );
+    if (response.accessToken) {
+      localStorage.setItem("accessToken", response.accessToken);
+      localStorage.setItem("refreshToken", response.refreshToken);
+      return this.getMe();
     }
+    throw new Error("Login failed: No access token received.");
   }
 
   async logout(): Promise<void> {
-    try {
-      console.log("AuthService: Attempting logout");
-
-      await this.apiService.post("/admin/auth/logout");
-
-      // Clear tokens from localStorage
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-
-      console.log("AuthService: Logout successful");
-    } catch (error) {
-      console.error("AuthService: Logout failed:", error);
-      // Still clear tokens even if API call fails
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      throw error;
-    }
+    await this.apiService.post(API_ENDPOINTS.LOGOUT);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   }
 
-  async getCurrentUser(): Promise<User> {
-    try {
-      console.log("AuthService: Fetching current user");
-
-      const user = await this.apiService.get<User>("/admins/me");
-
-      console.log("AuthService: User data received:", {
-        id: user.id,
-        username: user.username,
-      });
-
-      return user;
-    } catch (error) {
-      console.error("AuthService: Failed to get current user:", error);
-      throw new Error("فشل في جلب بيانات المستخدم.");
-    }
+  async getMe(): Promise<User> {
+    return this.apiService.get<User>("/admins/me");
   }
 
-  async refreshToken(): Promise<LoginResponse> {
+  hasToken(): boolean {
+    return !!localStorage.getItem("accessToken");
+  }
+
+  async refreshToken(): Promise<LoginResponse | null> {
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!refreshToken) {
+      return null;
+    }
+
     try {
-      const refreshToken = localStorage.getItem("refreshToken");
-
-      if (!refreshToken) {
-        throw new Error("No refresh token available");
-      }
-
-      console.log("AuthService: Attempting token refresh");
-
       const response = await this.apiService.post<LoginResponse>(
-        "/admin/auth/refresh",
-        {
-          refreshToken,
-        }
+        API_ENDPOINTS.REFRESH,
+        { refreshToken }
       );
-
-      console.log("AuthService: Token refresh successful");
-
+      if (response.accessToken) {
+        localStorage.setItem("accessToken", response.accessToken);
+      }
       return response;
     } catch (error) {
-      console.error("AuthService: Token refresh failed:", error);
-      throw new Error("فشل في تحديث الجلسة.");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      return null;
     }
   }
 }
+
+const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL);
+export const authService = new AuthService(apiService);

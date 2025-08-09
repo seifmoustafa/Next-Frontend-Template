@@ -263,12 +263,32 @@ export const ar = {
   "common.edit": "تعديل",
   "common.view": "عرض",
   "common.add": "إضافة",
+  "common.add_child": "إضافة فرع",
+  "common.will_add_under": "سيتم إضافته تحت",
+  "common.root": "الجذر",
   "common.loading": "جاري التحميل...",
   "common.noData": "لا توجد بيانات متاحة",
   "common.error": "حدث خطأ",
   "common.success": "تم بنجاح",
   "common.retry": "إعادة المحاولة",
   "common.user": "مستخدم",
+  
+  // Confirmation Dialogs
+  "common.confirmDelete": "تأكيد الحذف",
+  "common.deleteConfirmation": "هل أنت متأكد من حذف هذا {itemType}؟",
+  "common.deleteWarning": "لا يمكن التراجع عن هذا الإجراء.",
+  "common.deleting": "جاري الحذف...",
+  
+  // Toast Messages
+  "toast.created": "تم إنشاء {itemType}",
+  "toast.updated": "تم تحديث {itemType}", 
+  "toast.deleted": "تم حذف {itemType}",
+  "toast.createSuccess": "تم إنشاء {itemName} بنجاح.",
+  "toast.updateSuccess": "تم تحديث {itemName} بنجاح.",
+  "toast.deleteSuccess": "تم حذف {itemName} بنجاح.",
+  "toast.createError": "فشل في إنشاء {itemType}. يرجى المحاولة مرة أخرى.",
+  "toast.updateError": "فشل في تحديث {itemType}. يرجى المحاولة مرة أخرى.",
+  "toast.deleteError": "فشل في حذف {itemType}. يرجى المحاولة مرة أخرى.",
 
   // Table
   "table.select": "تحديد",
@@ -347,7 +367,6 @@ export const ar = {
   "nav.pos_application": "تطبيق نقاط البيع",
   "nav.travel": "السفر",
 
-  "nav.user_list": "قائمة المستخدمين",
   "nav.add_user": "إضافة مستخدم",
   "nav.user_roles": "أدوار المستخدمين",
   "nav.view_roles": "عرض الأدوار",
@@ -397,7 +416,6 @@ export const ar = {
   "settings.tabs.components": "المكونات",
   "settings.tabs.typography": "الخطوط",
   "settings.tabs.behavior": "السلوك",
-  "settings.resetAll": "إعادة تعيين الكل",
   "settings.exportSuccess": "تم تصدير الإعدادات",
   "settings.exportSuccessDesc": "تم تصدير إعداداتك بنجاح.",
   "settings.importSuccess": "تم استيراد الإعدادات",

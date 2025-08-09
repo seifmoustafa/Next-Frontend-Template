@@ -37,21 +37,24 @@ export function UserTypesView() {
     },
     {
       label: t("common.delete"),
-      onClick: (item: UserType) => viewModel.deleteItem(item.id),
+      onClick: (item: UserType) => viewModel.deleteItem(item),
       variant: "ghost" as const,
       className: "text-red-600 hover:text-red-700",
     },
   ];
 
   return (
-    <GenericCrudView
-      title={t("userTypes.title")}
-      subtitle={t("userTypes.subtitle")}
-      columns={columns}
-      actions={actions}
-      createFields={fields}
-      viewModel={viewModel}
-    />
+    <>
+      <GenericCrudView
+        title={t("userTypes.title")}
+        subtitle={t("userTypes.subtitle")}
+        columns={columns}
+        actions={actions}
+        createFields={fields}
+        viewModel={viewModel}
+      />
+      <viewModel.ConfirmationDialog />
+    </>
   );
 }
 

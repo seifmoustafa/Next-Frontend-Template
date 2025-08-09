@@ -361,8 +361,9 @@ export function ClassicSidebar({
                           "bg-gradient-to-br from-cyan-500/20 to-cyan-600/10"
                       )}
                     >
-                      {user.firstName.charAt(0)}
-                      {user.lastName.charAt(0)}
+                     {/*{ user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}*/}
+{user.username}
                     </AvatarFallback>
                   </Avatar>
                   {/* Online indicator */}

@@ -5,7 +5,7 @@ export const en = {
   "auth.password": "Password",
   "auth.loginButton": "Sign In",
   "auth.loginError": "Invalid username or password",
-  "auth.welcome": "Welcome to Admin Dashboard",
+  "auth.welcome": "Contract Management System",
   "auth.pleaseLogin": "Please sign in to continue",
   "auth.usernamePlaceholder": "superadmin",
   "auth.connectionError": "Server connection error. Please try again.",
@@ -266,12 +266,33 @@ export const en = {
   "common.edit": "Edit",
   "common.view": "View",
   "common.add": "Add",
+  "common.add_child": "Add child",
+  "common.will_add_under": "Will be added under",
+  "common.root": "Root",
   "common.loading": "Loading...",
   "common.noData": "No data available",
   "common.error": "An error occurred",
   "common.success": "Success",
   "common.retry": "Try Again",
   "common.user": "User",
+  
+  // Confirmation Dialogs
+  "common.confirmDelete": "Confirm Delete",
+  "common.deleteConfirmation": "Are you sure you want to delete this {itemType}?",
+  "common.deleteWarning": "This action cannot be undone.",
+  "common.deleting": "Deleting...",
+
+  
+  // Toast Messages
+  "toast.created": "{itemType} Created",
+  "toast.updated": "{itemType} Updated", 
+  "toast.deleted": "{itemType} Deleted",
+  "toast.createSuccess": "{itemName} has been created successfully.",
+  "toast.updateSuccess": "{itemName} has been updated successfully.",
+  "toast.deleteSuccess": "{itemName} has been deleted successfully.",
+  "toast.createError": "Failed to create {itemType}. Please try again.",
+  "toast.updateError": "Failed to update {itemType}. Please try again.",
+  "toast.deleteError": "Failed to delete {itemType}. Please try again.",
 
   // Table
   "table.select": "Select",
@@ -350,7 +371,6 @@ export const en = {
   "nav.pos_application": "POS Application",
   "nav.travel": "Travel",
 
-  "nav.user_list": "User List",
   "nav.add_user": "Add User",
   "nav.user_roles": "User Roles",
   "nav.view_roles": "View Roles",
@@ -376,12 +396,9 @@ export const en = {
   "layout.toggle_panel": "Toggle Panel",
   "layout.search_placeholder": "Search...",
   "layout.user_menu": "User Menu",
-  "layout.logout": "Logout",
-  "layout.profile": "Profile",
   "layout.account_settings": "Account Settings",
 
   // Settings
-  "settings.title": "Settings",
   "settings.layout_description": "Choose your preferred layout style",
   "settings.theme": "Theme",
   "settings.theme_description": "Select your theme preference",
@@ -400,7 +417,6 @@ export const en = {
   "settings.tabs.components": "Components",
   "settings.tabs.typography": "Typography",
   "settings.tabs.behavior": "Behavior",
-  "settings.resetAll": "Reset All",
   "settings.exportSuccess": "Settings Exported",
   "settings.exportSuccessDesc": "Your settings have been exported successfully.",
   "settings.importSuccess": "Settings Imported",

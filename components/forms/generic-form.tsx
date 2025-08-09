@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
@@ -18,16 +19,17 @@ export interface FieldOption {
 export interface FieldConfig {
   name: string;
   label: string;
-  type: "text" | "password" | "select";
+  type: "text" | "password" | "select" | "switch" | "hidden";
   placeholder?: string;
   required?: boolean;
   options?: FieldOption[];
+  defaultValue?: any;
 }
 
 interface GenericFormProps {
   fields: FieldConfig[];
-  initialValues?: Record<string, string>;
-  onSubmit: (data: Record<string, string>) => Promise<void>;
+  initialValues?: Record<string, any>;
+  onSubmit: (data: Record<string, any>) => Promise<void>;
   onCancel: () => void;
 }
 
@@ -39,10 +41,19 @@ export function GenericForm({
 }: GenericFormProps) {
   const settings = useSettings();
   const { t } = useI18n();
-  const [formData, setFormData] = useState<Record<string, string>>(initialValues);
+  const [formData, setFormData] = useState<Record<string, any>>(() => {
+    const data = { ...initialValues };
+    // Set default values for fields that have them
+    fields.forEach(field => {
+      if (field.defaultValue !== undefined && data[field.name] === undefined) {
+        data[field.name] = field.defaultValue;
+      }
+    });
+    return data;
+  });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (name: string, value: string) => {
+  const handleChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -136,40 +147,60 @@ export function GenericForm({
   return (
     <div className="w-full max-h-[70vh] overflow-y-auto">
       <form onSubmit={handleSubmit} className={getFormSpacing()}>
-        {fields.map((field) => (
-          <div key={field.name} className={getFieldSpacing()}>
-            <Label htmlFor={field.name} className="font-medium">
-              {field.label}
-            </Label>
-            {field.type === "select" ? (
-              <Select
-                value={formData[field.name] || ""}
-                onValueChange={(value) => handleChange(field.name, value)}
-              >
-                <SelectTrigger className={getInputHeight()}>
-                  <SelectValue placeholder={field.placeholder} />
-                </SelectTrigger>
-                <SelectContent>
-                  {field.options?.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <Input
-                id={field.name}
-                type={field.type}
-                value={formData[field.name] || ""}
-                onChange={(e) => handleChange(field.name, e.target.value)}
-                required={field.required}
-                className={getInputHeight()}
-                placeholder={field.placeholder}
-              />
-            )}
-          </div>
-        ))}
+        {fields.map((field) => 
+          field.type === "hidden" ? (
+            <input
+              key={field.name}
+              type="hidden"
+              name={field.name}
+              value={formData[field.name] || ""}
+            />
+          ) : (
+            <div key={field.name} className={getFieldSpacing()}>
+              <Label htmlFor={field.name} className="font-medium">
+                {field.label}
+              </Label>
+              {field.type === "select" ? (
+                <Select
+                  value={formData[field.name] || ""}
+                  onValueChange={(value) => handleChange(field.name, value)}
+                >
+                  <SelectTrigger className={getInputHeight()}>
+                    <SelectValue placeholder={field.placeholder} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {field.options?.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : field.type === "switch" ? (
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id={field.name}
+                    checked={formData[field.name] || false}
+                    onCheckedChange={(checked) => handleChange(field.name, checked)}
+                  />
+                  <Label htmlFor={field.name} className="text-sm text-muted-foreground">
+                    {formData[field.name] ? t("common.yes") : t("common.no")}
+                  </Label>
+                </div>
+              ) : (
+                <Input
+                  id={field.name}
+                  type={field.type}
+                  value={formData[field.name] || ""}
+                  onChange={(e) => handleChange(field.name, e.target.value)}
+                  required={field.required}
+                  className={getInputHeight()}
+                  placeholder={field.placeholder}
+                />
+              )}
+            </div>
+          )
+        )}
 
         <Separator />
 

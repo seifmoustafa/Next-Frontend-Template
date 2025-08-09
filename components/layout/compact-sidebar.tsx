@@ -67,8 +67,6 @@ export function CompactSidebar({
     );
   };
 
-  
-
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
     const isActive = isNavigationItemActive(item, pathname);
     const isExpanded = expandedItems.includes(item.name);
@@ -281,8 +279,9 @@ export function CompactSidebar({
                     )}
                   >
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary text-sm font-semibold">
-                      {user.firstName.charAt(0)}
-                      {user.lastName.charAt(0)}
+                      {/*{ user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}*/}
+                      {user.username}
                     </AvatarFallback>
                   </Avatar>
                   {/* Online indicator */}

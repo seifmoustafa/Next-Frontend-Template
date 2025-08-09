@@ -1,4 +1,5 @@
-import type { IApiService } from "./api.service";
+import { ApiService, type IApiService } from "./api.service";
+import { API_ENDPOINTS } from "@/lib/constants";
 import type { INotificationService } from "./notification.service";
 import type { PaginationInfo } from "@/lib/pagination";
 
@@ -73,7 +74,7 @@ export class UserService implements IUserService {
       if (params?.search) queryParams.append("search", params.search);
 
       const response = await this.apiService.get<UsersResponse>(
-        `/admins?${queryParams.toString()}`
+        `${API_ENDPOINTS.GET_USERS}?${queryParams.toString()}`
       );
       return response;
     } catch (error) {
@@ -84,7 +85,7 @@ export class UserService implements IUserService {
 
   async getUserById(id: string): Promise<User> {
     try {
-      const user = await this.apiService.get<User>(`/admins/${id}`);
+      const user = await this.apiService.get<User>(API_ENDPOINTS.GET_USER(id));
       return user;
     } catch (error) {
       this.notificationService.error("فشل في جلب بيانات المستخدم");
@@ -94,7 +95,7 @@ export class UserService implements IUserService {
 
   async createUser(data: CreateUserRequest): Promise<User> {
     try {
-      const user = await this.apiService.post<User>("/admins", data);
+      const user = await this.apiService.post<User>(API_ENDPOINTS.CREATE_USER, data);
       this.notificationService.success("تم إنشاء المستخدم بنجاح");
       return user;
     } catch (error) {
@@ -105,7 +106,7 @@ export class UserService implements IUserService {
 
   async updateUser(id: string, data: UpdateUserRequest): Promise<User> {
     try {
-      const user = await this.apiService.put<User>(`/admins/${id}`, data);
+      const user = await this.apiService.put<User>(API_ENDPOINTS.UPDATE_USER(id), data);
       this.notificationService.success("تم تحديث المستخدم بنجاح");
       return user;
     } catch (error) {
@@ -116,7 +117,7 @@ export class UserService implements IUserService {
 
   async deleteUser(id: string): Promise<void> {
     try {
-      await this.apiService.delete(`/admins/${id}`);
+      await this.apiService.delete(API_ENDPOINTS.DELETE_USER(id));
       this.notificationService.success("تم حذف المستخدم بنجاح");
     } catch (error) {
       this.notificationService.error("فشل في حذف المستخدم");
@@ -129,7 +130,7 @@ export class UserService implements IUserService {
   ): Promise<DeleteSelectedUsersResponse> {
     try {
       const response = await this.apiService.post<DeleteSelectedUsersResponse>(
-        "/admins/selected",
+        API_ENDPOINTS.DELETE_SELECTED_USERS,
         {
           usersIds: userIds,
         }
