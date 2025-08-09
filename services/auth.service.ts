@@ -1,4 +1,5 @@
 import { ApiService, type IApiService } from "./api.service";
+import { API_ENDPOINTS } from "@/config/api-endpoints";
 
 export interface LoginRequest {
   username: string;
@@ -43,7 +44,7 @@ export class AuthService implements IAuthService {
       );
 
       const response = await this.apiService.post<LoginResponse>(
-        "/admin/auth/login",
+        API_ENDPOINTS.AUTH_LOGIN,
         credentials
       );
 
@@ -62,7 +63,7 @@ export class AuthService implements IAuthService {
     try {
       console.log("AuthService: Attempting logout");
 
-      await this.apiService.post("/admin/auth/logout");
+      await this.apiService.post(API_ENDPOINTS.AUTH_LOGOUT);
 
       // Clear tokens from localStorage
       localStorage.removeItem("accessToken");
@@ -82,7 +83,7 @@ export class AuthService implements IAuthService {
     try {
       console.log("AuthService: Fetching current user");
 
-      const user = await this.apiService.get<User>("/admins/me");
+      const user = await this.apiService.get<User>(API_ENDPOINTS.ADMINS_ME);
 
       console.log("AuthService: User data received:", {
         id: user.id,
@@ -107,7 +108,7 @@ export class AuthService implements IAuthService {
       console.log("AuthService: Attempting token refresh");
 
       const response = await this.apiService.post<LoginResponse>(
-        "/admin/auth/refresh",
+        API_ENDPOINTS.AUTH_REFRESH,
         {
           refreshToken,
         }

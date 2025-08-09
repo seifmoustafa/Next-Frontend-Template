@@ -13,6 +13,7 @@ import { useI18n } from "@/providers/i18n-provider"
 import { User, Save, Loader2, Lock, Eye, EyeOff, Shield, Phone } from "lucide-react"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { ErrorMessage } from "@/components/ui/error-message"
+import { API_ENDPOINTS } from "@/config/api-endpoints"
 
 interface UserProfile {
   id: string
@@ -78,7 +79,7 @@ export function ProfileView() {
       const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api"
       const token = localStorage.getItem("accessToken")
 
-      const response = await fetch(`${baseUrl}/admins/me`, {
+      const response = await fetch(`${baseUrl}${API_ENDPOINTS.ADMINS_ME}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
@@ -114,7 +115,7 @@ export function ProfileView() {
       const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api"
       const token = localStorage.getItem("accessToken")
 
-      const response = await fetch(`${baseUrl}/admins/me`, {
+      const response = await fetch(`${baseUrl}${API_ENDPOINTS.ADMINS_ME}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -163,17 +164,20 @@ export function ProfileView() {
       const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api"
       const token = localStorage.getItem("accessToken")
 
-      const response = await fetch(`${baseUrl}/admins/me/password`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          currentPassword: passwordFormData.currentPassword,
-          newPassword: passwordFormData.newPassword,
-        }),
-      })
+      const response = await fetch(
+        `${baseUrl}${API_ENDPOINTS.ADMINS_ME_PASSWORD}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            currentPassword: passwordFormData.currentPassword,
+            newPassword: passwordFormData.newPassword,
+          }),
+        }
+      )
 
       if (!response.ok) {
         if (response.status === 400) {
