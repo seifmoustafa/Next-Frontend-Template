@@ -8,13 +8,18 @@ import type {
   UpdateUserRequest,
   UsersResponse,
 } from "@/services/user.service";
+import type { PaginationInfo } from "@/lib/pagination";
 
 export function useUsersViewModel(userService: IUserService) {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [total, setTotal] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState<PaginationInfo>({
+    itemCount: 0,
+    pageSize: 10,
+    currentPage: 1,
+    pageCount: 1,
+  });
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
@@ -30,12 +35,11 @@ export function useUsersViewModel(userService: IUserService) {
         setError(null);
         const response: UsersResponse = await userService.getUsers({
           page,
-          pageSize: 10,
+          pageSize: pagination.pageSize,
           search,
         });
         setUsers(response.data);
-        setTotal(response.pagination.itemsCount);
-        setCurrentPage(page);
+        setPagination(response.pagination);
         setSearchTerm(search);
       } catch (err) {
         setError(err instanceof Error ? err.message : "حدث خطأ");
@@ -43,13 +47,13 @@ export function useUsersViewModel(userService: IUserService) {
         setLoading(false);
       }
     },
-    [userService]
+    [userService, pagination.pageSize]
   );
 
   const createUser = async (userData: CreateUserRequest) => {
     try {
       await userService.createUser(userData);
-      await loadUsers(currentPage, searchTerm);
+      await loadUsers(pagination.currentPage, searchTerm);
       setIsCreateModalOpen(false);
     } catch (err) {
       throw err;
@@ -59,7 +63,7 @@ export function useUsersViewModel(userService: IUserService) {
   const updateUser = async (id: string, userData: UpdateUserRequest) => {
     try {
       await userService.updateUser(id, userData);
-      await loadUsers(currentPage, searchTerm);
+      await loadUsers(pagination.currentPage, searchTerm);
       setIsEditModalOpen(false);
       setEditingUser(null);
     } catch (err) {
@@ -71,7 +75,7 @@ export function useUsersViewModel(userService: IUserService) {
     try {
       if (confirm("هل أنت متأكد من حذف هذا المستخدم؟")) {
         await userService.deleteUser(id);
-        await loadUsers(currentPage, searchTerm);
+        await loadUsers(pagination.currentPage, searchTerm);
       }
     } catch (err) {
       throw err;
@@ -84,7 +88,7 @@ export function useUsersViewModel(userService: IUserService) {
       if (confirm(`هل أنت متأكد من حذف ${selectedUsers.length} مستخدم؟`)) {
         await userService.deleteSelectedUsers(selectedUsers);
         setSelectedUsers([]);
-        await loadUsers(currentPage, searchTerm);
+        await loadUsers(pagination.currentPage, searchTerm);
       }
     } catch (err) {
       throw err;
@@ -131,8 +135,7 @@ export function useUsersViewModel(userService: IUserService) {
     users,
     loading,
     error,
-    total,
-    currentPage,
+    pagination,
     searchTerm,
     selectedUsers,
     isCreateModalOpen,
@@ -149,6 +152,6 @@ export function useUsersViewModel(userService: IUserService) {
     setIsCreateModalOpen,
     searchUsers,
     changePage,
-    refreshUsers: () => loadUsers(currentPage, searchTerm),
+    refreshUsers: () => loadUsers(pagination.currentPage, searchTerm),
   };
 }

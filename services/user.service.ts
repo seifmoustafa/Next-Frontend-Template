@@ -1,5 +1,6 @@
 import type { IApiService } from "./api.service";
 import type { INotificationService } from "./notification.service";
+import type { PaginationInfo } from "@/lib/pagination";
 
 export interface User {
   id: string;
@@ -12,18 +13,7 @@ export interface User {
 
 export interface UsersResponse {
   data: User[];
-  pagination: {
-    itemsCount: number;
-    pagesCount: number;
-    pageSize: number;
-    currentPage: number;
-    firstPage: number | null;
-    lastPage: number | null;
-    nextPage: number | null;
-    previousPage: number | null;
-    hasPrevious: boolean;
-    hasNext: boolean;
-  };
+  pagination: PaginationInfo;
 }
 
 export interface CreateUserRequest {
