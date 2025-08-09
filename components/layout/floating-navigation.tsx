@@ -322,9 +322,8 @@ export function FloatingNavigation({
                     )}
                   >
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold">
-                     {/*{ user.firstName.charAt(0) ?? user.username}
-                      {user.lastName.charAt(0) ?? ""}*/}
-{user.username}
+                      { user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}
                     </AvatarFallback>
                   </Avatar>
                   {/* Online indicator */}
