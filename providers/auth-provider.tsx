@@ -1,8 +1,9 @@
 "use client";
 
 import type React from "react";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { AuthService } from "@/services/auth.service";
 
 interface User {
   id: string;
@@ -28,8 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  // Define baseUrl once for the whole provider
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+  const authService = useMemo(() => new AuthService(), []);
 
   const isAuthenticated = !!user;
 
@@ -38,56 +38,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string
   ): Promise<boolean> => {
     try {
-      const loginUrl = `${baseUrl}/admin/auth/login`;
-
-      console.log("Attempting login to:", loginUrl); // Debug log
-
-      const response = await fetch(loginUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      console.log("Response status:", response.status); // Debug log
-
-      if (!response.ok) {
-        console.error("Response not ok:", response.status, response.statusText);
-        return false;
-      }
-
-      const data = await response.json();
-      console.log("Login response:", data); // Debug log
+      const data = await authService.login({ username, password });
 
       if (data.success && data.accessToken) {
-        // Store tokens
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
 
-        // Get user data
-        const userUrl = `${baseUrl}/admins/me`;
-        console.log("Fetching user data from:", userUrl); // Debug log
-
-        const userResponse = await fetch(userUrl, {
-          headers: {
-            Authorization: `Bearer ${data.accessToken}`,
-            Accept: "application/json",
-          },
-        });
-
-        if (!userResponse.ok) {
-          console.error(
-            "User fetch failed:",
-            userResponse.status,
-            userResponse.statusText
-          );
-          return false;
-        }
-
-        const userData = await userResponse.json();
-        console.log("User data:", userData); // Debug log
+        const userData = await authService.getCurrentUser();
         setUser(userData);
 
         return true;
@@ -97,43 +54,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false;
     } catch (error) {
       console.error("Login error details:", error);
-
-      // More specific error handling
-      if (error instanceof TypeError && error.message.includes("fetch")) {
-        console.error(
-          "Network error - check if API server is running and CORS is configured"
-        );
-      }
-
       return false;
     }
   };
 
   const logout = async () => {
-    const logoutUrl = `${baseUrl}/admin/auth/logout`;
-    const accessToken = localStorage.getItem("accessToken");
-
     try {
-      const response = await fetch(logoutUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: "application/json",
-        },
-      });
-
-      if (response.status === 204) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        setUser(null);
-        router.push("/login");
-      } else {
-        // Optionally handle unsuccessful logout
-        console.error("Logout failed:", response.status, response.statusText);
-      }
+      await authService.logout();
+      setUser(null);
+      router.push("/login");
     } catch (error) {
       console.error("Logout error:", error);
-      // Optionally handle network errors
     }
   };
 
@@ -146,24 +77,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      const userUrl = `${baseUrl}/admins/me`;
-
-      const response = await fetch(userUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-      } else {
-        // Token is invalid
-        console.log("Token invalid, clearing storage");
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-      }
+      const userData = await authService.getCurrentUser();
+      setUser(userData);
     } catch (error) {
       console.error("Auth check error:", error);
       localStorage.removeItem("accessToken");
