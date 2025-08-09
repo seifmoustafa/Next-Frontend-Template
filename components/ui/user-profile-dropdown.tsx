@@ -67,9 +67,15 @@ export function UserProfileDropdown({
     setIsOpen(false);
   };
 
-  const handleSignOut = () => {
-    logout();
-    setIsOpen(false);
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Keep dropdown open if logout fails so user can try again
+      // You could also show a toast notification here
+    }
   };
 
   const getAvatarSize = () => {

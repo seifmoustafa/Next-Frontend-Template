@@ -53,12 +53,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     try {
       await authService.logout();
+      // Only clear user state and redirect if logout was successful
       setUser(null);
       router.push("/login");
     } catch (error) {
       console.error("Logout failed in provider:", error);
-      setUser(null);
-      router.push("/login");
+      // Don't clear user state or redirect if logout failed
+      // This keeps the user logged in if the server logout fails
+      throw error;
     }
   };
 

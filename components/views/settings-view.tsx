@@ -65,7 +65,7 @@ export function SettingsView() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "app-settings.json";
+    a.download = t("settings.exportFileName");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -90,7 +90,7 @@ export function SettingsView() {
               description: t("settings.importSuccessDesc"),
             });
           } else {
-            throw new Error("Invalid format");
+            throw new Error(t("settings.invalidFormat"));
           }
         } catch (error) {
           toast({
@@ -116,13 +116,13 @@ export function SettingsView() {
     try {
       localStorage.setItem("dashboard-settings", settings.exportSettings());
       toast({
-        title: "Settings saved",
-        description: "Your preferences have been stored",
+        title: t("settings.saveSuccess"),
+        description: t("settings.saveSuccessDesc"),
       });
     } catch (error) {
       toast({
-        title: "Save failed",
-        description: "Could not save settings", // simple message
+        title: t("settings.saveFailed"),
+        description: t("settings.saveFailedDesc"),
         variant: "destructive",
       });
     }
@@ -288,8 +288,8 @@ export function SettingsView() {
   const layoutTemplates = [
     {
       value: "modern",
-      name: "Modern",
-      description: "Clean and contemporary",
+      name: t("settings.layoutTemplate.options.modern.name"),
+      description: t("settings.layoutTemplate.options.modern.description"),
       preview: (
         <div className="w-full h-16 bg-gradient-to-r from-gray-100 to-gray-200 rounded flex">
           <div className="w-12 bg-gray-300 rounded-l"></div>
@@ -302,8 +302,8 @@ export function SettingsView() {
     },
     {
       value: "classic",
-      name: "Classic",
-      description: "Traditional layout",
+      name: t("settings.layoutTemplate.options.classic.name"),
+      description: t("settings.layoutTemplate.options.classic.description"),
       preview: (
         <div className="w-full h-16 bg-white border rounded flex">
           <div className="w-12 bg-gray-100 border-r"></div>
@@ -316,8 +316,8 @@ export function SettingsView() {
     },
     {
       value: "compact",
-      name: "Compact",
-      description: "Space-efficient",
+      name: t("settings.layoutTemplate.options.compact.name"),
+      description: t("settings.layoutTemplate.options.compact.description"),
       preview: (
         <div className="w-full h-16 bg-gray-50 rounded flex">
           <div className="w-8 bg-gray-200"></div>
@@ -331,8 +331,8 @@ export function SettingsView() {
     },
     {
       value: "elegant",
-      name: "Elegant",
-      description: "Sophisticated design",
+      name: t("settings.layoutTemplate.options.elegant.name"),
+      description: t("settings.layoutTemplate.options.elegant.description"),
       preview: (
         <div className="w-full h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded shadow-sm flex">
           <div className="w-12 bg-gradient-to-b from-gray-200 to-gray-300 rounded-l"></div>
@@ -345,8 +345,8 @@ export function SettingsView() {
     },
     {
       value: "minimal",
-      name: "Minimal",
-      description: "Clean and simple",
+      name: t("settings.layoutTemplate.options.minimal.name"),
+      description: t("settings.layoutTemplate.options.minimal.description"),
       preview: (
         <div className="w-full h-16 bg-white rounded border-l-2 border-gray-300 flex">
           <div className="w-10 bg-gray-50"></div>
@@ -359,8 +359,8 @@ export function SettingsView() {
     },
     {
       value: "floating",
-      name: "Floating",
-      description: "Cards and overlays",
+      name: t("settings.layoutTemplate.options.floating.name"),
+      description: t("settings.layoutTemplate.options.floating.description"),
       preview: (
         <div className="w-full h-16 bg-gradient-to-r from-blue-50 to-purple-50 rounded relative">
           <div className="absolute top-1 left-1 w-8 h-6 bg-white rounded shadow"></div>
@@ -371,8 +371,8 @@ export function SettingsView() {
     },
     {
       value: "navigation",
-      name: "Navigation",
-      description: "Dual sidebar system",
+      name: t("settings.layoutTemplate.options.navigation.name"),
+      description: t("settings.layoutTemplate.options.navigation.description"),
       preview: (
         <div className="w-full h-16 bg-gray-100 rounded flex">
           <div className="w-6 bg-gray-300"></div>
@@ -390,91 +390,91 @@ export function SettingsView() {
   const fontSizes = [
     {
       value: "small",
-      name: "Small",
+      name: t("fontSize.small"),
       example: "text-sm",
-      description: "14px base size",
+      description: t("fontSize.smallDesc"),
     },
     {
       value: "default",
-      name: "Default",
+      name: t("fontSize.default"),
       example: "text-base",
-      description: "16px base size",
+      description: t("fontSize.defaultDesc"),
     },
     {
       value: "large",
-      name: "Large",
+      name: t("fontSize.large"),
       example: "text-lg",
-      description: "18px base size",
+      description: t("fontSize.largeDesc"),
     },
   ];
 
   // Border radius options with visual examples - UPDATED WITH MORE OPTIONS
   const borderRadiusOptions = [
-    { value: "none", name: "None", class: "rounded-none", px: "0px" },
-    { value: "small", name: "Small", class: "rounded-sm", px: "2px" },
-    { value: "default", name: "Default", class: "rounded", px: "4px" },
-    { value: "large", name: "Large", class: "rounded-lg", px: "8px" },
-    { value: "full", name: "Full", class: "rounded-full", px: "9999px" },
+    { value: "none", name: t("radius.none"), class: "rounded-none", px: "0px" },
+    { value: "small", name: t("radius.small"), class: "rounded-sm", px: "2px" },
+    { value: "default", name: t("radius.default"), class: "rounded", px: "4px" },
+    { value: "large", name: t("radius.large"), class: "rounded-lg", px: "8px" },
+    { value: "full", name: t("radius.full"), class: "rounded-full", px: "9999px" },
   ];
 
   // Button style options - UPDATED WITH MORE GRANULAR RADIUS OPTIONS
   const buttonStyles = [
     {
       value: "default",
-      name: "Default",
+      name: t("settings.buttonStyle.options.default.name"),
       class: "rounded-md",
-      description: "6px radius",
+      description: t("settings.buttonStyle.options.default.description"),
     },
     {
       value: "small-round",
-      name: "Small Round",
+      name: t("settings.buttonStyle.options.smallRound.name"),
       class: "rounded",
-      description: "4px radius",
+      description: t("settings.buttonStyle.options.smallRound.description"),
     },
     {
       value: "medium-round",
-      name: "Medium Round",
+      name: t("settings.buttonStyle.options.mediumRound.name"),
       class: "rounded-lg",
-      description: "8px radius",
+      description: t("settings.buttonStyle.options.mediumRound.description"),
     },
     {
       value: "large-round",
-      name: "Large Round",
+      name: t("settings.buttonStyle.options.largeRound.name"),
       class: "rounded-xl",
-      description: "12px radius",
+      description: t("settings.buttonStyle.options.largeRound.description"),
     },
     {
       value: "extra-round",
-      name: "Extra Round",
+      name: t("settings.buttonStyle.options.extraRound.name"),
       class: "rounded-2xl",
-      description: "16px radius",
+      description: t("settings.buttonStyle.options.extraRound.description"),
     },
     {
       value: "super-round",
-      name: "Super Round",
+      name: t("settings.buttonStyle.options.superRound.name"),
       class: "rounded-3xl",
-      description: "24px radius",
+      description: t("settings.buttonStyle.options.superRound.description"),
     },
     {
       value: "rounded",
-      name: "Full Round",
+      name: t("settings.buttonStyle.options.rounded.name"),
       class: "rounded-full",
-      description: "Fully rounded",
+      description: t("settings.buttonStyle.options.rounded.description"),
     },
     {
       value: "sharp",
-      name: "Sharp",
+      name: t("settings.buttonStyle.options.sharp.name"),
       class: "rounded-none",
-      description: "No radius",
+      description: t("settings.buttonStyle.options.sharp.description"),
     },
   ];
 
   // Spacing options with visual examples
   const spacingOptions = [
-    { value: "compact", name: "Compact", spacing: "p-2 gap-1" },
-    { value: "default", name: "Default", spacing: "p-4 gap-2" },
-    { value: "comfortable", name: "Comfortable", spacing: "p-6 gap-3" },
-    { value: "spacious", name: "Spacious", spacing: "p-8 gap-4" },
+    { value: "compact", name: t("settings.spacing.options.compact"), spacing: "p-2 gap-1" },
+    { value: "default", name: t("settings.spacing.options.default"), spacing: "p-4 gap-2" },
+    { value: "comfortable", name: t("settings.spacing.options.comfortable"), spacing: "p-6 gap-3" },
+    { value: "spacious", name: t("settings.spacing.options.spacious"), spacing: "p-8 gap-4" },
   ];
 
   // Shadow intensity options
@@ -515,69 +515,101 @@ export function SettingsView() {
 
   // Card style options
   const cardStyles = [
-    { value: "default", name: "Default", class: "border bg-card" },
+    { value: "default", name: t("cardStyle.default"), class: "border bg-card" },
     {
       value: "glass",
-      name: "Glass",
+      name: t("cardStyle.glass"),
       class: "bg-white/10 backdrop-blur border border-white/20",
     },
-    { value: "solid", name: "Solid", class: "bg-gray-100 border-0" },
-    { value: "bordered", name: "Bordered", class: "border-2 bg-card" },
+    { value: "solid", name: t("cardStyle.solid"), class: "bg-gray-100 border-0" },
+    { value: "bordered", name: t("cardStyle.bordered"), class: "border-2 bg-card" },
     {
       value: "elevated",
-      name: "Elevated",
+      name: t("settings.cardStyleOptions.elevated"),
       class: "shadow-lg bg-card border-0",
     },
   ];
 
   // Header style options
   const headerStyles = [
-    { value: "default", name: "Default", description: "Standard header" },
-    { value: "compact", name: "Compact", description: "Smaller height" },
-    { value: "elevated", name: "Elevated", description: "With shadow" },
+    {
+      value: "default",
+      name: t("settings.headerStyle.options.default.name"),
+      description: t("settings.headerStyle.options.default.description"),
+    },
+    {
+      value: "compact",
+      name: t("settings.headerStyle.options.compact.name"),
+      description: t("settings.headerStyle.options.compact.description"),
+    },
+    {
+      value: "elevated",
+      name: t("settings.headerStyle.options.elevated.name"),
+      description: t("settings.headerStyle.options.elevated.description"),
+    },
     {
       value: "transparent",
-      name: "Transparent",
-      description: "Transparent background",
+      name: t("settings.headerStyle.options.transparent.name"),
+      description: t("settings.headerStyle.options.transparent.description"),
     },
   ];
 
   // Sidebar style options
   const sidebarStyles = [
-    { value: "default", name: "Default", description: "Standard sidebar" },
-    { value: "compact", name: "Compact", description: "Narrower width" },
+    {
+      value: "default",
+      name: t("settings.sidebarStyle.options.default.name"),
+      description: t("settings.sidebarStyle.options.default.description"),
+    },
+    {
+      value: "compact",
+      name: t("settings.sidebarStyle.options.compact.name"),
+      description: t("settings.sidebarStyle.options.compact.description"),
+    },
     {
       value: "floating",
-      name: "Floating",
-      description: "Floating with margin",
+      name: t("settings.sidebarStyle.options.floating.name"),
+      description: t("settings.sidebarStyle.options.floating.description"),
     },
-    { value: "minimal", name: "Minimal", description: "Clean design" },
+    {
+      value: "minimal",
+      name: t("settings.sidebarStyle.options.minimal.name"),
+      description: t("settings.sidebarStyle.options.minimal.description"),
+    },
   ];
 
   // Navigation style options
   const navigationStyles = [
-    { value: "default", name: "Default", description: "Standard navigation" },
-    { value: "pills", name: "Pills", description: "Pill-shaped items" },
+    {
+      value: "default",
+      name: t("settings.navigationStyle.options.default.name"),
+      description: t("settings.navigationStyle.options.default.description"),
+    },
+    {
+      value: "pills",
+      name: t("settings.navigationStyle.options.pills.name"),
+      description: t("settings.navigationStyle.options.pills.description"),
+    },
     {
       value: "underline",
-      name: "Underline",
-      description: "Underlined active items",
+      name: t("settings.navigationStyle.options.underline.name"),
+      description: t("settings.navigationStyle.options.underline.description"),
     },
     {
       value: "sidebar",
-      name: "Sidebar",
-      description: "Sidebar-style navigation",
+      name: t("settings.navigationStyle.options.sidebar.name"),
+      description: t("settings.navigationStyle.options.sidebar.description"),
     },
   ];
 
   const treeStyles = [
     {
       value: "lines",
-      name: "Lines",
-      description: "Classic hierarchical connectors",
+      name: t("settings.treeStyle.options.lines.name"),
+      description: t("settings.treeStyle.options.lines.description"),
       preview: (
         <div className="p-3">
-          <div className="h-2 w-24 bg-muted rounded mb-2" />
+            <div className="h-2 w-24 bg-muted rounded mb-2" />
           <div className="border-l border-muted-foreground/30 ml-4 pl-3 space-y-2">
             <div className="h-2 w-20 bg-muted rounded" />
             <div className="h-2 w-16 bg-muted rounded" />
@@ -587,8 +619,8 @@ export function SettingsView() {
     },
     {
       value: "cards",
-      name: "Cards",
-      description: "Stacked cards with elevation",
+      name: t("settings.treeStyle.options.cards.name"),
+      description: t("settings.treeStyle.options.cards.description"),
       preview: (
         <div className="p-3 space-y-2">
           <div className="h-6 w-28 bg-card border rounded shadow-sm" />
@@ -601,8 +633,8 @@ export function SettingsView() {
     },
     {
       value: "minimal",
-      name: "Minimal",
-      description: "Subtle dashed connectors",
+      name: t("settings.treeStyle.options.minimal.name"),
+      description: t("settings.treeStyle.options.minimal.description"),
       preview: (
         <div className="p-3">
           <div className="h-2 w-24 bg-muted rounded mb-2" />
@@ -615,19 +647,19 @@ export function SettingsView() {
     },
     {
       value: "bubble",
-      name: "Bubbles",
-      description: "Chip-like groups with wrap",
+      name: t("settings.treeStyle.options.bubble.name"),
+      description: t("settings.treeStyle.options.bubble.description"),
       preview: (
         <div className="p-3">
           <div className="inline-flex gap-2 flex-wrap">
             <div className="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px]">
-              Parent
+              {t("settings.treeStyle.sample.parent")}
             </div>
             <div className="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px]">
-              Child 1
+              {t("settings.treeStyle.sample.child1")}
             </div>
             <div className="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px]">
-              Child 2
+              {t("settings.treeStyle.sample.child2")}
             </div>
           </div>
         </div>
@@ -637,74 +669,118 @@ export function SettingsView() {
 
   // Icon style options
   const iconStyles = [
-    { value: "outline", name: "Outline", description: "Outlined icons" },
-    { value: "filled", name: "Filled", description: "Filled icons" },
-    { value: "duotone", name: "Duotone", description: "Two-tone icons" },
-    { value: "minimal", name: "Minimal", description: "Simple icons" },
+    {
+      value: "outline",
+      name: t("settings.iconStyle.options.outline.name"),
+      description: t("settings.iconStyle.options.outline.description"),
+    },
+    {
+      value: "filled",
+      name: t("settings.iconStyle.options.filled.name"),
+      description: t("settings.iconStyle.options.filled.description"),
+    },
+    {
+      value: "duotone",
+      name: t("settings.iconStyle.options.duotone.name"),
+      description: t("settings.iconStyle.options.duotone.description"),
+    },
+    {
+      value: "minimal",
+      name: t("settings.iconStyle.options.minimal.name"),
+      description: t("settings.iconStyle.options.minimal.description"),
+    },
   ];
 
   // Input style options
   const inputStyles = [
-    { value: "default", name: "Default", class: "rounded-md border" },
-    { value: "rounded", name: "Rounded", class: "rounded-full border px-4" },
+    { value: "default", name: t("settings.inputStyle.options.default"), class: "rounded-md border" },
+    { value: "rounded", name: t("settings.inputStyle.options.rounded"), class: "rounded-full border px-4" },
     {
       value: "underlined",
-      name: "Underlined",
+      name: t("settings.inputStyle.options.underlined"),
       class: "rounded-none border-0 border-b-2 px-0",
     },
-    { value: "filled", name: "Filled", class: "rounded-lg bg-muted border-0" },
+    { value: "filled", name: t("settings.inputStyle.options.filled"), class: "rounded-lg bg-muted border-0" },
   ];
 
   // Table style options
   const tableStyles = [
-    { value: "default", name: "Default", description: "Clean table design" },
+    {
+      value: "default",
+      name: t("settings.tableStyle.options.default.name"),
+      description: t("settings.tableStyle.options.default.description"),
+    },
     {
       value: "striped",
-      name: "Striped",
-      description: "Alternating row colors",
+      name: t("settings.tableStyle.options.striped.name"),
+      description: t("settings.tableStyle.options.striped.description"),
     },
-    { value: "bordered", name: "Bordered", description: "Full borders" },
-    { value: "minimal", name: "Minimal", description: "No borders" },
+    {
+      value: "bordered",
+      name: t("settings.tableStyle.options.bordered.name"),
+      description: t("settings.tableStyle.options.bordered.description"),
+    },
+    {
+      value: "minimal",
+      name: t("settings.tableStyle.options.minimal.name"),
+      description: t("settings.tableStyle.options.minimal.description"),
+    },
   ];
 
   // Badge style options
   const badgeStyles = [
-    { value: "default", name: "Default", class: "rounded-full" },
-    { value: "rounded", name: "Rounded", class: "rounded-lg" },
-    { value: "square", name: "Square", class: "rounded-none" },
-    { value: "pill", name: "Pill", class: "rounded-full px-3" },
+    { value: "default", name: t("settings.badgeStyle.options.default"), class: "rounded-full" },
+    { value: "rounded", name: t("settings.badgeStyle.options.rounded"), class: "rounded-lg" },
+    { value: "square", name: t("settings.badgeStyle.options.square"), class: "rounded-none" },
+    { value: "pill", name: t("settings.badgeStyle.options.pill"), class: "rounded-full px-3" },
   ];
 
   // Avatar style options
   const avatarStyles = [
-    { value: "default", name: "Default", class: "rounded-full" },
-    { value: "rounded", name: "Rounded", class: "rounded-lg" },
-    { value: "square", name: "Square", class: "rounded-none" },
-    { value: "hexagon", name: "Hexagon", class: "rounded-full" },
+    { value: "default", name: t("settings.avatarStyle.options.default"), class: "rounded-full" },
+    { value: "rounded", name: t("settings.avatarStyle.options.rounded"), class: "rounded-lg" },
+    { value: "square", name: t("settings.avatarStyle.options.square"), class: "rounded-none" },
+    { value: "hexagon", name: t("settings.avatarStyle.options.hexagon"), class: "rounded-full" },
   ];
 
   // Form style options
   const formStyles = [
-    { value: "default", name: "Default", description: "Standard form layout" },
-    { value: "compact", name: "Compact", description: "Tighter spacing" },
-    { value: "spacious", name: "Spacious", description: "More breathing room" },
-    { value: "inline", name: "Inline", description: "Horizontal layout" },
+    {
+      value: "default",
+      name: t("settings.formStyle.options.default.name"),
+      description: t("settings.formStyle.options.default.description"),
+    },
+    {
+      value: "compact",
+      name: t("settings.formStyle.options.compact.name"),
+      description: t("settings.formStyle.options.compact.description"),
+    },
+    {
+      value: "spacious",
+      name: t("settings.formStyle.options.spacious.name"),
+      description: t("settings.formStyle.options.spacious.description"),
+    },
+    {
+      value: "inline",
+      name: t("settings.formStyle.options.inline.name"),
+      description: t("settings.formStyle.options.inline.description"),
+    },
   ];
 
   // Loading style options - UPDATED WITH ACTUAL COMPONENTS
   const loadingStyles = [
     {
       value: "spinner",
-      name: "Spinner",
-      description: "Rotating spinner",
+      name: t("settings.loadingStyle.options.spinner.name"),
+      description: t("settings.loadingStyle.options.spinner.description"),
       component: (
         <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
       ),
     },
     {
       value: "dots",
-      name: "Dots",
-      description: "Bouncing dots",
+      name: t("settings.loadingStyle.options.dots.name"),
+      description: t("settings.loadingStyle.options.dots.description"),
       component: (
         <div className="flex space-x-1">
           <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
@@ -715,8 +791,8 @@ export function SettingsView() {
     },
     {
       value: "bars",
-      name: "Bars",
-      description: "Loading bars",
+      name: t("settings.loadingStyle.options.bars.name"),
+      description: t("settings.loadingStyle.options.bars.description"),
       component: (
         <div className="flex space-x-1">
           <div className="w-1 h-6 bg-primary animate-pulse"></div>
@@ -727,8 +803,8 @@ export function SettingsView() {
     },
     {
       value: "pulse",
-      name: "Pulse",
-      description: "Pulsing effect",
+      name: t("settings.loadingStyle.options.pulse.name"),
+      description: t("settings.loadingStyle.options.pulse.description"),
       component: (
         <div className="w-6 h-6 bg-primary rounded animate-pulse"></div>
       ),
@@ -737,45 +813,73 @@ export function SettingsView() {
 
   // Tooltip style options - UPDATED WITH ACTUAL TOOLTIPS
   const tooltipStyles = [
-    { value: "default", name: "Default", description: "Standard tooltip" },
-    { value: "rounded", name: "Rounded", description: "Rounded corners" },
-    { value: "sharp", name: "Sharp", description: "Sharp corners" },
-    { value: "bubble", name: "Bubble", description: "Speech bubble style" },
+    {
+      value: "default",
+      name: t("settings.tooltipStyle.options.default.name"),
+      description: t("settings.tooltipStyle.options.default.description"),
+    },
+    {
+      value: "rounded",
+      name: t("settings.tooltipStyle.options.rounded.name"),
+      description: t("settings.tooltipStyle.options.rounded.description"),
+    },
+    {
+      value: "sharp",
+      name: t("settings.tooltipStyle.options.sharp.name"),
+      description: t("settings.tooltipStyle.options.sharp.description"),
+    },
+    {
+      value: "bubble",
+      name: t("settings.tooltipStyle.options.bubble.name"),
+      description: t("settings.tooltipStyle.options.bubble.description"),
+    },
   ];
 
   // Modal style options
   const modalStyles = [
-    { value: "default", name: "Default", description: "Centered modal" },
-    { value: "centered", name: "Centered", description: "Always centered" },
+    {
+      value: "default",
+      name: t("settings.modalStyle.options.default.name"),
+      description: t("settings.modalStyle.options.default.description"),
+    },
+    {
+      value: "centered",
+      name: t("settings.modalStyle.options.centered.name"),
+      description: t("settings.modalStyle.options.centered.description"),
+    },
     {
       value: "fullscreen",
-      name: "Fullscreen",
-      description: "Full screen overlay",
+      name: t("settings.modalStyle.options.fullscreen.name"),
+      description: t("settings.modalStyle.options.fullscreen.description"),
     },
-    { value: "drawer", name: "Drawer", description: "Side drawer style" },
+    {
+      value: "drawer",
+      name: t("settings.modalStyle.options.drawer.name"),
+      description: t("settings.modalStyle.options.drawer.description"),
+    },
   ];
 
   // Sample data for live preview
   const sampleTableData = [
-    { id: 1, name: "John Doe", email: "john@example.com", status: "Active" },
+    { id: 1, name: "John Doe", email: "john@example.com", status: "active" },
     {
       id: 2,
       name: "Jane Smith",
       email: "jane@example.com",
-      status: "Inactive",
+      status: "inactive",
     },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com", status: "Active" },
+    { id: 3, name: "Bob Johnson", email: "bob@example.com", status: "active" },
   ];
 
   const sampleTableColumns = [
-    { key: "name", label: "Name", sortable: true },
-    { key: "email", label: "Email", sortable: true },
+    { key: "name", label: t("settings.sampleTable.name"), sortable: true },
+    { key: "email", label: t("settings.sampleTable.email"), sortable: true },
     {
       key: "status",
-      label: "Status",
+      label: t("settings.sampleTable.status"),
       render: (value: string) => (
-        <Badge variant={value === "Active" ? "default" : "secondary"}>
-          {value}
+        <Badge variant={value === "active" ? "default" : "secondary"}>
+          {t(`settings.sampleTable.${value}`)}
         </Badge>
       ),
     },
@@ -786,20 +890,20 @@ export function SettingsView() {
       <div className="container mx-auto p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Settings</h1>
+            <h1 className="text-3xl font-bold">{t("settings.pageTitle")}</h1>
             <p className="text-muted-foreground">
-              Customize your application experience
+              {t("settings.pageSubtitle")}
             </p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={handleExportSettings}>
               <Download className="h-4 w-4 mr-2" />
-              Export
+              {t("common.export")}
             </Button>
             <Button variant="outline" asChild>
               <label htmlFor="import-settings" className="cursor-pointer">
                 <Upload className="h-4 w-4 mr-2" />
-                Import
+                {t("common.import")}
               </label>
             </Button>
             <input
@@ -815,7 +919,7 @@ export function SettingsView() {
               disabled={settings.autoSave}
             >
               <Save className="h-4 w-4 mr-2" />
-              Save
+              {t("common.save")}
             </Button>
             <Button variant="destructive" onClick={handleResetSettings}>
               <RotateCcw className="h-4 w-4 mr-2" />
@@ -824,9 +928,9 @@ export function SettingsView() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           {/* Settings Panel */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <Tabs
               value={activeTab}
               onValueChange={setActiveTab}
@@ -1085,9 +1189,9 @@ export function SettingsView() {
                 {/* Layout Templates */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Layout Template</CardTitle>
+                    <CardTitle>{t("settings.layoutTemplate.title")}</CardTitle>
                     <CardDescription>
-                      Choose your preferred layout style
+                      {t("settings.layoutTemplate.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1128,9 +1232,9 @@ export function SettingsView() {
                 {/* Header Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Header Style</CardTitle>
+                    <CardTitle>{t("settings.headerStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how the header should appear
+                      {t("settings.headerStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1177,9 +1281,9 @@ export function SettingsView() {
                 {/* Sidebar Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Sidebar Style</CardTitle>
+                    <CardTitle>{t("settings.sidebarStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how the sidebar should appear
+                      {t("settings.sidebarStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1231,9 +1335,9 @@ export function SettingsView() {
                 {/* Card Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Card Style</CardTitle>
+                    <CardTitle>{t("settings.cardStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how cards should appear throughout the app
+                      {t("settings.cardStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1279,9 +1383,9 @@ export function SettingsView() {
                 {/* Button Styles - UPDATED WITH MORE OPTIONS */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Button Style</CardTitle>
+                    <CardTitle>{t("settings.buttonStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how buttons should appear throughout the app
+                      {t("settings.buttonStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1331,9 +1435,9 @@ export function SettingsView() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Tree Style</CardTitle>
+                    <CardTitle>{t("settings.treeStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how hierarchical trees are rendered across the app
+                      {t("settings.treeStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1374,9 +1478,9 @@ export function SettingsView() {
                 {/* Navigation Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Navigation Style</CardTitle>
+                    <CardTitle>{t("settings.navigationStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how navigation should appear
+                      {t("settings.navigationStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1440,9 +1544,9 @@ export function SettingsView() {
                 {/* Icon Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Icon Style</CardTitle>
+                    <CardTitle>{t("settings.iconStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how icons should appear throughout the app
+                      {t("settings.iconStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1485,9 +1589,9 @@ export function SettingsView() {
                 {/* Input Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Input Style</CardTitle>
+                    <CardTitle>{t("settings.inputStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how input fields should appear
+                      {t("settings.inputStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1530,9 +1634,9 @@ export function SettingsView() {
                 {/* Table Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Table Style</CardTitle>
+                    <CardTitle>{t("settings.tableStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how tables should appear throughout the app
+                      {t("settings.tableStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1602,9 +1706,9 @@ export function SettingsView() {
                 {/* Badge Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Badge Style</CardTitle>
+                    <CardTitle>{t("settings.badgeStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how badges should appear throughout the app
+                      {t("settings.badgeStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1649,9 +1753,9 @@ export function SettingsView() {
                 {/* Avatar Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Avatar Style</CardTitle>
+                    <CardTitle>{t("settings.avatarStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how avatars should appear throughout the app
+                      {t("settings.avatarStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1699,9 +1803,9 @@ export function SettingsView() {
                 {/* Font Sizes */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Font Size</CardTitle>
+                    <CardTitle>{t("settings.fontSizeSection.title")}</CardTitle>
                     <CardDescription>
-                      Adjust the base font size for better readability
+                      {t("settings.fontSizeSection.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1747,9 +1851,9 @@ export function SettingsView() {
                 {/* Border Radius */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Border Radius</CardTitle>
+                    <CardTitle>{t("settings.borderRadius.title")}</CardTitle>
                     <CardDescription>
-                      Choose how rounded corners should appear
+                      {t("settings.borderRadius.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1791,9 +1895,9 @@ export function SettingsView() {
                 {/* Spacing */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Spacing</CardTitle>
+                    <CardTitle>{t("settings.spacing.title")}</CardTitle>
                     <CardDescription>
-                      Control the spacing between elements
+                      {t("settings.spacing.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1831,9 +1935,9 @@ export function SettingsView() {
                 {/* Form Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Form Style</CardTitle>
+                    <CardTitle>{t("settings.formStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how forms should be laid out
+                      {t("settings.formStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1883,9 +1987,9 @@ export function SettingsView() {
                 {/* Loading Styles - UPDATED WITH ACTUAL COMPONENTS */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Loading Style</CardTitle>
+                    <CardTitle>{t("settings.loadingStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how loading indicators should appear
+                      {t("settings.loadingStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1926,9 +2030,9 @@ export function SettingsView() {
                 {/* Tooltip Styles - UPDATED WITH ACTUAL TOOLTIPS */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Tooltip Style</CardTitle>
+                    <CardTitle>{t("settings.tooltipStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how tooltips should appear
+                      {t("settings.tooltipStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1981,9 +2085,9 @@ export function SettingsView() {
                 {/* Modal Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Modal Style</CardTitle>
+                    <CardTitle>{t("settings.modalStyle.title")}</CardTitle>
                     <CardDescription>
-                      Choose how modals should appear
+                      {t("settings.modalStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -2035,25 +2139,39 @@ export function SettingsView() {
                 {/* Logo Settings */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Logo Settings</CardTitle>
+                    <CardTitle>{t("settings.logo.title")}</CardTitle>
                     <CardDescription>
-                      Customize your application logo appearance
+                      {t("settings.logo.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {/* Logo Type */}
                     <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Logo Type</Label>
+                      <Label className="text-sm font-semibold">
+                        {t("settings.logo.typeLabel")}
+                      </Label>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {[
                           {
                             value: "sparkles",
-                            name: "Sparkles",
+                            name: t("logoType.sparkles"),
                             icon: Sparkles,
                           },
-                          { value: "shield", name: "Shield", icon: Shield },
-                          { value: "image", name: "Image", icon: ImageIcon },
-                          { value: "custom", name: "Custom Text", icon: Type },
+                          {
+                            value: "shield",
+                            name: t("logoType.shield"),
+                            icon: Shield,
+                          },
+                          {
+                            value: "image",
+                            name: t("logoType.image"),
+                            icon: ImageIcon,
+                          },
+                          {
+                            value: "custom",
+                            name: t("logoType.customText"),
+                            icon: Type,
+                          },
                         ].map((type) => (
                           <div
                             key={type.value}
@@ -2089,14 +2207,36 @@ export function SettingsView() {
 
                     {/* Logo Size */}
                     <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Logo Size</Label>
+                      <Label className="text-sm font-semibold">
+                        {t("settings.logo.sizeLabel")}
+                      </Label>
                       <div className="grid grid-cols-5 gap-4">
                         {[
-                          { value: "xs", name: "XS", size: "h-4 w-4" },
-                          { value: "sm", name: "SM", size: "h-5 w-5" },
-                          { value: "md", name: "MD", size: "h-6 w-6" },
-                          { value: "lg", name: "LG", size: "h-8 w-8" },
-                          { value: "xl", name: "XL", size: "h-10 w-10" },
+                          {
+                            value: "xs",
+                            name: t("settings.logo.sizeOptions.xs"),
+                            size: "h-4 w-4",
+                          },
+                          {
+                            value: "sm",
+                            name: t("settings.logo.sizeOptions.sm"),
+                            size: "h-5 w-5",
+                          },
+                          {
+                            value: "md",
+                            name: t("settings.logo.sizeOptions.md"),
+                            size: "h-6 w-6",
+                          },
+                          {
+                            value: "lg",
+                            name: t("settings.logo.sizeOptions.lg"),
+                            size: "h-8 w-8",
+                          },
+                          {
+                            value: "xl",
+                            name: t("settings.logo.sizeOptions.xl"),
+                            size: "h-10 w-10",
+                          },
                         ].map((size) => (
                           <div
                             key={size.value}
@@ -2210,18 +2350,18 @@ export function SettingsView() {
                       <>
                         <div className="space-y-3">
                           <Label className="text-sm font-semibold">
-                            Logo Text
+                            {t("settings.logo.textLabel")}
                           </Label>
                           <Input
                             value={settings.logoText}
                             onChange={(e) =>
                               settings.setLogoText(e.target.value)
                             }
-                            placeholder="Enter logo text..."
+                            placeholder={t("settings.logo.textPlaceholder")}
                             className="max-w-xs"
                           />
                           <p className="text-xs text-muted-foreground">
-                            Text displayed as the logo
+                            {t("settings.logo.textHelp")}
                           </p>
                         </div>
                         <Separator />
@@ -2232,7 +2372,7 @@ export function SettingsView() {
                       <>
                         <div className="space-y-3">
                           <p className="text-sm text-muted-foreground">
-                            The image logo uses the file at /app-logo.png
+                            {t("settings.logo.imageInfo")}
                           </p>
                         </div>
                         <Separator />
@@ -2242,13 +2382,13 @@ export function SettingsView() {
                     {/* Logo Preview */}
                     <div className="space-y-3">
                       <Label className="text-sm font-semibold">
-                        Logo Preview
+                        {t("settings.logo.previewLabel")}
                       </Label>
                       <div className="flex items-center justify-center p-6 border rounded-lg bg-muted/20">
                         <Logo showText={true} />
                       </div>
                       <p className="text-xs text-muted-foreground text-center">
-                        Live preview of your logo with current settings
+                        {t("settings.logo.previewHelp")}
                       </p>
                     </div>
                   </CardContent>
@@ -2257,46 +2397,70 @@ export function SettingsView() {
                 {/* Toast Design Settings */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Toast Notifications</CardTitle>
+                    <CardTitle>{t("settings.toast.title")}</CardTitle>
                     <CardDescription>
-                      Customize the appearance and behavior of toast notifications
+                      {t("settings.toast.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {/* Toast Design */}
                     <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Toast Design</Label>
+                      <Label className="text-sm font-semibold">
+                        {t("settings.toast.designLabel")}
+                      </Label>
                       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                         {[
                           {
                             value: "minimal",
-                            name: "Minimal",
-                            description: "Clean and simple",
+                            name: t(
+                              "settings.toast.designOptions.minimal.name"
+                            ),
+                            description: t(
+                              "settings.toast.designOptions.minimal.description"
+                            ),
                             preview: "border bg-background",
                           },
                           {
                             value: "modern",
-                            name: "Modern",
-                            description: "Blur and transparency",
+                            name: t(
+                              "settings.toast.designOptions.modern.name"
+                            ),
+                            description: t(
+                              "settings.toast.designOptions.modern.description"
+                            ),
                             preview: "backdrop-blur-sm bg-opacity-90 border",
                           },
                           {
                             value: "gradient",
-                            name: "Gradient",
-                            description: "Colorful gradients",
-                            preview: "bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0",
+                            name: t(
+                              "settings.toast.designOptions.gradient.name"
+                            ),
+                            description: t(
+                              "settings.toast.designOptions.gradient.description"
+                            ),
+                            preview:
+                              "bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0",
                           },
                           {
                             value: "outlined",
-                            name: "Outlined",
-                            description: "Bold borders",
+                            name: t(
+                              "settings.toast.designOptions.outlined.name"
+                            ),
+                            description: t(
+                              "settings.toast.designOptions.outlined.description"
+                            ),
                             preview: "border-2 bg-transparent backdrop-blur-sm",
                           },
                           {
                             value: "filled",
-                            name: "Filled",
-                            description: "Solid backgrounds",
-                            preview: "border-0 shadow-xl bg-primary text-primary-foreground",
+                            name: t(
+                              "settings.toast.designOptions.filled.name"
+                            ),
+                            description: t(
+                              "settings.toast.designOptions.filled.description"
+                            ),
+                            preview:
+                              "border-0 shadow-xl bg-primary text-primary-foreground",
                           },
                         ].map((design) => (
                           <div
@@ -2318,7 +2482,7 @@ export function SettingsView() {
                                   design.preview
                                 )}
                               >
-                                Toast Preview
+                                {t("settings.toast.preview")}
                               </div>
                               <div className="text-center">
                                 <p className="text-sm font-medium">{design.name}</p>
@@ -2343,9 +2507,9 @@ export function SettingsView() {
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Icons in Toasts</Label>
+                          <Label>{t("settings.toast.showIconsLabel")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Display icons in toast notifications
+                            {t("settings.toast.showIconsDesc")}
                           </p>
                         </div>
                         <Switch
@@ -2357,13 +2521,47 @@ export function SettingsView() {
                       <Separator />
 
                       <div className="space-y-3">
-                        <Label className="text-sm font-semibold">Toast Duration</Label>
+                        <Label className="text-sm font-semibold">
+                          {t("settings.toast.durationLabel")}
+                        </Label>
                         <div className="grid grid-cols-4 gap-4">
                           {[
-                            { value: 1000, name: "1s", description: "Quick" },
-                            { value: 3000, name: "3s", description: "Normal" },
-                            { value: 5000, name: "5s", description: "Long" },
-                            { value: 10000, name: "10s", description: "Extended" },
+                            {
+                              value: 1000,
+                              name: t(
+                                "settings.toast.durationOptions.quick.name"
+                              ),
+                              description: t(
+                                "settings.toast.durationOptions.quick.description"
+                              ),
+                            },
+                            {
+                              value: 3000,
+                              name: t(
+                                "settings.toast.durationOptions.normal.name"
+                              ),
+                              description: t(
+                                "settings.toast.durationOptions.normal.description"
+                              ),
+                            },
+                            {
+                              value: 5000,
+                              name: t(
+                                "settings.toast.durationOptions.long.name"
+                              ),
+                              description: t(
+                                "settings.toast.durationOptions.long.description"
+                              ),
+                            },
+                            {
+                              value: 10000,
+                              name: t(
+                                "settings.toast.durationOptions.extended.name"
+                              ),
+                              description: t(
+                                "settings.toast.durationOptions.extended.description"
+                              ),
+                            },
                           ].map((duration) => (
                             <div
                               key={duration.value}
@@ -2398,15 +2596,21 @@ export function SettingsView() {
 
                     {/* Toast Preview */}
                     <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Test Toasts</Label>
+                      <Label className="text-sm font-semibold">
+                        {t("settings.toast.testLabel")}
+                      </Label>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         <Button
                           variant="default"
                           size="sm"
                           onClick={() => {
                             enhancedToast({
-                              title: "Success!",
-                              description: "Operation completed successfully.",
+                              title: t(
+                                "settings.toast.messages.success.title"
+                              ),
+                              description: t(
+                                "settings.toast.messages.success.description"
+                              ),
                               variant: "success",
                               design: settings.toastDesign,
                               showIcon: settings.showToastIcons,
@@ -2414,15 +2618,17 @@ export function SettingsView() {
                             });
                           }}
                         >
-                          Success
+                          {t("settings.toast.testButtons.success")}
                         </Button>
                         <Button
                           variant="destructive"
                           size="sm"
                           onClick={() => {
                             enhancedToast({
-                              title: "Error!",
-                              description: "Something went wrong.",
+                              title: t("settings.toast.messages.error.title"),
+                              description: t(
+                                "settings.toast.messages.error.description"
+                              ),
                               variant: "destructive",
                               design: settings.toastDesign,
                               showIcon: settings.showToastIcons,
@@ -2430,15 +2636,17 @@ export function SettingsView() {
                             });
                           }}
                         >
-                          Error
+                          {t("settings.toast.testButtons.error")}
                         </Button>
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => {
                             enhancedToast({
-                              title: "Warning!",
-                              description: "Please check your input.",
+                              title: t("settings.toast.messages.warning.title"),
+                              description: t(
+                                "settings.toast.messages.warning.description"
+                              ),
                               variant: "warning",
                               design: settings.toastDesign,
                               showIcon: settings.showToastIcons,
@@ -2446,15 +2654,17 @@ export function SettingsView() {
                             });
                           }}
                         >
-                          Warning
+                          {t("settings.toast.testButtons.warning")}
                         </Button>
                         <Button
                           variant="secondary"
                           size="sm"
                           onClick={() => {
                             enhancedToast({
-                              title: "Info",
-                              description: "Here's some information.",
+                              title: t("settings.toast.messages.info.title"),
+                              description: t(
+                                "settings.toast.messages.info.description"
+                              ),
                               variant: "info",
                               design: settings.toastDesign,
                               showIcon: settings.showToastIcons,
@@ -2462,11 +2672,11 @@ export function SettingsView() {
                             });
                           }}
                         >
-                          Info
+                          {t("settings.toast.testButtons.info")}
                         </Button>
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        Click buttons to test different toast styles with your current settings
+                        {t("settings.toast.testHint")}
                       </p>
                     </div>
                   </CardContent>
@@ -2477,18 +2687,20 @@ export function SettingsView() {
               <TabsContent value="behavior" className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>UI Behavior</CardTitle>
+                    <CardTitle>{t("settings.behavior.title")}</CardTitle>
                     <CardDescription>
-                      Control how the interface behaves
+                      {t("settings.behavior.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Breadcrumbs</Label>
+                          <Label>
+                            {t("settings.behavior.breadcrumbs.label")}
+                          </Label>
                           <p className="text-sm text-muted-foreground">
-                            Display navigation breadcrumbs
+                            {t("settings.behavior.breadcrumbs.description")}
                           </p>
                         </div>
                         <Switch
@@ -2501,9 +2713,11 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show User Avatar</Label>
+                          <Label>
+                            {t("settings.behavior.userAvatar.label")}
+                          </Label>
                           <p className="text-sm text-muted-foreground">
-                            Display user avatar in header
+                            {t("settings.behavior.userAvatar.description")}
                           </p>
                         </div>
                         <Switch
@@ -2516,9 +2730,11 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Notifications</Label>
+                          <Label>
+                            {t("settings.behavior.notifications.label")}
+                          </Label>
                           <p className="text-sm text-muted-foreground">
-                            Display notification bell in header
+                            {t("settings.behavior.notifications.description")}
                           </p>
                         </div>
                         <Switch
@@ -2531,9 +2747,11 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Logo</Label>
+                          <Label>
+                            {t("settings.behavior.logo.label")}
+                          </Label>
                           <p className="text-sm text-muted-foreground">
-                            Display logo in sidebar and header
+                            {t("settings.behavior.logo.description")}
                           </p>
                         </div>
                         <Switch
@@ -2546,9 +2764,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Compact Mode</Label>
+                          <Label>{t("settings.behavior.compact.label")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Reduce spacing throughout the app
+                            {t("settings.behavior.compact.description")}
                           </p>
                         </div>
                         <Switch
@@ -2561,9 +2779,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>High Contrast</Label>
+                          <Label>{t("settings.behavior.contrast.label")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Increase contrast for accessibility
+                            {t("settings.behavior.contrast.description")}
                           </p>
                         </div>
                         <Switch
@@ -2576,9 +2794,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Reduced Motion</Label>
+                          <Label>{t("settings.behavior.motion.label")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Minimize animations and transitions
+                            {t("settings.behavior.motion.description")}
                           </p>
                         </div>
                         <Switch
@@ -2591,9 +2809,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Sticky Header</Label>
+                          <Label>{t("settings.behavior.sticky.label")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Keep header fixed at top of page
+                            {t("settings.behavior.sticky.description")}
                           </p>
                         </div>
                         <Switch
@@ -2606,9 +2824,11 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Collapsible Sidebar</Label>
+                          <Label>
+                            {t("settings.behavior.sidebar.label")}
+                          </Label>
                           <p className="text-sm text-muted-foreground">
-                            Allow sidebar to be collapsed
+                            {t("settings.behavior.sidebar.description")}
                           </p>
                         </div>
                         <Switch
@@ -2621,9 +2841,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Show Footer</Label>
+                          <Label>{t("settings.behavior.footer.label")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Display footer at bottom of pages
+                            {t("settings.behavior.footer.description")}
                           </p>
                         </div>
                         <Switch
@@ -2636,9 +2856,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>Auto Save</Label>
+                          <Label>{t("settings.behavior.autoSave.label")}</Label>
                           <p className="text-sm text-muted-foreground">
-                            Automatically save settings changes
+                            {t("settings.behavior.autoSave.description")}
                           </p>
                         </div>
                         <Switch
@@ -2654,74 +2874,98 @@ export function SettingsView() {
           </div>
 
           {/* Live Preview Panel */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-2">
             <Card className="sticky top-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Eye className="w-5 h-5" />
-                  Live Preview
+                  {t("settings.preview.title")}
                 </CardTitle>
-                <CardDescription>See your changes in real-time</CardDescription>
+                <CardDescription>
+                  {t("settings.preview.description")}
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Sample Components */}
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Buttons</Label>
+                  <Label className="text-sm font-semibold">
+                    {t("settings.preview.buttons.label")}
+                  </Label>
                   <div className="space-y-2">
                     <Button size="sm" className="w-full">
-                      Small Button
+                      {t("settings.preview.buttons.small")}
                     </Button>
-                    <Button className="w-full">Default Button</Button>
+                    <Button className="w-full">
+                      {t("settings.preview.buttons.default")}
+                    </Button>
                     <Button variant="outline" className="w-full bg-transparent">
-                      Outline Button
+                      {t("settings.preview.buttons.outline")}
                     </Button>
                     <Button variant="secondary" className="w-full">
-                      Secondary
+                      {t("settings.preview.buttons.secondary")}
                     </Button>
                   </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Badges</Label>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge>Default</Badge>
-                    <Badge variant="secondary">Secondary</Badge>
-                    <Badge variant="outline">Outline</Badge>
-                    <Badge variant="destructive">Error</Badge>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Avatars</Label>
-                  <div className="flex gap-2">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="text-xs">SM</AvatarFallback>
-                    </Avatar>
-                    <Avatar>
-                      <AvatarFallback>MD</AvatarFallback>
-                    </Avatar>
-                    <Avatar className="h-12 w-12">
-                      <AvatarFallback>LG</AvatarFallback>
-                    </Avatar>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Input</Label>
-                  <Input placeholder="Sample input field..." />
                 </div>
 
                 <Separator />
 
                 <div className="space-y-3">
                   <Label className="text-sm font-semibold">
-                    Loading Spinner
+                    {t("settings.preview.badges.label")}
+                  </Label>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge>{t("settings.preview.badges.default")}</Badge>
+                    <Badge variant="secondary">
+                      {t("settings.preview.badges.secondary")}
+                    </Badge>
+                    <Badge variant="outline">
+                      {t("settings.preview.badges.outline")}
+                    </Badge>
+                    <Badge variant="destructive">
+                      {t("settings.preview.badges.error")}
+                    </Badge>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold">
+                    {t("settings.preview.avatars.label")}
+                  </Label>
+                  <div className="flex gap-2">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="text-xs">
+                        {t("settings.preview.avatars.sm")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <Avatar>
+                      <AvatarFallback>
+                        {t("settings.preview.avatars.md")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <Avatar className="h-12 w-12">
+                      <AvatarFallback>
+                        {t("settings.preview.avatars.lg")}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold">
+                    {t("settings.preview.input.label")}
+                  </Label>
+                  <Input placeholder={t("settings.preview.input.placeholder")} />
+                </div>
+
+                <Separator />
+
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold">
+                    {t("settings.preview.loading.label")}
                   </Label>
                   <div className="flex justify-center py-4">
                     <div className="scale-50">
@@ -2733,16 +2977,18 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Tooltip</Label>
+                  <Label className="text-sm font-semibold">
+                    {t("settings.preview.tooltip.label")}
+                  </Label>
                   <div className="flex justify-center">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button variant="outline" size="sm">
-                          Hover me
+                          {t("settings.preview.tooltip.trigger")}
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>This is a sample tooltip</p>
+                        <p>{t("settings.preview.tooltip.content")}</p>
                       </TooltipContent>
                     </Tooltip>
                   </div>
@@ -2751,7 +2997,9 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Table Preview</Label>
+                  <Label className="text-sm font-semibold">
+                    {t("settings.preview.table.label")}
+                  </Label>
                   <div className="text-xs">
                     <GenericTable
                       data={sampleTableData}
@@ -2764,17 +3012,21 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Card Preview</Label>
+                  <Label className="text-sm font-semibold">
+                    {t("settings.preview.card.label")}
+                  </Label>
                   <Card className="p-3">
                     <CardHeader className="p-0 pb-2">
-                      <CardTitle className="text-sm">Sample Card</CardTitle>
+                      <CardTitle className="text-sm">
+                        {t("settings.preview.card.title")}
+                      </CardTitle>
                       <CardDescription className="text-xs">
-                        This shows how cards look
+                        {t("settings.preview.card.description")}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="p-0">
                       <p className="text-xs text-muted-foreground">
-                        Card content goes here with current styling applied.
+                        {t("settings.preview.card.content")}
                       </p>
                     </CardContent>
                   </Card>
@@ -2783,12 +3035,15 @@ export function SettingsView() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <Label className="text-sm font-semibold">Typography</Label>
+                  <Label className="text-sm font-semibold">
+                    {t("settings.preview.typography.label")}
+                  </Label>
                   <div className="space-y-1">
-                    <h4 className="font-semibold">Heading Sample</h4>
+                    <h4 className="font-semibold">
+                      {t("settings.preview.typography.heading")}
+                    </h4>
                     <p className="text-sm text-muted-foreground">
-                      This is sample paragraph text showing current font size
-                      and spacing.
+                      {t("settings.preview.typography.paragraph")}
                     </p>
                   </div>
                 </div>

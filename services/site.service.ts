@@ -1,5 +1,5 @@
 import type { IApiService } from "./api.service";
-import { API_ENDPOINTS } from "@/lib/api-endpoints";
+import { API_ENDPOINTS } from "@/config/api-endpoints";
 import type { INotificationService } from "./notification.service";
 import type { PaginationInfo } from "@/lib/pagination";
 

@@ -1,5 +1,5 @@
 import { ApiService, type IApiService } from "./api.service";
-import { API_ENDPOINTS } from "@/lib/api-endpoints";
+import { API_ENDPOINTS } from "@/config/api-endpoints";
 
 export interface LoginRequest {
   username: string;
@@ -38,9 +38,15 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
-    await this.apiService.post(API_ENDPOINTS.LOGOUT);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    try {
+      await this.apiService.post(API_ENDPOINTS.LOGOUT);
+      // Only clear tokens if logout API call was successful
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    } catch (error) {
+      // If logout fails, don't clear tokens and re-throw the error
+      throw error;
+    }
   }
 
   async getMe(): Promise<User> {

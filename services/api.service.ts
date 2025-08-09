@@ -64,6 +64,13 @@ export class ApiService implements IApiService {
         throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`)
       }
 
+      // Handle 204 No Content responses
+      if (response.status === 204) {
+        console.log("API Success: 204 No Content") // Debug log
+        return null as T
+      }
+
+      // For other successful responses, parse JSON
       const data = await response.json()
       console.log("API Success:", data) // Debug log
       return data

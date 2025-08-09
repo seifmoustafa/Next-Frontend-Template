@@ -38,6 +38,15 @@ export function Sidebar({
   const { logout, user } = useAuth();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // You could show a toast notification here
+    }
+  };
+
   // Get navigation items with translations
   const navigation = getNavigationItems(t);
 
@@ -258,7 +267,7 @@ export function Sidebar({
         <div className="p-3 border-t border-sidebar-border">
           <Button
             variant="ghost"
-            onClick={logout}
+            onClick={handleLogout}
             className={cn(
               "w-full justify-start space-x-3 rtl:space-x-reverse text-sidebar-foreground/70 hover:text-destructive hover:bg-destructive/10 px-3 py-2 h-auto rounded-lg",
               "shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"

@@ -37,8 +37,12 @@ export function ElegantSidebar({
   const pathname = usePathname();
   const { t, direction } = useI18n();
   const { user } = useAuth();
-  const { sidebarStyle, animationLevel, buttonStyle, spacingSize } =
-    useSettings();
+  const {
+    sidebarStyle,
+    animationLevel,
+    buttonStyle,
+    spacingSize,
+  } = useSettings();
 
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
@@ -239,7 +243,7 @@ export function ElegantSidebar({
           "before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-white/5 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
         )}
         style={{ paddingLeft: `${16 + indent}px` }}
-        onClick={() => !item.disabled && collapsible && onOpenChange(false)}
+          onClick={() => !item.disabled && collapsible && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse relative z-10">
           <div
@@ -403,8 +407,9 @@ export function ElegantSidebar({
                           : "text-base"
                       )}
                     >
-                       { user.firstName.charAt(0) ?? user.username}
-                      {user.lastName.charAt(0) ?? ""}
+                     {/*{ user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}*/}
+{user.username}
                     </AvatarFallback>
                   </Avatar>
                   {/* Compact online indicator */}

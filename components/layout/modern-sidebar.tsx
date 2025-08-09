@@ -41,6 +41,15 @@ export function ModernSidebar({
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [isHovered, setIsHovered] = useState(false);
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // You could show a toast notification here
+    }
+  };
+
   // Get navigation items with translations
   const navigation = getNavigationItems(t);
 
@@ -321,8 +330,9 @@ export function ModernSidebar({
                     )}
                   >
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold text-sm">
-                       { user.firstName.charAt(0) ?? user.username}
-                      {user.lastName.charAt(0) ?? ""}
+                      {/*{ user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}*/}
+                      {user.username}
                     </AvatarFallback>
                   </Avatar>
                   {/* Online indicator */}
@@ -360,7 +370,7 @@ export function ModernSidebar({
           <div className="p-3 border-t border-sidebar-border">
             <Button
               variant="ghost"
-              onClick={logout}
+              onClick={handleLogout}
               className={cn(
                 "w-full text-sidebar-foreground/70 hover:text-destructive hover:bg-destructive/10 transition-all duration-300",
                 "rounded-xl shadow-sm hover:shadow-md hover:scale-105",
