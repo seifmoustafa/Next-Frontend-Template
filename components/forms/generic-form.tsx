@@ -9,7 +9,8 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
-import { cn } from "@/lib/utils";
+import { cn, toDateInputValue, fromDateInputValue } from "@/lib/utils";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export interface FieldOption {
   value: string;
@@ -18,8 +19,8 @@ export interface FieldOption {
 
 export interface FieldConfig {
   name: string;
-  label: string;
-  type: "text" | "password" | "select" | "switch" | "hidden";
+  label?: string; // Optional for hidden fields
+  type: "text" | "password" | "select" | "switch" | "hidden" | "date" | "datetime";
   placeholder?: string;
   required?: boolean;
   options?: FieldOption[];
@@ -43,10 +44,14 @@ export function GenericForm({
   const { t } = useI18n();
   const [formData, setFormData] = useState<Record<string, any>>(() => {
     const data = { ...initialValues };
-    // Set default values for fields that have them
+    // Set default values for fields that have them and convert dates for HTML inputs
     fields.forEach(field => {
       if (field.defaultValue !== undefined && data[field.name] === undefined) {
         data[field.name] = field.defaultValue;
+      }
+      // Convert date fields from API format to HTML input format
+      if ((field.type === "date" || field.type === "datetime") && data[field.name]) {
+        data[field.name] = toDateInputValue(data[field.name]);
       }
     });
     return data;
@@ -61,7 +66,14 @@ export function GenericForm({
     e.preventDefault();
     setLoading(true);
     try {
-      await onSubmit(formData);
+      // Convert date fields back to ISO format for API
+      const submitData = { ...formData };
+      fields.forEach(field => {
+        if ((field.type === "date" || field.type === "datetime") && submitData[field.name]) {
+          submitData[field.name] = fromDateInputValue(submitData[field.name]);
+        }
+      });
+      await onSubmit(submitData);
     } finally {
       setLoading(false);
     }
@@ -145,7 +157,7 @@ export function GenericForm({
   };
 
   return (
-    <div className="w-full max-h-[70vh] overflow-y-auto">
+    <div className="w-full max-h-[70vh] overflow-y-auto p-6">
       <form onSubmit={handleSubmit} className={getFormSpacing()}>
         {fields.map((field) => 
           field.type === "hidden" ? (
@@ -187,6 +199,16 @@ export function GenericForm({
                     {formData[field.name] ? t("common.yes") : t("common.no")}
                   </Label>
                 </div>
+              ) : field.type === "date" || field.type === "datetime" ? (
+                <DatePicker
+                  id={field.name}
+                  type={field.type === "datetime" ? "datetime-local" : "date"}
+                  value={formData[field.name] || ""}
+                  onChange={(value) => handleChange(field.name, value)}
+                  required={field.required}
+                  className={getInputHeight()}
+                  placeholder={field.placeholder}
+                />
               ) : (
                 <Input
                   id={field.name}

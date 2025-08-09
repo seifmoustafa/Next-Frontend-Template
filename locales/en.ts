@@ -15,6 +15,9 @@ export const en = {
 
   // Navigation
   nav: {
+    vendors: "Vendors",
+    contracts: "Contracts",
+    sites: "Sites",
     dashboard: "Dashboard",
     users: "Users",
     analytics: "Analytics",
@@ -647,6 +650,70 @@ export const en = {
         drawer: { name: "Drawer", description: "Side drawer style" },
       },
     },
+    datePickerStyle: {
+      title: "Date Picker Style",
+      description: "Choose how date picker fields should appear",
+      options: {
+        default: {
+          name: "Default",
+          description: "Standard date picker with clean borders",
+        },
+        modern: {
+          name: "Modern",
+          description: "Gradient background with enhanced shadows",
+        },
+        glass: {
+          name: "Glass",
+          description: "Transparent glass effect with backdrop blur",
+        },
+        outlined: {
+          name: "Outlined",
+          description: "Bold border with transparent background",
+        },
+        filled: {
+          name: "Filled",
+          description: "Solid background with subtle borders",
+        },
+        minimal: {
+          name: "Minimal",
+          description: "Bottom border only, clean and simple",
+        },
+        elegant: {
+          name: "Elegant",
+          description: "Sophisticated gradient with accent line",
+        },
+      },
+    },
+    calendarStyle: {
+      title: "Calendar Style",
+      description: "Choose how calendar dropdowns should appear",
+      options: {
+        default: {
+          name: "Default",
+          description: "Clean and simple calendar design",
+        },
+        modern: {
+          name: "Modern",
+          description: "Gradient backgrounds with enhanced shadows",
+        },
+        glass: {
+          name: "Glass",
+          description: "Transparent glass effect with backdrop blur",
+        },
+        elegant: {
+          name: "Elegant",
+          description: "Sophisticated design with accent colors",
+        },
+        minimal: {
+          name: "Minimal",
+          description: "Ultra-clean design with minimal styling",
+        },
+        dark: {
+          name: "Dark",
+          description: "Dark theme calendar with rich colors",
+        },
+      },
+    },
     logo: {
       title: "Logo Settings",
       description: "Customize your application logo appearance",
@@ -912,6 +979,7 @@ export const en = {
 
   // Common
   common: {
+    selectDate: "Select Date",
     search: "Search...",
     filter: "Filter",
     export: "Export",
@@ -1043,6 +1111,22 @@ export const en = {
   status: {
     online: "Online",
   },
-
+  contracts: {
+    title: "Contracts",
+    subtitle: "Manage vendor contracts",
+    name: "Contract Name",
+    number: "Contract Number",
+    date: "Contract Date",
+    vendor: "Vendor",
+    form: {
+      name: "Contract Name",
+      namePlaceholder: "e.g., Annual Support Agreement",
+      number: "Contract Number",
+      numberPlaceholder: "e.g., 2025-001",
+      date: "Contract Date",
+      vendor: "Vendor",
+      vendorPlaceholder: "Select a vendor",
+    },
+  },
   // All properties are now organized in nested objects above
 };

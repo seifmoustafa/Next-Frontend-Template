@@ -86,6 +86,8 @@ export type ModalStyle = "default" | "centered" | "fullscreen" | "drawer";
 
 export type TreeStyle = "lines" | "cards" | "minimal" | "bubble";
 export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled";
+export type DatePickerStyle = "default" | "modern" | "glass" | "outlined" | "filled" | "minimal" | "elegant";
+export type CalendarStyle = "default" | "modern" | "glass" | "elegant" | "minimal" | "dark";
 
 interface SettingsContextType {
   // Existing settings
@@ -139,6 +141,12 @@ interface SettingsContextType {
 
   treeStyle: TreeStyle;
   setTreeStyle: (style: TreeStyle) => void;
+
+  datePickerStyle: DatePickerStyle;
+  setDatePickerStyle: (style: DatePickerStyle) => void;
+
+  calendarStyle: CalendarStyle;
+  setCalendarStyle: (style: CalendarStyle) => void;
 
   // Toast settings
   toastDesign: ToastDesign;
@@ -242,6 +250,8 @@ const defaultSettings = {
   tooltipStyle: "default" as TooltipStyle,
   modalStyle: "default" as ModalStyle,
   treeStyle: "lines" as TreeStyle,
+  datePickerStyle: "modern" as DatePickerStyle,
+  calendarStyle: "modern" as CalendarStyle,
   
   // Toast settings
   toastDesign: "minimal" as ToastDesign,
@@ -441,6 +451,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setTooltipStyle: (style) => updateSetting("tooltipStyle", style),
     setModalStyle: (style) => updateSetting("modalStyle", style),
     setTreeStyle: (style) => updateSetting("treeStyle", style),
+    setDatePickerStyle: (style) => updateSetting("datePickerStyle", style),
+    setCalendarStyle: (style) => updateSetting("calendarStyle", style),
     setToastDesign: (design) => updateSetting("toastDesign", design),
     setShowToastIcons: (show) => updateSetting("showToastIcons", show),
     setToastDuration: (duration) => updateSetting("toastDuration", duration),

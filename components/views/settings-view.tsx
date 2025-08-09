@@ -45,6 +45,8 @@ import {
   User,
   Info,
   Save,
+  CalendarDays,
+  ChevronRight,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useEnhancedToast } from "@/hooks/use-enhanced-toast";
@@ -701,6 +703,86 @@ export function SettingsView() {
       class: "rounded-none border-0 border-b-2 px-0",
     },
     { value: "filled", name: t("settings.inputStyle.options.filled"), class: "rounded-lg bg-muted border-0" },
+  ];
+
+  // DatePicker style options
+  const datePickerStyles = [
+    {
+      value: "default",
+      name: t("settings.datePickerStyle.options.default.name"),
+      description: t("settings.datePickerStyle.options.default.description"),
+      preview: "bg-background border border-border rounded-md",
+    },
+    {
+      value: "modern",
+      name: t("settings.datePickerStyle.options.modern.name"),
+      description: t("settings.datePickerStyle.options.modern.description"),
+      preview: "bg-gradient-to-r from-background to-muted/20 border border-border/50 rounded-md shadow-sm",
+    },
+    {
+      value: "glass",
+      name: t("settings.datePickerStyle.options.glass.name"),
+      description: t("settings.datePickerStyle.options.glass.description"),
+      preview: "bg-background/60 backdrop-blur-sm border border-white/20 rounded-md shadow-lg",
+    },
+    {
+      value: "outlined",
+      name: t("settings.datePickerStyle.options.outlined.name"),
+      description: t("settings.datePickerStyle.options.outlined.description"),
+      preview: "bg-transparent border-2 border-border rounded-md",
+    },
+    {
+      value: "filled",
+      name: t("settings.datePickerStyle.options.filled.name"),
+      description: t("settings.datePickerStyle.options.filled.description"),
+      preview: "bg-muted/50 border border-transparent rounded-md",
+    },
+    {
+      value: "minimal",
+      name: t("settings.datePickerStyle.options.minimal.name"),
+      description: t("settings.datePickerStyle.options.minimal.description"),
+      preview: "bg-transparent border-b-2 border-border rounded-none",
+    },
+    {
+      value: "elegant",
+      name: t("settings.datePickerStyle.options.elegant.name"),
+      description: t("settings.datePickerStyle.options.elegant.description"),
+      preview: "bg-gradient-to-br from-background via-background to-muted/10 border border-border/30 rounded-md shadow-sm",
+    },
+  ];
+
+  // Calendar style options
+  const calendarStyles = [
+    {
+      value: "default",
+      name: t("settings.calendarStyle.options.default.name"),
+      description: t("settings.calendarStyle.options.default.description"),
+    },
+    {
+      value: "modern",
+      name: t("settings.calendarStyle.options.modern.name"),
+      description: t("settings.calendarStyle.options.modern.description"),
+    },
+    {
+      value: "glass",
+      name: t("settings.calendarStyle.options.glass.name"),
+      description: t("settings.calendarStyle.options.glass.description"),
+    },
+    {
+      value: "elegant",
+      name: t("settings.calendarStyle.options.elegant.name"),
+      description: t("settings.calendarStyle.options.elegant.description"),
+    },
+    {
+      value: "minimal",
+      name: t("settings.calendarStyle.options.minimal.name"),
+      description: t("settings.calendarStyle.options.minimal.description"),
+    },
+    {
+      value: "dark",
+      name: t("settings.calendarStyle.options.dark.name"),
+      description: t("settings.calendarStyle.options.dark.description"),
+    },
   ];
 
   // Table style options
@@ -1531,6 +1613,124 @@ export function SettingsView() {
                             </div>
                           </div>
                           {settings.navigationStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* DatePicker Styles */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.datePickerStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.datePickerStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {datePickerStyles.map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.datePickerStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setDatePickerStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-3">
+                            <h4 className="font-semibold">{style.name}</h4>
+                            <p className="text-xs text-muted-foreground">
+                              {style.description}
+                            </p>
+                            {/* DatePicker Preview */}
+                            <div className="space-y-2">
+                              <div
+                                className={cn(
+                                  "h-10 w-full px-3 flex items-center justify-between text-xs text-muted-foreground",
+                                  style.preview
+                                )}
+                              >
+                                <span>DD/MM/YYYY</span>
+                                <CalendarDays className="h-4 w-4" />
+                              </div>
+                            </div>
+                          </div>
+                          {settings.datePickerStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Calendar Styles */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.calendarStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.calendarStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {calendarStyles.map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.calendarStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setCalendarStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-3">
+                            <h4 className="font-semibold">{style.name}</h4>
+                            <p className="text-xs text-muted-foreground">
+                              {style.description}
+                            </p>
+                            {/* Calendar Preview */}
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between text-xs">
+                                <CalendarDays className="h-3 w-3" />
+                                <span>Jan 2024</span>
+                                <ChevronRight className="h-3 w-3" />
+                              </div>
+                              <div className="grid grid-cols-7 gap-0.5 text-xs">
+                                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
+                                  <div key={i} className="h-4 w-4 flex items-center justify-center text-muted-foreground">
+                                    {day}
+                                  </div>
+                                ))}
+                                {Array.from({ length: 7 }, (_, i) => (
+                                  <div
+                                    key={i}
+                                    className={cn(
+                                      "h-4 w-4 flex items-center justify-center rounded-sm text-xs",
+                                      i === 3 ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+                                    )}
+                                  >
+                                    {i + 1}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                          {settings.calendarStyle === style.value && (
                             <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
                               <Check className="h-3 w-3 text-primary-foreground" />
                             </div>

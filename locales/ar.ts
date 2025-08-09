@@ -15,6 +15,9 @@ export const ar = {
 
   // Navigation
   nav: {
+    vendors: "الموردون",
+    contracts: "العقود",
+    sites: "المواقع",
     dashboard: "لوحة التحكم",
     users: "المستخدمون",
     analytics: "التحليلات",
@@ -28,7 +31,7 @@ export const ar = {
 
   // Layout & App
   app: {
-    title: "نموذج إدارة",
+    title: "منظومة إدارة العقود",
     subtitle: "الإدارية",
     tagline: "منظومة إدارة العقود والسيطرة علي مخزون العالم كله",
     modern: "العصرية",
@@ -558,6 +561,31 @@ export const ar = {
         drawer: { name: "سحب", description: "شريط جانبي منزلق" },
       },
     },
+    datePickerStyle: {
+      title: "نمط منتقي التاريخ",
+      description: "اختر كيفية ظهور حقول منتقي التاريخ",
+      options: {
+        default: { name: "افتراضي", description: "منتقي تاريخ قياسي بحدود نظيفة" },
+        modern: { name: "حديث", description: "خلفية متدرجة مع ظلال محسنة" },
+        glass: { name: "زجاجي", description: "تأثير زجاجي شفاف مع ضبابية" },
+        outlined: { name: "مخطط", description: "حدود بارزة مع خلفية شفافة" },
+        filled: { name: "ممتلئ", description: "خلفية صلبة مع حدود خفيفة" },
+        minimal: { name: "بسيط", description: "حد سفلي فقط، نظيف وبسيط" },
+        elegant: { name: "أنيق", description: "تدرج متطور مع خط مميز" },
+      },
+    },
+    calendarStyle: {
+      title: "نمط التقويم",
+      description: "اختر كيفية ظهور قوائم التقويم المنسدلة",
+      options: {
+        default: { name: "افتراضي", description: "تصميم تقويم نظيف وبسيط" },
+        modern: { name: "حديث", description: "خلفيات متدرجة مع ظلال محسنة" },
+        glass: { name: "زجاجي", description: "تأثير زجاجي شفاف مع ضبابية" },
+        elegant: { name: "أنيق", description: "تصميم متطور مع ألوان مميزة" },
+        minimal: { name: "بسيط", description: "تصميم فائق النظافة مع تنسيق بسيط" },
+        dark: { name: "داكن", description: "تقويم بسمة داكنة مع ألوان غنية" },
+      },
+    },
     logo: {
       title: "إعدادات الشعار",
       description: "خصص مظهر شعار التطبيق",
@@ -808,6 +836,7 @@ export const ar = {
 
   // Common
   common: {
+    selectDate: "اختر التاريخ",
     search: "البحث...",
     filter: "تصفية",
     create: "إنشاء",
@@ -877,6 +906,22 @@ export const ar = {
   status: {
     online: "متصل",
   },
-
+  contracts: {
+    title: "العقود",
+    subtitle: "إدارة عقود المورّدين",
+    name: "اسم العقد",
+    number: "رقم العقد",
+    date: "تاريخ العقد",
+    vendor: "المورّد",
+    form: {
+      name: "اسم العقد",
+      namePlaceholder: "مثال: عقد الدعم السنوي",
+      number: "رقم العقد",
+      numberPlaceholder: "مثال: 2025-001",
+      date: "تاريخ العقد",
+      vendor: "المورّد",
+      vendorPlaceholder: "اختر المورّد",
+    },
+  },
   // All properties are now organized in nested objects above
 };
