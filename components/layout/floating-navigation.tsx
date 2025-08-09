@@ -27,13 +27,11 @@ import { Logo } from "@/components/ui/logo";
 interface FloatingNavigationProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  collapsible?: boolean;
 }
 
 export function FloatingNavigation({
   open,
   onOpenChange,
-  collapsible = true,
 }: FloatingNavigationProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
@@ -195,7 +193,7 @@ export function FloatingNavigation({
             : "bg-background/60 text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
         )}
         style={{ paddingLeft: `${16 + indent}px` }}
-        onClick={() => !item.disabled && collapsible && onOpenChange(false)}
+        onClick={() => !item.disabled && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <div
@@ -274,21 +272,19 @@ export function FloatingNavigation({
                 </p>
               </div>
             </div>
-            {collapsible && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "lg:hidden h-8 w-8 hover:bg-primary/10",
-                  "shadow-sm hover:shadow-md hover:scale-105",
-                  getButtonStyleClass(),
-                  getAnimationClass()
-                )}
-                onClick={() => onOpenChange(false)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "lg:hidden h-8 w-8 hover:bg-primary/10",
+                "shadow-sm hover:shadow-md hover:scale-105",
+                getButtonStyleClass(),
+                getAnimationClass()
+              )}
+              onClick={() => onOpenChange(false)}
+            >
+              <X className="h-4 w-4" />
+            </Button>
           </div>
 
           {/* User Info */}
