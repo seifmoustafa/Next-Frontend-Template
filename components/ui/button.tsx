@@ -48,6 +48,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       let radiusClasses = "";
 
       switch (settings.buttonStyle) {
+        case "small-round":
+          radiusClasses = "rounded";
+          break;
+        case "medium-round":
+          radiusClasses = "rounded-lg";
+          break;
+        case "large-round":
+          radiusClasses = "rounded-xl";
+          break;
+        case "extra-round":
+          radiusClasses = "rounded-2xl";
+          break;
+        case "super-round":
+          radiusClasses = "rounded-3xl";
+          break;
         case "rounded":
           radiusClasses = "rounded-full";
           break;
