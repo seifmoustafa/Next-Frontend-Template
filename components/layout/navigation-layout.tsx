@@ -9,6 +9,7 @@ import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { navigation } from "@/config/navigation";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/layout/footer";
 
 interface NavigationLayoutProps {
   children: React.ReactNode;
@@ -267,6 +268,7 @@ export function NavigationLayout({
             </div>
           </div>
         </main>
+        {settings.showFooter && <Footer />}
       </div>
 
       {/* Mobile Overlay */}

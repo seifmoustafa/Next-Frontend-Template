@@ -14,6 +14,10 @@ interface LogoProps {
 export function Logo({ className, showText = true }: LogoProps) {
   const settings = useSettings()
 
+  if (!settings.showLogo) {
+    return null
+  }
+
   const sizeClasses = {
     xs: 'h-4 w-4',
     sm: 'h-5 w-5', 
@@ -53,7 +57,7 @@ export function Logo({ className, showText = true }: LogoProps) {
         return (
           <div className={cn(sizeClasses[settings.logoSize], 'relative')}>
             <Image
-              src={settings.logoImagePath || '/placeholder.svg?height=32&width=32'}
+              src={'/app-logo.png'}
               alt="Logo"
               fill
               className={cn('object-contain', animationClasses[settings.logoAnimation])}
@@ -65,15 +69,7 @@ export function Logo({ className, showText = true }: LogoProps) {
           </div>
         )
       case 'custom':
-        return (
-          <div className={cn(
-            textSizeClasses[settings.logoSize],
-            animationClasses[settings.logoAnimation],
-            'font-bold'
-          )}>
-            {settings.logoText || 'SA'}
-          </div>
-        )
+        return null
       default:
         return <Sparkles className={iconClass} />
     }
@@ -82,11 +78,8 @@ export function Logo({ className, showText = true }: LogoProps) {
   return (
     <div className={cn('flex items-center gap-2', className)}>
       {renderIcon()}
-      {showText && settings.logoType !== 'custom' && (
-        <span className={cn(
-          'font-semibold',
-          textSizeClasses[settings.logoSize]
-        )}>
+      {showText && settings.logoType === 'custom' && (
+        <span className={cn('font-semibold', textSizeClasses[settings.logoSize])}>
           {settings.logoText}
         </span>
       )}

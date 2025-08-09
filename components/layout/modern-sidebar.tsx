@@ -26,21 +26,23 @@ interface ModernSidebarProps {
  open: boolean;
  onOpenChange: (open: boolean) => void;
  onHoverChange: (hovered: boolean) => void;
+ collapsible?: boolean;
 }
 
 export function ModernSidebar({
  open,
  onOpenChange,
  onHoverChange,
+ collapsible = true,
 }: ModernSidebarProps) {
- const pathname = usePathname();
- const { t, direction } = useI18n();
- const { logout, user } = useAuth();
- const [expandedItems, setExpandedItems] = useState<string[]>([]);
- const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
+  const { t, direction } = useI18n();
+  const { logout, user } = useAuth();
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
 
- // Get navigation items with translations
- const navigation = getNavigationItems(t);
+  // Get navigation items with translations
+  const navigation = getNavigationItems(t);
 
  const handleMouseEnter = () => {
    setIsHovered(true);
@@ -76,15 +78,15 @@ export function ModernSidebar({
        >
          <CollapsibleTrigger asChild>
            <div
-             className={cn(
-               "group flex items-center w-full rounded-xl text-sm font-medium transition-all duration-300 cursor-pointer",
-               item.disabled && "opacity-50 cursor-not-allowed",
-               isActive
-                 ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
-                 : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md",
-               isHovered ? "px-3 py-3" : "justify-center px-2 py-3"
-             )}
-             style={isHovered ? { paddingLeft: `${12 + indent}px` } : undefined}
+            className={cn(
+              "group flex items-center w-full rounded-xl text-sm font-medium transition-all duration-300 cursor-pointer",
+              item.disabled && "opacity-50 cursor-not-allowed",
+              isActive
+                ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
+                : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md",
+              "px-3 py-3"
+            )}
+            style={{ paddingLeft: `${12 + indent}px` }}
            >
              <div
                className={cn(
@@ -171,18 +173,16 @@ export function ModernSidebar({
      <Link
        key={item.name}
        href={item.href || "#"}
-       className={cn(
-         "group flex items-center w-full rounded-xl text-sm font-medium transition-all duration-300",
-         item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
-         isActive
-           ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
-           : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md",
-         isHovered
-           ? "px-3 py-3 space-x-3 rtl:space-x-reverse"
-           : "justify-center px-2 py-3"
-       )}
-       style={isHovered ? { paddingLeft: `${12 + indent}px` } : undefined}
-       onClick={() => !item.disabled && onOpenChange(false)}
+        className={cn(
+          "group flex items-center w-full rounded-xl text-sm font-medium transition-all duration-300",
+          item.disabled && "opacity-50 cursor-not-allowed pointer-events-none",
+          isActive
+            ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
+            : "text-sidebar-foreground/70 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-md",
+          "px-3 py-3 space-x-3 rtl:space-x-reverse"
+        )}
+       style={{ paddingLeft: `${12 + indent}px` }}
+       onClick={() => !item.disabled && collapsible && onOpenChange(false)}
      >
        {/* Icon - always visible */}
        <div
@@ -284,17 +284,19 @@ export function ModernSidebar({
              )}
            </div>
 
-           <Button
-             variant="ghost"
-             size="icon"
-             className={cn(
-               "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent flex-shrink-0",
-               "rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
-             )}
-             onClick={() => onOpenChange(false)}
-           >
-             <X className="w-5 h-5" />
-           </Button>
+           {collapsible && (
+             <Button
+               variant="ghost"
+               size="icon"
+               className={cn(
+                 "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent flex-shrink-0",
+                 "rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+               )}
+               onClick={() => onOpenChange(false)}
+             >
+               <X className="w-5 h-5" />
+             </Button>
+           )}
          </div>
 
          {/* User Info */}
