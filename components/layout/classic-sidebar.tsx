@@ -70,8 +70,6 @@ export function ClassicSidebar({
     );
   };
 
-  
-
   const renderNavigationItem = (item: NavigationItem, level = 0) => {
     const isActive = isNavigationItemActive(item, pathname);
     const isExpanded = expandedItems.includes(item.name);
@@ -300,21 +298,21 @@ export function ClassicSidebar({
               </div>
             </div>
 
-          {collapsible && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent",
-                borderRadiusClass,
-                animationClass,
-                "shadow-md hover:shadow-lg hover:scale-105"
-              )}
-              onClick={() => onOpenChange(false)}
-            >
-              <X className="w-5 h-5" />
-            </Button>
-          )}
+            {collapsible && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent",
+                  borderRadiusClass,
+                  animationClass,
+                  "shadow-md hover:shadow-lg hover:scale-105"
+                )}
+                onClick={() => onOpenChange(false)}
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            )}
           </div>
 
           {/* User Info */}
@@ -361,9 +359,8 @@ export function ClassicSidebar({
                           "bg-gradient-to-br from-cyan-500/20 to-cyan-600/10"
                       )}
                     >
-                     {/*{ user.firstName.charAt(0) ?? user.username}
-                      {user.lastName.charAt(0) ?? ""}*/}
-{user.username}
+                       { user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}
                     </AvatarFallback>
                   </Avatar>
                   {/* Online indicator */}
@@ -390,19 +387,19 @@ export function ClassicSidebar({
           )}
 
           {/* Navigation */}
-        <nav
-          className={cn(
-            "flex-1 overflow-y-auto",
-            getSpacingClass({
-              compact: "p-2 space-y-1",
-              comfortable: "p-8 space-y-6",
-              spacious: "p-12 space-y-8",
-              default: "p-6 space-y-4",
-            })
-          )}
-        >
-          {navigation.map((item) => renderNavigationItem(item))}
-        </nav>
+          <nav
+            className={cn(
+              "flex-1 overflow-y-auto",
+              getSpacingClass({
+                compact: "p-2 space-y-1",
+                comfortable: "p-8 space-y-6",
+                spacious: "p-12 space-y-8",
+                default: "p-6 space-y-4",
+              })
+            )}
+          >
+            {navigation.map((item) => renderNavigationItem(item))}
+          </nav>
         </div>
       </div>
     </>
