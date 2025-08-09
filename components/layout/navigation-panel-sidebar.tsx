@@ -33,7 +33,13 @@ export function NavigationPanelSidebar({
 }: NavigationPanelSidebarProps) {
   const pathname = usePathname();
   const { direction, t } = useI18n();
-  const { colorTheme, cardStyle, animationLevel, borderRadius } = useSettings();
+  const {
+    colorTheme,
+    cardStyle,
+    animationLevel,
+    borderRadius,
+  } = useSettings();
+
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get the selected main navigation item
