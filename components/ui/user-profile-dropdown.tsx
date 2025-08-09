@@ -15,7 +15,6 @@ import { ChevronDown, Settings, User, LogOut } from "lucide-react";
 import { useAuth } from "@/providers/auth-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
-import { useSettings } from "@/providers/settings-provider";
 
 interface UserProfileDropdownProps {
   variant?:
@@ -38,9 +37,8 @@ export function UserProfileDropdown({
   const { t } = useI18n();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const settings = useSettings();
 
-  if (!user || !settings.showUserAvatar) return null;
+  if (!user) return null;
 
   const getInitials = () => {
     // Safe handling of user name
