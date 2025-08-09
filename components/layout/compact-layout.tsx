@@ -6,6 +6,7 @@ import { CompactHeader } from "@/components/layout/compact-header";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/layout/footer";
 
 interface CompactLayoutProps {
   children: React.ReactNode;
@@ -105,16 +106,18 @@ export function CompactLayout({
         </div>
       </main>
 
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div
-          className={cn(
-            "fixed inset-0 bg-black/50 z-30 lg:hidden",
-            getAnimationClass()
-          )}
-          onClick={() => onSidebarOpenChange(false)}
-        />
-      )}
-    </div>
-  );
-}
+        {settings.showFooter && <Footer />}
+
+        {/* Mobile overlay */}
+        {sidebarOpen && (
+          <div
+            className={cn(
+              "fixed inset-0 bg-black/50 z-30 lg:hidden",
+              getAnimationClass()
+            )}
+            onClick={() => onSidebarOpenChange(false)}
+          />
+        )}
+      </div>
+    );
+  }

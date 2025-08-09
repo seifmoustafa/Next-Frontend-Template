@@ -8,6 +8,7 @@ import { MinimalHeader } from "@/components/layout/minimal-header";
 import { ClassicHeader } from "@/components/layout/classic-header";
 import { ClassicSidebar } from "@/components/layout/classic-sidebar";
 import { ModernSidebar } from "@/components/layout/modern-sidebar";
+import { Footer } from "@/components/layout/footer";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
@@ -25,8 +26,8 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarHovered, setSidebarHovered] = useState(false);
-  const { direction } = useI18n();
-  const { layoutTemplate } = useSettings();
+    const { direction } = useI18n();
+    const { layoutTemplate, showFooter } = useSettings();
 
   // Close sidebar when clicking outside on mobile
   useEffect(() => {
@@ -109,11 +110,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         )}
       >
         {/* Modern sidebar with hover expansion */}
-        <ModernSidebar
-          open={sidebarOpen}
-          onOpenChange={setSidebarOpen}
-          onHoverChange={setSidebarHovered}
-        />
+          <ModernSidebar
+            open={sidebarOpen}
+            onOpenChange={setSidebarOpen}
+            onHoverChange={setSidebarHovered}
+          />
 
         <div
           className={cn(
@@ -128,12 +129,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           )}
         >
           {/* Modern header */}
-          <Header onMenuClick={() => setSidebarOpen(true)} isModern={true} />
+            <Header onMenuClick={() => setSidebarOpen(true)} isModern={true} />
 
-          <main className="p-6 pt-24">
-            <div className="animate-fade-in">{children}</div>
-          </main>
-        </div>
+            <main className="p-6 pt-24">
+              <div className="animate-fade-in">{children}</div>
+            </main>
+            {showFooter && <Footer />}
+          </div>
 
         {/* Mobile overlay */}
         {sidebarOpen && (
@@ -156,12 +158,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         )}
       >
         {/* Minimal layout has no sidebar, just a header with dropdown navigation */}
-        <MinimalHeader />
+          <MinimalHeader />
 
-        <main className="p-6 pt-20">
-          <div className="animate-fade-in max-w-7xl mx-auto">{children}</div>
-        </main>
-      </div>
+          <main className="p-6 pt-20">
+            <div className="animate-fade-in max-w-7xl mx-auto">{children}</div>
+          </main>
+          {showFooter && <Footer />}
+        </div>
     );
   }
 
@@ -189,6 +192,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <main className="p-8">
             <div className="animate-fade-in">{children}</div>
           </main>
+          {showFooter && <Footer />}
         </div>
 
         {/* Mobile overlay */}
@@ -210,20 +214,21 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         direction === "rtl" ? "rtl" : "ltr"
       )}
     >
-      <Sidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
+        <Sidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
 
-      <div
-        className={cn(
-          "transition-all duration-300 ease-in-out",
-          direction === "rtl" ? "lg:mr-80" : "lg:ml-80"
-        )}
-      >
-        <Header onMenuClick={() => setSidebarOpen(true)} />
+        <div
+          className={cn(
+            "transition-all duration-300 ease-in-out",
+            direction === "rtl" ? "lg:mr-80" : "lg:ml-80"
+          )}
+        >
+          <Header onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="p-6">
-          <div className="animate-fade-in">{children}</div>
-        </main>
-      </div>
+          <main className="p-6">
+            <div className="animate-fade-in">{children}</div>
+          </main>
+          {showFooter && <Footer />}
+        </div>
 
       {/* Mobile overlay */}
       {sidebarOpen && (

@@ -2066,38 +2066,31 @@ export function SettingsView() {
                     <Separator />
 
                     {/* Logo Text */}
-                    <div className="space-y-3">
-                      <Label className="text-sm font-semibold">Logo Text</Label>
-                      <Input
-                        value={settings.logoText}
-                        onChange={(e) => settings.setLogoText(e.target.value)}
-                        placeholder="Enter logo text..."
-                        className="max-w-xs"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Text displayed next to the logo icon or as custom logo
-                      </p>
-                    </div>
-
-                    <Separator />
-
-                    {/* Logo Image Path */}
-                    {settings.logoType === "image" && (
+                    {settings.logoType === "custom" && (
                       <>
                         <div className="space-y-3">
                           <Label className="text-sm font-semibold">
-                            Logo Image Path
+                            Logo Text
                           </Label>
                           <Input
-                            value={settings.logoImagePath}
-                            onChange={(e) =>
-                              settings.setLogoImagePath(e.target.value)
-                            }
-                            placeholder="/path/to/your/logo.png"
+                            value={settings.logoText}
+                            onChange={(e) => settings.setLogoText(e.target.value)}
+                            placeholder="Enter logo text..."
                             className="max-w-xs"
                           />
                           <p className="text-xs text-muted-foreground">
-                            Path to your custom logo image file
+                            Text displayed as the logo
+                          </p>
+                        </div>
+                        <Separator />
+                      </>
+                    )}
+
+                    {settings.logoType === "image" && (
+                      <>
+                        <div className="space-y-3">
+                          <p className="text-sm text-muted-foreground">
+                            The image logo uses the file at /app-logo.png
                           </p>
                         </div>
                         <Separator />

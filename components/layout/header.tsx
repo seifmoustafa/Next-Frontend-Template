@@ -1,11 +1,13 @@
 "use client"
 
-import { Menu } from "lucide-react"
+import { Bell, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useI18n } from "@/providers/i18n-provider"
+import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common"
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown"
+import { PageBreadcrumbs } from "@/components/ui/page-breadcrumbs"
 
 interface HeaderProps {
   onMenuClick: () => void
@@ -14,10 +16,22 @@ interface HeaderProps {
 
 export function Header({ onMenuClick, isModern = false }: HeaderProps) {
   const { t } = useI18n()
+  const settings = useSettings()
 
   return (
-    <header className={cn("sticky top-0 z-40 glass border-b border-border", isModern && "h-20 flex items-center")}> 
-      <div className={cn("flex items-center justify-between px-6", isModern ? "py-6" : "py-4")}> 
+    <header
+      className={cn(
+        settings.stickyHeader ? "sticky top-0" : "relative",
+        "z-40 glass border-b border-border",
+        isModern && "h-20 flex flex-col"
+      )}
+    >
+      <div
+        className={cn(
+          "flex items-center justify-between px-6",
+          isModern ? "py-6" : "py-4"
+        )}
+      >
         {/* Left side */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
           <Button
@@ -44,9 +58,19 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
           <LanguageSwitcher buttonClassName="hover-lift" />
           <ThemeSwitcher buttonClassName="hover-lift" />
+          {settings.showNotifications && (
+            <Button variant="ghost" size="icon" className="hover-lift">
+              <Bell className="w-5 h-5" />
+            </Button>
+          )}
           <UserProfileDropdown showName={false} />
         </div>
       </div>
+      {settings.showBreadcrumbs && (
+        <div className="px-6 pb-2 hidden md:block">
+          <PageBreadcrumbs />
+        </div>
+      )}
     </header>
   )
 }

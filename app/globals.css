@@ -898,3 +898,19 @@
 [data-layout="navigation"] .navigation-header {
   box-shadow: var(--shadow-sm);
 }
+
+/* Behavior toggles */
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+html[data-high-contrast="true"] {
+  filter: contrast(1.25) saturate(1.2);
+}
+
+html[data-compact-mode="true"] {
+  --spacing-unit: 0.5rem;
+}

@@ -6,6 +6,7 @@ import { FloatingHeader } from "@/components/layout/floating-header";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/layout/footer";
 
 interface FloatingLayoutProps {
   children: React.ReactNode;
@@ -87,13 +88,13 @@ export function FloatingLayout({
       />
 
       {/* Main Content */}
-      <main
-        className={cn(
-          "relative z-10",
-          settings.stickyHeader ? "pt-24" : "pt-8",
-          getSpacingClass()
-        )}
-      >
+        <main
+          className={cn(
+            "relative z-10",
+            settings.stickyHeader ? "pt-24" : "pt-8",
+            getSpacingClass()
+          )}
+        >
         <div className="max-w-7xl mx-auto">
           <div
             className={cn(
@@ -115,14 +116,15 @@ export function FloatingLayout({
             {children}
           </div>
         </div>
-      </main>
+        </main>
+        {settings.showFooter && <Footer />}
 
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div
-          className={cn(
-            "fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden",
-            getAnimationClass()
+        {/* Mobile overlay */}
+        {sidebarOpen && (
+          <div
+            className={cn(
+              "fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden",
+              getAnimationClass()
           )}
           onClick={() => onSidebarOpenChange(false)}
         />

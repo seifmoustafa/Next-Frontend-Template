@@ -56,7 +56,16 @@ export type SidebarPosition = "left" | "right";
 // New setting types
 export type HeaderStyle = "default" | "compact" | "elevated" | "transparent";
 export type SidebarStyle = "default" | "compact" | "floating" | "minimal";
-export type ButtonStyle = "default" | "rounded" | "sharp" | "modern";
+export type ButtonStyle =
+  | "default"
+  | "small-round"
+  | "medium-round"
+  | "large-round"
+  | "extra-round"
+  | "super-round"
+  | "rounded"
+  | "sharp"
+  | "modern";
 export type NavigationStyle = "default" | "pills" | "underline" | "sidebar";
 export type SpacingSize = "compact" | "default" | "comfortable" | "spacious";
 export type IconStyle = "outline" | "filled" | "duotone" | "minimal";
@@ -104,7 +113,6 @@ interface SettingsContextType {
   logoAnimation: LogoAnimation;
   logoSize: LogoSize;
   logoText: string;
-  logoImagePath: string;
 
   // Additional app control settings
   showBreadcrumbs: boolean;
@@ -151,7 +159,6 @@ interface SettingsContextType {
   setLogoAnimation: (animation: LogoAnimation) => void;
   setLogoSize: (size: LogoSize) => void;
   setLogoText: (text: string) => void;
-  setLogoImagePath: (path: string) => void;
   setShowBreadcrumbs: (show: boolean) => void;
   setShowUserAvatar: (show: boolean) => void;
   setShowNotifications: (show: boolean) => void;
@@ -204,7 +211,6 @@ const defaultSettings = {
   logoAnimation: "none" as LogoAnimation,
   logoSize: "md" as LogoSize,
   logoText: "SA",
-  logoImagePath: "/placeholder-logo.png",
   showBreadcrumbs: true,
   showUserAvatar: true,
   showNotifications: true,
@@ -396,7 +402,6 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setLogoAnimation: (animation) => updateSetting("logoAnimation", animation),
     setLogoSize: (size) => updateSetting("logoSize", size),
     setLogoText: (text) => updateSetting("logoText", text),
-    setLogoImagePath: (path) => updateSetting("logoImagePath", path),
     setShowBreadcrumbs: (show) => updateSetting("showBreadcrumbs", show),
     setShowUserAvatar: (show) => updateSetting("showUserAvatar", show),
     setShowNotifications: (show) => updateSetting("showNotifications", show),
