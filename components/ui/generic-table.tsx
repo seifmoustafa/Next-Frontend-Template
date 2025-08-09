@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -50,6 +50,8 @@ interface GenericTableProps<T> {
   onSelectionChange?: (selected: string[]) => void
   searchPlaceholder?: string
   emptyMessage?: string
+  onSearch?: (term: string) => void
+  searchValue?: string
 }
 
 export function GenericTable<T extends Record<string, any>>({
@@ -63,12 +65,26 @@ export function GenericTable<T extends Record<string, any>>({
   onSelectionChange,
   searchPlaceholder,
   emptyMessage,
+  onSearch,
+  searchValue,
 }: GenericTableProps<T>) {
   const { t, direction } = useI18n()
   const settings = useSettings()
   const [sortColumn, setSortColumn] = useState<keyof T | null>(null)
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState(searchValue ?? "")
+
+  useEffect(() => {
+    setSearchTerm(searchValue ?? "")
+  }, [searchValue])
+
+  useEffect(() => {
+    if (!onSearch) return
+    const handler = setTimeout(() => {
+      onSearch(searchTerm)
+    }, 500)
+    return () => clearTimeout(handler)
+  }, [searchTerm, onSearch])
 
   const placeholder = searchPlaceholder ?? t("common.search")
   const empty = emptyMessage ?? t("common.noData")
@@ -82,11 +98,13 @@ export function GenericTable<T extends Record<string, any>>({
     }
   }
 
-  const filteredData = data.filter(item =>
-    Object.values(item).some(value =>
-      String(value).toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  )
+  const filteredData = onSearch
+    ? data
+    : data.filter(item =>
+        Object.values(item).some(value =>
+          String(value).toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      )
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortColumn) return 0

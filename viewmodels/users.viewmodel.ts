@@ -38,6 +38,7 @@ export function useUsersViewModel(userService: IUserService) {
   });
 
   const searchUsers = (term: string) => {
+    setPagination((prev) => ({ ...prev, currentPage: 1 }));
     setSearchTerm(term);
   };
 

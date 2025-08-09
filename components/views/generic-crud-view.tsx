@@ -23,7 +23,10 @@ interface GenericCrudViewProps<T> {
     onPageChange: (page: number) => void;
     onPageSizeChange?: (size: number) => void;
   };
-  searchComponent?: React.ReactNode;
+  search?: {
+    value: string;
+    onChange: (term: string) => void;
+  };
 }
 
 export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
@@ -36,7 +39,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
     editFields,
     viewModel,
     pagination,
-    searchComponent,
+    search,
   } = props;
   const settings = useSettings();
 
@@ -151,8 +154,6 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
         </div>
       </div>
 
-      {searchComponent}
-
       <Card className={getCardClasses()}>
         <CardContent className="p-0">
           <GenericTable
@@ -164,6 +165,8 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             selectedItems={viewModel.selectedItems}
             onSelectionChange={viewModel.setSelectedItems}
             pagination={pagination}
+            onSearch={search?.onChange}
+            searchValue={search?.value}
           />
         </CardContent>
       </Card>

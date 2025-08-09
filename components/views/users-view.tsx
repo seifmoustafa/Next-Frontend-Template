@@ -7,7 +7,6 @@ import { useServices } from "@/providers/service-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import type { User } from "@/services/user.service";
 import type { UserType } from "@/services/user-type.service";
-import { Input } from "@/components/ui/input";
 
 export function UsersView() {
   const { userService, userTypeService } = useServices();
@@ -66,17 +65,6 @@ export function UsersView() {
     },
   ];
 
-  const searchComponent = (
-    <div className="flex items-center gap-2">
-      <Input
-        value={viewModel.searchTerm}
-        onChange={(e) => viewModel.searchUsers(e.target.value)}
-        placeholder={t("users.searchPlaceholder")}
-        className="max-w-xs"
-      />
-    </div>
-  );
-
   return (
     <GenericCrudView
       title={t("users.title")}
@@ -91,7 +79,10 @@ export function UsersView() {
         onPageChange: viewModel.changePage,
         onPageSizeChange: viewModel.changePageSize,
       }}
-      searchComponent={searchComponent}
+      search={{
+        value: viewModel.searchTerm,
+        onChange: viewModel.searchUsers,
+      }}
     />
   );
 }
