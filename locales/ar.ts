@@ -718,7 +718,7 @@ export const ar = {
     compactDesc: "تصميم مدمج مع عناصر صغيرة لتوفير مساحة أكبر للمحتوى",
     floatingDesc: "تصميم عائم مع بطاقات منفصلة وتأثيرات ثلاثية الأبعاد",
     items: "عناصر",
-    search_placeholder:"بحث",
+    search_placeholder: "بحث",
   },
 
   // Color Themes
@@ -810,6 +810,7 @@ export const ar = {
   common: {
     search: "البحث...",
     filter: "تصفية",
+    create: "إنشاء",
     export: "تصدير",
     import: "استيراد",
     save: "حفظ",
@@ -854,6 +855,15 @@ export const ar = {
     of: "من",
     previous: "السابق",
     next: "التالي",
+    showing: "عرض",
+    results: "نتيجة",
+    show: "إظهار",
+    perPage: "في الصفحة",
+    firstPage: "الصفحة الأولى",
+    lastPage: "الصفحة الأخيرة",
+    previousPage: "الصفحة السابقة",
+    nextPage: "الصفحة التالية",
+    goToPage: "الذهاب للصفحة",
   },
 
   // Stats

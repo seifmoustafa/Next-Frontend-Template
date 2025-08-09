@@ -1021,6 +1021,15 @@ export const en = {
     of: "of",
     previous: "Previous",
     next: "Next",
+    showing: "Showing",
+    results: "results",
+    show: "Show",
+    perPage: "per page",
+    firstPage: "First page",
+    lastPage: "Last page",
+    previousPage: "Previous page",
+    nextPage: "Next page",
+    goToPage: "Go to page",
   },
 
   // Stats

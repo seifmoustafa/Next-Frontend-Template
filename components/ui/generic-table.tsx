@@ -377,21 +377,30 @@ export function GenericTable<T extends Record<string, any>>({
             <TableHeader>
               <TableRow className={getHeaderClasses()}>
                 {selectable && (
-                  <TableHead className={cn("w-12", getCellPadding())}>
-                    <Checkbox
-                      checked={
-                        selectedItems.length === sortedData.length &&
-                        sortedData.length > 0
-                      }
-                      onCheckedChange={(checked) => {
-                        if (onSelectionChange) {
-                          const newSelected = checked
-                            ? sortedData.map((row) => row.id)
-                            : [];
-                          onSelectionChange(newSelected);
+                  <TableHead className={cn(
+                    "w-12", 
+                    getCellPadding(),
+                    "relative"
+                  )}>
+                    <div className={cn(
+                      "absolute inset-0 flex items-center",
+                      direction === "rtl" ? "right-4" : "left-4"
+                    )}>
+                      <Checkbox
+                        checked={
+                          selectedItems.length === sortedData.length &&
+                          sortedData.length > 0
                         }
-                      }}
-                    />
+                        onCheckedChange={(checked) => {
+                          if (onSelectionChange) {
+                            const newSelected = checked
+                              ? sortedData.map((row) => row.id)
+                              : [];
+                            onSelectionChange(newSelected);
+                          }
+                        }}
+                      />
+                    </div>
                   </TableHead>
                 )}
                 {columns.map((column) => (
@@ -466,18 +475,26 @@ export function GenericTable<T extends Record<string, any>>({
                       className={getRowClasses(index, isSelected)}
                     >
                       {selectable && (
-                        <TableCell className={getCellPadding()}>
-                          <Checkbox
-                            checked={isSelected}
-                            onCheckedChange={(checked) => {
-                              if (onSelectionChange) {
-                                const newSelected = checked
-                                  ? [...selectedItems, row.id]
-                                  : selectedItems.filter((id) => id !== row.id);
-                                onSelectionChange(newSelected);
-                              }
-                            }}
-                          />
+                        <TableCell className={cn(
+                          getCellPadding(),
+                          "relative"
+                        )}>
+                          <div className={cn(
+                            "absolute inset-0 flex items-center",
+                            direction === "rtl" ? "right-4" : "left-4"
+                          )}>
+                            <Checkbox
+                              checked={isSelected}
+                              onCheckedChange={(checked) => {
+                                if (onSelectionChange) {
+                                  const newSelected = checked
+                                    ? [...selectedItems, row.id]
+                                    : selectedItems.filter((id) => id !== row.id);
+                                  onSelectionChange(newSelected);
+                                }
+                              }}
+                            />
+                          </div>
                         </TableCell>
                       )}
                       {columns.map((column) => (
@@ -540,98 +557,222 @@ export function GenericTable<T extends Record<string, any>>({
         </div>
       </div>
 
-      {/* Pagination */}
+      {/* Professional Pagination */}
       {pagination && (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 gap-2">
-          <p
-            className={cn(
-              "text-muted-foreground",
-              settings.fontSize === "small"
-                ? "text-xs"
-                : settings.fontSize === "large"
-                ? "text-base"
-                : "text-sm",
-              "m-8"
-            )}
-          >
-            {(() => {
-              const start =
-                (pagination.currentPage - 1) * pagination.pageSize + 1;
-              const end = Math.min(
-                pagination.currentPage * pagination.pageSize,
-                pagination.itemsCount
-              );
-              return `${start}-${end} of ${pagination.itemsCount}`;
-            })()}
-          </p>
-          <div className="flex items-center gap-2 m-8">
-            {pagination.onPageSizeChange && (
-              <Select
-                value={String(pagination.pageSize)}
-                onValueChange={(v) => pagination.onPageSizeChange?.(Number(v))}
+        <div className="border-t bg-background/50 backdrop-blur-sm">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between p-4 gap-4">
+            {/* Results Info */}
+            <div className="flex items-center gap-4">
+              <p
+                className={cn(
+                  "text-muted-foreground font-medium",
+                  settings.fontSize === "small"
+                    ? "text-xs"
+                    : settings.fontSize === "large"
+                    ? "text-base"
+                    : "text-sm"
+                )}
               >
-                <SelectTrigger className="w-[70px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[10, 25, 50].map((size) => (
-                    <SelectItem key={size} value={String(size)}>
-                      {size}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
+                {(() => {
+                  const start =
+                    (pagination.currentPage - 1) * pagination.pageSize + 1;
+                  const end = Math.min(
+                    pagination.currentPage * pagination.pageSize,
+                    pagination.itemsCount
+                  );
+                  return `${t("table.showing")} ${start}-${end} ${t("table.of")} ${pagination.itemsCount} ${t("table.results")}`;
+                })()}
+              </p>
+              
+              {/* Page Size Selector */}
+              {pagination.onPageSizeChange && (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    {t("table.show")}:
+                  </span>
+                  <Select
+                    value={String(pagination.pageSize)}
+                    onValueChange={(v) => pagination.onPageSizeChange?.(Number(v))}
+                  >
+                    <SelectTrigger className="w-[80px] h-8">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[10, 25, 50, 100].map((size) => (
+                        <SelectItem key={size} value={String(size)}>
+                          {size}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <span className="text-sm text-muted-foreground">
+                    {t("table.perPage")}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Advanced Pagination Controls */}
             {pagination.pagesCount > 1 && (
-              <Pager>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        pagination.onPageChange(pagination.currentPage - 1);
-                      }}
-                      className={
-                        pagination.currentPage === 1
-                          ? "pointer-events-none opacity-50"
-                          : ""
+              <div className="flex items-center gap-2">
+                {/* First Page */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => pagination.onPageChange(1)}
+                  disabled={pagination.currentPage === 1}
+                  className={cn(
+                    "h-8 w-8 p-0",
+                    direction === "rtl" && "rotate-180"
+                  )}
+                  title={t("table.firstPage")}
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                  </svg>
+                </Button>
+
+                {/* Previous Page */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => pagination.onPageChange(pagination.currentPage - 1)}
+                  disabled={pagination.currentPage === 1}
+                  className={cn(
+                    "h-8 w-8 p-0",
+                    direction === "rtl" && "rotate-180"
+                  )}
+                  title={t("table.previousPage")}
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </Button>
+
+                {/* Page Numbers with Smart Truncation */}
+                <div className="flex items-center gap-1">
+                  {(() => {
+                    const current = pagination.currentPage;
+                    const total = pagination.pagesCount;
+                    const pages: (number | string)[] = [];
+
+                    if (total <= 7) {
+                      // Show all pages if 7 or fewer
+                      for (let i = 1; i <= total; i++) {
+                        pages.push(i);
                       }
-                    />
-                  </PaginationItem>
-                  {Array.from(
-                    { length: pagination.pagesCount },
-                    (_, i) => i + 1
-                  ).map((page) => (
-                    <PaginationItem key={page}>
-                      <PaginationLink
-                        href="#"
-                        isActive={page === pagination.currentPage}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          pagination.onPageChange(page);
-                        }}
-                      >
-                        {page}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ))}
-                  <PaginationItem>
-                    <PaginationNext
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        pagination.onPageChange(pagination.currentPage + 1);
-                      }}
-                      className={
-                        pagination.currentPage === pagination.pagesCount
-                          ? "pointer-events-none opacity-50"
-                          : ""
+                    } else {
+                      // Smart truncation for many pages
+                      if (current <= 4) {
+                        // Near beginning: 1 2 3 4 5 ... 10
+                        for (let i = 1; i <= 5; i++) pages.push(i);
+                        pages.push("...");
+                        pages.push(total);
+                      } else if (current >= total - 3) {
+                        // Near end: 1 ... 6 7 8 9 10
+                        pages.push(1);
+                        pages.push("...");
+                        for (let i = total - 4; i <= total; i++) pages.push(i);
+                      } else {
+                        // Middle: 1 ... 4 5 6 ... 10
+                        pages.push(1);
+                        pages.push("...");
+                        for (let i = current - 1; i <= current + 1; i++) pages.push(i);
+                        pages.push("...");
+                        pages.push(total);
                       }
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pager>
+                    }
+
+                    return pages.map((page, index) => {
+                      if (page === "...") {
+                        return (
+                          <span
+                            key={`ellipsis-${index}`}
+                            className="px-2 py-1 text-muted-foreground"
+                          >
+                            ...
+                          </span>
+                        );
+                      }
+
+                      const pageNum = page as number;
+                      const isActive = pageNum === current;
+
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={isActive ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => pagination.onPageChange(pageNum)}
+                          className={cn(
+                            "h-8 w-8 p-0",
+                            isActive && "bg-primary text-primary-foreground shadow-sm"
+                          )}
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    });
+                  })()}
+                </div>
+
+                {/* Next Page */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => pagination.onPageChange(pagination.currentPage + 1)}
+                  disabled={pagination.currentPage === pagination.pagesCount}
+                  className={cn(
+                    "h-8 w-8 p-0",
+                    direction === "rtl" && "rotate-180"
+                  )}
+                  title={t("table.nextPage")}
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Button>
+
+                {/* Last Page */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => pagination.onPageChange(pagination.pagesCount)}
+                  disabled={pagination.currentPage === pagination.pagesCount}
+                  className={cn(
+                    "h-8 w-8 p-0",
+                    direction === "rtl" && "rotate-180"
+                  )}
+                  title={t("table.lastPage")}
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                  </svg>
+                </Button>
+
+                {/* Page Jump Input */}
+                <div className="flex items-center gap-2 ml-4 pl-4 border-l">
+                  <span className="text-sm text-muted-foreground whitespace-nowrap">
+                    {t("table.goToPage")}:
+                  </span>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={pagination.pagesCount}
+                    className="w-16 h-8 text-center"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        const value = parseInt((e.target as HTMLInputElement).value);
+                        if (value >= 1 && value <= pagination.pagesCount) {
+                          pagination.onPageChange(value);
+                          (e.target as HTMLInputElement).value = "";
+                        }
+                      }
+                    }}
+                    placeholder={String(pagination.currentPage)}
+                  />
+                </div>
+              </div>
             )}
           </div>
         </div>
