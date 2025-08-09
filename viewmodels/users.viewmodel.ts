@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type {
   User,
   IUserService,
@@ -8,147 +8,59 @@ import type {
   UpdateUserRequest,
   UsersResponse,
 } from "@/services/user.service";
+import type { PaginationInfo } from "@/lib/pagination";
+import { useCrudViewModel } from "@/hooks/use-crud-view-model";
 
 export function useUsersViewModel(userService: IUserService) {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [total, setTotal] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState<PaginationInfo>({
+    itemsCount: 0,
+    pageSize: 10,
+    currentPage: 1,
+    pagesCount: 1,
+  });
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  // Modal state
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const list = useCallback(async () => {
+    const response: UsersResponse = await userService.getUsers({
+      page: pagination.currentPage,
+      pageSize: pagination.pageSize,
+      search: searchTerm,
+    });
+    setPagination(response.pagination);
+    return response.data;
+  }, [userService, pagination.currentPage, pagination.pageSize, searchTerm]);
 
-  const loadUsers = useCallback(
-    async (page = 1, search = "") => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response: UsersResponse = await userService.getUsers({
-          page,
-          pageSize: 10,
-          search,
-        });
-        setUsers(response.data);
-        setTotal(response.pagination.itemsCount);
-        setCurrentPage(page);
-        setSearchTerm(search);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "حدث خطأ");
-      } finally {
-        setLoading(false);
-      }
-    },
-    [userService]
-  );
-
-  const createUser = async (userData: CreateUserRequest) => {
-    try {
-      await userService.createUser(userData);
-      await loadUsers(currentPage, searchTerm);
-      setIsCreateModalOpen(false);
-    } catch (err) {
-      throw err;
-    }
-  };
-
-  const updateUser = async (id: string, userData: UpdateUserRequest) => {
-    try {
-      await userService.updateUser(id, userData);
-      await loadUsers(currentPage, searchTerm);
-      setIsEditModalOpen(false);
-      setEditingUser(null);
-    } catch (err) {
-      throw err;
-    }
-  };
-
-  const deleteUser = async (id: string) => {
-    try {
-      if (confirm("هل أنت متأكد من حذف هذا المستخدم؟")) {
-        await userService.deleteUser(id);
-        await loadUsers(currentPage, searchTerm);
-      }
-    } catch (err) {
-      throw err;
-    }
-  };
-
-  const deleteSelectedUsers = async () => {
-    try {
-      if (selectedUsers.length === 0) return;
-      if (confirm(`هل أنت متأكد من حذف ${selectedUsers.length} مستخدم؟`)) {
-        await userService.deleteSelectedUsers(selectedUsers);
-        setSelectedUsers([]);
-        await loadUsers(currentPage, searchTerm);
-      }
-    } catch (err) {
-      throw err;
-    }
-  };
-
-  const toggleUserSelection = (userId: string) => {
-    setSelectedUsers((prev) =>
-      prev.includes(userId)
-        ? prev.filter((id) => id !== userId)
-        : [...prev, userId]
-    );
-  };
-
-  const toggleAllUsers = () => {
-    setSelectedUsers((prev) =>
-      prev.length === users.length ? [] : users.map((user) => user.id)
-    );
-  };
-
-  const openEditModal = (user: User) => {
-    setEditingUser(user);
-    setIsEditModalOpen(true);
-  };
-
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
-    setEditingUser(null);
-  };
+  const crud = useCrudViewModel<User, CreateUserRequest, UpdateUserRequest>({
+    list,
+    create: (data) => userService.createUser(data),
+    update: (id, data) => userService.updateUser(id, data),
+    delete: (id) => userService.deleteUser(id),
+  });
 
   const searchUsers = (term: string) => {
-    loadUsers(1, term);
+    setPagination((prev) => ({ ...prev, currentPage: 1 }));
+    setSearchTerm(term);
   };
 
   const changePage = (page: number) => {
-    loadUsers(page, searchTerm);
+    setPagination((prev) => ({ ...prev, currentPage: page }));
+  };
+
+  const changePageSize = (size: number) => {
+    setPagination((prev) => ({ ...prev, pageSize: size, currentPage: 1 }));
   };
 
   useEffect(() => {
-    loadUsers();
-  }, [loadUsers]);
+    crud.refreshItems();
+  }, [list]);
 
   return {
-    users,
-    loading,
-    error,
-    total,
-    currentPage,
+    ...crud,
+    pagination,
     searchTerm,
-    selectedUsers,
-    isCreateModalOpen,
-    isEditModalOpen,
-    editingUser,
-    createUser,
-    updateUser,
-    deleteUser,
-    deleteSelectedUsers,
-    toggleUserSelection,
-    toggleAllUsers,
-    openEditModal,
-    closeEditModal,
-    setIsCreateModalOpen,
     searchUsers,
     changePage,
-    refreshUsers: () => loadUsers(currentPage, searchTerm),
+    changePageSize,
   };
 }
+
