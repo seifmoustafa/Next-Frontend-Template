@@ -8,6 +8,7 @@ import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
+import { useSettings } from "@/providers/settings-provider";
 
 interface ElegantHeaderProps {
   onMenuClick: () => void;
@@ -15,6 +16,7 @@ interface ElegantHeaderProps {
 
 export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
   const { t, direction } = useI18n();
+  const settings = useSettings();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -72,42 +74,46 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
             </div>
           </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "lg:hidden h-8 w-8 hover:bg-primary/10",
-              "shadow-sm hover:shadow-md hover:scale-105",
-              buttonClass,
-              animationClass
-            )}
-            onClick={() => onchange(false)}
-          >
-            <X className="w-4 h-4" />
-          </Button>
+          {settings.collapsibleSidebar && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "lg:hidden h-8 w-8 hover:bg-primary/10",
+                "shadow-sm hover:shadow-md hover:scale-105",
+                buttonClass,
+                animationClass
+              )}
+              onClick={() => onchange(false)}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          )}
         </div>
         {/* Left Section */}
         <div className="relative flex items-center space-x-4 rtl:space-x-reverse z-20">
           {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "lg:hidden h-12 w-12",
-              "bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5",
-              "hover:from-primary/25 hover:via-primary/15 hover:to-primary/10",
-              "border border-primary/20 hover:border-primary/40",
-              "shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30",
-              "hover:scale-110 active:scale-95",
-              "backdrop-blur-xl",
-              "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
-              buttonClass,
-              animationClass
-            )}
-            onClick={onMenuClick}
-          >
-            <Menu className="h-5 w-5 text-primary drop-shadow-sm" />
-          </Button>
+          {settings.collapsibleSidebar && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "lg:hidden h-12 w-12",
+                "bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5",
+                "hover:from-primary/25 hover:via-primary/15 hover:to-primary/10",
+                "border border-primary/20 hover:border-primary/40",
+                "shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30",
+                "hover:scale-110 active:scale-95",
+                "backdrop-blur-xl",
+                "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+                buttonClass,
+                animationClass
+              )}
+              onClick={onMenuClick}
+            >
+              <Menu className="h-5 w-5 text-primary drop-shadow-sm" />
+            </Button>
+          )}
         </div>
 
         {/* Center Section - Enhanced Search */}

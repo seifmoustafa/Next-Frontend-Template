@@ -27,9 +27,14 @@ import { Logo } from "@/components/ui/logo";
 interface CompactSidebarProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  collapsible?: boolean;
 }
 
-export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
+export function CompactSidebar({
+  open,
+  onOpenChange,
+  collapsible = true,
+}: CompactSidebarProps) {
   const pathname = usePathname();
   const { t, direction } = useI18n();
   const { user } = useAuth();
@@ -166,7 +171,7 @@ export function CompactSidebar({ open, onOpenChange }: CompactSidebarProps) {
             : "text-foreground/80 hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:text-primary hover:shadow-sm"
         )}
         style={{ paddingLeft: `${12 + indent}px` }}
-        onClick={() => !item.disabled && onOpenChange(false)}
+        onClick={() => !item.disabled && collapsible && onOpenChange(false)}
       >
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <div

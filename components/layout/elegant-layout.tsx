@@ -109,7 +109,11 @@ export function ElegantLayout({
       <ElegantHeader onMenuClick={() => onSidebarOpenChange(true)} />
 
       {/* Sidebar - Lower z-index than header */}
-      <ElegantSidebar open={sidebarOpen} onOpenChange={onSidebarOpenChange} />
+      <ElegantSidebar
+        open={sidebarOpen}
+        onOpenChange={onSidebarOpenChange}
+        collapsible={settings.collapsibleSidebar}
+      />
 
       {/* Main Content - Enhanced with better spacing and animations */}
         <main
@@ -150,7 +154,7 @@ export function ElegantLayout({
         {settings.showFooter && <Footer />}
 
         {/* Mobile overlay with enhanced blur and gradient */}
-        {sidebarOpen && (
+        {sidebarOpen && settings.collapsibleSidebar && (
         <div
           className={cn(
             "fixed inset-0 z-30 lg:hidden",

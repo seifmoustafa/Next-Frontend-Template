@@ -34,14 +34,16 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
       >
         {/* Left side */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden hover-lift sidebar-trigger"
-            onClick={onMenuClick}
-          >
-            <Menu className="w-5 h-5" />
-          </Button>
+          {settings.collapsibleSidebar && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden hover-lift sidebar-trigger"
+              onClick={onMenuClick}
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
+          )}
 
           <HeaderSearch
             containerClassName="hidden md:block"

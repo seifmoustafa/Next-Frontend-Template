@@ -85,6 +85,7 @@ export function FloatingLayout({
       <FloatingNavigation
         open={sidebarOpen}
         onOpenChange={onSidebarOpenChange}
+        collapsible={settings.collapsibleSidebar}
       />
 
       {/* Main Content */}
@@ -120,7 +121,7 @@ export function FloatingLayout({
         {settings.showFooter && <Footer />}
 
         {/* Mobile overlay */}
-        {sidebarOpen && (
+        {sidebarOpen && settings.collapsibleSidebar && (
           <div
             className={cn(
               "fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden",

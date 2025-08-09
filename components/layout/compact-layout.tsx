@@ -73,7 +73,11 @@ export function CompactLayout({
       <CompactHeader onMenuClick={() => onSidebarOpenChange(true)} />
 
       {/* Sidebar */}
-      <CompactSidebar open={sidebarOpen} onOpenChange={onSidebarOpenChange} />
+      <CompactSidebar
+        open={sidebarOpen}
+        onOpenChange={onSidebarOpenChange}
+        collapsible={settings.collapsibleSidebar}
+      />
 
       {/* Main Content - Proper responsive margins */}
       <main
@@ -109,7 +113,7 @@ export function CompactLayout({
         {settings.showFooter && <Footer />}
 
         {/* Mobile overlay */}
-        {sidebarOpen && (
+        {sidebarOpen && settings.collapsibleSidebar && (
           <div
             className={cn(
               "fixed inset-0 bg-black/50 z-30 lg:hidden",

@@ -26,12 +26,14 @@ interface ModernSidebarProps {
  open: boolean;
  onOpenChange: (open: boolean) => void;
  onHoverChange: (hovered: boolean) => void;
+ collapsible?: boolean;
 }
 
 export function ModernSidebar({
  open,
  onOpenChange,
  onHoverChange,
+ collapsible = true,
 }: ModernSidebarProps) {
  const pathname = usePathname();
  const { t, direction } = useI18n();
@@ -182,7 +184,7 @@ export function ModernSidebar({
            : "justify-center px-2 py-3"
        )}
        style={isHovered ? { paddingLeft: `${12 + indent}px` } : undefined}
-       onClick={() => !item.disabled && onOpenChange(false)}
+       onClick={() => !item.disabled && collapsible && onOpenChange(false)}
      >
        {/* Icon - always visible */}
        <div
@@ -284,17 +286,19 @@ export function ModernSidebar({
              )}
            </div>
 
-           <Button
-             variant="ghost"
-             size="icon"
-             className={cn(
-               "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent flex-shrink-0",
-               "rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
-             )}
-             onClick={() => onOpenChange(false)}
-           >
-             <X className="w-5 h-5" />
-           </Button>
+           {collapsible && (
+             <Button
+               variant="ghost"
+               size="icon"
+               className={cn(
+                 "lg:hidden text-sidebar-foreground hover:bg-sidebar-accent flex-shrink-0",
+                 "rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+               )}
+               onClick={() => onOpenChange(false)}
+             >
+               <X className="w-5 h-5" />
+             </Button>
+           )}
          </div>
 
          {/* User Info */}

@@ -24,13 +24,23 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const settings = useSettings();
+  const [sidebarOpen, setSidebarOpen] = useState(
+    settings.collapsibleSidebar ? false : true
+  );
   const [sidebarHovered, setSidebarHovered] = useState(false);
     const { direction } = useI18n();
-    const { layoutTemplate, showFooter } = useSettings();
+    const { layoutTemplate, showFooter, collapsibleSidebar } = settings;
 
-  // Close sidebar when clicking outside on mobile
   useEffect(() => {
+    if (!collapsibleSidebar) {
+      setSidebarOpen(true);
+    }
+  }, [collapsibleSidebar]);
+
+  // Close sidebar when clicking outside on mobile if collapsible
+  useEffect(() => {
+    if (!collapsibleSidebar) return;
     const handleClickOutside = (event: MouseEvent) => {
       const sidebar = document.querySelector(".sidebar");
       const sidebarTrigger = document.querySelector(".sidebar-trigger");
@@ -50,7 +60,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [collapsibleSidebar]);
 
   // Navigation Layout - NEW
   if (layoutTemplate === "navigation") {
@@ -110,11 +120,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         )}
       >
         {/* Modern sidebar with hover expansion */}
-          <ModernSidebar
-            open={sidebarOpen}
-            onOpenChange={setSidebarOpen}
-            onHoverChange={setSidebarHovered}
-          />
+        <ModernSidebar
+          open={sidebarOpen}
+          onOpenChange={setSidebarOpen}
+          onHoverChange={setSidebarHovered}
+          collapsible={collapsibleSidebar}
+        />
 
         <div
           className={cn(
@@ -138,7 +149,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
 
         {/* Mobile overlay */}
-        {sidebarOpen && (
+        {sidebarOpen && collapsibleSidebar && (
           <div
             className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
             onClick={() => setSidebarOpen(false)}
@@ -178,7 +189,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         )}
       >
         {/* Classic sidebar - wider with larger icons and text */}
-        <ClassicSidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
+        <ClassicSidebar
+          open={sidebarOpen}
+          onOpenChange={setSidebarOpen}
+          collapsible={collapsibleSidebar}
+        />
 
         <div
           className={cn(
@@ -196,7 +211,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
 
         {/* Mobile overlay */}
-        {sidebarOpen && (
+        {sidebarOpen && collapsibleSidebar && (
           <div
             className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
             onClick={() => setSidebarOpen(false)}
@@ -231,7 +246,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
 
       {/* Mobile overlay */}
-      {sidebarOpen && (
+      {sidebarOpen && collapsibleSidebar && (
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
