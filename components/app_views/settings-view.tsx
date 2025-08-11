@@ -415,9 +415,19 @@ export function SettingsView() {
   const borderRadiusOptions = [
     { value: "none", name: t("radius.none"), class: "rounded-none", px: "0px" },
     { value: "small", name: t("radius.small"), class: "rounded-sm", px: "2px" },
-    { value: "default", name: t("radius.default"), class: "rounded", px: "4px" },
+    {
+      value: "default",
+      name: t("radius.default"),
+      class: "rounded",
+      px: "4px",
+    },
     { value: "large", name: t("radius.large"), class: "rounded-lg", px: "8px" },
-    { value: "full", name: t("radius.full"), class: "rounded-full", px: "9999px" },
+    {
+      value: "full",
+      name: t("radius.full"),
+      class: "rounded-full",
+      px: "9999px",
+    },
   ];
 
   // Button style options - UPDATED WITH MORE GRANULAR RADIUS OPTIONS
@@ -474,10 +484,26 @@ export function SettingsView() {
 
   // Spacing options with visual examples
   const spacingOptions = [
-    { value: "compact", name: t("settings.spacing.options.compact"), spacing: "p-2 gap-1" },
-    { value: "default", name: t("settings.spacing.options.default"), spacing: "p-4 gap-2" },
-    { value: "comfortable", name: t("settings.spacing.options.comfortable"), spacing: "p-6 gap-3" },
-    { value: "spacious", name: t("settings.spacing.options.spacious"), spacing: "p-8 gap-4" },
+    {
+      value: "compact",
+      name: t("settings.spacing.options.compact"),
+      spacing: "p-2 gap-1",
+    },
+    {
+      value: "default",
+      name: t("settings.spacing.options.default"),
+      spacing: "p-4 gap-2",
+    },
+    {
+      value: "comfortable",
+      name: t("settings.spacing.options.comfortable"),
+      spacing: "p-6 gap-3",
+    },
+    {
+      value: "spacious",
+      name: t("settings.spacing.options.spacious"),
+      spacing: "p-8 gap-4",
+    },
   ];
 
   // Shadow intensity options
@@ -524,8 +550,16 @@ export function SettingsView() {
       name: t("cardStyle.glass"),
       class: "bg-white/10 backdrop-blur border border-white/20",
     },
-    { value: "solid", name: t("cardStyle.solid"), class: "bg-gray-100 border-0" },
-    { value: "bordered", name: t("cardStyle.bordered"), class: "border-2 bg-card" },
+    {
+      value: "solid",
+      name: t("cardStyle.solid"),
+      class: "bg-gray-100 border-0",
+    },
+    {
+      value: "bordered",
+      name: t("cardStyle.bordered"),
+      class: "border-2 bg-card",
+    },
     {
       value: "elevated",
       name: t("settings.cardStyleOptions.elevated"),
@@ -808,14 +842,26 @@ export function SettingsView() {
 
   // Input style options
   const inputStyles = [
-    { value: "default", name: t("settings.inputStyle.options.default"), class: "rounded-md border" },
-    { value: "rounded", name: t("settings.inputStyle.options.rounded"), class: "rounded-full border px-4" },
+    {
+      value: "default",
+      name: t("settings.inputStyle.options.default"),
+      class: "rounded-md border",
+    },
+    {
+      value: "rounded",
+      name: t("settings.inputStyle.options.rounded"),
+      class: "rounded-full border px-4",
+    },
     {
       value: "underlined",
       name: t("settings.inputStyle.options.underlined"),
       class: "rounded-none border-0 border-b-2 px-0",
     },
-    { value: "filled", name: t("settings.inputStyle.options.filled"), class: "rounded-lg bg-muted border-0" },
+    {
+      value: "filled",
+      name: t("settings.inputStyle.options.filled"),
+      class: "rounded-lg bg-muted border-0",
+    },
   ];
 
   // DatePicker style options
@@ -830,13 +876,15 @@ export function SettingsView() {
       value: "modern",
       name: t("settings.datePickerStyle.options.modern.name"),
       description: t("settings.datePickerStyle.options.modern.description"),
-      preview: "bg-gradient-to-r from-background to-muted/20 border border-border/50 rounded-md shadow-sm",
+      preview:
+        "bg-gradient-to-r from-background to-muted/20 border border-border/50 rounded-md shadow-sm",
     },
     {
       value: "glass",
       name: t("settings.datePickerStyle.options.glass.name"),
       description: t("settings.datePickerStyle.options.glass.description"),
-      preview: "bg-background/60 backdrop-blur-sm border border-white/20 rounded-md shadow-lg",
+      preview:
+        "bg-background/60 backdrop-blur-sm border border-white/20 rounded-md shadow-lg",
     },
     {
       value: "outlined",
@@ -860,7 +908,8 @@ export function SettingsView() {
       value: "elegant",
       name: t("settings.datePickerStyle.options.elegant.name"),
       description: t("settings.datePickerStyle.options.elegant.description"),
-      preview: "bg-gradient-to-br from-background via-background to-muted/10 border border-border/30 rounded-md shadow-sm",
+      preview:
+        "bg-gradient-to-br from-background via-background to-muted/10 border border-border/30 rounded-md shadow-sm",
     },
   ];
 
@@ -924,18 +973,50 @@ export function SettingsView() {
 
   // Badge style options
   const badgeStyles = [
-    { value: "default", name: t("settings.badgeStyle.options.default"), class: "rounded-full" },
-    { value: "rounded", name: t("settings.badgeStyle.options.rounded"), class: "rounded-lg" },
-    { value: "square", name: t("settings.badgeStyle.options.square"), class: "rounded-none" },
-    { value: "pill", name: t("settings.badgeStyle.options.pill"), class: "rounded-full px-3" },
+    {
+      value: "default",
+      name: t("settings.badgeStyle.options.default"),
+      class: "rounded-full",
+    },
+    {
+      value: "rounded",
+      name: t("settings.badgeStyle.options.rounded"),
+      class: "rounded-lg",
+    },
+    {
+      value: "square",
+      name: t("settings.badgeStyle.options.square"),
+      class: "rounded-none",
+    },
+    {
+      value: "pill",
+      name: t("settings.badgeStyle.options.pill"),
+      class: "rounded-full px-3",
+    },
   ];
 
   // Avatar style options
   const avatarStyles = [
-    { value: "default", name: t("settings.avatarStyle.options.default"), class: "rounded-full" },
-    { value: "rounded", name: t("settings.avatarStyle.options.rounded"), class: "rounded-lg" },
-    { value: "square", name: t("settings.avatarStyle.options.square"), class: "rounded-none" },
-    { value: "hexagon", name: t("settings.avatarStyle.options.hexagon"), class: "rounded-full" },
+    {
+      value: "default",
+      name: t("settings.avatarStyle.options.default"),
+      class: "rounded-full",
+    },
+    {
+      value: "rounded",
+      name: t("settings.avatarStyle.options.rounded"),
+      class: "rounded-lg",
+    },
+    {
+      value: "square",
+      name: t("settings.avatarStyle.options.square"),
+      class: "rounded-none",
+    },
+    {
+      value: "hexagon",
+      name: t("settings.avatarStyle.options.hexagon"),
+      class: "rounded-full",
+    },
   ];
 
   // Select style options
@@ -1111,8 +1192,16 @@ export function SettingsView() {
   ];
 
   const sampleTableColumns = [
-    { key: "name" as const, label: t("settings.sampleTable.name"), sortable: true },
-    { key: "email" as const, label: t("settings.sampleTable.email"), sortable: true },
+    {
+      key: "name" as const,
+      label: t("settings.sampleTable.name"),
+      sortable: true,
+    },
+    {
+      key: "email" as const,
+      label: t("settings.sampleTable.email"),
+      sortable: true,
+    },
     {
       key: "status" as const,
       label: t("settings.sampleTable.status"),
@@ -1868,17 +1957,24 @@ export function SettingsView() {
                                 <ChevronRight className="h-3 w-3" />
                               </div>
                               <div className="grid grid-cols-7 gap-0.5 text-xs">
-                                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
-                                  <div key={i} className="h-4 w-4 flex items-center justify-center text-muted-foreground">
-                                    {day}
-                                  </div>
-                                ))}
+                                {["S", "M", "T", "W", "T", "F", "S"].map(
+                                  (day, i) => (
+                                    <div
+                                      key={i}
+                                      className="h-4 w-4 flex items-center justify-center text-muted-foreground"
+                                    >
+                                      {day}
+                                    </div>
+                                  )
+                                )}
                                 {Array.from({ length: 7 }, (_, i) => (
                                   <div
                                     key={i}
                                     className={cn(
                                       "h-4 w-4 flex items-center justify-center rounded-sm text-xs",
-                                      i === 3 ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+                                      i === 3
+                                        ? "bg-primary text-primary-foreground"
+                                        : "hover:bg-muted"
                                     )}
                                   >
                                     {i + 1}
@@ -2779,9 +2875,7 @@ export function SettingsView() {
                           },
                           {
                             value: "modern",
-                            name: t(
-                              "settings.toast.designOptions.modern.name"
-                            ),
+                            name: t("settings.toast.designOptions.modern.name"),
                             description: t(
                               "settings.toast.designOptions.modern.description"
                             ),
@@ -2810,9 +2904,7 @@ export function SettingsView() {
                           },
                           {
                             value: "filled",
-                            name: t(
-                              "settings.toast.designOptions.filled.name"
-                            ),
+                            name: t("settings.toast.designOptions.filled.name"),
                             description: t(
                               "settings.toast.designOptions.filled.description"
                             ),
@@ -2842,7 +2934,9 @@ export function SettingsView() {
                                 {t("settings.toast.preview")}
                               </div>
                               <div className="text-center">
-                                <p className="text-sm font-medium">{design.name}</p>
+                                <p className="text-sm font-medium">
+                                  {design.name}
+                                </p>
                                 <p className="text-xs text-muted-foreground">
                                   {design.description}
                                 </p>
@@ -2862,21 +2956,6 @@ export function SettingsView() {
 
                     {/* Toast Options */}
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-0.5">
-                          <Label>{t("settings.toast.showIconsLabel")}</Label>
-                          <p className="text-sm text-muted-foreground">
-                            {t("settings.toast.showIconsDesc")}
-                          </p>
-                        </div>
-                        <Switch
-                          checked={settings.showToastIcons ?? true}
-                          onCheckedChange={settings.setShowToastIcons}
-                        />
-                      </div>
-
-                      <Separator />
-
                       <div className="space-y-3">
                         <Label className="text-sm font-semibold">
                           {t("settings.toast.durationLabel")}
@@ -2933,7 +3012,9 @@ export function SettingsView() {
                               }
                             >
                               <div className="text-center space-y-1">
-                                <p className="text-lg font-bold">{duration.name}</p>
+                                <p className="text-lg font-bold">
+                                  {duration.name}
+                                </p>
                                 <p className="text-xs text-muted-foreground">
                                   {duration.description}
                                 </p>
@@ -2962,9 +3043,7 @@ export function SettingsView() {
                           size="sm"
                           onClick={() => {
                             enhancedToast({
-                              title: t(
-                                "settings.toast.messages.success.title"
-                              ),
+                              title: t("settings.toast.messages.success.title"),
                               description: t(
                                 "settings.toast.messages.success.description"
                               ),
@@ -3069,7 +3148,7 @@ export function SettingsView() {
                                 {style.description}
                               </p>
                             </div>
-                            
+
                             {/* Select Preview with Proper Spacing */}
                             <div className="space-y-4 pb-24">
                               {/* Regular Select */}
@@ -3077,40 +3156,64 @@ export function SettingsView() {
                                 <div className="text-xs font-medium text-muted-foreground">
                                   {t("settings.selectStyle.regularSelect")}
                                 </div>
-                                <div className={cn(
-                                  "h-8 w-full flex items-center justify-between px-3 text-xs border rounded transition-all",
-                                  // Theme-aware styling
-                                  style.value === "modern" && "border-2 border-primary/30 rounded-xl bg-background shadow-sm",
-                                  style.value === "glass" && "border border-border/30 bg-background/20 backdrop-blur-sm rounded-lg",
-                                  style.value === "outlined" && "border-2 border-primary/40 bg-transparent rounded-md",
-                                  style.value === "filled" && "border-0 bg-muted/50 rounded-md",
-                                  style.value === "minimal" && "border-0 border-b-2 border-primary/40 bg-transparent rounded-none",
-                                  style.value === "elegant" && "border border-primary/30 bg-gradient-to-r from-background to-muted/30 rounded-lg shadow-sm",
-                                  style.value === "professional" && "border border-border bg-background shadow-sm rounded-md",
-                                  style.value === "default" && "border border-input bg-background rounded-md"
-                                )}>
+                                <div
+                                  className={cn(
+                                    "h-8 w-full flex items-center justify-between px-3 text-xs border rounded transition-all",
+                                    // Theme-aware styling
+                                    style.value === "modern" &&
+                                      "border-2 border-primary/30 rounded-xl bg-background shadow-sm",
+                                    style.value === "glass" &&
+                                      "border border-border/30 bg-background/20 backdrop-blur-sm rounded-lg",
+                                    style.value === "outlined" &&
+                                      "border-2 border-primary/40 bg-transparent rounded-md",
+                                    style.value === "filled" &&
+                                      "border-0 bg-muted/50 rounded-md",
+                                    style.value === "minimal" &&
+                                      "border-0 border-b-2 border-primary/40 bg-transparent rounded-none",
+                                    style.value === "elegant" &&
+                                      "border border-primary/30 bg-gradient-to-r from-background to-muted/30 rounded-lg shadow-sm",
+                                    style.value === "professional" &&
+                                      "border border-border bg-background shadow-sm rounded-md",
+                                    style.value === "default" &&
+                                      "border border-input bg-background rounded-md"
+                                  )}
+                                >
                                   <span className="text-muted-foreground rtl:text-right ltr:text-left">
-                                    {t("settings.selectStyle.selectPlaceholder")}
+                                    {t(
+                                      "settings.selectStyle.selectPlaceholder"
+                                    )}
                                   </span>
-                                  <ChevronRight className={cn(
-                                    "h-3 w-3 opacity-50 transition-transform",
-                                    "rtl:rotate-180"
-                                  )} />
+                                  <ChevronRight
+                                    className={cn(
+                                      "h-3 w-3 opacity-50 transition-transform",
+                                      "rtl:rotate-180"
+                                    )}
+                                  />
                                 </div>
-                                
+
                                 {/* Static Dropdown Preview */}
-                                <div className={cn(
-                                  "border rounded text-xs shadow-lg",
-                                  // Theme-aware dropdown styling
-                                  style.value === "modern" && "border-primary/30 rounded-xl shadow-xl bg-popover text-popover-foreground",
-                                  style.value === "glass" && "border-border/30 bg-popover/90 backdrop-blur-md rounded-lg shadow-xl text-popover-foreground",
-                                  style.value === "outlined" && "border-2 border-primary/40 rounded-md shadow-lg bg-popover text-popover-foreground",
-                                  style.value === "filled" && "border-0 rounded-md shadow-xl bg-popover text-popover-foreground",
-                                  style.value === "minimal" && "border border-border rounded-sm shadow-md bg-popover text-popover-foreground",
-                                  style.value === "elegant" && "border border-primary/30 bg-popover rounded-lg shadow-xl text-popover-foreground",
-                                  style.value === "professional" && "border border-border rounded-md shadow-lg bg-popover text-popover-foreground",
-                                  style.value === "default" && "border border-border bg-popover rounded-md shadow-md text-popover-foreground"
-                                )}>
+                                <div
+                                  className={cn(
+                                    "border rounded text-xs shadow-lg",
+                                    // Theme-aware dropdown styling
+                                    style.value === "modern" &&
+                                      "border-primary/30 rounded-xl shadow-xl bg-popover text-popover-foreground",
+                                    style.value === "glass" &&
+                                      "border-border/30 bg-popover/90 backdrop-blur-md rounded-lg shadow-xl text-popover-foreground",
+                                    style.value === "outlined" &&
+                                      "border-2 border-primary/40 rounded-md shadow-lg bg-popover text-popover-foreground",
+                                    style.value === "filled" &&
+                                      "border-0 rounded-md shadow-xl bg-popover text-popover-foreground",
+                                    style.value === "minimal" &&
+                                      "border border-border rounded-sm shadow-md bg-popover text-popover-foreground",
+                                    style.value === "elegant" &&
+                                      "border border-primary/30 bg-popover rounded-lg shadow-xl text-popover-foreground",
+                                    style.value === "professional" &&
+                                      "border border-border rounded-md shadow-lg bg-popover text-popover-foreground",
+                                    style.value === "default" &&
+                                      "border border-border bg-popover rounded-md shadow-md text-popover-foreground"
+                                  )}
+                                >
                                   <div className="p-1 space-y-1">
                                     <div className="px-2 py-1 hover:bg-accent rounded text-accent-foreground rtl:text-right ltr:text-left">
                                       {t("settings.selectStyle.option1")}
@@ -3124,57 +3227,85 @@ export function SettingsView() {
                                   </div>
                                 </div>
                               </div>
-                              
+
                               {/* Searchable Select */}
                               <div className="space-y-2">
                                 <div className="text-xs font-medium text-muted-foreground">
                                   {t("settings.selectStyle.searchableSelect")}
                                 </div>
-                                <div className={cn(
-                                  "h-8 w-full flex items-center justify-between px-3 text-xs border rounded transition-all",
-                                  // Theme-aware styling with accent colors
-                                  style.value === "modern" && "border-2 border-green-500/30 rounded-xl bg-background shadow-sm",
-                                  style.value === "glass" && "border border-border/30 bg-background/20 backdrop-blur-sm rounded-lg",
-                                  style.value === "outlined" && "border-2 border-green-500/40 bg-transparent rounded-md",
-                                  style.value === "filled" && "border-0 bg-green-50 dark:bg-green-950/20 rounded-md",
-                                  style.value === "minimal" && "border-0 border-b-2 border-green-500/40 bg-transparent rounded-none",
-                                  style.value === "elegant" && "border border-green-500/30 bg-gradient-to-r from-background to-green-50 dark:to-green-950/20 rounded-lg shadow-sm",
-                                  style.value === "professional" && "border border-border bg-background shadow-sm rounded-md",
-                                  style.value === "default" && "border border-input bg-background rounded-md"
-                                )}>
+                                <div
+                                  className={cn(
+                                    "h-8 w-full flex items-center justify-between px-3 text-xs border rounded transition-all",
+                                    // Theme-aware styling with accent colors
+                                    style.value === "modern" &&
+                                      "border-2 border-green-500/30 rounded-xl bg-background shadow-sm",
+                                    style.value === "glass" &&
+                                      "border border-border/30 bg-background/20 backdrop-blur-sm rounded-lg",
+                                    style.value === "outlined" &&
+                                      "border-2 border-green-500/40 bg-transparent rounded-md",
+                                    style.value === "filled" &&
+                                      "border-0 bg-green-50 dark:bg-green-950/20 rounded-md",
+                                    style.value === "minimal" &&
+                                      "border-0 border-b-2 border-green-500/40 bg-transparent rounded-none",
+                                    style.value === "elegant" &&
+                                      "border border-green-500/30 bg-gradient-to-r from-background to-green-50 dark:to-green-950/20 rounded-lg shadow-sm",
+                                    style.value === "professional" &&
+                                      "border border-border bg-background shadow-sm rounded-md",
+                                    style.value === "default" &&
+                                      "border border-input bg-background rounded-md"
+                                  )}
+                                >
                                   <span className="text-muted-foreground rtl:text-right ltr:text-left">
-                                    {t("settings.selectStyle.searchPlaceholder")}
+                                    {t(
+                                      "settings.selectStyle.searchPlaceholder"
+                                    )}
                                   </span>
-                                  <div className={cn(
-                                    "flex items-center gap-1",
-                                    "rtl:flex-row-reverse"
-                                  )}>
+                                  <div
+                                    className={cn(
+                                      "flex items-center gap-1",
+                                      "rtl:flex-row-reverse"
+                                    )}
+                                  >
                                     <Search className="h-3 w-3 opacity-50" />
-                                    <ChevronRight className={cn(
-                                      "h-3 w-3 opacity-50 transition-transform",
-                                      "rtl:rotate-180"
-                                    )} />
+                                    <ChevronRight
+                                      className={cn(
+                                        "h-3 w-3 opacity-50 transition-transform",
+                                        "rtl:rotate-180"
+                                      )}
+                                    />
                                   </div>
                                 </div>
-                                
+
                                 {/* Static Searchable Dropdown Preview */}
-                                <div className={cn(
-                                  "border rounded text-xs shadow-lg",
-                                  // Theme-aware dropdown styling with accent
-                                  style.value === "modern" && "border-green-500/30 rounded-xl shadow-xl bg-popover text-popover-foreground",
-                                  style.value === "glass" && "border-border/30 bg-popover/90 backdrop-blur-md rounded-lg shadow-xl text-popover-foreground",
-                                  style.value === "outlined" && "border-2 border-green-500/40 rounded-md shadow-lg bg-popover text-popover-foreground",
-                                  style.value === "filled" && "border-0 rounded-md shadow-xl bg-popover text-popover-foreground",
-                                  style.value === "minimal" && "border border-border rounded-sm shadow-md bg-popover text-popover-foreground",
-                                  style.value === "elegant" && "border border-green-500/30 bg-popover rounded-lg shadow-xl text-popover-foreground",
-                                  style.value === "professional" && "border border-border rounded-md shadow-lg bg-popover text-popover-foreground",
-                                  style.value === "default" && "border border-border bg-popover rounded-md shadow-md text-popover-foreground"
-                                )}>
+                                <div
+                                  className={cn(
+                                    "border rounded text-xs shadow-lg",
+                                    // Theme-aware dropdown styling with accent
+                                    style.value === "modern" &&
+                                      "border-green-500/30 rounded-xl shadow-xl bg-popover text-popover-foreground",
+                                    style.value === "glass" &&
+                                      "border-border/30 bg-popover/90 backdrop-blur-md rounded-lg shadow-xl text-popover-foreground",
+                                    style.value === "outlined" &&
+                                      "border-2 border-green-500/40 rounded-md shadow-lg bg-popover text-popover-foreground",
+                                    style.value === "filled" &&
+                                      "border-0 rounded-md shadow-xl bg-popover text-popover-foreground",
+                                    style.value === "minimal" &&
+                                      "border border-border rounded-sm shadow-md bg-popover text-popover-foreground",
+                                    style.value === "elegant" &&
+                                      "border border-green-500/30 bg-popover rounded-lg shadow-xl text-popover-foreground",
+                                    style.value === "professional" &&
+                                      "border border-border rounded-md shadow-lg bg-popover text-popover-foreground",
+                                    style.value === "default" &&
+                                      "border border-border bg-popover rounded-md shadow-md text-popover-foreground"
+                                  )}
+                                >
                                   <div className="p-2 border-b border-border">
-                                    <div className={cn(
-                                      "flex items-center gap-2 px-2 py-1 bg-muted/50 rounded",
-                                      "rtl:flex-row-reverse"
-                                    )}>
+                                    <div
+                                      className={cn(
+                                        "flex items-center gap-2 px-2 py-1 bg-muted/50 rounded",
+                                        "rtl:flex-row-reverse"
+                                      )}
+                                    >
                                       <Search className="h-3 w-3 opacity-50" />
                                       <span className="text-muted-foreground rtl:text-right ltr:text-left">
                                         {t("settings.selectStyle.typeToSearch")}
@@ -3194,6 +3325,258 @@ export function SettingsView() {
                             </div>
                           </div>
                           {settings.selectStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Switch Styles */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.switchStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.switchStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {[
+                        {
+                          value: "default",
+                          name: t("settings.switchStyle.options.default.title"),
+                          description: t(
+                            "settings.switchStyle.options.default.description"
+                          ),
+                        },
+                        {
+                          value: "modern",
+                          name: t("settings.switchStyle.options.modern.title"),
+                          description: t(
+                            "settings.switchStyle.options.modern.description"
+                          ),
+                        },
+                        {
+                          value: "ios",
+                          name: t("settings.switchStyle.options.ios.title"),
+                          description: t(
+                            "settings.switchStyle.options.ios.description"
+                          ),
+                        },
+                        {
+                          value: "android",
+                          name: t("settings.switchStyle.options.android.title"),
+                          description: t(
+                            "settings.switchStyle.options.android.description"
+                          ),
+                        },
+                        {
+                          value: "toggle",
+                          name: t("settings.switchStyle.options.toggle.title"),
+                          description: t(
+                            "settings.switchStyle.options.toggle.description"
+                          ),
+                        },
+                        {
+                          value: "slider",
+                          name: t("settings.switchStyle.options.slider.title"),
+                          description: t(
+                            "settings.switchStyle.options.slider.description"
+                          ),
+                        },
+                        {
+                          value: "neon",
+                          name: t("settings.switchStyle.options.neon.title"),
+                          description: t(
+                            "settings.switchStyle.options.neon.description"
+                          ),
+                        },
+                        {
+                          value: "neumorphism",
+                          name: t(
+                            "settings.switchStyle.options.neumorphism.title"
+                          ),
+                          description: t(
+                            "settings.switchStyle.options.neumorphism.description"
+                          ),
+                        },
+                        {
+                          value: "liquid",
+                          name: t("settings.switchStyle.options.liquid.title"),
+                          description: t(
+                            "settings.switchStyle.options.liquid.description"
+                          ),
+                        },
+                        {
+                          value: "cyberpunk",
+                          name: t(
+                            "settings.switchStyle.options.cyberpunk.title"
+                          ),
+                          description: t(
+                            "settings.switchStyle.options.cyberpunk.description"
+                          ),
+                        },
+                      ].map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.switchStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setSwitchStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-4">
+                            <div className="text-center">
+                              <h4 className="font-semibold">{style.name}</h4>
+                              <p className="text-xs text-muted-foreground">
+                                {style.description}
+                              </p>
+                            </div>
+
+                            {/* Switch Preview */}
+                            <div className="flex flex-col items-center space-y-3">
+                              {/* ON State Preview */}
+                              <div className="flex items-center space-x-3">
+                                <span className="text-xs text-muted-foreground">
+                                  OFF
+                                </span>
+                                <div className="relative">
+                                  {style.value === "default" && (
+                                    <div className="h-6 w-11 rounded-full bg-primary border-2 border-transparent flex items-center">
+                                      <div className="h-5 w-5 rounded-full bg-background shadow-lg transform translate-x-5 transition-transform" />
+                                    </div>
+                                  )}
+                                  {style.value === "modern" && (
+                                    <div className="h-7 w-12 rounded-full bg-gradient-to-r from-primary to-primary/80 border-2 border-transparent shadow-lg flex items-center">
+                                      <div className="h-5 w-5 rounded-full bg-white shadow-xl transform translate-x-5 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "ios" && (
+                                    <div className="h-8 w-14 rounded-full bg-green-500 shadow-inner flex items-center">
+                                      <div className="h-7 w-7 rounded-full bg-white shadow-lg transform translate-x-6 my-0.5 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "android" && (
+                                    <div className="h-6 w-10 rounded-full bg-primary/30 flex items-center">
+                                      <div className="h-5 w-5 rounded-full bg-primary shadow-lg shadow-primary/50 transform translate-x-4 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "toggle" && (
+                                    <div className="h-8 w-16 rounded-lg border-2 border-primary bg-primary/10 flex items-center">
+                                      <div className="h-6 w-6 rounded-md bg-primary shadow-md transform translate-x-8 my-0.5 mx-0.5 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "slider" && (
+                                    <div className="h-6 w-12 rounded-full bg-gradient-to-r from-primary to-primary/70 relative overflow-hidden flex items-center">
+                                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent pointer-events-none" />
+                                      <div className="h-4 w-4 rounded-full bg-white shadow-lg transform translate-x-6 my-1 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "neon" && (
+                                    <div className="h-7 w-13 rounded-full border-2 border-primary bg-black/20 dark:bg-primary/10 shadow-[0_0_20px_rgba(var(--primary),0.5)] relative overflow-hidden flex items-center">
+                                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+                                      <div className="h-5 w-5 rounded-full bg-primary shadow-[0_0_15px_rgba(var(--primary),0.8)] animate-pulse transform translate-x-6 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "neumorphism" && (
+                                    <div className="h-8 w-16 rounded-2xl bg-gray-200 dark:bg-gray-800 shadow-[inset_-4px_-4px_8px_rgba(255,255,255,0.5),inset_4px_4px_8px_rgba(0,0,0,0.1)] dark:shadow-[inset_-4px_-4px_8px_rgba(255,255,255,0.1),inset_4px_4px_8px_rgba(0,0,0,0.3)] flex items-center">
+                                      <div className="h-6 w-6 rounded-xl bg-primary shadow-[2px_2px_4px_rgba(0,0,0,0.2),-2px_-2px_4px_rgba(255,255,255,0.8)] dark:shadow-[2px_2px_4px_rgba(0,0,0,0.4),-2px_-2px_4px_rgba(255,255,255,0.1)] transform translate-x-8 my-1 mx-1 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "liquid" && (
+                                    <div className="h-8 w-16 rounded-full bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 relative overflow-hidden flex items-center">
+                                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none animate-pulse" />
+                                      <div className="absolute top-0 left-0 h-full w-full rounded-full bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+                                      <div className="h-7 w-7 rounded-full bg-gradient-to-br from-primary via-primary/90 to-primary/80 shadow-2xl transform translate-x-8 my-0.5 transition-all duration-500" />
+                                    </div>
+                                  )}
+                                  {style.value === "cyberpunk" && (
+                                    <div className="h-6 w-14 rounded-sm border-2 border-primary bg-black/80 shadow-[0_0_20px_rgba(var(--primary),0.6),inset_0_0_20px_rgba(var(--primary),0.1)] relative overflow-hidden flex items-center">
+                                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent pointer-events-none animate-pulse" />
+                                      <div className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-transparent via-primary/60 to-transparent pointer-events-none" />
+                                      <div className="h-4 w-4 rounded-sm bg-primary shadow-[0_0_15px_rgba(var(--primary),1),inset_0_0_10px_rgba(255,255,255,0.2)] transform translate-x-8 my-0.5 mx-0.5 transition-all" />
+                                    </div>
+                                  )}
+                                </div>
+                                <span className="text-xs font-medium">ON</span>
+                              </div>
+
+                              {/* OFF State Preview */}
+                              <div className="flex items-center space-x-3">
+                                <span className="text-xs font-medium">OFF</span>
+                                <div className="relative">
+                                  {style.value === "default" && (
+                                    <div className="h-6 w-11 rounded-full bg-input border-2 border-transparent flex items-center">
+                                      <div className="h-5 w-5 rounded-full bg-background shadow-lg transform translate-x-0 transition-transform" />
+                                    </div>
+                                  )}
+                                  {style.value === "modern" && (
+                                    <div className="h-7 w-12 rounded-full bg-gray-300 dark:bg-gray-600 border-2 border-transparent shadow-lg flex items-center">
+                                      <div className="h-5 w-5 rounded-full bg-white shadow-lg transform translate-x-0 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "ios" && (
+                                    <div className="h-8 w-14 rounded-full bg-gray-300 dark:bg-gray-600 shadow-inner flex items-center">
+                                      <div className="h-7 w-7 rounded-full bg-white shadow-lg transform translate-x-0.5 my-0.5 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "android" && (
+                                    <div className="h-6 w-10 rounded-full bg-gray-400/30 flex items-center">
+                                      <div className="h-5 w-5 rounded-full bg-gray-500 shadow-lg shadow-gray-500/50 transform translate-x-0 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "toggle" && (
+                                    <div className="h-8 w-16 rounded-lg border-2 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600 flex items-center">
+                                      <div className="h-6 w-6 rounded-md bg-white dark:bg-gray-300 shadow-md transform translate-x-0 my-0.5 mx-0.5 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "slider" && (
+                                    <div className="h-6 w-12 rounded-full bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700 relative overflow-hidden flex items-center">
+                                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent pointer-events-none" />
+                                      <div className="h-4 w-4 rounded-full bg-white shadow-lg transform translate-x-1 my-1 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "neon" && (
+                                    <div className="h-7 w-13 rounded-full border-2 border-gray-400/50 bg-gray-100/50 dark:bg-gray-800/50 relative overflow-hidden flex items-center">
+                                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+                                      <div className="h-5 w-5 rounded-full bg-gray-400 shadow-gray-400/50 transform translate-x-0 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "neumorphism" && (
+                                    <div className="h-8 w-16 rounded-2xl bg-gray-200 dark:bg-gray-800 shadow-[inset_4px_4px_8px_rgba(0,0,0,0.1),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] dark:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.3),inset_-4px_-4px_8px_rgba(255,255,255,0.1)] flex items-center">
+                                      <div className="h-6 w-6 rounded-xl bg-gray-300 shadow-[2px_2px_4px_rgba(0,0,0,0.2),-2px_-2px_4px_rgba(255,255,255,0.8)] dark:shadow-[2px_2px_4px_rgba(0,0,0,0.4),-2px_-2px_4px_rgba(255,255,255,0.1)] transform translate-x-0 my-1 mx-1 transition-all" />
+                                    </div>
+                                  )}
+                                  {style.value === "liquid" && (
+                                    <div className="h-8 w-16 rounded-full bg-gradient-to-r from-gray-200/80 to-gray-300/80 dark:from-gray-700/80 dark:to-gray-600/80 relative overflow-hidden flex items-center">
+                                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none animate-pulse" />
+                                      <div className="absolute top-0 left-0 h-full w-full rounded-full bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+                                      <div className="h-7 w-7 rounded-full bg-gradient-to-br from-white to-gray-100 dark:from-gray-300 dark:to-gray-400 shadow-2xl transform translate-x-0.5 my-0.5 transition-all duration-500" />
+                                    </div>
+                                  )}
+                                  {style.value === "cyberpunk" && (
+                                    <div className="h-6 w-14 rounded-sm border-2 border-gray-500/50 bg-gray-900/50 dark:bg-gray-800/50 relative overflow-hidden flex items-center">
+                                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-500/10 to-transparent pointer-events-none" />
+                                      <div className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-transparent via-gray-500/30 to-transparent pointer-events-none" />
+                                      <div className="h-4 w-4 rounded-sm bg-gray-400 shadow-gray-400/50 transform translate-x-0 my-0.5 mx-0.5 transition-all" />
+                                    </div>
+                                  )}
+                                </div>
+                                <span className="text-xs text-muted-foreground">
+                                  ON
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          {settings.switchStyle === style.value && (
                             <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
                               <Check className="h-3 w-3 text-primary-foreground" />
                             </div>
@@ -3269,9 +3652,7 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>
-                            {t("settings.behavior.logo.label")}
-                          </Label>
+                          <Label>{t("settings.behavior.logo.label")}</Label>
                           <p className="text-sm text-muted-foreground">
                             {t("settings.behavior.logo.description")}
                           </p>
@@ -3346,9 +3727,7 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>
-                            {t("settings.behavior.sidebar.label")}
-                          </Label>
+                          <Label>{t("settings.behavior.sidebar.label")}</Label>
                           <p className="text-sm text-muted-foreground">
                             {t("settings.behavior.sidebar.description")}
                           </p>
@@ -3480,7 +3859,9 @@ export function SettingsView() {
                   <Label className="text-sm font-semibold">
                     {t("settings.preview.input.label")}
                   </Label>
-                  <Input placeholder={t("settings.preview.input.placeholder")} />
+                  <Input
+                    placeholder={t("settings.preview.input.placeholder")}
+                  />
                 </div>
 
                 <Separator />

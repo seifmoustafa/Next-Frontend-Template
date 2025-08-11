@@ -84,11 +84,60 @@ export type LoadingStyle = "spinner" | "dots" | "bars" | "pulse";
 export type TooltipStyle = "default" | "rounded" | "sharp" | "bubble";
 export type ModalStyle = "default" | "centered" | "fullscreen" | "drawer";
 
-export type TreeStyle = "lines" | "cards" | "minimal" | "bubble" | "modern" | "glass" | "elegant" | "professional" | "gradient" | "neon" | "organic" | "corporate";
-export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled";
-export type DatePickerStyle = "default" | "modern" | "glass" | "outlined" | "filled" | "minimal" | "elegant";
-export type CalendarStyle = "default" | "modern" | "glass" | "elegant" | "minimal" | "dark";
-export type SelectStyle = "default" | "modern" | "glass" | "outlined" | "filled" | "minimal" | "elegant" | "professional";
+export type TreeStyle =
+  | "lines"
+  | "cards"
+  | "minimal"
+  | "bubble"
+  | "modern"
+  | "glass"
+  | "elegant"
+  | "professional"
+  | "gradient"
+  | "neon"
+  | "organic"
+  | "corporate";
+export type ToastDesign =
+  | "minimal"
+  | "modern"
+  | "gradient"
+  | "outlined"
+  | "filled";
+export type DatePickerStyle =
+  | "default"
+  | "modern"
+  | "glass"
+  | "outlined"
+  | "filled"
+  | "minimal"
+  | "elegant";
+export type CalendarStyle =
+  | "default"
+  | "modern"
+  | "glass"
+  | "elegant"
+  | "minimal"
+  | "dark";
+export type SelectStyle =
+  | "default"
+  | "modern"
+  | "glass"
+  | "outlined"
+  | "filled"
+  | "minimal"
+  | "elegant"
+  | "professional";
+export type SwitchStyle =
+  | "default"
+  | "modern"
+  | "ios"
+  | "android"
+  | "toggle"
+  | "slider"
+  | "neon"
+  | "neumorphism"
+  | "liquid"
+  | "cyberpunk";
 
 interface SettingsContextType {
   // Existing settings
@@ -151,6 +200,9 @@ interface SettingsContextType {
 
   selectStyle: SelectStyle;
   setSelectStyle: (style: SelectStyle) => void;
+
+  switchStyle: SwitchStyle;
+  setSwitchStyle: (style: SwitchStyle) => void;
 
   // Toast settings
   toastDesign: ToastDesign;
@@ -257,7 +309,8 @@ const defaultSettings = {
   datePickerStyle: "modern" as DatePickerStyle,
   calendarStyle: "modern" as CalendarStyle,
   selectStyle: "default" as SelectStyle,
-  
+  switchStyle: "default" as SwitchStyle,
+
   // Toast settings
   toastDesign: "minimal" as ToastDesign,
   showToastIcons: true,
@@ -459,6 +512,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setDatePickerStyle: (style) => updateSetting("datePickerStyle", style),
     setCalendarStyle: (style) => updateSetting("calendarStyle", style),
     setSelectStyle: (style) => updateSetting("selectStyle", style),
+    setSwitchStyle: (style) => updateSetting("switchStyle", style),
     setToastDesign: (design) => updateSetting("toastDesign", design),
     setShowToastIcons: (show) => updateSetting("showToastIcons", show),
     setToastDuration: (duration) => updateSetting("toastDuration", duration),
