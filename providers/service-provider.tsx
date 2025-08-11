@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { ApiService } from "@/services/api.service";
 import { UserService } from "@/services/user.service";
 import { UserTypeService } from "@/services/user-type.service";
@@ -9,6 +9,11 @@ import { AnalyticsService } from "@/services/analytics.service";
 import { NotificationService } from "@/services/notification.service";
 import { SiteService } from "@/services/site.service";
 import { VendorService } from "@/services/vendor.service";
+import { ContractService } from "@/services/contract.service";
+import { CategoryService } from "@/services/category.service";
+import { WarehouseLocationService } from "@/services/warehouseLocation.service";
+
+import { CivilianService } from "@/services/civilian.service";
 
 interface Services {
   apiService: ApiService;
@@ -18,28 +23,43 @@ interface Services {
   notificationService: NotificationService;
   siteService: SiteService;
   vendorService: VendorService;
+  categoryService : CategoryService;
+  contractService: ContractService;
+  warehouseLocationService: WarehouseLocationService
+  civilianService: CivilianService;
 }
 
 const ServiceContext = createContext<Services | null>(null);
 
 export function ServiceProvider({ children }: { children: React.ReactNode }) {
-  const notificationService = new NotificationService();
-  const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "");
-  const userService = new UserService(apiService, notificationService);
-  const userTypeService = new UserTypeService(apiService, notificationService);
-  const analyticsService = new AnalyticsService(apiService);
-  const siteService = new SiteService(apiService, notificationService);
-  const vendorService = new VendorService(apiService, notificationService);
+  // Use useMemo to create stable service instances
+  const services = useMemo(() => {
+    const notificationService = new NotificationService();
+    const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "");
+    const userService = new UserService(apiService, notificationService);
+    const userTypeService = new UserTypeService(apiService, notificationService);
+    const analyticsService = new AnalyticsService(apiService);
+    const siteService = new SiteService(apiService, notificationService);
+    const vendorService = new VendorService(apiService, notificationService);
+    const contractService = new ContractService(apiService, notificationService);
+    const categoryService = new CategoryService(apiService,notificationService);
+    const warehouseLocationService = new WarehouseLocationService(apiService,notificationService);
+    const civilianService = new CivilianService(apiService, notificationService);
 
-  const services: Services = {
-    apiService,
-    userService,
-    userTypeService,
-    analyticsService,
-    siteService,
-    notificationService,
-    vendorService,
-  };
+    return {
+      apiService,
+      userService,
+      userTypeService,
+      analyticsService,
+      notificationService,
+      siteService,
+      vendorService,
+      contractService,
+      categoryService,
+      warehouseLocationService,
+      civilianService,
+    };
+  }, []); // Empty dependency array = stable services
 
   return (
     <ServiceContext.Provider value={services}>

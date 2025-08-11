@@ -46,7 +46,7 @@ export interface IUserService {
   getUsers(params?: {
     page?: number;
     pageSize?: number;
-    search?: string;
+    PageSearch?: string;
   }): Promise<UsersResponse>;
   getUserById(id: string): Promise<User>;
   createUser(data: CreateUserRequest): Promise<User>;
@@ -64,14 +64,14 @@ export class UserService implements IUserService {
   async getUsers(params?: {
     page?: number;
     pageSize?: number;
-    search?: string;
+    PageSearch?: string;
   }): Promise<UsersResponse> {
     try {
       const queryParams = new URLSearchParams();
       if (params?.page) queryParams.append("page", params.page.toString());
       if (params?.pageSize)
         queryParams.append("pageSize", params.pageSize.toString());
-      if (params?.search) queryParams.append("search", params.search);
+      if (params?.PageSearch) queryParams.append("PageSearch", params.PageSearch);
 
       const response = await this.apiService.get<UsersResponse>(
         `${API_ENDPOINTS.GET_USERS}?${queryParams.toString()}`

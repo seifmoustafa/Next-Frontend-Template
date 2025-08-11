@@ -1,11 +1,15 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { CalendarDays, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { CustomCalendar } from "./custom-calendar";
+import { calculateDropdownPosition, scrollIntoViewIfNeeded, type DropdownPosition } from "@/lib/dropdown-positioning";
+
+
 
 interface DatePickerProps {
   id?: string;
@@ -32,7 +36,15 @@ export function DatePicker({
   const { t, language, direction } = useI18n();
   const [isFocused, setIsFocused] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [calendarPosition, setCalendarPosition] = useState<DropdownPosition>({ 
+    top: 0, 
+    left: 0, 
+    width: 0, 
+    maxHeight: 400,
+    placement: 'bottom-start'
+  });
   const containerRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target.value);
@@ -44,6 +56,18 @@ export function DatePicker({
   };
 
   const handleIconClick = () => {
+    if (!showCalendar && containerRef.current) {
+      // Calculate optimal position with viewport detection
+      const position = calculateDropdownPosition({
+        triggerElement: containerRef.current,
+        dropdownHeight: 400,
+        minWidth: 280
+      });
+      setCalendarPosition(position);
+      
+      // Scroll trigger into view if needed
+      scrollIntoViewIfNeeded(containerRef.current);
+    }
     setShowCalendar(!showCalendar);
   };
 
@@ -74,21 +98,48 @@ export function DatePicker({
     }
   };
 
-  // Click outside handler
+  // Disabled click-outside detection to prevent interference
+  // Users can close by clicking the trigger again or pressing Escape
+
+  // Handle window resize to recalculate position
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setShowCalendar(false);
+    const handleResize = () => {
+      if (showCalendar && containerRef.current) {
+        const position = calculateDropdownPosition({
+          triggerElement: containerRef.current,
+          dropdownHeight: 400,
+          minWidth: 280
+        });
+        setCalendarPosition(position);
       }
     };
 
     if (showCalendar) {
-      document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('scroll', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('scroll', handleResize);
+      };
     }
+  }, [showCalendar]);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!showCalendar) return;
+
+      switch (event.key) {
+        case 'Escape':
+          setShowCalendar(false);
+          break;
+      }
     };
+
+    if (showCalendar) {
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }
   }, [showCalendar]);
 
   const IconComponent = type === "datetime-local" ? Clock : CalendarDays;
@@ -386,7 +437,8 @@ export function DatePicker({
       >
         {/* Display Value or Placeholder */}
         <span className={cn(
-          "flex-1 text-left select-none",
+          "flex-1 select-none",
+          direction === "rtl" ? "text-right" : "text-left",
           value ? "text-foreground" : "text-muted-foreground"
         )}>
           {value ? formatDisplayValue(value) : (placeholder || t("common.selectDate") || "Select date")}
@@ -395,7 +447,8 @@ export function DatePicker({
         {/* Professional Icon */}
         <IconComponent 
           className={cn(
-            "h-4 w-4 transition-all duration-200 flex-shrink-0 ml-2",
+            "h-4 w-4 transition-all duration-200 flex-shrink-0",
+            direction === "rtl" ? "mr-2" : "ml-2",
             showCalendar ? "text-primary scale-110" : "text-muted-foreground",
             "hover:text-primary hover:scale-105"
           )} 
@@ -412,16 +465,32 @@ export function DatePicker({
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
       )}
       
-      {/* Custom Calendar Dropdown */}
-      {showCalendar && (
-        <div className="absolute top-full left-0 right-0 z-50 mt-1">
+
+      
+      {/* Custom Calendar Dropdown - Portal Rendered */}
+      {showCalendar && typeof window !== "undefined" && createPortal(
+        <div 
+          ref={calendarRef}
+          data-dropdown-portal="true"
+          data-date-picker="true"
+          className="fixed z-[99999] pointer-events-auto"
+          style={{
+            top: `${calendarPosition.top}px`,
+            left: `${calendarPosition.left}px`,
+            width: `${calendarPosition.width}px`,
+            maxHeight: `${calendarPosition.maxHeight}px`,
+            pointerEvents: 'auto'
+          }}
+
+        >
           <CustomCalendar
             value={value}
             onChange={handleCalendarChange}
             onClose={() => setShowCalendar(false)}
             type={type}
           />
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

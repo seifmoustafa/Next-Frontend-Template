@@ -28,4 +28,30 @@ export const API_ENDPOINTS = {
   CREATE_VENDOR: "/Vendors",
   UPDATE_VENDOR: (id: string) => `/Vendors/${id}`,
   DELETE_VENDOR: (id: string) => `/Vendors/${id}`,
+
+  GET_CONTRACTS: "/Contract",
+  GET_CONTRACT: (id: string) => `/Contract/${id}`,
+  CREATE_CONTRACT: "/Contract",
+  UPDATE_CONTRACT: (id: string) => `/Contract/${id}`,
+  DELETE_CONTRACT: (id: string) => `/Contract/${id}`,
+
+  GET_CATEGORYS: "/Category",
+  GET_CATEGORY: (id: string) => `/Category/${id}`,
+  CREATE_CATEGORY: "/Category",
+  UPDATE_CATEGORY: (id: string) => `/Category/${id}`,
+  DELETE_CATEGORY: (id: string) => `/Category/${id}`,
+
+  GET_WAREHOUSELOCATIONS: "/WarehouseLocations",
+  GET_WAREHOUSELOCATION: (id: string) => `/WarehouseLocations/${id}`,
+  CREATE_WAREHOUSELOCATION: "/WarehouseLocations",
+  UPDATE_WAREHOUSELOCATION: (id: string) => `/WarehouseLocations/${id}`,
+  DELETE_WAREHOUSELOCATION: (id: string) => `/WarehouseLocations/${id}`,
+  GET_WAREHOUSELOCATIONS_WITH_CHILDREN: "/WarehouseLocations/With-Children",
+
+  GET_CIVILIANS: "/Civilians",
+  GET_CIVILIAN: (id: string) => `/Civilians/${id}`,
+  CREATE_CIVILIAN: "/Civilians",
+  UPDATE_CIVILIAN: (id: string) => `/Civilians/${id}`,
+  DELETE_CIVILIAN: (id: string) => `/Civilians/${id}`,
+
 };

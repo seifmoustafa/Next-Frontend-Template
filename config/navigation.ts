@@ -15,6 +15,9 @@ import {
   BarChart,
   MapPin,
   Store,
+  Building,
+  ContrastIcon,
+  HardHat,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -49,10 +52,42 @@ export const navigation: NavigationItem[] = [
     icon: MapPin,
   },
   {
-    name: "nav.vendors",
-    href: "/vendors",
-    icon: Store,
+    name: "nav.siteWorkers",
+    icon: HardHat,
+    children: [
+      {
+        name: "nav.civilians",
+        href: "/civilians",
+      },
+    ],
   },
+  {
+    name: "nav.imports",
+    icon: Building,
+    children: [
+      {
+        name: "nav.vendors",
+        href: "/vendors",
+        // icon: Store,
+      },
+      {
+        name: "nav.contracts",
+        href: "/contracts",
+        // icon: ContrastIcon,
+      },
+       {
+        name: "nav.categories",
+        href: "/categories",
+        icon: BarChart,
+      },
+       {
+        name: "nav.warehouseLocations",
+        href: "/warehouseLocations",
+        icon: BarChart,
+      },
+    ],
+  },
+
   // {
   //   name: "nav.dashboard", // Uses translation key
   //   href: "/",

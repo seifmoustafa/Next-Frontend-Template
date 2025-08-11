@@ -40,14 +40,14 @@ export interface ISiteService {
   getSites(params?: {
     page?: number;
     pageSize?: number;
-    search?: string;
+    PageSearch?: string;
   }): Promise<SitesResponse>;
 
   // New: With-Children endpoint
   getSitesWithChildren(params?: {
     page?: number;
     pageSize?: number;
-    search?: string;
+    PageSearch?: string;
   }): Promise<SitesResponse>;
 
   getSiteById(id: string): Promise<Site>;
@@ -65,14 +65,14 @@ export class SiteService implements ISiteService {
   async getSites(params?: {
     page?: number;
     pageSize?: number;
-    search?: string;
+    PageSearch?: string;
   }): Promise<SitesResponse> {
     try {
       const queryParams = new URLSearchParams();
       if (params?.page) queryParams.append("page", params.page.toString());
       if (params?.pageSize)
         queryParams.append("pageSize", params.pageSize.toString());
-      if (params?.search) queryParams.append("search", params.search);
+      if (params?.PageSearch) queryParams.append("PageSearch", params.PageSearch);
 
       const response = await this.apiService.get<SitesResponse>(
         `${API_ENDPOINTS.GET_SITES}?${queryParams.toString()}`
@@ -88,7 +88,7 @@ export class SiteService implements ISiteService {
   async getSitesWithChildren(params?: {
     page?: number;
     pageSize?: number;
-    search?: string;
+    PageSearch?: string;
   }): Promise<SitesResponse> {
     try {
       const queryParams = new URLSearchParams();
@@ -96,7 +96,7 @@ export class SiteService implements ISiteService {
         queryParams.append("PageNumber", params.page.toString());
       if (params?.pageSize)
         queryParams.append("PageSize", params.pageSize.toString());
-      if (params?.search) queryParams.append("PageSearch", params.search);
+      if (params?.PageSearch) queryParams.append("PageSearch", params.PageSearch);
 
       const response = await this.apiService.get<SitesResponse>(
         `${API_ENDPOINTS.GET_SITES_WITH_CHILDREN}?${queryParams.toString()}`

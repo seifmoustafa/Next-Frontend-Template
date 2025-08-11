@@ -148,7 +148,7 @@ export function GenericModal({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
       <DialogContent className={cn(getSizeClasses(), getModalClasses())}>
         <DialogHeader className={cn(getHeaderPadding(), "border-b shrink-0")}>
           <DialogTitle className={cn("font-semibold", getTitleSize())}>

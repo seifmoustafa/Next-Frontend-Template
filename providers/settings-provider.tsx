@@ -84,10 +84,11 @@ export type LoadingStyle = "spinner" | "dots" | "bars" | "pulse";
 export type TooltipStyle = "default" | "rounded" | "sharp" | "bubble";
 export type ModalStyle = "default" | "centered" | "fullscreen" | "drawer";
 
-export type TreeStyle = "lines" | "cards" | "minimal" | "bubble";
+export type TreeStyle = "lines" | "cards" | "minimal" | "bubble" | "modern" | "glass" | "elegant" | "professional" | "gradient" | "neon" | "organic" | "corporate";
 export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled";
 export type DatePickerStyle = "default" | "modern" | "glass" | "outlined" | "filled" | "minimal" | "elegant";
 export type CalendarStyle = "default" | "modern" | "glass" | "elegant" | "minimal" | "dark";
+export type SelectStyle = "default" | "modern" | "glass" | "outlined" | "filled" | "minimal" | "elegant" | "professional";
 
 interface SettingsContextType {
   // Existing settings
@@ -147,6 +148,9 @@ interface SettingsContextType {
 
   calendarStyle: CalendarStyle;
   setCalendarStyle: (style: CalendarStyle) => void;
+
+  selectStyle: SelectStyle;
+  setSelectStyle: (style: SelectStyle) => void;
 
   // Toast settings
   toastDesign: ToastDesign;
@@ -249,9 +253,10 @@ const defaultSettings = {
   loadingStyle: "spinner" as LoadingStyle,
   tooltipStyle: "default" as TooltipStyle,
   modalStyle: "default" as ModalStyle,
-  treeStyle: "lines" as TreeStyle,
+  treeStyle: "modern" as TreeStyle,
   datePickerStyle: "modern" as DatePickerStyle,
   calendarStyle: "modern" as CalendarStyle,
+  selectStyle: "default" as SelectStyle,
   
   // Toast settings
   toastDesign: "minimal" as ToastDesign,
@@ -453,6 +458,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setTreeStyle: (style) => updateSetting("treeStyle", style),
     setDatePickerStyle: (style) => updateSetting("datePickerStyle", style),
     setCalendarStyle: (style) => updateSetting("calendarStyle", style),
+    setSelectStyle: (style) => updateSetting("selectStyle", style),
     setToastDesign: (design) => updateSetting("toastDesign", design),
     setShowToastIcons: (show) => updateSetting("showToastIcons", show),
     setToastDuration: (duration) => updateSetting("toastDuration", duration),

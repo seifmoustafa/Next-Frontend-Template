@@ -47,6 +47,7 @@ import {
   Save,
   CalendarDays,
   ChevronRight,
+  Search,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useEnhancedToast } from "@/hooks/use-enhanced-toast";
@@ -611,7 +612,7 @@ export function SettingsView() {
       description: t("settings.treeStyle.options.lines.description"),
       preview: (
         <div className="p-3">
-            <div className="h-2 w-24 bg-muted rounded mb-2" />
+          <div className="h-2 w-24 bg-muted rounded mb-2" />
           <div className="border-l border-muted-foreground/30 ml-4 pl-3 space-y-2">
             <div className="h-2 w-20 bg-muted rounded" />
             <div className="h-2 w-16 bg-muted rounded" />
@@ -663,6 +664,118 @@ export function SettingsView() {
             <div className="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px]">
               {t("settings.treeStyle.sample.child2")}
             </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "modern",
+      name: t("settings.treeStyle.options.modern.name"),
+      description: t("settings.treeStyle.options.modern.description"),
+      preview: (
+        <div className="p-3 space-y-1">
+          <div className="h-6 w-28 bg-gradient-to-r from-background via-background/95 to-background/90 border border-border/50 rounded shadow-sm" />
+          <div className="pl-8 space-y-1">
+            <div className="h-6 w-24 bg-gradient-to-r from-background via-background/95 to-background/90 border border-border/50 rounded shadow-sm" />
+            <div className="h-6 w-20 bg-gradient-to-r from-background via-background/95 to-background/90 border border-border/50 rounded shadow-sm" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "glass",
+      name: t("settings.treeStyle.options.glass.name"),
+      description: t("settings.treeStyle.options.glass.description"),
+      preview: (
+        <div className="p-3 space-y-3">
+          <div className="h-6 w-28 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-lg" />
+          <div className="pl-6 space-y-3">
+            <div className="h-6 w-24 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-lg" />
+            <div className="h-6 w-20 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-lg" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "elegant",
+      name: t("settings.treeStyle.options.elegant.name"),
+      description: t("settings.treeStyle.options.elegant.description"),
+      preview: (
+        <div className="p-3 space-y-1">
+          <div className="h-6 w-28 bg-gradient-to-br from-background via-background/98 to-muted/30 border-l-4 border-l-primary/60 border-y border-r border-border/30 rounded-r-lg shadow-sm" />
+          <div className="pl-6 space-y-1">
+            <div className="h-6 w-24 bg-gradient-to-br from-background via-background/98 to-muted/30 border-l-4 border-l-primary/60 border-y border-r border-border/30 rounded-r-lg shadow-sm" />
+            <div className="h-6 w-20 bg-gradient-to-br from-background via-background/98 to-muted/30 border-l-4 border-l-primary/60 border-y border-r border-border/30 rounded-r-lg shadow-sm" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "professional",
+      name: t("settings.treeStyle.options.professional.name"),
+      description: t("settings.treeStyle.options.professional.description"),
+      preview: (
+        <div className="p-3 space-y-1">
+          <div className="h-6 w-28 bg-card border border-border border-l-4 border-l-primary/60 rounded-md shadow-sm relative overflow-hidden" />
+          <div className="pl-8 space-y-1">
+            <div className="h-6 w-24 bg-card border border-border rounded-md shadow-sm" />
+            <div className="h-6 w-20 bg-card border border-border rounded-md shadow-sm" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "gradient",
+      name: t("settings.treeStyle.options.gradient.name"),
+      description: t("settings.treeStyle.options.gradient.description"),
+      preview: (
+        <div className="p-3 space-y-2">
+          <div className="h-6 w-28 bg-gradient-to-r from-primary/20 via-background to-secondary/20 border border-transparent rounded shadow-md" />
+          <div className="pl-8 space-y-2">
+            <div className="h-6 w-24 bg-gradient-to-r from-primary/10 via-background to-secondary/10 border border-transparent rounded shadow-md" />
+            <div className="h-6 w-20 bg-gradient-to-r from-primary/10 via-background to-secondary/10 border border-transparent rounded shadow-md" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "neon",
+      name: t("settings.treeStyle.options.neon.name"),
+      description: t("settings.treeStyle.options.neon.description"),
+      preview: (
+        <div className="p-3 space-y-2">
+          <div className="h-6 w-28 bg-background/90 border border-primary/50 rounded-lg shadow-lg shadow-primary/20 text-primary font-bold" />
+          <div className="pl-8 space-y-2">
+            <div className="h-6 w-24 bg-background/90 border border-primary/30 rounded-lg shadow-md shadow-primary/10" />
+            <div className="h-6 w-20 bg-background/90 border border-primary/30 rounded-lg shadow-md shadow-primary/10" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "organic",
+      name: t("settings.treeStyle.options.organic.name"),
+      description: t("settings.treeStyle.options.organic.description"),
+      preview: (
+        <div className="p-3 space-y-3">
+          <div className="h-6 w-28 bg-gradient-to-br from-green-50/50 via-background to-blue-50/50 border border-green-200/30 rounded-2xl shadow-sm transform rotate-1" />
+          <div className="pl-10 space-y-3">
+            <div className="h-6 w-24 bg-gradient-to-br from-green-50/50 via-background to-blue-50/50 border border-green-200/30 rounded-2xl shadow-sm" />
+            <div className="h-6 w-20 bg-gradient-to-br from-green-50/50 via-background to-blue-50/50 border border-green-200/30 rounded-2xl shadow-sm" />
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "corporate",
+      name: t("settings.treeStyle.options.corporate.name"),
+      description: t("settings.treeStyle.options.corporate.description"),
+      preview: (
+        <div className="p-3 space-y-1">
+          <div className="h-6 w-28 bg-slate-50/50 border-l-8 border-l-blue-600 border-y border-r border-slate-200 rounded-r-md font-bold text-slate-900" />
+          <div className="pl-6 space-y-1">
+            <div className="h-6 w-24 bg-slate-50/50 border-l-4 border-l-blue-600 border-y border-r border-slate-200 rounded-r-md text-slate-700" />
+            <div className="h-6 w-20 bg-slate-50/50 border-l-4 border-l-blue-600 border-y border-r border-slate-200 rounded-r-md text-slate-700" />
           </div>
         </div>
       ),
@@ -825,6 +938,50 @@ export function SettingsView() {
     { value: "hexagon", name: t("settings.avatarStyle.options.hexagon"), class: "rounded-full" },
   ];
 
+  // Select style options
+  const selectStyles = [
+    {
+      value: "default",
+      name: t("settings.selectStyle.options.default.name"),
+      description: t("settings.selectStyle.options.default.description"),
+    },
+    {
+      value: "modern",
+      name: t("settings.selectStyle.options.modern.name"),
+      description: t("settings.selectStyle.options.modern.description"),
+    },
+    {
+      value: "glass",
+      name: t("settings.selectStyle.options.glass.name"),
+      description: t("settings.selectStyle.options.glass.description"),
+    },
+    {
+      value: "outlined",
+      name: t("settings.selectStyle.options.outlined.name"),
+      description: t("settings.selectStyle.options.outlined.description"),
+    },
+    {
+      value: "filled",
+      name: t("settings.selectStyle.options.filled.name"),
+      description: t("settings.selectStyle.options.filled.description"),
+    },
+    {
+      value: "minimal",
+      name: t("settings.selectStyle.options.minimal.name"),
+      description: t("settings.selectStyle.options.minimal.description"),
+    },
+    {
+      value: "elegant",
+      name: t("settings.selectStyle.options.elegant.name"),
+      description: t("settings.selectStyle.options.elegant.description"),
+    },
+    {
+      value: "professional",
+      name: t("settings.selectStyle.options.professional.name"),
+      description: t("settings.selectStyle.options.professional.description"),
+    },
+  ];
+
   // Form style options
   const formStyles = [
     {
@@ -954,10 +1111,10 @@ export function SettingsView() {
   ];
 
   const sampleTableColumns = [
-    { key: "name", label: t("settings.sampleTable.name"), sortable: true },
-    { key: "email", label: t("settings.sampleTable.email"), sortable: true },
+    { key: "name" as const, label: t("settings.sampleTable.name"), sortable: true },
+    { key: "email" as const, label: t("settings.sampleTable.email"), sortable: true },
     {
-      key: "status",
+      key: "status" as const,
       label: t("settings.sampleTable.status"),
       render: (value: string) => (
         <Badge variant={value === "active" ? "default" : "secondary"}>
@@ -2878,6 +3035,171 @@ export function SettingsView() {
                       <p className="text-xs text-muted-foreground">
                         {t("settings.toast.testHint")}
                       </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Select Styles */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.selectStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.selectStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {selectStyles.map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.selectStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setSelectStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-3">
+                            <div className="text-center">
+                              <h4 className="font-semibold">{style.name}</h4>
+                              <p className="text-xs text-muted-foreground">
+                                {style.description}
+                              </p>
+                            </div>
+                            
+                            {/* Select Preview with Proper Spacing */}
+                            <div className="space-y-4 pb-24">
+                              {/* Regular Select */}
+                              <div className="space-y-2">
+                                <div className="text-xs font-medium text-muted-foreground">
+                                  {t("settings.selectStyle.regularSelect")}
+                                </div>
+                                <div className={cn(
+                                  "h-8 w-full flex items-center justify-between px-3 text-xs border rounded transition-all",
+                                  // Theme-aware styling
+                                  style.value === "modern" && "border-2 border-primary/30 rounded-xl bg-background shadow-sm",
+                                  style.value === "glass" && "border border-border/30 bg-background/20 backdrop-blur-sm rounded-lg",
+                                  style.value === "outlined" && "border-2 border-primary/40 bg-transparent rounded-md",
+                                  style.value === "filled" && "border-0 bg-muted/50 rounded-md",
+                                  style.value === "minimal" && "border-0 border-b-2 border-primary/40 bg-transparent rounded-none",
+                                  style.value === "elegant" && "border border-primary/30 bg-gradient-to-r from-background to-muted/30 rounded-lg shadow-sm",
+                                  style.value === "professional" && "border border-border bg-background shadow-sm rounded-md",
+                                  style.value === "default" && "border border-input bg-background rounded-md"
+                                )}>
+                                  <span className="text-muted-foreground rtl:text-right ltr:text-left">
+                                    {t("settings.selectStyle.selectPlaceholder")}
+                                  </span>
+                                  <ChevronRight className={cn(
+                                    "h-3 w-3 opacity-50 transition-transform",
+                                    "rtl:rotate-180"
+                                  )} />
+                                </div>
+                                
+                                {/* Static Dropdown Preview */}
+                                <div className={cn(
+                                  "border rounded text-xs shadow-lg",
+                                  // Theme-aware dropdown styling
+                                  style.value === "modern" && "border-primary/30 rounded-xl shadow-xl bg-popover text-popover-foreground",
+                                  style.value === "glass" && "border-border/30 bg-popover/90 backdrop-blur-md rounded-lg shadow-xl text-popover-foreground",
+                                  style.value === "outlined" && "border-2 border-primary/40 rounded-md shadow-lg bg-popover text-popover-foreground",
+                                  style.value === "filled" && "border-0 rounded-md shadow-xl bg-popover text-popover-foreground",
+                                  style.value === "minimal" && "border border-border rounded-sm shadow-md bg-popover text-popover-foreground",
+                                  style.value === "elegant" && "border border-primary/30 bg-popover rounded-lg shadow-xl text-popover-foreground",
+                                  style.value === "professional" && "border border-border rounded-md shadow-lg bg-popover text-popover-foreground",
+                                  style.value === "default" && "border border-border bg-popover rounded-md shadow-md text-popover-foreground"
+                                )}>
+                                  <div className="p-1 space-y-1">
+                                    <div className="px-2 py-1 hover:bg-accent rounded text-accent-foreground rtl:text-right ltr:text-left">
+                                      {t("settings.selectStyle.option1")}
+                                    </div>
+                                    <div className="px-2 py-1 hover:bg-accent rounded text-accent-foreground rtl:text-right ltr:text-left">
+                                      {t("settings.selectStyle.option2")}
+                                    </div>
+                                    <div className="px-2 py-1 hover:bg-accent rounded text-accent-foreground rtl:text-right ltr:text-left">
+                                      {t("settings.selectStyle.option3")}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Searchable Select */}
+                              <div className="space-y-2">
+                                <div className="text-xs font-medium text-muted-foreground">
+                                  {t("settings.selectStyle.searchableSelect")}
+                                </div>
+                                <div className={cn(
+                                  "h-8 w-full flex items-center justify-between px-3 text-xs border rounded transition-all",
+                                  // Theme-aware styling with accent colors
+                                  style.value === "modern" && "border-2 border-green-500/30 rounded-xl bg-background shadow-sm",
+                                  style.value === "glass" && "border border-border/30 bg-background/20 backdrop-blur-sm rounded-lg",
+                                  style.value === "outlined" && "border-2 border-green-500/40 bg-transparent rounded-md",
+                                  style.value === "filled" && "border-0 bg-green-50 dark:bg-green-950/20 rounded-md",
+                                  style.value === "minimal" && "border-0 border-b-2 border-green-500/40 bg-transparent rounded-none",
+                                  style.value === "elegant" && "border border-green-500/30 bg-gradient-to-r from-background to-green-50 dark:to-green-950/20 rounded-lg shadow-sm",
+                                  style.value === "professional" && "border border-border bg-background shadow-sm rounded-md",
+                                  style.value === "default" && "border border-input bg-background rounded-md"
+                                )}>
+                                  <span className="text-muted-foreground rtl:text-right ltr:text-left">
+                                    {t("settings.selectStyle.searchPlaceholder")}
+                                  </span>
+                                  <div className={cn(
+                                    "flex items-center gap-1",
+                                    "rtl:flex-row-reverse"
+                                  )}>
+                                    <Search className="h-3 w-3 opacity-50" />
+                                    <ChevronRight className={cn(
+                                      "h-3 w-3 opacity-50 transition-transform",
+                                      "rtl:rotate-180"
+                                    )} />
+                                  </div>
+                                </div>
+                                
+                                {/* Static Searchable Dropdown Preview */}
+                                <div className={cn(
+                                  "border rounded text-xs shadow-lg",
+                                  // Theme-aware dropdown styling with accent
+                                  style.value === "modern" && "border-green-500/30 rounded-xl shadow-xl bg-popover text-popover-foreground",
+                                  style.value === "glass" && "border-border/30 bg-popover/90 backdrop-blur-md rounded-lg shadow-xl text-popover-foreground",
+                                  style.value === "outlined" && "border-2 border-green-500/40 rounded-md shadow-lg bg-popover text-popover-foreground",
+                                  style.value === "filled" && "border-0 rounded-md shadow-xl bg-popover text-popover-foreground",
+                                  style.value === "minimal" && "border border-border rounded-sm shadow-md bg-popover text-popover-foreground",
+                                  style.value === "elegant" && "border border-green-500/30 bg-popover rounded-lg shadow-xl text-popover-foreground",
+                                  style.value === "professional" && "border border-border rounded-md shadow-lg bg-popover text-popover-foreground",
+                                  style.value === "default" && "border border-border bg-popover rounded-md shadow-md text-popover-foreground"
+                                )}>
+                                  <div className="p-2 border-b border-border">
+                                    <div className={cn(
+                                      "flex items-center gap-2 px-2 py-1 bg-muted/50 rounded",
+                                      "rtl:flex-row-reverse"
+                                    )}>
+                                      <Search className="h-3 w-3 opacity-50" />
+                                      <span className="text-muted-foreground rtl:text-right ltr:text-left">
+                                        {t("settings.selectStyle.typeToSearch")}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="p-1 space-y-1">
+                                    <div className="px-2 py-1 hover:bg-accent rounded text-accent-foreground rtl:text-right ltr:text-left">
+                                      {t("settings.selectStyle.searchResult1")}
+                                    </div>
+                                    <div className="px-2 py-1 hover:bg-accent rounded text-accent-foreground rtl:text-right ltr:text-left">
+                                      {t("settings.selectStyle.searchResult2")}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {settings.selectStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </CardContent>
                 </Card>

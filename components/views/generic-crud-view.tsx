@@ -10,13 +10,42 @@ import { ErrorMessage } from "@/components/ui/error-message";
 import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
 import type { PaginationInfo } from "@/lib/pagination";
+import { useI18n } from "@/providers/i18n-provider";
+
+export interface CrudColumn {
+  key: string;
+  label: string;
+  sortable?: boolean;
+}
+
+export interface CrudAction<TItem> {
+  label: string;
+  onClick: (item: TItem) => void;
+  variant?: "default" | "ghost" | "destructive";
+  className?: string;
+}
+
+export interface SimpleCrudConfig<TItem> {
+  // Page configuration
+  titleKey: string; // Translation key for title
+  subtitleKey: string; // Translation key for subtitle
+  
+  // Table configuration
+  columns: CrudColumn[];
+  createFields: FieldConfig[];
+  editFields: FieldConfig[];
+  
+  // Actions configuration
+  getActions: (vm: any, t: any) => CrudAction<TItem>[];
+}
 
 interface GenericCrudViewProps<T> {
-  title: string;
+  // Original props (for backward compatibility)
+  title?: string;
   subtitle?: string;
-  columns: any[];
+  columns?: any[];
   actions?: any[];
-  createFields: FieldConfig[];
+  createFields?: FieldConfig[];
   editFields?: FieldConfig[];
   viewModel: any;
   pagination?: PaginationInfo & {
@@ -26,23 +55,49 @@ interface GenericCrudViewProps<T> {
   search?: {
     value: string;
     onChange: (term: string) => void;
+    inputRef?: React.RefObject<HTMLInputElement>;
   };
+  
+  // New configuration-based props
+  config?: SimpleCrudConfig<T>;
 }
 
 export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
   const {
-    title,
-    subtitle,
-    columns,
-    actions,
-    createFields,
-    editFields,
+    title: propTitle,
+    subtitle: propSubtitle,
+    columns: propColumns,
+    actions: propActions,
+    createFields: propCreateFields,
+    editFields: propEditFields,
     viewModel,
-    pagination,
-    search,
+    pagination: propPagination,
+    search: propSearch,
+    config,
   } = props;
   const settings = useSettings();
+  const { t } = useI18n();
 
+  // Use config if provided, otherwise use direct props (backward compatibility)
+  const title = config ? t(config.titleKey) : propTitle!;
+  const subtitle = config ? t(config.subtitleKey) : propSubtitle;
+  const columns = config ? config.columns : propColumns!;
+  const actions = config ? config.getActions(viewModel, t) : propActions;
+  const createFields = config ? config.createFields : propCreateFields!;
+  const editFields = config ? config.editFields : (propEditFields || propCreateFields!);
+  
+  // Auto-generate pagination and search for config-based usage
+  const pagination = propPagination || (config ? {
+    ...viewModel.pagination,
+    onPageChange: viewModel.changePage,
+    onPageSizeChange: viewModel.changePageSize,
+  } : undefined);
+  
+  const search = propSearch || (config ? {
+    value: viewModel.searchValue,
+    onChange: viewModel.handleSearchChange,
+    inputRef: viewModel.searchInputRef,
+  } : undefined);
   const getSpacingClasses = () => {
     switch (settings.spacingSize) {
       case "compact":
@@ -133,7 +188,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
               size={getButtonSize()}
               className="flex-1 sm:flex-none"
             >
-              حذف المحدد ({viewModel.selectedItems.length})
+              {t("common.delete")} ({viewModel.selectedItems.length})
             </Button>
           )}
           <Button
@@ -142,14 +197,14 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             size={getButtonSize()}
             className="hover-lift bg-transparent flex-1 sm:flex-none"
           >
-            تحديث
+            {t("common.refresh")}
           </Button>
           <Button
             onClick={() => viewModel.setIsCreateModalOpen(true)}
             className="gradient-primary hover-lift flex-1 sm:flex-none"
             size={getButtonSize()}
           >
-            إضافة
+            {t("common.add")}
           </Button>
         </div>
       </div>
@@ -164,9 +219,13 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             selectable
             selectedItems={viewModel.selectedItems}
             onSelectionChange={viewModel.setSelectedItems}
-            pagination={pagination}
+            pagination={pagination ? {
+              ...pagination,
+              currentPage: pagination.page, // Map page to currentPage for GenericTable
+            } : undefined}
             onSearch={search?.onChange}
             searchValue={search?.value}
+            searchInputRef={search?.inputRef}
           />
         </CardContent>
       </Card>
@@ -174,7 +233,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
       <GenericModal
         open={viewModel.isCreateModalOpen}
         onOpenChange={viewModel.setIsCreateModalOpen}
-        title={`إضافة ${title}`}
+        title={`${t("common.add")} ${title}`}
       >
         <GenericForm
           fields={createFields}
@@ -190,7 +249,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             viewModel.closeEditModal();
           }
         }}
-        title={`تعديل ${title}`}
+        title={`${t("common.edit")} ${title}`}
       >
         <GenericForm
           fields={editFields || createFields}

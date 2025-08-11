@@ -1,71 +1,54 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import type {
   Site,
   ISiteService,
   CreateSiteRequest,
   UpdateSiteRequest,
-  SitesResponse,
 } from "@/services/site.service";
-import type { PaginationInfo } from "@/lib/pagination";
-import { useEnhancedCrudViewModel } from "@/hooks/use-enhanced-crud-view-model";
+import { useTreeViewModel, type TreeService, type TreeViewModelConfig } from "@/hooks/use-tree-view-model";
 
-export function useSitesViewModel(SiteService: ISiteService) {
-  const [pagination, setPagination] = useState<PaginationInfo>({
-    itemsCount: 0,
-    pageSize: 10,
-    currentPage: 1,
-    pagesCount: 1,
-  });
-  const [searchTerm, setSearchTerm] = useState("");
+export function useSitesViewModel(siteService: ISiteService) {
+  // Create service adapter for generic tree view model
+  const service: TreeService<Site, CreateSiteRequest, UpdateSiteRequest> = useMemo(() => ({
+    getWithChildren: (params) => siteService.getSitesWithChildren(params),
+    create: (data) => siteService.createSite(data),
+    update: (id, data) => siteService.updateSite(id, data),
+    delete: (id) => siteService.deleteSite(id),
+  }), [siteService]);
 
-  const list = useCallback(async () => {
-    const response: SitesResponse = await SiteService.getSites({
-      page: pagination.currentPage,
-      pageSize: pagination.pageSize,
-      search: searchTerm,
-    });
-    setPagination(response.pagination);
-    return response.data;
-  }, [SiteService, pagination.currentPage, pagination.pageSize, searchTerm]);
-
-  const service = useMemo(
-    () => ({
-      list,
-      create: (data: CreateSiteRequest) => SiteService.createSite(data),
-      update: (id: string, data: UpdateSiteRequest) => SiteService.updateSite(id, data),
-      delete: (id: string) => SiteService.deleteSite(id),
-    }),
-    [SiteService, list]
-  );
-
-  const crud = useEnhancedCrudViewModel<Site, CreateSiteRequest, UpdateSiteRequest>(service, {
+  // Configuration for the generic tree view model
+  const config: TreeViewModelConfig<Site> = useMemo(() => ({
     itemTypeName: "Site",
     itemTypeNamePlural: "Sites",
-    getItemDisplayName: (site: Site) => site.siteName,
-  });
+    getItemDisplayName: (item: Site) => item.siteName,
+    getFormFieldName: (item: Site) => item.siteName,
+    createFormData: (values: any) => ({
+      siteName: values.siteName,
+      parentSiteId: values.parentSiteId,
+    }),
+    updateFormData: (values: any, item: Site) => ({
+      id: item.id,
+      siteName: values.siteName,
+      parentSiteId: item.parentSiteId, // Keep the original parent site ID when editing
+    }),
+    getInitialFormValues: (item?: Site, parent?: Site) => ({
+      siteName: item?.siteName || "",
+      parentSiteId: parent?.id || item?.parentSiteId || null,
+    }),
+  }), []);
 
-  const searchSites = (term: string) => {
-    setPagination((prev) => ({ ...prev, currentPage: 1 }));
-    setSearchTerm(term);
-  };
-
-  const changePage = (page: number) => {
-    setPagination((prev) => ({ ...prev, currentPage: page }));
-  };
-
-  const changePageSize = (size: number) => {
-    setPagination((prev) => ({ ...prev, pageSize: size, currentPage: 1 }));
-  };
+  // Use the generic tree view model
+  const treeViewModel = useTreeViewModel(service, config);
 
   return {
-    ...crud,
-    pagination,
-    searchTerm,
-    searchSites,
-    changePage,
-    changePageSize,
+    ...treeViewModel,
+    // Keep original method names for backward compatibility
+    searchSites: treeViewModel.searchItems,
+    deleteSite: treeViewModel.deleteItem,
+    // Add openAddRoot method for sites
+    openAddRoot: () => treeViewModel.openAddChild(null),
   };
 }
 

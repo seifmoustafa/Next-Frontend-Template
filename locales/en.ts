@@ -97,6 +97,10 @@ export const en = {
     appearance_settings: "Appearance Settings",
     notification_settings: "Notification Settings",
     security_settings: "Security Settings",
+    siteWorkers: "Site Workers",
+    civilians: "Civilians",
+    imports: "Imports",
+    
   },
 
   // Layout & App
@@ -517,6 +521,38 @@ export const en = {
           name: "Bubbles",
           description: "Chip-like groups with wrap",
         },
+        modern: {
+          name: "Modern",
+          description: "Sleek gradient design with smooth animations",
+        },
+        glass: {
+          name: "Glass",
+          description: "Translucent glass panels with backdrop blur",
+        },
+        elegant: {
+          name: "Elegant",
+          description: "Sophisticated left-border hierarchy design",
+        },
+        professional: {
+          name: "Professional",
+          description: "Clean business-style with subtle animations",
+        },
+        gradient: {
+          name: "Gradient",
+          description: "Colorful flowing gradients with dynamic effects",
+        },
+        neon: {
+          name: "Neon",
+          description: "Glowing cyber-style with neon accents",
+        },
+        organic: {
+          name: "Organic",
+          description: "Natural flowing design with soft curves",
+        },
+        corporate: {
+          name: "Corporate",
+          description: "Formal business hierarchy with blue accents",
+        },
       },
       sample: { parent: "Parent", child1: "Child 1", child2: "Child 2" },
     },
@@ -714,6 +750,54 @@ export const en = {
         },
       },
     },
+    selectStyle: {
+      title: "Select Style",
+      description: "Choose the design style for select components",
+      regularSelect: "Regular Select",
+      searchableSelect: "Searchable Select",
+      selectPlaceholder: "Select option...",
+      searchPlaceholder: "Search...",
+      typeToSearch: "Type to search...",
+      option1: "Option 1",
+      option2: "Option 2",
+      option3: "Option 3",
+      searchResult1: "Search Result 1",
+      searchResult2: "Search Result 2",
+      options: {
+        default: {
+          name: "Default",
+          description: "Standard select design",
+        },
+        modern: {
+          name: "Modern",
+          description: "Contemporary with rounded corners",
+        },
+        glass: {
+          name: "Glass",
+          description: "Translucent with blur effect",
+        },
+        outlined: {
+          name: "Outlined",
+          description: "Bold border emphasis",
+        },
+        filled: {
+          name: "Filled",
+          description: "Solid background style",
+        },
+        minimal: {
+          name: "Minimal",
+          description: "Clean underline design",
+        },
+        elegant: {
+          name: "Elegant",
+          description: "Sophisticated gradient style",
+        },
+        professional: {
+          name: "Professional",
+          description: "Business-focused design",
+        },
+      },
+    },
     logo: {
       title: "Logo Settings",
       description: "Customize your application logo appearance",
@@ -900,6 +984,8 @@ export const en = {
     search_placeholder: "Search...",
     user_menu: "User Menu",
     account_settings: "Account Settings",
+    click_to_expand: "Click to expand",
+    click_to_navigate: "Click to navigate",
   },
 
   // Color Themes
@@ -979,11 +1065,13 @@ export const en = {
 
   // Common
   common: {
+    collapseAll: "Collapse All",
+    expandAll: "Expand All",
+    save: "Save",
     selectDate: "Select Date",
     search: "Search...",
     filter: "Filter",
     export: "Export",
-    save: "Save",
     cancel: "Cancel",
     delete: "Delete",
     edit: "Edit",
@@ -1126,6 +1214,41 @@ export const en = {
       date: "Contract Date",
       vendor: "Vendor",
       vendorPlaceholder: "Select a vendor",
+      searchVendors: "Search vendors...",
+    },
+  },
+  Sites: {
+    title: "Sites",
+    subtitle: "Manage sites",
+    SiteName: "Site Name",
+    form: {
+      SiteNamePlaceholder: "Enter site name",
+      parentSiteId: "Parent Site",
+      parentSiteIdPlaceholder: "Select parent site",
+      root: "Root",
+      rootPlaceholder: "Select root site",
+    },
+  },
+  civilians: {
+    title: "Civilians How deal with the site",
+    subtitle: "Manage civilian records",
+    name: "Name",
+    nationalityNumber: "National ID",
+    phoneNumber: "Phone",
+    address: "Address",
+    site: "Site",
+    form: {
+      name: "Name",
+      namePlaceholder: "e.g., Mohamed Ali",
+      nationalityNumber: "National ID",
+      nationalityNumberPlaceholder: "e.g., 3000720010176",
+      phoneNumber: "Phone",
+      phoneNumberPlaceholder: "e.g., 01123456789",
+      address: "Address",
+      addressPlaceholder: "e.g., 43 El Mohamady Galal St",
+      site: "Site",
+      sitePlaceholder: "Select a site",
+      searchSites: "Search sites...",
     },
   },
   // All properties are now organized in nested objects above

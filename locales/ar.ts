@@ -16,6 +16,7 @@ export const ar = {
   // Navigation
   nav: {
     vendors: "الموردون",
+    categories: "التصنيفات",
     contracts: "العقود",
     sites: "المواقع",
     dashboard: "لوحة التحكم",
@@ -27,8 +28,22 @@ export const ar = {
     user_list: "قائمة المستخدمين",
     user_types: "أنواع المستخدمين",
     menu: "القائمة",
+    siteWorkers: "العاملين بالوحدة",
+    civilians: "المدنيين",
+    imports:"التعاقدات"
   },
-
+  Sites: {
+    title: "المواقع",
+    subtitle: "إدارة المواقع",
+    SiteName: "اسم الوحدة",
+    form: {
+      SiteNamePlaceholder: "أدخل اسم الوحدة",
+      parentSiteId: "الوحدة الرئيسي",
+      parentSiteIdPlaceholder: "اختر الوحدة الرئيسي",
+      root: "الوحدة الرئيسي",
+      rootPlaceholder: "اختر الوحدة الرئيسي",
+    },
+  },
   // Layout & App
   app: {
     title: "منظومة إدارة العقود",
@@ -178,6 +193,60 @@ export const ar = {
       phonePlaceholder: "أدخل رقم الهاتف",
       address: "العنوان",
       addressPlaceholder: "أدخل عنوان المورد",
+    },
+  },
+
+    // Categorys
+  categories: {
+    title: "إدارة التصنيفات",
+    subtitle: "إدارة التصنيفات ",
+    name: "اسم التصنيف",
+    isActive: "حالة النشاط",
+    createdAt: "تاريخ الإنشاء",
+    addCategory: "إضافة مورد",
+    editCategory: "تعديل التصنيف",
+    deleteCategory: "حذف التصنيف",
+    search: "البحث في التصنيفات...",
+    total: "إجمالي التصنيفات",
+    active: "نشط",
+    inactive: "غير نشط",
+    status: "الحالة",
+    actions: "الإجراءات",
+    noCategorys: "لا توجد موردين",
+    confirmDelete: "حذف التصنيف",
+    deleteConfirmation: "هل أنت متأكد من حذف التصنيف '{name}'؟",
+    deleteWarning:
+      "سيؤدي هذا الإجراء إلى حذف التصنيف نهائياً ولا يمكن التراجع عنه.",
+    deleting: "جاري حذف التصنيف...",
+    created: "تم إنشاء التصنيف",
+    updated: "تم تحديث التصنيف",
+    deleted: "تم حذف التصنيف",
+    createSuccess: "تم إنشاء التصنيف '{name}' بنجاح",
+    updateSuccess: "تم تحديث التصنيف '{name}' بنجاح",
+    deleteSuccess: "تم حذف التصنيف '{name}' بنجاح",
+    createError: "فشل في إنشاء التصنيف",
+    updateError: "فشل في تحديث التصنيف",
+    deleteError: "فشل في حذف التصنيف",
+    loadError: "فشل في تحميل التصنيفات",
+    validationError: "يرجى مراجعة النموذج للأخطاء",
+    nameRequired: "اسم التصنيف مطلوب",
+    nameMinLength: "يجب أن يكون اسم التصنيف حرفين على الأقل",
+    emailInvalid: "يرجى إدخال عنوان بريد إلكتروني صحيح",
+    phoneInvalid: "يرجى إدخال رقم هاتف صحيح",
+    form: {
+      name: "اسم التصنيف",
+      namePlaceholder: "أدخل اسم التصنيف",
+      isActive: "حالة النشاط",
+      isActivePlaceholder: "تحديد حالة التصنيف",
+      description: "الوصف",
+      descriptionPlaceholder: "أدخل وصف التصنيف",
+      contactInfo: "معلومات الاتصال",
+      email: "البريد الإلكتروني",
+      emailPlaceholder: "أدخل عنوان البريد الإلكتروني",
+      phone: "رقم الهاتف",
+      phonePlaceholder: "أدخل رقم الهاتف",
+      address: "العنوان",
+      addressPlaceholder: "أدخل عنوان التصنيف",
     },
   },
 
@@ -416,23 +485,55 @@ export const ar = {
     },
     treeStyle: {
       title: "نمط الشجرة",
-      description: "اختر كيفية عرض الهياكل الشجرية في التطبيق",
+      description: "اختر كيفية عرض الأشجار الهرمية في التطبيق",
       options: {
         lines: {
           name: "خطوط",
-          description: "وصلات هرمية كلاسيكية",
+          description: "موصلات هرمية كلاسيكية",
         },
         cards: {
           name: "بطاقات",
-          description: "بطاقات متراكبة مع ظل",
+          description: "بطاقات مكدسة مع ارتفاع",
         },
         minimal: {
           name: "بسيط",
-          description: "وصلات متقطعة خفيفة",
+          description: "موصلات منقطة خفية",
         },
         bubble: {
           name: "فقاعات",
-          description: "مجموعات على شكل شرائح",
+          description: "مجموعات تشبه الرقائق مع التفاف",
+        },
+        modern: {
+          name: "عصري",
+          description: "تصميم متدرج أنيق مع رسوم متحركة سلسة",
+        },
+        glass: {
+          name: "زجاجي",
+          description: "ألواح زجاجية شفافة مع ضبابية الخلفية",
+        },
+        elegant: {
+          name: "أنيق",
+          description: "تصميم هرمي متطور بحدود يسارية",
+        },
+        professional: {
+          name: "مهني",
+          description: "نمط أعمال نظيف مع رسوم متحركة خفية",
+        },
+        gradient: {
+          name: "متدرج",
+          description: "تدرجات ملونة متدفقة مع تأثيرات ديناميكية",
+        },
+        neon: {
+          name: "نيون",
+          description: "نمط سايبر متوهج مع لمسات نيون",
+        },
+        organic: {
+          name: "طبيعي",
+          description: "تصميم متدفق طبيعي مع منحنيات ناعمة",
+        },
+        corporate: {
+          name: "مؤسسي",
+          description: "هرمية أعمال رسمية مع لمسات زرقاء",
         },
       },
       sample: { parent: "أصل", child1: "فرع 1", child2: "فرع 2" },
@@ -565,7 +666,10 @@ export const ar = {
       title: "نمط منتقي التاريخ",
       description: "اختر كيفية ظهور حقول منتقي التاريخ",
       options: {
-        default: { name: "افتراضي", description: "منتقي تاريخ قياسي بحدود نظيفة" },
+        default: {
+          name: "افتراضي",
+          description: "منتقي تاريخ قياسي بحدود نظيفة",
+        },
         modern: { name: "حديث", description: "خلفية متدرجة مع ظلال محسنة" },
         glass: { name: "زجاجي", description: "تأثير زجاجي شفاف مع ضبابية" },
         outlined: { name: "مخطط", description: "حدود بارزة مع خلفية شفافة" },
@@ -582,8 +686,59 @@ export const ar = {
         modern: { name: "حديث", description: "خلفيات متدرجة مع ظلال محسنة" },
         glass: { name: "زجاجي", description: "تأثير زجاجي شفاف مع ضبابية" },
         elegant: { name: "أنيق", description: "تصميم متطور مع ألوان مميزة" },
-        minimal: { name: "بسيط", description: "تصميم فائق النظافة مع تنسيق بسيط" },
+        minimal: {
+          name: "بسيط",
+          description: "تصميم فائق النظافة مع تنسيق بسيط",
+        },
         dark: { name: "داكن", description: "تقويم بسمة داكنة مع ألوان غنية" },
+      },
+    },
+    selectStyle: {
+      title: "نمط القائمة المنسدلة",
+      description: "اختر نمط التصميم لمكونات القائمة المنسدلة",
+      regularSelect: "قائمة منسدلة عادية",
+      searchableSelect: "قائمة منسدلة قابلة للبحث",
+      selectPlaceholder: "اختر خيار...",
+      searchPlaceholder: "بحث...",
+      typeToSearch: "اكتب للبحث...",
+      option1: "الخيار 1",
+      option2: "الخيار 2",
+      option3: "الخيار 3",
+      searchResult1: "نتيجة البحث 1",
+      searchResult2: "نتيجة البحث 2",
+      options: {
+        default: {
+          name: "افتراضي",
+          description: "تصميم قائمة منسدلة قياسي",
+        },
+        modern: {
+          name: "عصري",
+          description: "معاصر مع زوايا مدورة",
+        },
+        glass: {
+          name: "زجاجي",
+          description: "شفاف مع تأثير ضبابي",
+        },
+        outlined: {
+          name: "محدد",
+          description: "تأكيد حدود جريء",
+        },
+        filled: {
+          name: "مملوء",
+          description: "نمط خلفية صلبة",
+        },
+        minimal: {
+          name: "بسيط",
+          description: "تصميم خط سفلي نظيف",
+        },
+        elegant: {
+          name: "أنيق",
+          description: "نمط متدرج متطور",
+        },
+        professional: {
+          name: "مهني",
+          description: "تصميم يركز على العمل",
+        },
       },
     },
     logo: {
@@ -747,6 +902,8 @@ export const ar = {
     floatingDesc: "تصميم عائم مع بطاقات منفصلة وتأثيرات ثلاثية الأبعاد",
     items: "عناصر",
     search_placeholder: "بحث",
+    click_to_expand: "انقر للتمديد",
+    click_to_navigate: "انقر للتنقل",
   },
 
   // Color Themes
@@ -836,6 +993,8 @@ export const ar = {
 
   // Common
   common: {
+    collapseAll: "طي الكل",
+    expandAll: "إظهار الكل",
     selectDate: "اختر التاريخ",
     search: "البحث...",
     filter: "تصفية",
@@ -855,6 +1014,7 @@ export const ar = {
     noData: "لا توجد بيانات متاحة",
     error: "حدث خطأ",
     success: "تم بنجاح",
+    refresh: "تحديث",
     retry: "إعادة المحاولة",
     user: "مستخدم",
     confirmDelete: "تأكيد الحذف",
@@ -921,7 +1081,31 @@ export const ar = {
       date: "تاريخ العقد",
       vendor: "المورّد",
       vendorPlaceholder: "اختر المورّد",
+      searchVendors: "البحث عن المورّدين...",
     },
   },
+  civilians: {
+    title: "المدنيين المتعامليين مع الوحدة",
+    subtitle: "إدارة سجلات المواطنين",
+    name: "الاسم",
+    nationalityNumber: "الرقم القومي",
+    phoneNumber: "الهاتف",
+    address: "العنوان",
+    site: "الوحدة",
+    form: {
+      name: "الاسم",
+      namePlaceholder: "مثال: محمد علي",
+      nationalityNumber: "الرقم القومي",
+      nationalityNumberPlaceholder: "مثال: 3000720010176",
+      phoneNumber: "الهاتف",
+      phoneNumberPlaceholder: "مثال: 01123456789",
+      address: "العنوان",
+      addressPlaceholder: "مثال: 43 شارع المحمدي جلال",
+      site: "الوحدة",
+      sitePlaceholder: "اختر الوحدة",
+      searchSites: "ابحث عن الوحدات...",
+    },
+  },
+
   // All properties are now organized in nested objects above
 };

@@ -77,6 +77,7 @@ interface GenericTableProps<T> {
   emptyMessage?: string;
   onSearch?: (term: string) => void;
   searchValue?: string;
+  searchInputRef?: React.RefObject<HTMLInputElement>;
 }
 
 export function GenericTable<T extends Record<string, any>>({
@@ -92,6 +93,7 @@ export function GenericTable<T extends Record<string, any>>({
   emptyMessage,
   onSearch,
   searchValue,
+  searchInputRef,
 }: GenericTableProps<T>) {
   const { t, direction } = useI18n();
   const settings = useSettings();
@@ -263,6 +265,7 @@ export function GenericTable<T extends Record<string, any>>({
       <div className="relative">
         <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
+          ref={searchInputRef}
           placeholder={placeholder}
           className="pl-10 rtl:pl-4 rtl:pr-10"
           value={searchTerm}

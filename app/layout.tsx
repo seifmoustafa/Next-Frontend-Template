@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/providers/theme-provider"
 import { I18nProvider } from "@/providers/i18n-provider"
 import { ServiceProvider } from "@/providers/service-provider"
 import { AuthProvider } from "@/providers/auth-provider"

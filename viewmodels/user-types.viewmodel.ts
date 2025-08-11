@@ -7,7 +7,7 @@ import type {
   CreateUserTypeRequest,
   UpdateUserTypeRequest,
 } from "@/services/user-type.service";
-import { useEnhancedCrudViewModel } from "@/hooks/use-enhanced-crud-view-model";
+import { useCrudViewModel } from "@/hooks/use-crud-view-model";
 
 export function useUserTypesViewModel(userTypeService: IUserTypeService) {
   const list = useCallback(() => userTypeService.getUserTypes(), [userTypeService]);
@@ -29,7 +29,7 @@ export function useUserTypesViewModel(userTypeService: IUserTypeService) {
     [list, create, update, remove]
   );
 
-  return useEnhancedCrudViewModel<UserType, CreateUserTypeRequest, UpdateUserTypeRequest>(service, {
+  return useCrudViewModel<UserType, CreateUserTypeRequest, UpdateUserTypeRequest>(service, {
     itemTypeName: "User Type",
     itemTypeNamePlural: "User Types",
     getItemDisplayName: (userType: UserType) => userType.adminTypeName,

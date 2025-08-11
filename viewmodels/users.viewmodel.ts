@@ -9,26 +9,26 @@ import type {
   UsersResponse,
 } from "@/services/user.service";
 import type { PaginationInfo } from "@/lib/pagination";
-import { useEnhancedCrudViewModel } from "@/hooks/use-enhanced-crud-view-model";
+import { useCrudViewModel } from "@/hooks/use-crud-view-model";
 
 export function useUsersViewModel(userService: IUserService) {
   const [pagination, setPagination] = useState<PaginationInfo>({
     itemsCount: 0,
     pageSize: 10,
-    currentPage: 1,
+    page: 1,
     pagesCount: 1,
   });
   const [searchTerm, setSearchTerm] = useState("");
 
   const list = useCallback(async () => {
     const response: UsersResponse = await userService.getUsers({
-      page: pagination.currentPage,
+      page: pagination.page,
       pageSize: pagination.pageSize,
-      search: searchTerm,
+      PageSearch: searchTerm,
     });
     setPagination(response.pagination);
     return response.data;
-  }, [userService, pagination.currentPage, pagination.pageSize, searchTerm]);
+  }, [userService, pagination.page, pagination.pageSize, searchTerm]);
 
   const service = useMemo(
     () => ({
@@ -40,23 +40,23 @@ export function useUsersViewModel(userService: IUserService) {
     [userService, list]
   );
 
-  const crud = useEnhancedCrudViewModel<User, CreateUserRequest, UpdateUserRequest>(service, {
+  const crud = useCrudViewModel<User, CreateUserRequest, UpdateUserRequest>(service, {
     itemTypeName: "User",
     itemTypeNamePlural: "Users", 
     getItemDisplayName: (user: User) => `${user.firstName} ${user.lastName}`,
   });
 
   const searchUsers = (term: string) => {
-    setPagination((prev) => ({ ...prev, currentPage: 1 }));
+    setPagination((prev) => ({ ...prev, page: 1 }));
     setSearchTerm(term);
   };
 
   const changePage = (page: number) => {
-    setPagination((prev) => ({ ...prev, currentPage: page }));
+    setPagination((prev) => ({ ...prev, page: page }));
   };
 
   const changePageSize = (size: number) => {
-    setPagination((prev) => ({ ...prev, pageSize: size, currentPage: 1 }));
+    setPagination((prev) => ({ ...prev, pageSize: size, page: 1 }));
   };
 
   return {

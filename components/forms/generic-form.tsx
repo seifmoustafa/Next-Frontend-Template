@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useSettings } from "@/providers/settings-provider";
@@ -20,11 +21,20 @@ export interface FieldOption {
 export interface FieldConfig {
   name: string;
   label?: string; // Optional for hidden fields
-  type: "text" | "password" | "select" | "switch" | "hidden" | "date" | "datetime";
+  type: "text" | "password" | "select" | "searchable-select" | "server-select" | "switch" | "hidden" | "date" | "datetime";
   placeholder?: string;
+  searchPlaceholder?: string; // For searchable selects
   required?: boolean;
   options?: FieldOption[];
   defaultValue?: any;
+  // Searchable select specific options
+  searchType?: "client" | "server";
+  onServerSearch?: (query: string) => Promise<FieldOption[]>;
+  searchEndpoint?: string;
+  debounceMs?: number;
+  allowClear?: boolean;
+  noResultsText?: string;
+  searchingText?: string;
 }
 
 interface GenericFormProps {
@@ -41,7 +51,7 @@ export function GenericForm({
   onCancel,
 }: GenericFormProps) {
   const settings = useSettings();
-  const { t } = useI18n();
+  const { t, direction } = useI18n();
   const [formData, setFormData] = useState<Record<string, any>>(() => {
     const data = { ...initialValues };
     // Set default values for fields that have them and convert dates for HTML inputs
@@ -157,7 +167,10 @@ export function GenericForm({
   };
 
   return (
-    <div className="w-full max-h-[70vh] overflow-y-auto p-6">
+    <div className={cn(
+      "w-full max-h-[70vh] overflow-y-auto p-6",
+      direction === "rtl" ? "text-right" : "text-left"
+    )} dir={direction}>
       <form onSubmit={handleSubmit} className={getFormSpacing()}>
         {fields.map((field) => 
           field.type === "hidden" ? (
@@ -169,7 +182,13 @@ export function GenericForm({
             />
           ) : (
             <div key={field.name} className={getFieldSpacing()}>
-              <Label htmlFor={field.name} className="font-medium">
+              <Label 
+                htmlFor={field.name} 
+                className={cn(
+                  "font-medium",
+                  direction === "rtl" ? "text-right" : "text-left"
+                )}
+              >
                 {field.label}
               </Label>
               {field.type === "select" ? (
@@ -188,14 +207,36 @@ export function GenericForm({
                     ))}
                   </SelectContent>
                 </Select>
+              ) : field.type === "searchable-select" || field.type === "server-select" ? (
+                <SearchableSelect
+                  options={field.options}
+                  value={formData[field.name] || ""}
+                  onValueChange={(value) => handleChange(field.name, value)}
+                  placeholder={field.placeholder}
+                  searchPlaceholder={field.searchPlaceholder}
+                  searchType={field.type === "server-select" ? "server" : field.searchType || "client"}
+                  onServerSearch={field.onServerSearch}
+                  searchEndpoint={field.searchEndpoint}
+                  debounceMs={field.debounceMs}
+                  allowClear={field.allowClear}
+                  noResultsText={field.noResultsText}
+                  searchingText={field.searchingText}
+                  className={getInputHeight()}
+                />
               ) : field.type === "switch" ? (
-                <div className="flex items-center space-x-2">
+                <div className={cn(
+                  "flex items-center",
+                  direction === "rtl" ? "space-x-reverse space-x-2" : "space-x-2"
+                )}>
                   <Switch
                     id={field.name}
                     checked={formData[field.name] || false}
                     onCheckedChange={(checked) => handleChange(field.name, checked)}
                   />
-                  <Label htmlFor={field.name} className="text-sm text-muted-foreground">
+                  <Label htmlFor={field.name} className={cn(
+                    "text-sm text-muted-foreground",
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}>
                     {formData[field.name] ? t("common.yes") : t("common.no")}
                   </Label>
                 </div>
@@ -216,8 +257,12 @@ export function GenericForm({
                   value={formData[field.name] || ""}
                   onChange={(e) => handleChange(field.name, e.target.value)}
                   required={field.required}
-                  className={getInputHeight()}
+                  className={cn(
+                    getInputHeight(),
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}
                   placeholder={field.placeholder}
+                  dir={direction}
                 />
               )}
             </div>
@@ -226,12 +271,20 @@ export function GenericForm({
 
         <Separator />
 
-        <div className={cn("flex flex-col sm:flex-row justify-end", getGridGap(), getSeparatorSpacing())}>
+        <div className={cn(
+          "flex flex-col sm:flex-row", 
+          direction === "rtl" ? "justify-start" : "justify-end",
+          getGridGap(), 
+          getSeparatorSpacing()
+        )}>
           <Button
             type="button"
             variant="outline"
             onClick={onCancel}
-            className={cn(getInputHeight(), "order-2 sm:order-1")}
+            className={cn(
+              getInputHeight(), 
+              direction === "rtl" ? "order-1 sm:order-2" : "order-2 sm:order-1"
+            )}
             disabled={loading}
             size={getButtonSize()}
           >
@@ -240,7 +293,11 @@ export function GenericForm({
           <Button
             type="submit"
             disabled={loading}
-            className={cn(getInputHeight(), "gradient-primary order-1 sm:order-2")}
+            className={cn(
+              getInputHeight(), 
+              "gradient-primary",
+              direction === "rtl" ? "order-2 sm:order-1" : "order-1 sm:order-2"
+            )}
             size={getButtonSize()}
           >
             {loading ? t("common.loading") : t("common.save")}

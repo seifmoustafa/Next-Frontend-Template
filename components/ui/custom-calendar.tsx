@@ -327,7 +327,7 @@ export function CustomCalendar({
             onClick={() => navigateMonth("prev")}
             className="p-1 hover:bg-primary/10 rounded-md transition-colors"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" />
           </button>
           
           <div className="flex items-center gap-2">
@@ -341,7 +341,7 @@ export function CustomCalendar({
             onClick={() => navigateMonth("next")}
             className="p-1 hover:bg-primary/10 rounded-md transition-colors"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4" />
           </button>
         </div>
       </div>
