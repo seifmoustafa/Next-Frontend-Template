@@ -1,6 +1,6 @@
 "use client";
 
-import { GenericCrudView } from "@/components/views/generic-crud-view";
+import { GenericCrudView } from "@/components/ui/generic-crud-view";
 import { useUserTypesViewModel } from "@/viewmodels/user-types.viewmodel";
 import { useServices } from "@/providers/service-provider";
 import { useI18n } from "@/providers/i18n-provider";

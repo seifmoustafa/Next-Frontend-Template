@@ -1,5 +1,5 @@
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { SitesView } from "@/components/views/site-view";
+import { SitesView } from "@/views/site-view";
 
 export default async function SitesPage() {
   return (

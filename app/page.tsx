@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/auth-provider";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { DashboardView } from "@/components/views/dashboard-view";
+import { DashboardView } from "@/views/dashboard-view";
 
 export default function HomePage() {
   const { isAuthenticated, isLoading } = useAuth();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { GenericCrudView } from "@/components/views/generic-crud-view";
+import { GenericCrudView } from "@/components/ui/generic-crud-view";
 import { useUsersViewModel } from "@/viewmodels/users.viewmodel";
 import { useServices } from "@/providers/service-provider";
 import { useI18n } from "@/providers/i18n-provider";

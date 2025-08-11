@@ -1,6 +1,6 @@
 "use client";
 
-import { GenericCrudView } from "@/components/views/generic-crud-view";
+import { GenericCrudView } from "@/components/ui/generic-crud-view";
 import { useGenericCrudViewModel } from "@/hooks/use-generic-crud-viewmodel";
 import { useServices } from "@/providers/service-provider";
 import { useI18n } from "@/providers/i18n-provider";
@@ -11,7 +11,7 @@ import type {
   CiviliansResponse 
 } from "@/services/civilian.service";
 import type { Site } from "@/services/site.service";
-import type { CrudConfig } from "@/components/views/generic-crud-view";
+import type { CrudConfig } from "@/components/ui/generic-crud-view";
 import { useMemo, useCallback } from "react";
 
 export function CiviliansView() {
