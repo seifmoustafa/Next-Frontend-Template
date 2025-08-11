@@ -3,9 +3,6 @@
 import type React from "react";
 import { createContext, useContext, useMemo } from "react";
 import { ApiService } from "@/services/api.service";
-import { UserService } from "@/services/user.service";
-import { UserTypeService } from "@/services/user-type.service";
-import { AnalyticsService } from "@/services/analytics.service";
 import { NotificationService } from "@/services/notification.service";
 import { SiteService } from "@/services/site.service";
 import { CategoryService } from "@/services/category.service";
@@ -14,9 +11,6 @@ import { CivilianService } from "@/services/civilian.service";
 
 interface Services {
   apiService: ApiService;
-  userService: UserService;
-  userTypeService: UserTypeService;
-  analyticsService: AnalyticsService;
   notificationService: NotificationService;
   siteService: SiteService;
   categoryService: CategoryService;
@@ -30,12 +24,6 @@ export function ServiceProvider({ children }: { children: React.ReactNode }) {
   const services = useMemo(() => {
     const notificationService = new NotificationService();
     const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "");
-    const userService = new UserService(apiService, notificationService);
-    const userTypeService = new UserTypeService(
-      apiService,
-      notificationService
-    );
-    const analyticsService = new AnalyticsService(apiService);
     const siteService = new SiteService(apiService, notificationService);
     const categoryService = new CategoryService(
       apiService,
@@ -48,9 +36,6 @@ export function ServiceProvider({ children }: { children: React.ReactNode }) {
 
     return {
       apiService,
-      userService,
-      userTypeService,
-      analyticsService,
       notificationService,
       siteService,
 
