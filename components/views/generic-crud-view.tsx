@@ -4,13 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { GenericTable } from "@/components/ui/generic-table";
 import { GenericModal } from "@/components/ui/generic-modal";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { GenericForm, FieldConfig } from "@/components/forms/generic-form";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ErrorMessage } from "@/components/ui/error-message";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { useEnhancedDelete } from "@/hooks/use-enhanced-delete";
+import { useEnhancedToast } from "@/hooks/use-enhanced-toast";
 import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
 import type { PaginationInfo } from "@/lib/pagination";
 import { useI18n } from "@/providers/i18n-provider";
+import { useCallback } from "react";
 
 export interface CrudColumn {
   key: string;
@@ -25,7 +30,7 @@ export interface CrudAction<TItem> {
   className?: string;
 }
 
-export interface SimpleCrudConfig<TItem> {
+export interface CrudConfig<TItem> {
   // Page configuration
   titleKey: string; // Translation key for title
   subtitleKey: string; // Translation key for subtitle
@@ -36,7 +41,12 @@ export interface SimpleCrudConfig<TItem> {
   editFields: FieldConfig[];
   
   // Actions configuration
-  getActions: (vm: any, t: any) => CrudAction<TItem>[];
+  getActions: (vm: any, t: any, handleDelete?: (item: TItem) => void) => CrudAction<TItem>[];
+  
+  // Delete configuration
+  getItemDisplayName?: (item: TItem) => string; // For delete confirmation messages
+  itemTypeKey?: string; // Translation key for item type (e.g., "vendors.itemType")
+  deleteService?: (id: string) => Promise<void>; // Direct delete service function
 }
 
 interface GenericCrudViewProps<T> {
@@ -59,7 +69,7 @@ interface GenericCrudViewProps<T> {
   };
   
   // New configuration-based props
-  config?: SimpleCrudConfig<T>;
+  config?: CrudConfig<T>;
 }
 
 export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
@@ -78,11 +88,36 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
   const settings = useSettings();
   const { t } = useI18n();
 
+  // Enhanced delete system for professional confirmation dialogs
+  const deleteSystem = useEnhancedDelete();
+  const { operationSuccess, operationError } = useEnhancedToast();
+
+  // Enhanced delete handler with professional confirmation dialog
+  const handleDelete = useCallback(async (item: T) => {
+    const itemDisplayName = config?.getItemDisplayName ? config.getItemDisplayName(item) : (item as any).name || 'Item';
+    const itemType = config?.itemTypeKey ? t(config.itemTypeKey) : 'Item';
+    const id = typeof item === "string" ? item : (item as any).id;
+    
+    await deleteSystem.confirmDelete(
+      async () => {
+        // Use the direct delete service from config
+        if (config?.deleteService) {
+          await config.deleteService(id);
+          // Refresh the data after successful delete
+          await viewModel.refreshItems();
+          // Success message will be shown by the enhanced delete system
+        } else {
+          throw new Error("Delete service not configured");
+        }
+      }
+    );
+  }, [deleteSystem, viewModel, config, t, operationSuccess, operationError]);
+
   // Use config if provided, otherwise use direct props (backward compatibility)
   const title = config ? t(config.titleKey) : propTitle!;
   const subtitle = config ? t(config.subtitleKey) : propSubtitle;
   const columns = config ? config.columns : propColumns!;
-  const actions = config ? config.getActions(viewModel, t) : propActions;
+  const actions = config ? config.getActions(viewModel, t, handleDelete) : propActions;
   const createFields = config ? config.createFields : propCreateFields!;
   const editFields = config ? config.editFields : (propEditFields || propCreateFields!);
   
@@ -242,25 +277,46 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
         />
       </GenericModal>
 
-      <GenericModal
+      <Dialog
         open={viewModel.isEditModalOpen}
         onOpenChange={(open) => {
+          console.log('Edit modal onOpenChange:', open, 'editingItem:', viewModel.editingItem);
+          // Exact same approach as tree view
           if (!open) {
             viewModel.closeEditModal();
           }
         }}
-        title={`${t("common.edit")} ${title}`}
       >
-        <GenericForm
-          fields={editFields || createFields}
-          onSubmit={(data) =>
-            viewModel.editingItem &&
-            viewModel.updateItem(viewModel.editingItem.id, data)
-          }
-          initialValues={viewModel.editingItem || {}}
-          onCancel={viewModel.closeEditModal}
-        />
-      </GenericModal>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{`${t("common.edit")} ${title}`}</DialogTitle>
+          </DialogHeader>
+          <GenericForm
+            fields={editFields || createFields}
+            onSubmit={(data) => {
+              if (viewModel.editingItem) {
+                return viewModel.updateItem(viewModel.editingItem.id, data);
+              }
+            }}
+            initialValues={viewModel.editingItem || {}}
+            onCancel={viewModel.closeEditModal}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Professional confirmation dialog for delete operations */}
+      <ConfirmationDialog
+        open={deleteSystem.showConfirmation}
+        onOpenChange={deleteSystem.cancelDelete}
+        title={deleteSystem.deleteOptions.confirmTitle || t("common.confirmDelete")}
+        description={deleteSystem.deleteOptions.confirmDescription || t("common.deleteWarning")}
+        confirmText={t("common.delete")}
+        cancelText={t("common.cancel")}
+        onConfirm={deleteSystem.executeDelete}
+        onCancel={deleteSystem.cancelDelete}
+        variant="destructive"
+        isLoading={deleteSystem.isDeleting}
+      />
     </div>
   );
 }

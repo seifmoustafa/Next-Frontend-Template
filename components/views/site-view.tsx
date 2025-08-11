@@ -1,17 +1,49 @@
 "use client";
 
-import { useSitesViewModel } from "@/viewmodels/site.viewmodel";
 import { useServices } from "@/providers/service-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { GenericTreeView } from "@/components/ui/generic-tree-view";
-import type { Site } from "@/services/site.service";
+import type { Site, CreateSiteRequest, UpdateSiteRequest } from "@/services/site.service";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useTreeViewModel, type TreeService, type TreeViewModelConfig } from "@/hooks/use-tree-view-model";
+import { useMemo } from "react";
 
 export function SitesView() {
   const { siteService } = useServices();
   const { t } = useI18n();
-  const vm = useSitesViewModel(siteService);
+
+  // Create service adapter for generic tree view model
+  const service: TreeService<Site, CreateSiteRequest, UpdateSiteRequest> = useMemo(() => ({
+    getWithChildren: (params) => siteService.getSitesWithChildren(params),
+    create: (data) => siteService.createSite(data),
+    update: (id, data) => siteService.updateSite(id, data),
+    delete: (id) => siteService.deleteSite(id),
+  }), [siteService]);
+
+  // Configuration for the generic tree view model
+  const config: TreeViewModelConfig<Site> = useMemo(() => ({
+    itemTypeName: "Site",
+    itemTypeNamePlural: "Sites",
+    getItemDisplayName: (item: Site) => item.siteName,
+    getFormFieldName: (item: Site) => item.siteName,
+    createFormData: (values: any) => ({
+      siteName: values.siteName,
+      parentSiteId: values.parentSiteId,
+    }),
+    updateFormData: (values: any, item: Site) => ({
+      id: item.id,
+      siteName: values.siteName,
+      parentSiteId: item.parentSiteId, // Keep the original parent site ID when editing
+    }),
+    getInitialFormValues: (item?: Site, parent?: Site) => ({
+      siteName: item?.siteName || "",
+      parentSiteId: parent?.id || item?.parentSiteId || null,
+    }),
+  }), []);
+
+  // Use the generic tree view model directly
+  const vm = useTreeViewModel(service, config);
 
   const renderFormFields = (formValues: any, setFormValues: (values: any) => void, editing: Site | null, parentForNew: Site | null) => (
     <>

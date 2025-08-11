@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import type { PaginationInfo } from "@/lib/pagination";
 import { useCrudViewModel } from "@/hooks/use-crud-view-model";
+import { useEnhancedToast } from "@/hooks/use-enhanced-toast";
 
 /* =========================
  * Types
@@ -222,11 +223,18 @@ export function useGenericCrudViewModel<
     [list]
   );
 
+  // Enhanced toast notifications
+  const { operationSuccess, operationError } = useEnhancedToast();
+
   // Enhanced CRUD VM (modals + confirmation)
   const crud = useCrudViewModel<TItem, TCreate, TUpdate>(crudService, {
     itemTypeName: config.itemTypeName,
     itemTypeNamePlural: config.itemTypeNamePlural,
     getItemDisplayName: (item: TItem) => getItemDisplayNameRef.current(item),
+    notifications: {
+      operationSuccess,
+      operationError,
+    },
   });
 
   // Handle input change

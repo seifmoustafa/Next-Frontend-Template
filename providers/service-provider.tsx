@@ -8,10 +8,7 @@ import { UserTypeService } from "@/services/user-type.service";
 import { AnalyticsService } from "@/services/analytics.service";
 import { NotificationService } from "@/services/notification.service";
 import { SiteService } from "@/services/site.service";
-import { VendorService } from "@/services/vendor.service";
-import { ContractService } from "@/services/contract.service";
 import { CategoryService } from "@/services/category.service";
-import { WarehouseLocationService } from "@/services/warehouseLocation.service";
 
 import { CivilianService } from "@/services/civilian.service";
 
@@ -22,10 +19,7 @@ interface Services {
   analyticsService: AnalyticsService;
   notificationService: NotificationService;
   siteService: SiteService;
-  vendorService: VendorService;
-  categoryService : CategoryService;
-  contractService: ContractService;
-  warehouseLocationService: WarehouseLocationService
+  categoryService: CategoryService;
   civilianService: CivilianService;
 }
 
@@ -37,14 +31,20 @@ export function ServiceProvider({ children }: { children: React.ReactNode }) {
     const notificationService = new NotificationService();
     const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "");
     const userService = new UserService(apiService, notificationService);
-    const userTypeService = new UserTypeService(apiService, notificationService);
+    const userTypeService = new UserTypeService(
+      apiService,
+      notificationService
+    );
     const analyticsService = new AnalyticsService(apiService);
     const siteService = new SiteService(apiService, notificationService);
-    const vendorService = new VendorService(apiService, notificationService);
-    const contractService = new ContractService(apiService, notificationService);
-    const categoryService = new CategoryService(apiService,notificationService);
-    const warehouseLocationService = new WarehouseLocationService(apiService,notificationService);
-    const civilianService = new CivilianService(apiService, notificationService);
+    const categoryService = new CategoryService(
+      apiService,
+      notificationService
+    );
+    const civilianService = new CivilianService(
+      apiService,
+      notificationService
+    );
 
     return {
       apiService,
@@ -53,10 +53,9 @@ export function ServiceProvider({ children }: { children: React.ReactNode }) {
       analyticsService,
       notificationService,
       siteService,
-      vendorService,
-      contractService,
+
       categoryService,
-      warehouseLocationService,
+
       civilianService,
     };
   }, []); // Empty dependency array = stable services

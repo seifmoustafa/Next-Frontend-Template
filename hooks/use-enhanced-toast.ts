@@ -10,7 +10,7 @@ import type {
 } from "@/components/ui/enhanced-toast"
 
 const TOAST_LIMIT = 5
-const TOAST_REMOVE_DELAY = 1000 // 1 second as requested
+const TOAST_REMOVE_DELAY = 2000 // 2 seconds as requested
 
 export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled"
 

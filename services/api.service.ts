@@ -1,115 +1,118 @@
-// Base API Service following SOLID principles
 export interface IApiService {
-  get<T>(endpoint: string, params?: Record<string, any>): Promise<T>
-  post<T>(endpoint: string, data?: any): Promise<T>
-  put<T>(endpoint: string, data?: any): Promise<T>
-  delete<T>(endpoint: string): Promise<T>
+  get<T>(endpoint: string, params?: Record<string, any>): Promise<T>;
+  post<T>(endpoint: string, data?: any): Promise<T>;
+  put<T>(endpoint: string, data?: any): Promise<T>;
+  delete<T>(endpoint: string): Promise<T>;
 }
 
 export class ApiService implements IApiService {
-  private baseUrl: string
-  private defaultHeaders: Record<string, string>
+  private baseUrl: string;
+  private defaultHeaders: Record<string, string>;
 
   constructor(baseUrl: string = process.env.NEXT_PUBLIC_API_URL || "/api") {
-    this.baseUrl = baseUrl
+    this.baseUrl = baseUrl;
     this.defaultHeaders = {
       "Content-Type": "application/json",
       Accept: "application/json",
+    };
+  }
+
+  private buildUrl(endpoint: string) {
+    const baseUrl = this.baseUrl.startsWith("http") ? this.baseUrl : `https://${this.baseUrl}`;
+    return `${baseUrl}${endpoint}`;
+  }
+
+  private unwrap<T>(json: any): T {
+    if (json && typeof json === "object" && "data" in json) {
+      if ("pagination" in json) {
+        return { data: json.data, pagination: json.pagination } as T;
+      }
+      return json.data as T;
     }
+    return json as T;
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const baseUrl = this.baseUrl.startsWith("http") ? this.baseUrl : `https://${this.baseUrl}`
-    const url = `${baseUrl}${endpoint}`
+    const url = this.buildUrl(endpoint);
+    console.log("API Request:", { method: options.method || "GET", url });
 
-    console.log("API Request:", { method: options.method || "GET", url }) // Debug log
-
-    // Get the correct token from localStorage
-    const token = localStorage.getItem("accessToken") // Changed from "authToken" to "accessToken"
+    const token = localStorage.getItem("accessToken");
     const headers: Record<string, string> = {
       ...this.defaultHeaders,
       ...(options.headers as Record<string, string>),
-    }
-
+    };
     if (token) {
-      headers.Authorization = `Bearer ${token}`
-      console.log("Token added to request:", token.substring(0, 20) + "...") // Debug log
+      headers.Authorization = `Bearer ${token}`;
+      console.log("Token added to request:", token.substring(0, 20) + "...");
     } else {
-      console.warn("No access token found in localStorage")
+      console.warn("No access token found in localStorage");
     }
 
     const config: RequestInit = {
       ...options,
       headers,
-      mode: "cors", // Explicitly set CORS mode
-    }
+      mode: "cors",
+    };
 
     try {
-      const response = await fetch(url, config)
-
-      console.log("API Response:", { status: response.status, statusText: response.statusText }) // Debug log
+      const response = await fetch(url, config);
+      console.log("API Response:", { status: response.status, statusText: response.statusText });
 
       if (!response.ok) {
         if (response.status === 401) {
-          // Token expired or invalid, redirect to login
-          console.error("Unauthorized - redirecting to login")
-          localStorage.removeItem("accessToken")
-          localStorage.removeItem("refreshToken")
-          window.location.href = "/login"
-          throw new Error("Unauthorized - please login again")
+          if(window.location.pathname != "/login"){
+          console.error("Unauthorized - redirecting to login");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          window.location.href = "/login";
+          throw new Error("Unauthorized - please login again");}
+          else{
+            throw new Error(response.statusText);}
         }
-
-        const errorText = await response.text()
-        console.error("API Error Response:", errorText)
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`)
+        const errorText = await response.text();
+        console.error("API Error Response:", errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
-      // Handle 204 No Content responses
       if (response.status === 204) {
-        console.log("API Success: 204 No Content") // Debug log
-        return null as T
+        console.log("API Success: 204 No Content");
+        return null as T;
       }
 
-      // For other successful responses, parse JSON
-      const data = await response.json()
-      console.log("API Success:", data) // Debug log
-      return data
+      const json = await response.json();
+      console.log("API Success (raw):", json);
+      const unwrapped = this.unwrap<T>(json);
+      console.log("API Success (unwrapped):", unwrapped);
+      return unwrapped;
     } catch (error) {
-      console.error("API request failed:", error)
-
+      console.error("API request failed:", error);
       if (error instanceof TypeError && error.message.includes("fetch")) {
-        throw new Error("خطأ في الاتصال بالخادم. تأكد من اتصال الإنترنت.")
+        throw new Error("خطأ في الاتصال بالخادم. تأكد من اتصال الإنترنت.");
       }
-
-      throw error
+      throw error;
     }
   }
 
   async get<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
-    const queryString = params ? "?" + new URLSearchParams(params).toString() : ""
-
-    return this.request<T>(`${endpoint}${queryString}`, {
-      method: "GET",
-    })
+    const queryString = params ? "?" + new URLSearchParams(params).toString() : "";
+    return this.request<T>(`${endpoint}${queryString}`, { method: "GET" });
   }
 
   async post<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: "POST",
       body: data ? JSON.stringify(data) : undefined,
-    })
+    });
   }
 
   async put<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: "PUT",
       body: data ? JSON.stringify(data) : undefined,
-    })
+    });
   }
 
   async delete<T>(endpoint: string): Promise<T> {
-    return this.request<T>(endpoint, {
-      method: "DELETE",
-    })
+    return this.request<T>(endpoint, { method: "DELETE" });
   }
 }

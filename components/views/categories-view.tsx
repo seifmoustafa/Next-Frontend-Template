@@ -10,7 +10,7 @@ import type {
   UpdateCategoryRequest,
   CategoriesResponse 
 } from "@/services/category.service";
-import type { SimpleCrudConfig } from "@/components/views/generic-crud-view";
+import type { CrudConfig } from "@/components/views/generic-crud-view";
 
 export function CategoriesView() {
   const { categoryService } = useServices();
@@ -33,32 +33,28 @@ export function CategoriesView() {
   );
 
   // Configuration for the generic view
-  const config: SimpleCrudConfig<Category> = {
+  const config: CrudConfig<Category> = {
     titleKey: "categories.title",
     subtitleKey: "categories.subtitle",
     columns: [
       { key: "categoryName", label: t("categories.name"), sortable: true },
-      { key: "categoryDescription", label: t("categories.description"), sortable: true },
     ],
     createFields: [
       { name: "categoryName", label: t("categories.form.name"), type: "text", placeholder: t("categories.form.namePlaceholder"), required: true },
-      { name: "categoryDescription", label: t("categories.form.description"), type: "text", placeholder: t("categories.form.descriptionPlaceholder"), required: true },
     ],
     editFields: [
       { name: "categoryName", label: t("categories.form.name"), type: "text", placeholder: t("categories.form.namePlaceholder"), required: true },
-      { name: "categoryDescription", label: t("categories.form.description"), type: "text", placeholder: t("categories.form.descriptionPlaceholder"), required: true },
       { name: "id", type: "hidden", required: true },
     ],
-    getActions: (vm, t) => [
+    getActions: (vm, t, handleDelete) => [
       { label: t("common.edit"), onClick: (item: Category) => vm.openEditModal(item), variant: "ghost" },
-      { label: t("common.delete"), onClick: (item: Category) => vm.deleteItem(item), variant: "ghost", className: "text-red-600 hover:text-red-700" },
+      { label: t("common.delete"), onClick: (item: Category) => handleDelete?.(item), variant: "ghost", className: "text-red-600 hover:text-red-700" },
     ],
+    // Enhanced delete configuration
+    getItemDisplayName: (item: Category) => item.categoryName,
+    itemTypeKey: "categories.itemType",
+    deleteService: categoryService.deleteCategory.bind(categoryService),
   };
 
-  return (
-    <>
-      <GenericCrudView config={config} viewModel={vm} />
-      <vm.ConfirmationDialog />
-    </>
-  );
+  return <GenericCrudView config={config} viewModel={vm} />;
 }

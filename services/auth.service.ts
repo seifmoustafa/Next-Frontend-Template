@@ -25,11 +25,8 @@ export class AuthService {
   constructor(private readonly apiService: IApiService) {}
 
   async login(credentials: LoginRequest): Promise<User> {
-    const response = await this.apiService.post<LoginResponse>(
-      API_ENDPOINTS.LOGIN,
-      credentials
-    );
-    if (response.accessToken) {
+    const response = await this.apiService.post<LoginResponse>(API_ENDPOINTS.LOGIN, credentials);
+    if (response && (response as any).accessToken) {
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
       return this.getMe();
@@ -40,11 +37,9 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await this.apiService.post(API_ENDPOINTS.LOGOUT);
-      // Only clear tokens if logout API call was successful
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     } catch (error) {
-      // If logout fails, don't clear tokens and re-throw the error
       throw error;
     }
   }
@@ -59,20 +54,15 @@ export class AuthService {
 
   async refreshToken(): Promise<LoginResponse | null> {
     const refreshToken = localStorage.getItem("refreshToken");
-    if (!refreshToken) {
-      return null;
-    }
+    if (!refreshToken) return null;
 
     try {
-      const response = await this.apiService.post<LoginResponse>(
-        API_ENDPOINTS.REFRESH,
-        { refreshToken }
-      );
-      if (response.accessToken) {
+      const response = await this.apiService.post<LoginResponse>(API_ENDPOINTS.REFRESH, { refreshToken });
+      if (response && response.accessToken) {
         localStorage.setItem("accessToken", response.accessToken);
       }
       return response;
-    } catch (error) {
+    } catch {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       return null;

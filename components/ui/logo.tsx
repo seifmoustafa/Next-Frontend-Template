@@ -9,9 +9,11 @@ import Image from 'next/image'
 interface LogoProps {
   className?: string
   showText?: boolean
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  animation?: 'none' | 'spin' | 'pulse' | 'bounce' | 'fancy'
 }
 
-export function Logo({ className, showText = true }: LogoProps) {
+export function Logo({ className, showText = true, size = 'md', animation = 'none' }: LogoProps) {
   const settings = useSettings()
 
   if (!settings.showLogo) {
@@ -38,7 +40,8 @@ export function Logo({ className, showText = true }: LogoProps) {
     none: '',
     spin: 'animate-spin',
     pulse: 'animate-pulse',
-    fancy: 'hover:scale-110 hover:rotate-12 transition-transform duration-300'
+    bounce: 'animate-bounce',
+    fancy: 'animate-pulse hover:animate-bounce transition-all duration-300',
   }
 
   const renderIcon = () => {

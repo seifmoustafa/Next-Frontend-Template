@@ -343,7 +343,7 @@ function getNodeStyling(
         hoverScale,
         level === 0 ? "font-bold text-primary shadow-sm shadow-primary/10" : "font-medium",
         hasChildren && isOpen ? "bg-primary/10 border-primary/50 shadow-md shadow-primary/20" : "",
-        "relative before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-transparent before:via-primary/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity"
+        "relative before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-transparent before:via-primary/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:pointer-events-none"
       );
 
     case "organic":

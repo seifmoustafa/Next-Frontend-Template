@@ -112,7 +112,7 @@ export function useCrudViewModel<
       setError(null);
       const data = await service.list();
       setItems(data);
-      operationSuccess("Load", itemTypeNamePlural);
+      // Don't show success toast for loading data - it's too noisy
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unexpected error";
       setError(message);
@@ -138,12 +138,14 @@ export function useCrudViewModel<
     try {
       await service.update(id, data);
       await loadItems();
+      // Only close modal and clear editing item on successful update
       setIsEditModalOpen(false);
       setEditingItem(null);
       operationSuccess("Update", itemTypeName);
     } catch (err) {
+      // Don't close modal on error - let user see the error and try again
       operationError("Update", itemTypeName, err instanceof Error ? err.message : "Failed to update");
-      throw err;
+      throw err; // Re-throw to prevent modal from closing
     }
   };
 

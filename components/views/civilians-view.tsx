@@ -11,7 +11,7 @@ import type {
   CiviliansResponse 
 } from "@/services/civilian.service";
 import type { Site } from "@/services/site.service";
-import type { SimpleCrudConfig } from "@/components/views/generic-crud-view";
+import type { CrudConfig } from "@/components/views/generic-crud-view";
 import { useMemo, useCallback } from "react";
 
 export function CiviliansView() {
@@ -58,7 +58,7 @@ export function CiviliansView() {
     }
   }, [siteService]);
 
-  const config: SimpleCrudConfig<Civilian> = useMemo(() => ({
+  const config: CrudConfig<Civilian> = useMemo(() => ({
     titleKey: "civilians.title",
     subtitleKey: "civilians.subtitle",
     columns: [
@@ -107,16 +107,15 @@ export function CiviliansView() {
       },
       { name: "id", type: "hidden", required: true },
     ],
-    getActions: (vm, t) => [
+    getActions: (vm, t, handleDelete) => [
       { label: t("common.edit"), onClick: (item: Civilian) => vm.openEditModal(item), variant: "ghost" },
-      { label: t("common.delete"), onClick: (item: Civilian) => vm.deleteItem(item), variant: "ghost", className: "text-red-600 hover:text-red-700" },
+      { label: t("common.delete"), onClick: (item: Civilian) => handleDelete?.(item), variant: "ghost", className: "text-red-600 hover:text-red-700" },
     ],
-  }), [t, vm.dropdownOptions, searchSites, vm.openEditModal, vm.deleteItem]);
+    // Enhanced delete configuration
+    getItemDisplayName: (item: Civilian) => `${item.civilianName} (${item.nationalityNumber})`,
+    itemTypeKey: "civilians.itemType",
+    deleteService: civilianService.deleteCivilian.bind(civilianService),
+  }), [t, vm.dropdownOptions, searchSites, vm.openEditModal, civilianService]);
 
-  return (
-    <>
-      <GenericCrudView config={config} viewModel={vm} />
-      <vm.ConfirmationDialog />
-    </>
-  );
+  return <GenericCrudView config={config} viewModel={vm} />;
 }

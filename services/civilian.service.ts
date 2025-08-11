@@ -1,4 +1,4 @@
-import { ApiService, type IApiService } from "./api.service";
+import { type IApiService } from "./api.service";
 import { API_ENDPOINTS } from "@/config/api-endpoints";
 import type { INotificationService } from "./notification.service";
 import type { PaginationInfo } from "@/lib/pagination";
@@ -34,15 +34,8 @@ export interface CreateCivilianRequest {
   isDeleted?: boolean;
 }
 
-export interface UpdateCivilianRequest {
+export interface UpdateCivilianRequest extends CreateCivilianRequest {
   id: string; // API expects id in body
-  civilianName: string;
-  nationalityNumber: string;
-  phoneNumber: string;
-  address: string;
-  siteId: string;
-  isActive?: boolean;
-  isDeleted?: boolean;
 }
 
 export interface ICivilianService {
@@ -64,12 +57,11 @@ export class CivilianService implements ICivilianService {
       const q = new URLSearchParams();
       if (params?.page !== undefined) q.append("PageNumber", String(params.page));
       if (params?.pageSize !== undefined) q.append("PageSize", String(params.pageSize));
-      if (params?.search) q.append("PageSearch", params.search); // mapping here
-      if (params?.PageSearch) q.append("PageSearch", params.PageSearch); // direct PageSearch parameter
-
+      if (params?.search) q.append("PageSearch", params.search);
+      if (params?.PageSearch) q.append("PageSearch", params.PageSearch);
       return await this.apiService.get<CiviliansResponse>(`${API_ENDPOINTS.GET_CIVILIANS}?${q.toString()}`);
     } catch (e) {
-      this.notificationService.error("فشل في جلب المواطنين");
+      this.notificationService.error("Failed to fetch civilians");
       throw e;
     }
   }
@@ -78,7 +70,7 @@ export class CivilianService implements ICivilianService {
     try {
       return await this.apiService.get<Civilian>(API_ENDPOINTS.GET_CIVILIAN(id));
     } catch (e) {
-      this.notificationService.error("فشل في جلب بيانات المواطن");
+      this.notificationService.error("Failed to fetch civilian");
       throw e;
     }
   }
@@ -87,10 +79,10 @@ export class CivilianService implements ICivilianService {
     try {
       const payload: CreateCivilianRequest = { isDeleted: false, isActive: true, ...data };
       const res = await this.apiService.post<Civilian>(API_ENDPOINTS.CREATE_CIVILIAN, payload);
-      this.notificationService.success("تم إنشاء المواطن بنجاح");
+      this.notificationService.success("Civilian created successfully");
       return res;
     } catch (e) {
-      this.notificationService.error("فشل في إنشاء المواطن");
+      this.notificationService.error("Failed to create civilian");
       throw e;
     }
   }
@@ -99,10 +91,10 @@ export class CivilianService implements ICivilianService {
     try {
       const payload: UpdateCivilianRequest = { isDeleted: false, isActive: true, ...data, id };
       const res = await this.apiService.put<Civilian>(API_ENDPOINTS.UPDATE_CIVILIAN(id), payload);
-      this.notificationService.success("تم تحديث المواطن بنجاح");
+      this.notificationService.success("Civilian updated successfully");
       return res;
     } catch (e) {
-      this.notificationService.error("فشل في تحديث المواطن");
+      this.notificationService.error("Failed to update civilian");
       throw e;
     }
   }
@@ -110,9 +102,9 @@ export class CivilianService implements ICivilianService {
   async deleteCivilian(id: string): Promise<void> {
     try {
       await this.apiService.delete(API_ENDPOINTS.DELETE_CIVILIAN(id));
-      this.notificationService.success("تم حذف المواطن بنجاح");
+      this.notificationService.success("Civilian deleted successfully");
     } catch (e) {
-      this.notificationService.error("فشل في حذف المواطن");
+      this.notificationService.error("Failed to delete civilian");
       throw e;
     }
   }
