@@ -71,7 +71,19 @@ export type NavigationStyle = "default" | "pills" | "underline" | "sidebar";
 export type SpacingSize = "compact" | "default" | "comfortable" | "spacious";
 export type IconStyle = "outline" | "filled" | "duotone" | "minimal";
 export type InputStyle = "default" | "rounded" | "underlined" | "filled";
-export type TableStyle = "default" | "striped" | "bordered" | "minimal";
+export type TableStyle =
+  | "default"
+  | "striped"
+  | "bordered"
+  | "minimal"
+  | "glass"
+  | "neon"
+  | "gradient"
+  | "neumorphism"
+  | "cyberpunk"
+  | "luxury"
+  | "matrix"
+  | "diamond";
 export type BadgeStyle = "default" | "rounded" | "square" | "pill";
 export type AvatarStyle = "default" | "rounded" | "square" | "hexagon";
 

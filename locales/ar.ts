@@ -325,48 +325,102 @@ export const ar = {
       description: "اختر سمة الألوان المفضلة لديك",
     },
     switchStyle: {
-      title: "نمط المفتاح",
+      title: "أنماط المفاتيح",
       description: "اختر تصميم مكون المفتاح المفضل لديك",
       options: {
         default: {
           title: "افتراضي",
-          description: "مفتاح كلاسيكي بتصميم قياسي",
+          description: "مفتاح كلاسيكي مع تصميم محسن",
         },
         modern: {
           title: "عصري",
-          description: "تصميم أنيق متدرج مع تأثيرات التمرير",
+          description: "تصميم متدرج أنيق مع تأثيرات زجاجية",
         },
         ios: {
           title: "نمط iOS",
-          description: "تصميم مفتاح مستوحى من Apple iOS",
+          description: "تصميم مستوحى من Apple iOS",
         },
         android: {
           title: "نمط Android",
-          description: "مكون مفتاح بتصميم Material Design",
+          description: "مفتاح Material Design",
         },
         toggle: {
           title: "زر التبديل",
-          description: "تبديل مستطيل مع حركة سلسة",
+          description: "تبديل مستطيل مع تأثيرات متميزة",
         },
         slider: {
           title: "نمط المنزلق",
           description: "تصميم منزلق متدرج متميز",
         },
         neon: {
-          title: "توهج النيون",
+          title: "توهج نيون",
           description: "توهج نيون مستقبلي مع حركة نابضة",
         },
         neumorphism: {
-          title: "النيومورفيزم",
-          description: "تصميم واجهة ناعم مع ظلال عمق واقعية",
+          title: "نيومورفيزم",
+          description: "واجهة مستخدم ناعمة مع ظلال عمق واقعية",
         },
         liquid: {
-          title: "الحركة السائلة",
-          description: "حركات سلسة شبيهة بالسائل مع تدرجات",
+          title: "حركة سائلة",
+          description: "حركات وتدرجات سلسة تشبه السائل",
         },
         cyberpunk: {
-          title: "السايبربانك",
-          description: "تصميم تقني مستقبلي مع حواف حادة",
+          title: "سايبربانك",
+          description: "تصميم تقني مستقبلي مع لمسات نيون",
+        },
+      },
+    },
+    tableStyle: {
+      title: "أنماط الجداول",
+      description: "اختر تصميم جداول البيانات المفضل لديك",
+      options: {
+        default: {
+          title: "افتراضي",
+          description: "تصميم جدول نظيف ومهني",
+        },
+        striped: {
+          title: "مخطط",
+          description: "ألوان صفوف متناوبة لقراءة أفضل",
+        },
+        bordered: {
+          title: "محاط بحدود",
+          description: "حدود محسنة لفصل البيانات بوضوح",
+        },
+        minimal: {
+          title: "بسيط",
+          description: "تصميم نظيف وبسيط مع تصميم أدنى",
+        },
+        glass: {
+          title: "مورفولوجيا زجاجية",
+          description: "تأثير زجاجي مذهل مع ضبابية الخلفية",
+        },
+        neon: {
+          title: "توهج نيون",
+          description: "تصميم نيون مستقبلي مع تأثيرات متوهجة",
+        },
+        gradient: {
+          title: "تدفق متدرج",
+          description: "تراكبات متدرجة جميلة وانتقالات سلسة",
+        },
+        neumorphism: {
+          title: "نيومورفيزم",
+          description: "تصميم واجهة مستخدم ناعمة مع عمق وظلال واقعية",
+        },
+        cyberpunk: {
+          title: "سايبربانك",
+          description: "تصميم مستوحى من التكنولوجيا مع حواف حادة ونيون",
+        },
+        luxury: {
+          title: "ذهبي فاخر",
+          description: "تصميم ذهبي متميز مع تصميم أنيق",
+        },
+        matrix: {
+          title: "كود ماتريكس",
+          description: "تصميم أخضر مستقبلي بنمط الماتريكس مع تأثيرات رقمية",
+        },
+        diamond: {
+          title: "منشور الماس",
+          description: "تصميم منشوري متعدد الألوان مع تدرجات قوس قزح",
         },
       },
     },
@@ -634,16 +688,6 @@ export const ar = {
         rounded: "مدور",
         underlined: "تحته خط",
         filled: "ممتلئ",
-      },
-    },
-    tableStyle: {
-      title: "نمط الجداول",
-      description: "اختر كيفية ظهور الجداول في التطبيق",
-      options: {
-        default: { name: "افتراضي", description: "تصميم جدول نظيف" },
-        striped: { name: "مخطط", description: "ألوان صفوف متناوبة" },
-        bordered: { name: "بحدود", description: "حدود كاملة" },
-        minimal: { name: "بسيط", description: "بدون حدود" },
       },
     },
     badgeStyle: {

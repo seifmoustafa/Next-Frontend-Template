@@ -375,16 +375,16 @@ export const en = {
       description: "Choose your preferred color theme",
     },
     switchStyle: {
-      title: "Switch Style",
+      title: "Switch Styles",
       description: "Choose your preferred switch component design",
       options: {
         default: {
           title: "Default",
-          description: "Classic switch with standard styling",
+          description: "Classic switch with enhanced styling",
         },
         modern: {
           title: "Modern",
-          description: "Sleek gradient design with enhanced effects",
+          description: "Sleek gradient design with glass effects",
         },
         ios: {
           title: "iOS Style",
@@ -396,7 +396,7 @@ export const en = {
         },
         toggle: {
           title: "Toggle Button",
-          description: "Rectangle toggle with rounded corners",
+          description: "Rectangle toggle with premium effects",
         },
         slider: {
           title: "Slider Style",
@@ -408,7 +408,7 @@ export const en = {
         },
         neumorphism: {
           title: "Neumorphism",
-          description: "Soft UI design with realistic depth shadows",
+          description: "Soft UI with realistic depth shadows",
         },
         liquid: {
           title: "Liquid Motion",
@@ -416,7 +416,61 @@ export const en = {
         },
         cyberpunk: {
           title: "Cyberpunk",
-          description: "Futuristic tech-inspired design with sharp edges",
+          description: "Futuristic tech-inspired design with neon accents",
+        },
+      },
+    },
+    tableStyle: {
+      title: "Table Styles",
+      description: "Choose your preferred data table design",
+      options: {
+        default: {
+          title: "Default",
+          description: "Clean and professional table design",
+        },
+        striped: {
+          title: "Striped",
+          description: "Alternating row colors for better readability",
+        },
+        bordered: {
+          title: "Bordered",
+          description: "Enhanced borders for clear data separation",
+        },
+        minimal: {
+          title: "Minimal",
+          description: "Clean and simple design with minimal styling",
+        },
+        glass: {
+          title: "Glass Morphism",
+          description: "Stunning glass effect with backdrop blur",
+        },
+        neon: {
+          title: "Neon Glow",
+          description: "Futuristic neon design with glowing effects",
+        },
+        gradient: {
+          title: "Gradient Flow",
+          description: "Beautiful gradient overlays and smooth transitions",
+        },
+        neumorphism: {
+          title: "Neumorphism",
+          description: "Soft UI design with realistic depth and shadows",
+        },
+        cyberpunk: {
+          title: "Cyberpunk",
+          description: "Tech-inspired design with sharp edges and neon",
+        },
+        luxury: {
+          title: "Luxury Gold",
+          description: "Premium golden design with elegant styling",
+        },
+        matrix: {
+          title: "Matrix Code",
+          description: "Futuristic green matrix-style with digital effects",
+        },
+        diamond: {
+          title: "Diamond Prism",
+          description: "Multi-colored prismatic design with rainbow gradients",
         },
       },
     },
@@ -425,6 +479,7 @@ export const en = {
     selectColorTheme: "Select Color Theme",
     logoType: "Logo Type",
     fontSize: "Font Size",
+    // ... (rest of the code remains the same)
     layoutTemplates: "Layout Templates",
     sidebarPosition: "Sidebar Position",
     languageSettings: "Language Settings",
@@ -697,19 +752,6 @@ export const en = {
         rounded: "Rounded",
         underlined: "Underlined",
         filled: "Filled",
-      },
-    },
-    tableStyle: {
-      title: "Table Style",
-      description: "Choose how tables should appear throughout the app",
-      options: {
-        default: { name: "Default", description: "Clean table design" },
-        striped: {
-          name: "Striped",
-          description: "Alternating row colors",
-        },
-        bordered: { name: "Bordered", description: "Full borders" },
-        minimal: { name: "Minimal", description: "No borders" },
       },
     },
     badgeStyle: {

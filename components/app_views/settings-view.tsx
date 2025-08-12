@@ -947,30 +947,6 @@ export function SettingsView() {
     },
   ];
 
-  // Table style options
-  const tableStyles = [
-    {
-      value: "default",
-      name: t("settings.tableStyle.options.default.name"),
-      description: t("settings.tableStyle.options.default.description"),
-    },
-    {
-      value: "striped",
-      name: t("settings.tableStyle.options.striped.name"),
-      description: t("settings.tableStyle.options.striped.description"),
-    },
-    {
-      value: "bordered",
-      name: t("settings.tableStyle.options.bordered.name"),
-      description: t("settings.tableStyle.options.bordered.description"),
-    },
-    {
-      value: "minimal",
-      name: t("settings.tableStyle.options.minimal.name"),
-      description: t("settings.tableStyle.options.minimal.description"),
-    },
-  ];
-
   // Badge style options
   const badgeStyles = [
     {
@@ -2087,14 +2063,118 @@ export function SettingsView() {
                 {/* Table Styles */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>{t("settings.tableStyle.title")}</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <div className="grid grid-cols-3 gap-0.5 h-4 w-4">
+                          <div className="bg-primary/60 rounded-[1px]"></div>
+                          <div className="bg-primary/60 rounded-[1px]"></div>
+                          <div className="bg-primary/60 rounded-[1px]"></div>
+                          <div className="bg-primary/40 rounded-[1px]"></div>
+                          <div className="bg-primary/40 rounded-[1px]"></div>
+                          <div className="bg-primary/40 rounded-[1px]"></div>
+                          <div className="bg-primary/30 rounded-[1px]"></div>
+                          <div className="bg-primary/30 rounded-[1px]"></div>
+                          <div className="bg-primary/30 rounded-[1px]"></div>
+                        </div>
+                      </div>
+                      {t("settings.tableStyle.title")}
+                    </CardTitle>
                     <CardDescription>
                       {t("settings.tableStyle.description")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                      {tableStyles.map((style) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {[
+                        {
+                          value: "default",
+                          name: t("settings.tableStyle.options.default.title"),
+                          description: t(
+                            "settings.tableStyle.options.default.description"
+                          ),
+                        },
+                        {
+                          value: "striped",
+                          name: t("settings.tableStyle.options.striped.title"),
+                          description: t(
+                            "settings.tableStyle.options.striped.description"
+                          ),
+                        },
+                        {
+                          value: "bordered",
+                          name: t("settings.tableStyle.options.bordered.title"),
+                          description: t(
+                            "settings.tableStyle.options.bordered.description"
+                          ),
+                        },
+                        {
+                          value: "minimal",
+                          name: t("settings.tableStyle.options.minimal.title"),
+                          description: t(
+                            "settings.tableStyle.options.minimal.description"
+                          ),
+                        },
+                        {
+                          value: "glass",
+                          name: t("settings.tableStyle.options.glass.title"),
+                          description: t(
+                            "settings.tableStyle.options.glass.description"
+                          ),
+                        },
+                        {
+                          value: "neon",
+                          name: t("settings.tableStyle.options.neon.title"),
+                          description: t(
+                            "settings.tableStyle.options.neon.description"
+                          ),
+                        },
+                        {
+                          value: "gradient",
+                          name: t("settings.tableStyle.options.gradient.title"),
+                          description: t(
+                            "settings.tableStyle.options.gradient.description"
+                          ),
+                        },
+                        {
+                          value: "neumorphism",
+                          name: t(
+                            "settings.tableStyle.options.neumorphism.title"
+                          ),
+                          description: t(
+                            "settings.tableStyle.options.neumorphism.description"
+                          ),
+                        },
+                        {
+                          value: "cyberpunk",
+                          name: t(
+                            "settings.tableStyle.options.cyberpunk.title"
+                          ),
+                          description: t(
+                            "settings.tableStyle.options.cyberpunk.description"
+                          ),
+                        },
+                        {
+                          value: "luxury",
+                          name: t("settings.tableStyle.options.luxury.title"),
+                          description: t(
+                            "settings.tableStyle.options.luxury.description"
+                          ),
+                        },
+                        {
+                          value: "matrix",
+                          name: t("settings.tableStyle.options.matrix.title"),
+                          description: t(
+                            "settings.tableStyle.options.matrix.description"
+                          ),
+                        },
+                        {
+                          value: "diamond",
+                          name: t("settings.tableStyle.options.diamond.title"),
+                          description: t(
+                            "settings.tableStyle.options.diamond.description"
+                          ),
+                        },
+                      ].map((style) => (
                         <div
                           key={style.value}
                           className={cn(
@@ -2107,42 +2187,160 @@ export function SettingsView() {
                             settings.setTableStyle(style.value as any)
                           }
                         >
-                          <div className="space-y-2">
-                            <h4 className="font-semibold">{style.name}</h4>
-                            <p className="text-sm text-muted-foreground">
-                              {style.description}
-                            </p>
-                            <div className="space-y-1">
-                              <div
-                                className={cn(
-                                  "h-2 bg-muted rounded",
-                                  style.value === "striped" && "bg-muted/50",
-                                  style.value === "bordered" &&
-                                    "border border-border",
-                                  style.value === "minimal" &&
-                                    "bg-transparent border-b border-border"
-                                )}
-                              ></div>
-                              <div
-                                className={cn(
-                                  "h-2 bg-muted rounded",
-                                  style.value === "striped" && "bg-muted",
-                                  style.value === "bordered" &&
-                                    "border border-border",
-                                  style.value === "minimal" &&
-                                    "bg-transparent border-b border-border"
-                                )}
-                              ></div>
-                              <div
-                                className={cn(
-                                  "h-2 bg-muted rounded",
-                                  style.value === "striped" && "bg-muted/50",
-                                  style.value === "bordered" &&
-                                    "border border-border",
-                                  style.value === "minimal" &&
-                                    "bg-transparent border-b border-border"
-                                )}
-                              ></div>
+                          <div className="space-y-4">
+                            <div className="text-center">
+                              <h4 className="font-semibold">{style.name}</h4>
+                              <p className="text-xs text-muted-foreground">
+                                {style.description}
+                              </p>
+                            </div>
+
+                            {/* Table Preview */}
+                            <div className="flex flex-col items-center space-y-2">
+                              <div className="w-full max-w-[200px] text-xs">
+                                {/* Table Container Preview */}
+                                <div
+                                  className={cn(
+                                    "overflow-hidden transition-all duration-300",
+                                    style.value === "default" &&
+                                      "rounded-lg border bg-card shadow-sm",
+                                    style.value === "striped" &&
+                                      "rounded-lg border bg-card",
+                                    style.value === "bordered" &&
+                                      "rounded-lg border-2 border-border bg-card",
+                                    style.value === "minimal" &&
+                                      "rounded-none border-0 bg-transparent",
+                                    style.value === "glass" &&
+                                      "rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl dark:bg-black/20 dark:border-white/10",
+                                    style.value === "neon" &&
+                                      "rounded-xl border-2 border-primary/30 bg-black/90 shadow-[0_0_15px_rgba(var(--primary),0.3)] dark:bg-black/95",
+                                    style.value === "gradient" &&
+                                      "rounded-2xl border-0 bg-gradient-to-br from-primary/20 via-background to-primary/10 shadow-2xl",
+                                    style.value === "neumorphism" &&
+                                      "rounded-3xl border-0 bg-background shadow-[10px_10px_20px_rgba(0,0,0,0.1),-10px_-10px_20px_rgba(255,255,255,0.1)] dark:shadow-[10px_10px_20px_rgba(0,0,0,0.3),-10px_-10px_20px_rgba(255,255,255,0.05)]",
+                                    style.value === "cyberpunk" &&
+                                      "rounded-none border-2 border-primary bg-black/95 shadow-[0_0_25px_rgba(var(--primary),0.4)]",
+                                    style.value === "luxury" &&
+                                      "rounded-2xl border border-amber-200/30 bg-gradient-to-br from-amber-50/50 to-amber-100/30 shadow-2xl dark:from-amber-900/20 dark:to-amber-800/10 dark:border-amber-400/20",
+                                    style.value === "matrix" &&
+                                      "rounded-none border-2 border-primary/30 bg-black/95 shadow-[0_0_30px_hsl(var(--primary)/0.4)] dark:bg-black/98 dark:border-primary/40",
+                                    style.value === "diamond" &&
+                                      "rounded-3xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-primary/15 shadow-[0_0_40px_hsl(var(--primary)/0.3)] dark:from-primary/20 dark:via-primary/10 dark:to-primary/25 dark:border-primary/30"
+                                  )}
+                                >
+                                  {/* Table Header */}
+                                  <div
+                                    className={cn(
+                                      "font-semibold text-foreground transition-all duration-300 h-8 flex items-center px-2",
+                                      style.value === "default" &&
+                                        "bg-muted/50 border-b",
+                                      style.value === "striped" &&
+                                        "bg-muted/70 border-b-2",
+                                      style.value === "bordered" &&
+                                        "bg-muted/50 border-b-2",
+                                      style.value === "minimal" &&
+                                        "bg-transparent border-b",
+                                      style.value === "glass" &&
+                                        "bg-white/20 border-b border-white/30 backdrop-blur-md text-foreground font-bold dark:bg-black/30 dark:border-white/20",
+                                      style.value === "neon" &&
+                                        "bg-black/90 border-b-2 border-primary/50 text-primary font-bold shadow-[0_0_10px_rgba(var(--primary),0.3)] dark:bg-black/95",
+                                      style.value === "gradient" &&
+                                        "bg-gradient-to-r from-primary/30 via-primary/20 to-primary/30 border-b border-primary/30 text-foreground font-bold shadow-lg",
+                                      style.value === "neumorphism" &&
+                                        "bg-background border-b-0 font-bold shadow-[4px_4px_8px_rgba(0,0,0,0.1),-4px_-4px_8px_rgba(255,255,255,0.1)] dark:shadow-[4px_4px_8px_rgba(0,0,0,0.2),-4px_-4px_8px_rgba(255,255,255,0.05)]",
+                                      style.value === "cyberpunk" &&
+                                        "bg-black/95 border-b-2 border-primary text-primary font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(var(--primary),0.4)]",
+                                      style.value === "luxury" &&
+                                        "bg-gradient-to-r from-amber-100/50 via-amber-50/30 to-amber-100/50 border-b border-amber-300/40 dark:from-amber-900/30 dark:via-amber-800/20 dark:to-amber-900/30 dark:border-amber-400/30 text-amber-900 dark:text-amber-100 font-bold shadow-lg shadow-amber-200/20",
+                                      style.value === "matrix" &&
+                                        "bg-black/95 border-b-2 border-primary/60 text-primary font-bold uppercase tracking-widest shadow-[0_0_15px_hsl(var(--primary)/0.4)] font-mono dark:bg-black/98 dark:border-primary/70 dark:text-primary",
+                                      style.value === "diamond" &&
+                                        "bg-gradient-to-r from-primary/20 via-primary/10 to-primary/25 border-b-2 border-primary/50 text-primary font-bold shadow-lg shadow-primary/30 dark:from-primary/25 dark:via-primary/15 dark:to-primary/30 dark:border-primary/40"
+                                    )}
+                                  >
+                                    <span className="text-[10px]">Name</span>
+                                    <span className="ml-auto text-[10px]">
+                                      Status
+                                    </span>
+                                  </div>
+
+                                  {/* Table Rows */}
+                                  {[0, 1, 2].map((index) => (
+                                    <div
+                                      key={index}
+                                      className={cn(
+                                        "transition-all duration-300 border-b h-6 flex items-center px-2",
+                                        style.value === "default" &&
+                                          "hover:bg-muted/30 bg-card",
+                                        style.value === "striped" &&
+                                          (index % 2 === 0
+                                            ? "bg-muted/30 hover:bg-muted/50"
+                                            : "bg-card hover:bg-muted/30"),
+                                        style.value === "bordered" &&
+                                          "border-b-2 hover:bg-muted/30 bg-card",
+                                        style.value === "minimal" &&
+                                          "border-b-0 hover:bg-muted/20 bg-transparent",
+                                        style.value === "glass" &&
+                                          cn(
+                                            "border-b border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-sm dark:border-white/5 dark:bg-black/10 dark:hover:bg-black/20",
+                                            index % 2 === 0 &&
+                                              "bg-white/10 dark:bg-black/20"
+                                          ),
+                                        style.value === "neon" &&
+                                          cn(
+                                            "border-b border-primary/20 bg-black/50 hover:bg-primary/10 dark:bg-black/70 dark:hover:bg-primary/5",
+                                            index % 2 === 0 &&
+                                              "bg-primary/5 dark:bg-primary/5"
+                                          ),
+                                        style.value === "gradient" &&
+                                          cn(
+                                            "border-b border-primary/10 bg-gradient-to-r from-transparent via-primary/5 to-transparent hover:from-primary/10 hover:via-primary/15 hover:to-primary/10",
+                                            index % 2 === 0 &&
+                                              "from-primary/5 via-primary/10 to-primary/5"
+                                          ),
+                                        style.value === "neumorphism" &&
+                                          cn(
+                                            "border-b-0 bg-background",
+                                            index % 2 === 0 &&
+                                              "shadow-[inset_1px_1px_2px_rgba(0,0,0,0.05),inset_-1px_-1px_2px_rgba(255,255,255,0.05)]"
+                                          ),
+                                        style.value === "luxury" &&
+                                          cn(
+                                            "border-b border-amber-200/20 bg-gradient-to-r from-amber-50/20 to-transparent dark:border-amber-400/20 dark:from-amber-900/10",
+                                            index % 2 === 0 &&
+                                              "from-amber-100/30 to-amber-50/10 dark:from-amber-900/20 dark:to-amber-800/10"
+                                          ),
+                                        style.value === "matrix" &&
+                                          cn(
+                                            "border-b border-primary/30 bg-black/90 text-primary font-mono dark:bg-black/95",
+                                            index % 2 === 0 &&
+                                              "bg-primary/5 border-primary/20"
+                                          ),
+                                        style.value === "diamond" &&
+                                          cn(
+                                            "border-b border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/15 text-primary dark:from-primary/10 dark:via-primary/5 dark:to-primary/15 dark:text-primary dark:border-primary/20",
+                                            index % 2 === 0 &&
+                                              "from-primary/15 via-primary/10 to-primary/20 dark:from-primary/15 dark:via-primary/10 dark:to-primary/20"
+                                          )
+                                      )}
+                                    >
+                                      <span className="text-[9px]">
+                                        Item {index + 1}
+                                      </span>
+                                      <div
+                                        className={cn(
+                                          "ml-auto w-2 h-2 rounded-full",
+                                          index === 0
+                                            ? "bg-green-500"
+                                            : index === 1
+                                            ? "bg-yellow-500"
+                                            : "bg-red-500"
+                                        )}
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
                           </div>
                           {settings.tableStyle === style.value && (
