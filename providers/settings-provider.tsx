@@ -84,7 +84,17 @@ export type TableStyle =
   | "luxury"
   | "matrix"
   | "diamond";
-export type BadgeStyle = "default" | "rounded" | "square" | "pill";
+export type BadgeStyle =
+  | "default"
+  | "modern"
+  | "glass"
+  | "neon"
+  | "gradient"
+  | "outlined"
+  | "filled"
+  | "minimal"
+  | "pill"
+  | "square";
 export type AvatarStyle = "default" | "rounded" | "square" | "hexagon";
 
 export type LogoType = "sparkles" | "shield" | "image" | "custom";

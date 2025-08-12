@@ -754,16 +754,7 @@ export const en = {
         filled: "Filled",
       },
     },
-    badgeStyle: {
-      title: "Badge Style",
-      description: "Choose how badges should appear throughout the app",
-      options: {
-        default: "Default",
-        rounded: "Rounded",
-        square: "Square",
-        pill: "Pill",
-      },
-    },
+
     avatarStyle: {
       title: "Avatar Style",
       description: "Choose how avatars should appear throughout the app",
@@ -820,6 +811,31 @@ export const en = {
         rounded: { name: "Rounded", description: "Rounded corners" },
         sharp: { name: "Sharp", description: "Sharp corners" },
         bubble: { name: "Bubble", description: "Speech bubble style" },
+      },
+    },
+    badgeStyle: {
+      title: "Badge Style",
+      description: "Choose the style for badges and status indicators",
+      options: {
+        default: { name: "Default", description: "Standard badge style" },
+        modern: { name: "Modern", description: "Modern glass-like appearance" },
+        glass: {
+          name: "Glass",
+          description: "Transparent glass effect with blur",
+        },
+        neon: { name: "Neon", description: "Glowing neon style with shadows" },
+        gradient: {
+          name: "Gradient",
+          description: "Colorful gradient backgrounds",
+        },
+        outlined: {
+          name: "Outlined",
+          description: "Border-only transparent style",
+        },
+        filled: { name: "Filled", description: "Solid filled backgrounds" },
+        minimal: { name: "Minimal", description: "Clean borderless style" },
+        pill: { name: "Pill", description: "Fully rounded pill shape" },
+        square: { name: "Square", description: "Sharp square corners" },
       },
     },
     modalStyle: {

@@ -216,7 +216,7 @@ export function GenericTable<T extends Record<string, any>>({
           baseClasses,
           "rounded-3xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-primary/15",
           "shadow-[0_0_40px_hsl(var(--primary)/0.3)] backdrop-blur-xl relative overflow-hidden",
-          "before:absolute before:inset-0 before:bg-[conic-gradient(from_0deg,transparent_0%,hsl(var(--primary)/0.1)_25%,hsl(var(--primary)/0.15)_50%,hsl(var(--primary)/0.1)_75%,transparent_100%)] before:animate-spin before:duration-[8s]",
+          "before:absolute before:inset-0 before:bg-[conic-gradient(from_0deg,transparent_0%,hsl(var(--primary)/0.1)_25%,hsl(var(--primary)/0.15)_50%,hsl(var(--primary)/0.1)_75%,transparent_100%)] before:animate-spin before:duration-&lsqb;8s&rsqb;",
           "dark:from-primary/20 dark:via-primary/10 dark:to-primary/25 dark:border-primary/30"
         );
       default:

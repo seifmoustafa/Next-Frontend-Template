@@ -951,23 +951,64 @@ export function SettingsView() {
   const badgeStyles = [
     {
       value: "default",
-      name: t("settings.badgeStyle.options.default"),
-      class: "rounded-full",
+      name: t("settings.badgeStyle.options.default.name"),
+      description: t("settings.badgeStyle.options.default.description"),
+      class: "rounded-full border",
     },
     {
-      value: "rounded",
-      name: t("settings.badgeStyle.options.rounded"),
-      class: "rounded-lg",
+      value: "modern",
+      name: t("settings.badgeStyle.options.modern.name"),
+      description: t("settings.badgeStyle.options.modern.description"),
+      class: "rounded-lg border bg-white/10 backdrop-blur-sm",
     },
     {
-      value: "square",
-      name: t("settings.badgeStyle.options.square"),
-      class: "rounded-none",
+      value: "glass",
+      name: t("settings.badgeStyle.options.glass.name"),
+      description: t("settings.badgeStyle.options.glass.description"),
+      class: "rounded-xl border bg-white/20 backdrop-blur-md",
+    },
+    {
+      value: "neon",
+      name: t("settings.badgeStyle.options.neon.name"),
+      description: t("settings.badgeStyle.options.neon.description"),
+      class: "rounded-md border shadow-lg shadow-primary/50",
+    },
+    {
+      value: "gradient",
+      name: t("settings.badgeStyle.options.gradient.name"),
+      description: t("settings.badgeStyle.options.gradient.description"),
+      class:
+        "rounded-full border bg-gradient-to-r from-primary/20 to-primary/30",
+    },
+    {
+      value: "outlined",
+      name: t("settings.badgeStyle.options.outlined.name"),
+      description: t("settings.badgeStyle.options.outlined.description"),
+      class: "rounded-lg border-2 bg-transparent",
+    },
+    {
+      value: "filled",
+      name: t("settings.badgeStyle.options.filled.name"),
+      description: t("settings.badgeStyle.options.filled.description"),
+      class: "rounded-md border-0 bg-primary/90",
+    },
+    {
+      value: "minimal",
+      name: t("settings.badgeStyle.options.minimal.name"),
+      description: t("settings.badgeStyle.options.minimal.description"),
+      class: "rounded-none border-0 bg-transparent",
     },
     {
       value: "pill",
-      name: t("settings.badgeStyle.options.pill"),
-      class: "rounded-full px-3",
+      name: t("settings.badgeStyle.options.pill.name"),
+      description: t("settings.badgeStyle.options.pill.description"),
+      class: "rounded-full border",
+    },
+    {
+      value: "square",
+      name: t("settings.badgeStyle.options.square.name"),
+      description: t("settings.badgeStyle.options.square.description"),
+      class: "rounded-sm border",
     },
   ];
 
