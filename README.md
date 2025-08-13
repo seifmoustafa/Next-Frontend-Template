@@ -1,250 +1,151 @@
-# Professional Admin Dashboard Template
+# Next.js Admin Dashboard Template
 
-A comprehensive, scalable admin dashboard template built with Next.js 14, featuring multi-language support (Arabic/English), MVVM architecture, and professional UI/UX design.
+A production-ready admin dashboard built with **Next.js 14**, **TypeScript**, and **Tailwind CSS**. The template follows an MVVM (Model–View–ViewModel) architecture, includes a service layer for API access, and ships with a multi-language system (Arabic/English) plus full dark/light theming.
 
-## 🚀 Features
+## Table of Contents
 
-### Core Features
-- **Multi-language Support**: Arabic (RTL) and English (LTR) with complete UI adaptation
-- **MVVM Architecture**: Clean separation of concerns with ViewModels
-- **Dependency Injection**: Service-based architecture following SOLID principles
-- **Responsive Design**: Mobile-first approach with adaptive layouts
-- **Dark/Light Theme**: Complete theme system with system preference detection
-- **Professional UI/UX**: Modern, clean design with smooth animations
+1. [Features](#features)
+2. [Getting Started](#getting-started)
+3. [Project Structure](#project-structure)
+4. [Core Concepts](#core-concepts)
+5. [Available Scripts](#available-scripts)
+6. [Environment Variables](#environment-variables)
+7. [Customization](#customization)
+8. [Deployment](#deployment)
+9. [Contributing](#contributing)
+10. [License](#license)
 
-### Technical Features
-- **Next.js 14**: Latest App Router with Server Components
-- **TypeScript**: Full type safety throughout the application
-- **Tailwind CSS**: Utility-first CSS framework with custom design system
-- **Generic Components**: Reusable, configurable UI components
-- **Service Layer**: Abstracted API calls with error handling
-- **State Management**: React hooks with custom ViewModels
+## Features
 
-## 🏗️ Architecture
+### Application
 
-### MVVM Pattern Implementation
+- **Multi-language support** (English and Arabic) with RTL/LTR layouts
+- **MVVM architecture** for clear separation of concerns
+- **Service layer** with dependency injection and centralized API handling
+- **Fully responsive** design with dark/light themes
+- **Professional UI/UX** with modern component library (Radix UI, shadcn style)
 
-\`\`\`
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│      View       │    │   ViewModel     │    │     Model       │
-│   (React UI)    │◄──►│  (Business      │◄──►│   (Services)    │
-│                 │    │   Logic)        │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-\`\`\`
+### Technical
 
-### Service Layer Architecture
+- Next.js 14 App Router with Server Components
+- TypeScript with strict type checking
+- Tailwind CSS with custom design tokens
+- Radix UI primitives and shadcn/ui components
+- React Hook Form, Zod, and i18next integrations
 
-\`\`\`
-┌─────────────────┐
-│   Components    │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│   ViewModels    │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│    Services     │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│   API Layer     │
-└─────────────────┘
-\`\`\`
-
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or yarn
+
+- **Node.js 18+**
+- **npm**, **pnpm**, or **yarn** package manager
 
 ### Installation
 
-1. **Clone or download the project**
-2. **Install dependencies**:
-   \`\`\`bash
-   npm install
-   \`\`\`
+```bash
+git clone <repo-url>
+cd Next-Frontend-Template
+npm install
+```
 
-3. **Set up environment variables**:
-   Create a `.env.local` file:
-   \`\`\`env
-   NEXT_PUBLIC_API_URL=http://localhost:3000/api
-   \`\`\`
+### Development
 
-4. **Run the development server**:
-   \`\`\`bash
-   npm run dev
-   \`\`\`
+```bash
+npm run dev
+# open http://localhost:3000
+```
 
-5. **Open your browser**:
-   Navigate to `http://localhost:3000`
+### Production build
 
-## 🔧 Configuration
-
-### Language Configuration
-The template supports easy language addition. To add a new language:
-
-1. **Update the translations** in `providers/i18n-provider.tsx`:
-   \`\`\`typescript
-   const translations = {
-     en: { /* English translations */ },
-     ar: { /* Arabic translations */ },
-     fr: { /* Add French translations */ }
-   }
-   \`\`\`
-
-2. **Add the language option** in the header component.
-
-### Backend Integration
-
-#### API Service Configuration
-The `ApiService` class handles all HTTP requests:
-
-\`\`\`typescript
-// services/api.service.ts
-const apiService = new ApiService("https://your-api-url.com")
-
-// Usage in services
-export class UserService {
-  constructor(private apiService: IApiService) {}
-  
-  async getUsers() {
-    return this.apiService.get<User[]>("/users")
-  }
-}
-\`\`\`
-
-#### Data Flow Example
-
-1. **Component** calls ViewModel method
-2. **ViewModel** calls Service method  
-3. **Service** calls API through ApiService
-4. **Response** flows back through the chain
-5. **UI** updates with new data
-
-\`\`\`typescript
-// In Component
-const viewModel = new UsersViewModel(userService)
-const { users, loading, createUser } = viewModel.useState()
-
-// In ViewModel
-async createUser(userData: CreateUserRequest) {
-  await this.userService.createUser(userData)
-  await this.loadUsers() // Refresh data
-}
-
-// In Service
-async createUser(data: CreateUserRequest): Promise<User> {
-  const user = await this.apiService.post<User>("/users", data)
-  this.notificationService.success("User created successfully")
-  return user
-}
-\`\`\`
-
-## 📁 Project Structure
-
-\`\`\`
-├── app/                    # Next.js App Router
-│   ├── dashboard/         # Dashboard pages
-│   ├── globals.css        # Global styles
-│   └── layout.tsx         # Root layout
-├── components/            # Reusable UI components
-│   ├── forms/            # Form components
-│   ├── layout/           # Layout components
-│   ├── ui/               # Generic UI components
-│   └── views/            # Page view components
-├── providers/            # Context providers
-├── services/             # Business logic services
-├── viewmodels/           # MVVM ViewModels
-└── lib/                  # Utility functions
-\`\`\`
-
-## 🎨 Customization
-
-### Theme Customization
-Modify the CSS variables in `app/globals.css`:
-
-\`\`\`css
-:root {
-  --primary: 221.2 83.2% 53.3%;
-  --secondary: 210 40% 96%;
-  /* Add your custom colors */
-}
-\`\`\`
-
-### Component Customization
-All components are built to be easily customizable:
-
-\`\`\`typescript
-// Generic Table with custom columns
-<GenericTable
-  data={users}
-  columns={[
-    { key: "name", label: "Name", sortable: true },
-    { key: "email", label: "Email", sortable: true },
-    { 
-      key: "status", 
-      label: "Status",
-      render: (value) => <StatusBadge status={value} />
-    }
-  ]}
-  actions={[
-    { label: "Edit", onClick: handleEdit },
-    { label: "Delete", onClick: handleDelete, variant: "destructive" }
-  ]}
-/>
-\`\`\`
-
-## 🔒 Security Features
-
-- **Authentication Ready**: Token-based auth structure
-- **Role-based Access**: User role management system
-- **Input Validation**: Form validation and sanitization
-- **Error Handling**: Comprehensive error management
-
-## 📱 Responsive Design
-
-The template is fully responsive with:
-- **Mobile-first approach**
-- **Adaptive sidebar** (drawer on mobile, fixed on desktop)
-- **Responsive tables** with horizontal scroll
-- **Touch-friendly interactions**
-
-## 🌐 RTL Support
-
-Complete RTL support for Arabic:
-- **Layout mirroring**: Sidebar, navigation, and content
-- **Typography**: Arabic font (Cairo) integration
-- **Icons and spacing**: Proper RTL alignment
-- **Form layouts**: RTL-aware form controls
-
-## 🚀 Production Deployment
-
-### Build for Production
-\`\`\`bash
+```bash
 npm run build
 npm start
-\`\`\`
+```
 
-### Environment Variables for Production
-\`\`\`env
-NEXT_PUBLIC_API_URL=https://your-production-api.com
-NODE_ENV=production
-\`\`\`
+## Project Structure
 
-## 🤝 Contributing
+```
+app/              # Next.js app router pages and layouts
+  ├─ login/       # Auth pages
+  ├─ dashboard/   # Dashboard area
+  └─ ...          # Additional routes
+components/
+  ├─ forms/       # Form elements built on React Hook Form
+  ├─ layout/      # Navigation, sidebar, header, etc.
+  ├─ ui/          # Generic UI primitives (buttons, dialogs, etc.)
+  └─ app_views/   # View-specific composite components
+config/           # App-wide configuration files
+docs/             # Additional documentation and design notes
+hooks/            # Custom React hooks
+lib/              # Utilities and helpers
+locales/          # Translation files (EN/AR)
+providers/        # Context and i18n providers
+public/           # Static assets (fonts, images)
+services/         # Business logic and API services
+styles/           # Global style sheets
+views/            # Page-level view components following MVVM
+```
 
-This template is designed to be:
-- **Maintainable**: Clean code structure with TypeScript
-- **Scalable**: Service-based architecture
-- **Extensible**: Easy to add new features and pages
-- **Reusable**: Generic components for rapid development
+## Core Concepts
 
-## 📄 License
+### MVVM
+
+Views render UI, ViewModels manage state/business logic, and Services handle data access. Components interact only with their ViewModels, keeping UI decoupled from backend details.
+
+### Service Layer
+
+The `services/` directory defines classes that wrap API calls and encapsulate side effects (e.g., notifications). An `ApiService` instance is injected into services to provide HTTP access.
+
+### Internationalization
+
+Translations live in `locales/`. `providers/i18n-provider.tsx` configures i18next and exposes hooks for switching languages. RTL/LTR layout is handled automatically.
+
+### Theming
+
+`next-themes` powers dark/light mode with system preference detection. Theme tokens are defined in `app/globals.css` and extended via Tailwind configuration.
+
+## Available Scripts
+
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Build the production bundle |
+| `npm start` | Start the production server |
+| `npm run lint` | Run ESLint (requires local configuration) |
+
+## Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+```
+
+Add any additional variables prefixed with `NEXT_PUBLIC_` for client-side access.
+
+## Customization
+
+- **Theme**: adjust CSS variables in `app/globals.css` and modify `tailwind.config.js`
+- **Components**: components in `components/` are generic and can be extended or themed easily
+- **Language**: add new translation files under `locales/` and update the i18n provider
+
+## Deployment
+
+1. Set environment variables for production (e.g., `NEXT_PUBLIC_API_URL`)
+2. Run `npm run build`
+3. Start the server with `npm start`
+
+The output in `.next/` can also be deployed to platforms like Vercel or Docker containers.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request with clear description of your changes.
+
+## License
 
 This template is provided as-is for educational and commercial use.
 
 ---
 
 **Built with ❤️ using Next.js, TypeScript, and Tailwind CSS**
+
