@@ -12,13 +12,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import GenericSelect from "@/components/ui/generic-select";
 import {
   Pagination as Pager,
   PaginationContent,
@@ -40,7 +34,12 @@ export interface GenericTreeViewProps<T extends TreeNode, TCreate, TUpdate> {
   getId: (node: T) => string;
   getLabel: (node: T) => string;
   getChildren: (node: T) => T[] | undefined;
-  renderFormFields: (formValues: any, setFormValues: (values: any) => void, editing: T | null, parentForNew: T | null) => React.ReactNode;
+  renderFormFields: (
+    formValues: any,
+    setFormValues: (values: any) => void,
+    editing: T | null,
+    parentForNew: T | null
+  ) => React.ReactNode;
   className?: string;
   showAddRoot?: boolean;
 }
@@ -73,21 +72,19 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
       </Button>
       {/* Pagination controls */}
       <div className="hidden md:flex items-center gap-2">
-        <Select
+        <GenericSelect
+          type="single"
+          options={[10, 25, 50, 100].map((size) => ({
+            value: String(size),
+            label: String(size),
+          }))}
           value={String(vm.pagination.pageSize)}
-          onValueChange={(v) => vm.changePageSize(Number(v))}
-        >
-          <SelectTrigger className="w-[80px]">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {[10, 25, 50].map((size) => (
-              <SelectItem key={size} value={String(size)}>
-                {size}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onValueChange={(v: string | string[]) =>
+            vm.changePageSize(Number(typeof v === "string" ? v : v[0]))
+          }
+          className="min-w-[100px] w-auto max-w-[120px] h-8 text-center font-medium"
+          allowClear={false}
+        />
         {vm.pagination.pagesCount > 1 && (
           <Pager>
             <PaginationContent>
@@ -128,10 +125,7 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
                   onClick={(e) => {
                     e.preventDefault();
                     vm.changePage(
-                      Math.min(
-                        vm.pagination.pagesCount,
-                        vm.pagination.page + 1
-                      )
+                      Math.min(vm.pagination.pagesCount, vm.pagination.page + 1)
                     );
                   }}
                   className={
@@ -201,8 +195,13 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
           </DialogHeader>
 
           <div className="space-y-4">
-            {renderFormFields(vm.formValues, vm.setFormValues, vm.editing, vm.parentForNew)}
-            
+            {renderFormFields(
+              vm.formValues,
+              vm.setFormValues,
+              vm.editing,
+              vm.parentForNew
+            )}
+
             <div className="grid gap-2">
               {vm.parentForNew && !vm.editing && (
                 <p className="text-xs text-muted-foreground">

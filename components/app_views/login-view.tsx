@@ -92,9 +92,10 @@ export function LoginView() {
                   value={vm.formData.password}
                   onChange={(e) => vm.updateField("password", e.target.value)}
                   required
-                  className="h-12 pr-10"
+                  className="h-12 pr-10 [&::-ms-reveal]:hidden [&::-webkit-credentials-auto-fill-button]:hidden"
                   placeholder="••••••••"
                   disabled={vm.isLoading}
+                  autoComplete="current-password"
                 />
                 <Button
                   type="button"

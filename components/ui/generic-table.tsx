@@ -28,13 +28,7 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import GenericSelect from "@/components/ui/generic-select";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
@@ -216,7 +210,7 @@ export function GenericTable<T extends Record<string, any>>({
           baseClasses,
           "rounded-3xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-primary/15",
           "shadow-[0_0_40px_hsl(var(--primary)/0.3)] backdrop-blur-xl relative overflow-hidden",
-          "before:absolute before:inset-0 before:bg-[conic-gradient(from_0deg,transparent_0%,hsl(var(--primary)/0.1)_25%,hsl(var(--primary)/0.15)_50%,hsl(var(--primary)/0.1)_75%,transparent_100%)] before:animate-spin before:duration-&lsqb;8s&rsqb;",
+          "before:absolute before:inset-0 before:bg-[conic-gradient(from_0deg,transparent_0%,hsl(var(--primary)/0.1)_25%,hsl(var(--primary)/0.15)_50%,hsl(var(--primary)/0.1)_75%,transparent_100%)] before:animate-spin",
           "dark:from-primary/20 dark:via-primary/10 dark:to-primary/25 dark:border-primary/30"
         );
       default:
@@ -881,23 +875,21 @@ export function GenericTable<T extends Record<string, any>>({
                   <span className="text-sm text-muted-foreground">
                     {t("table.show")}:
                   </span>
-                  <Select
+                  <GenericSelect
+                    type="single"
+                    options={[10, 25, 50, 100].map((size) => ({
+                      value: String(size),
+                      label: String(size),
+                    }))}
                     value={String(pagination.pageSize)}
-                    onValueChange={(v) =>
-                      pagination.onPageSizeChange?.(Number(v))
+                    onValueChange={(v: string | string[]) =>
+                      pagination.onPageSizeChange?.(
+                        Number(typeof v === "string" ? v : v[0])
+                      )
                     }
-                  >
-                    <SelectTrigger className="w-[80px] h-8">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {[10, 25, 50, 100].map((size) => (
-                        <SelectItem key={size} value={String(size)}>
-                          {size}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    className="min-w-[100px] w-auto max-w-[120px] h-8 text-center font-medium"
+                    allowClear={false}
+                  />
                   <span className="text-sm text-muted-foreground">
                     {t("table.perPage")}
                   </span>

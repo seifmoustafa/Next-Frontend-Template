@@ -54,13 +54,20 @@ import { useEnhancedToast } from "@/hooks/use-enhanced-toast";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/providers/i18n-provider";
 import { GenericTable } from "@/components/ui/generic-table";
+import GenericSelect from "@/components/ui/generic-select";
 
 export function SettingsView() {
+  const { t, direction } = useI18n();
   const settings = useSettings();
   const { toast } = useToast();
+
+  // Multi-select demo state
+  const [multiSelectDemo, setMultiSelectDemo] = useState<string[]>([]);
+  const [styleSelections, setStyleSelections] = useState<
+    Record<string, string | string[]>
+  >({});
   const { toast: enhancedToast } = useEnhancedToast();
   const [activeTab, setActiveTab] = useState("appearance");
-  const { t } = useI18n();
 
   const handleExportSettings = () => {
     const settingsJson = settings.exportSettings();
@@ -2485,6 +2492,733 @@ export function SettingsView() {
                           )}
                         </div>
                       ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Multi-Select Component Showcase */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("components.multiSelect.title")}</CardTitle>
+                    <CardDescription>
+                      {t("components.multiSelect.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      {/* Current Style Demo */}
+                      <div className="space-y-3">
+                        <h4 className="font-medium">
+                          {t("components.multiSelect.currentStyle")}:{" "}
+                          {settings.selectStyle}
+                        </h4>
+                        <div className="max-w-md">
+                          <GenericSelect
+                            type="multi"
+                            options={[
+                              {
+                                value: "react",
+                                label: t(
+                                  "components.multiSelect.categories.webTech.react"
+                                ),
+                              },
+                              {
+                                value: "vue",
+                                label: t(
+                                  "components.multiSelect.categories.webTech.vue"
+                                ),
+                              },
+                              {
+                                value: "angular",
+                                label: t(
+                                  "components.multiSelect.categories.webTech.angular"
+                                ),
+                              },
+                              {
+                                value: "svelte",
+                                label: t(
+                                  "components.multiSelect.categories.webTech.svelte"
+                                ),
+                              },
+                              {
+                                value: "nextjs",
+                                label: t(
+                                  "components.multiSelect.categories.webTech.nextjs"
+                                ),
+                              },
+                              {
+                                value: "typescript",
+                                label: t(
+                                  "components.multiSelect.categories.webTech.typescript"
+                                ),
+                              },
+                            ]}
+                            value={multiSelectDemo}
+                            onValueChange={(value: string | string[]) =>
+                              setMultiSelectDemo(
+                                Array.isArray(value) ? value : [value]
+                              )
+                            }
+                            // All text will be localized automatically by the component
+                          />
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          Selected:{" "}
+                          {multiSelectDemo.length > 0
+                            ? multiSelectDemo.join(", ")
+                            : "None"}
+                        </p>
+                      </div>
+
+                      {/* Style Variations Grid */}
+                      <div className="space-y-3">
+                        <h4 className="font-medium">
+                          {t("components.multiSelect.availableStyles")}
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {[
+                            {
+                              style: "default",
+                              label: t("settings.selectStyle.options.default"),
+                              options: [
+                                {
+                                  value: "html",
+                                  label: t(
+                                    "components.multiSelect.categories.webTech.html"
+                                  ),
+                                },
+                                {
+                                  value: "css",
+                                  label: t(
+                                    "components.multiSelect.categories.webTech.css"
+                                  ),
+                                },
+                                {
+                                  value: "javascript",
+                                  label: t(
+                                    "components.multiSelect.categories.webTech.javascript"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "modern",
+                              label: t("settings.selectStyle.options.modern"),
+                              options: [
+                                {
+                                  value: "react",
+                                  label: t(
+                                    "components.multiSelect.categories.webTech.react"
+                                  ),
+                                },
+                                {
+                                  value: "vue",
+                                  label: t(
+                                    "components.multiSelect.categories.webTech.vue"
+                                  ),
+                                },
+                                {
+                                  value: "angular",
+                                  label: t(
+                                    "components.multiSelect.categories.webTech.angular"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "glass",
+                              label: t("settings.selectStyle.options.glass"),
+                              options: [
+                                {
+                                  value: "figma",
+                                  label: t(
+                                    "components.multiSelect.categories.design.figma"
+                                  ),
+                                },
+                                {
+                                  value: "sketch",
+                                  label: t(
+                                    "components.multiSelect.categories.design.sketch"
+                                  ),
+                                },
+                                {
+                                  value: "adobe",
+                                  label: t(
+                                    "components.multiSelect.categories.design.adobe"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "outlined",
+                              label: t("settings.selectStyle.options.outlined"),
+                              options: [
+                                {
+                                  value: "nodejs",
+                                  label: t(
+                                    "components.multiSelect.categories.backend.nodejs"
+                                  ),
+                                },
+                                {
+                                  value: "python",
+                                  label: t(
+                                    "components.multiSelect.categories.backend.python"
+                                  ),
+                                },
+                                {
+                                  value: "java",
+                                  label: t(
+                                    "components.multiSelect.categories.backend.java"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "filled",
+                              label: t("settings.selectStyle.options.filled"),
+                              options: [
+                                {
+                                  value: "mysql",
+                                  label: t(
+                                    "components.multiSelect.categories.database.mysql"
+                                  ),
+                                },
+                                {
+                                  value: "postgres",
+                                  label: t(
+                                    "components.multiSelect.categories.database.postgres"
+                                  ),
+                                },
+                                {
+                                  value: "mongodb",
+                                  label: t(
+                                    "components.multiSelect.categories.database.mongodb"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "minimal",
+                              label: t("settings.selectStyle.options.minimal"),
+                              options: [
+                                {
+                                  value: "git",
+                                  label: t(
+                                    "components.multiSelect.categories.devops.git"
+                                  ),
+                                },
+                                {
+                                  value: "github",
+                                  label: t(
+                                    "components.multiSelect.categories.devops.github"
+                                  ),
+                                },
+                                {
+                                  value: "gitlab",
+                                  label: t(
+                                    "components.multiSelect.categories.devops.gitlab"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "elegant",
+                              label: t("settings.selectStyle.options.elegant"),
+                              options: [
+                                {
+                                  value: "aws",
+                                  label: t(
+                                    "components.multiSelect.categories.cloud.aws"
+                                  ),
+                                },
+                                {
+                                  value: "azure",
+                                  label: t(
+                                    "components.multiSelect.categories.cloud.azure"
+                                  ),
+                                },
+                                {
+                                  value: "gcp",
+                                  label: t(
+                                    "components.multiSelect.categories.cloud.gcp"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "professional",
+                              label: t(
+                                "settings.selectStyle.options.professional"
+                              ),
+                              options: [
+                                {
+                                  value: "docker",
+                                  label: t(
+                                    "components.multiSelect.categories.devops.docker"
+                                  ),
+                                },
+                                {
+                                  value: "kubernetes",
+                                  label: t(
+                                    "components.multiSelect.categories.devops.kubernetes"
+                                  ),
+                                },
+                                {
+                                  value: "jenkins",
+                                  label: t(
+                                    "components.multiSelect.categories.devops.jenkins"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "neon",
+                              label: t("settings.selectStyle.options.neon"),
+                              options: [
+                                {
+                                  value: "cybersecurity",
+                                  label: t(
+                                    "components.multiSelect.categories.security.cybersecurity"
+                                  ),
+                                },
+                                {
+                                  value: "ethicalHacking",
+                                  label: t(
+                                    "components.multiSelect.categories.security.ethicalHacking"
+                                  ),
+                                },
+                                {
+                                  value: "penetrationTesting",
+                                  label: t(
+                                    "components.multiSelect.categories.security.penetrationTesting"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "gradient",
+                              label: t("settings.selectStyle.options.gradient"),
+                              options: [
+                                {
+                                  value: "uiDesign",
+                                  label: t(
+                                    "components.multiSelect.categories.ux.uiDesign"
+                                  ),
+                                },
+                                {
+                                  value: "uxResearch",
+                                  label: t(
+                                    "components.multiSelect.categories.ux.uxResearch"
+                                  ),
+                                },
+                                {
+                                  value: "userTesting",
+                                  label: t(
+                                    "components.multiSelect.categories.ux.userTesting"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "neumorphism",
+                              label: t(
+                                "settings.selectStyle.options.neumorphism"
+                              ),
+                              options: [
+                                {
+                                  value: "ios",
+                                  label: t(
+                                    "components.multiSelect.categories.mobile.ios"
+                                  ),
+                                },
+                                {
+                                  value: "android",
+                                  label: t(
+                                    "components.multiSelect.categories.mobile.android"
+                                  ),
+                                },
+                                {
+                                  value: "reactNative",
+                                  label: t(
+                                    "components.multiSelect.categories.mobile.reactNative"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "cyberpunk",
+                              label: t(
+                                "settings.selectStyle.options.cyberpunk"
+                              ),
+                              options: [
+                                {
+                                  value: "blockchain",
+                                  label: t(
+                                    "components.multiSelect.categories.security.blockchain"
+                                  ),
+                                },
+                                {
+                                  value: "crypto",
+                                  label: t(
+                                    "components.multiSelect.categories.security.crypto"
+                                  ),
+                                },
+                                {
+                                  value: "machineLearning",
+                                  label: t(
+                                    "components.multiSelect.categories.ai.machineLearning"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "luxury",
+                              label: t("settings.selectStyle.options.luxury"),
+                              options: [
+                                {
+                                  value: "premium",
+                                  label: t(
+                                    "components.multiSelect.categories.business.premium"
+                                  ),
+                                },
+                                {
+                                  value: "enterprise",
+                                  label: t(
+                                    "components.multiSelect.categories.business.enterprise"
+                                  ),
+                                },
+                                {
+                                  value: "consulting",
+                                  label: t(
+                                    "components.multiSelect.categories.business.consulting"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "quantum",
+                              label: t("settings.selectStyle.options.quantum"),
+                              options: [
+                                {
+                                  value: "quantumComputing",
+                                  label: t(
+                                    "components.multiSelect.categories.ai.quantumComputing"
+                                  ),
+                                },
+                                {
+                                  value: "neuralNetworks",
+                                  label: t(
+                                    "components.multiSelect.categories.ai.neuralNetworks"
+                                  ),
+                                },
+                                {
+                                  value: "deepLearning",
+                                  label: t(
+                                    "components.multiSelect.categories.ai.deepLearning"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "nebula",
+                              label: t("settings.selectStyle.options.nebula"),
+                              options: [
+                                {
+                                  value: "spaceExploration",
+                                  label: t(
+                                    "components.multiSelect.categories.science.spaceExploration"
+                                  ),
+                                },
+                                {
+                                  value: "astronomy",
+                                  label: t(
+                                    "components.multiSelect.categories.science.astronomy"
+                                  ),
+                                },
+                                {
+                                  value: "astrophysics",
+                                  label: t(
+                                    "components.multiSelect.categories.science.astrophysics"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "prism",
+                              label: t("settings.selectStyle.options.prism"),
+                              options: [
+                                {
+                                  value: "optics",
+                                  label: t(
+                                    "components.multiSelect.categories.science.optics"
+                                  ),
+                                },
+                                {
+                                  value: "photography",
+                                  label: t(
+                                    "components.multiSelect.categories.creative.photography"
+                                  ),
+                                },
+                                {
+                                  value: "visualEffects",
+                                  label: t(
+                                    "components.multiSelect.categories.creative.visualEffects"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "stellar",
+                              label: t("settings.selectStyle.options.stellar"),
+                              options: [
+                                {
+                                  value: "solarEnergy",
+                                  label: t(
+                                    "components.multiSelect.categories.energy.solarEnergy"
+                                  ),
+                                },
+                                {
+                                  value: "renewableEnergy",
+                                  label: t(
+                                    "components.multiSelect.categories.energy.renewableEnergy"
+                                  ),
+                                },
+                                {
+                                  value: "sustainability",
+                                  label: t(
+                                    "components.multiSelect.categories.energy.sustainability"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "vortex",
+                              label: t("settings.selectStyle.options.vortex"),
+                              options: [
+                                {
+                                  value: "fluidDynamics",
+                                  label: t(
+                                    "components.multiSelect.categories.physics.fluidDynamics"
+                                  ),
+                                },
+                                {
+                                  value: "aerodynamics",
+                                  label: t(
+                                    "components.multiSelect.categories.physics.aerodynamics"
+                                  ),
+                                },
+                                {
+                                  value: "turbulence",
+                                  label: t(
+                                    "components.multiSelect.categories.physics.turbulence"
+                                  ),
+                                },
+                              ],
+                            },
+                            {
+                              style: "phoenix",
+                              label: t("settings.selectStyle.options.phoenix"),
+                              options: [
+                                {
+                                  value: "gameDesign",
+                                  label: t(
+                                    "components.multiSelect.categories.gaming.gameDesign"
+                                  ),
+                                },
+                                {
+                                  value: "animation",
+                                  label: t(
+                                    "components.multiSelect.categories.creative.animation"
+                                  ),
+                                },
+                                {
+                                  value: "digitalArt",
+                                  label: t(
+                                    "components.multiSelect.categories.creative.digitalArt"
+                                  ),
+                                },
+                              ],
+                            },
+                          ].map(({ style, label, options }) => (
+                            <div key={style} className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <h5 className="text-sm font-medium">{label}</h5>
+                                <button
+                                  onClick={() =>
+                                    settings.setSelectStyle(style as any)
+                                  }
+                                  className={cn(
+                                    "px-2 py-1 text-xs rounded transition-colors",
+                                    settings.selectStyle === style
+                                      ? "bg-primary text-primary-foreground"
+                                      : "bg-muted hover:bg-muted-foreground/20"
+                                  )}
+                                >
+                                  {settings.selectStyle === style
+                                    ? t("components.multiSelect.buttons.active")
+                                    : t("components.multiSelect.buttons.apply")}
+                                </button>
+                              </div>
+                              {/* Unified Select Preview - All Three Types */}
+                              <div className="space-y-3">
+                                {/* Single Select */}
+                                <div className="space-y-1">
+                                  <label className="text-xs font-medium text-muted-foreground">
+                                    {t("components.unifiedSelect.types.single")}
+                                  </label>
+                                  <GenericSelect
+                                    type="single"
+                                    design={style as any}
+                                    options={options.slice(0, 3)}
+                                    value={
+                                      styleSelections[`${style}-single`] ||
+                                      options[0]?.value ||
+                                      ""
+                                    }
+                                    onValueChange={(
+                                      newValue: string | string[]
+                                    ) =>
+                                      setStyleSelections((prev) => ({
+                                        ...prev,
+                                        [`${style}-single`]:
+                                          typeof newValue === "string"
+                                            ? newValue
+                                            : newValue[0],
+                                      }))
+                                    }
+                                    placeholder={`${style} Single Select`}
+                                  />
+                                </div>
+
+                                {/* Searchable Select */}
+                                <div className="space-y-1">
+                                  <label className="text-xs font-medium text-muted-foreground">
+                                    {t(
+                                      "components.unifiedSelect.types.searchable"
+                                    )}
+                                  </label>
+                                  <GenericSelect
+                                    type="searchable"
+                                    design={style as any}
+                                    options={options}
+                                    value={
+                                      styleSelections[`${style}-search`] || ""
+                                    }
+                                    onValueChange={(
+                                      newValue: string | string[]
+                                    ) =>
+                                      setStyleSelections((prev) => ({
+                                        ...prev,
+                                        [`${style}-search`]:
+                                          typeof newValue === "string"
+                                            ? newValue
+                                            : newValue[0],
+                                      }))
+                                    }
+                                    placeholder={`Search ${style} options...`}
+                                    searchPlaceholder="Type to search..."
+                                  />
+                                </div>
+
+                                {/* Multi Select */}
+                                <div className="space-y-1">
+                                  <label className="text-xs font-medium text-muted-foreground">
+                                    {t("components.unifiedSelect.types.multi")}
+                                  </label>
+                                  <GenericSelect
+                                    type="multi"
+                                    design={style as any}
+                                    options={options}
+                                    value={
+                                      styleSelections[`${style}-multi`] ||
+                                      [options[0]?.value].filter(Boolean)
+                                    }
+                                    onValueChange={(
+                                      newValue: string | string[]
+                                    ) =>
+                                      setStyleSelections((prev) => ({
+                                        ...prev,
+                                        [`${style}-multi`]: Array.isArray(
+                                          newValue
+                                        )
+                                          ? newValue
+                                          : [newValue],
+                                      }))
+                                    }
+                                    placeholder={`Multi-select ${style} items...`}
+                                    searchPlaceholder="Search and select multiple..."
+                                    maxSelectedDisplay={2}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Server-Side Search Demo */}
+                      <div className="space-y-3">
+                        <h4 className="font-medium">
+                          {t("components.multiSelect.serverSearchDemo")}
+                        </h4>
+                        <div className="max-w-md">
+                          <GenericSelect
+                            type="multi"
+                            searchType="server"
+                            options={[]}
+                            value={[]}
+                            onValueChange={(value: string | string[]) => {}}
+                            onServerSearch={async (query: string) => {
+                              // Simulate server search
+                              await new Promise((resolve) =>
+                                setTimeout(resolve, 500)
+                              );
+                              const mockResults = [
+                                {
+                                  value: `${query}-1`,
+                                  label: `${query} Result 1`,
+                                },
+                                {
+                                  value: `${query}-2`,
+                                  label: `${query} Result 2`,
+                                },
+                                {
+                                  value: `${query}-3`,
+                                  label: `${query} Result 3`,
+                                },
+                                {
+                                  value: `${query}-api`,
+                                  label: `${query} API`,
+                                },
+                                {
+                                  value: `${query}-sdk`,
+                                  label: `${query} SDK`,
+                                },
+                              ];
+                              return mockResults.slice(
+                                0,
+                                Math.floor(Math.random() * 5) + 1
+                              );
+                            }}
+                            placeholder="Server-side search demo..."
+                            searchPlaceholder="Type to search server..."
+                            searchingText="Searching server..."
+                            noResultsText="No server results found"
+                          />
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {t("components.multiSelect.serverSearchDescription")}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t">
+                        <p className="text-xs text-muted-foreground">
+                          <strong>
+                            {t("components.multiSelect.features")}:
+                          </strong>{" "}
+                          {t("components.multiSelect.featuresDescription")}
+                        </p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

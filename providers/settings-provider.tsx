@@ -84,17 +84,7 @@ export type TableStyle =
   | "luxury"
   | "matrix"
   | "diamond";
-export type BadgeStyle =
-  | "default"
-  | "modern"
-  | "glass"
-  | "neon"
-  | "gradient"
-  | "outlined"
-  | "filled"
-  | "minimal"
-  | "pill"
-  | "square";
+export type BadgeStyle = "default" | "modern" | "glass" | "neon" | "gradient" | "outlined" | "filled" | "minimal" | "pill" | "square";
 export type AvatarStyle = "default" | "rounded" | "square" | "hexagon";
 
 export type LogoType = "sparkles" | "shield" | "image" | "custom";
@@ -106,60 +96,39 @@ export type LoadingStyle = "spinner" | "dots" | "bars" | "pulse";
 export type TooltipStyle = "default" | "rounded" | "sharp" | "bubble";
 export type ModalStyle = "default" | "centered" | "fullscreen" | "drawer";
 
-export type TreeStyle =
-  | "lines"
-  | "cards"
-  | "minimal"
-  | "bubble"
+export type TreeStyle = "lines" | "cards" | "minimal" | "bubble" | "modern" | "glass" | "elegant" | "professional" | "gradient" | "neon" | "organic" | "corporate";
+export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled";
+export type DatePickerStyle = "default" | "modern" | "glass" | "outlined" | "filled" | "minimal" | "elegant";
+export type CalendarStyle = "default" | "modern" | "glass" | "elegant" | "minimal" | "dark";
+export type SelectStyle = 
+  | "default"
   | "modern"
   | "glass"
+  | "outlined"
+  | "filled"
+  | "minimal"
   | "elegant"
   | "professional"
-  | "gradient"
   | "neon"
-  | "organic"
-  | "corporate";
-export type ToastDesign =
-  | "minimal"
-  | "modern"
   | "gradient"
-  | "outlined"
-  | "filled";
-export type DatePickerStyle =
-  | "default"
-  | "modern"
-  | "glass"
-  | "outlined"
-  | "filled"
-  | "minimal"
-  | "elegant";
-export type CalendarStyle =
-  | "default"
-  | "modern"
-  | "glass"
-  | "elegant"
-  | "minimal"
-  | "dark";
-export type SelectStyle =
-  | "default"
-  | "modern"
-  | "glass"
-  | "outlined"
-  | "filled"
-  | "minimal"
-  | "elegant"
-  | "professional";
-export type SwitchStyle =
-  | "default"
-  | "modern"
-  | "ios"
-  | "android"
-  | "toggle"
-  | "slider"
-  | "neon"
   | "neumorphism"
+  | "cyberpunk"
+  | "luxury"
+  | "aurora"
+  | "matrix"
+  | "diamond"
+  | "holographic"
+  | "cosmic"
   | "liquid"
-  | "cyberpunk";
+  | "crystal"
+  | "plasma"
+  | "quantum"
+  | "nebula"
+  | "prism"
+  | "stellar"
+  | "vortex"
+  | "phoenix";
+export type SwitchStyle = "default" | "modern" | "ios" | "android" | "toggle" | "slider" | "neon" | "neumorphism" | "liquid" | "cyberpunk";
 
 interface SettingsContextType {
   // Existing settings
@@ -332,7 +301,7 @@ const defaultSettings = {
   calendarStyle: "modern" as CalendarStyle,
   selectStyle: "default" as SelectStyle,
   switchStyle: "default" as SwitchStyle,
-
+  
   // Toast settings
   toastDesign: "minimal" as ToastDesign,
   showToastIcons: true,
