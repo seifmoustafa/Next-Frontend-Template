@@ -50,14 +50,14 @@ export function getGenericSelectStyles(
       return {
         trigger: cn(
           baseClasses,
-          "rounded-xl border border-white/30 dark:border-primary/25 bg-white/15 dark:bg-primary/8 backdrop-blur-2xl px-5 py-3 transition-all duration-400 hover:bg-white/25 dark:hover:bg-primary/12 hover:border-white/50 dark:hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/15 focus:border-primary/60 focus:ring-4 focus:ring-primary/15 text-foreground cursor-pointer relative",
-          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:pointer-events-none before:rounded-xl",
-          "after:absolute after:inset-0 after:bg-gradient-to-tl after:from-primary/8 after:to-transparent after:pointer-events-none after:rounded-xl",
+          "rounded-xl border border-gray-200/60 dark:border-gray-700/60 bg-white/80 dark:bg-gray-800/80 backdrop-blur-2xl px-5 py-3 transition-all duration-400 hover:bg-white/90 dark:hover:bg-gray-800/90 hover:border-gray-300/70 dark:hover:border-gray-600/70 hover:shadow-2xl hover:shadow-primary/15 focus:border-primary/60 focus:ring-4 focus:ring-primary/15 text-gray-900 dark:text-gray-100 cursor-pointer relative",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:pointer-events-none before:rounded-xl",
+          "after:absolute after:inset-0 after:bg-gradient-to-tl after:from-primary/10 after:to-transparent after:pointer-events-none after:rounded-xl",
           directionClasses
         ),
         dropdown:
-          "rounded-xl border border-white/30 dark:border-primary/25 bg-white/15 dark:bg-primary/8 backdrop-blur-2xl shadow-2xl shadow-primary/15",
-        chip: "bg-white/25 dark:bg-primary/20 text-foreground border border-white/40 dark:border-primary/40 hover:bg-white/35 dark:hover:bg-primary/30 backdrop-blur-sm shadow-xl hover:scale-110 transition-all duration-300",
+          "rounded-xl border border-gray-200/60 dark:border-gray-700/60 bg-white/95 dark:bg-gray-800/95 backdrop-blur-2xl shadow-2xl shadow-primary/15 text-gray-900 dark:text-gray-100",
+        chip: "bg-white/70 dark:bg-gray-700/70 text-gray-900 dark:text-gray-100 border border-gray-200/50 dark:border-gray-600/50 hover:bg-white/80 dark:hover:bg-gray-600/80 backdrop-blur-sm shadow-xl hover:scale-110 transition-all duration-300",
       };
 
     case "outlined":
@@ -287,8 +287,8 @@ export function getGenericSelectStyles(
           className
         ),
         dropdown:
-          "rounded-3xl border-0 bg-gradient-to-br from-teal-50/80 via-cyan-50/80 to-blue-50/80 dark:from-teal-950/80 dark:via-cyan-950/80 dark:to-blue-950/80 shadow-2xl shadow-teal-500/20 backdrop-blur-md",
-        chip: "bg-gradient-to-r from-teal-100/80 to-cyan-100/80 dark:from-teal-900/60 dark:to-cyan-900/60 text-teal-900 dark:text-teal-100 border-0 hover:from-teal-200/90 hover:to-cyan-200/90 dark:hover:from-teal-800/70 dark:hover:to-cyan-800/70 shadow-lg hover:scale-110 transition-all duration-400 rounded-full",
+          "rounded-2xl border border-blue-300/40 dark:border-blue-400/50 bg-gradient-to-br from-blue-50/95 via-cyan-50/95 to-teal-50/95 dark:from-blue-950/95 dark:via-cyan-950/95 dark:to-teal-950/95 shadow-2xl shadow-blue-500/20 backdrop-blur-sm text-gray-800 dark:text-gray-100",
+        chip: "bg-gradient-to-r from-blue-100/80 to-cyan-100/80 dark:from-blue-900/60 dark:to-cyan-900/60 text-gray-800 dark:text-gray-100 border border-blue-300/50 dark:border-blue-600/50 hover:from-blue-200/90 hover:to-cyan-200/90 dark:hover:from-blue-800/70 dark:hover:to-cyan-800/70 shadow-lg hover:scale-110 transition-all duration-500",
       };
 
     case "crystal":

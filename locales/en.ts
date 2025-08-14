@@ -929,40 +929,28 @@ export const en = {
       searchResult1: "Search Result 1",
       searchResult2: "Search Result 2",
       options: {
-        default: {
-          name: "Default",
-          description: "Standard select design",
-        },
-        modern: {
-          name: "Modern",
-          description: "Contemporary with rounded corners",
-        },
-        glass: {
-          name: "Glass",
-          description: "Translucent with blur effect",
-        },
-        outlined: {
-          name: "Outlined",
-          description: "Bold border emphasis",
-        },
-        filled: {
-          name: "Filled",
-          description: "Solid background style",
-        },
-        minimal: {
-          name: "Minimal",
-          description: "Clean underline design",
-        },
-        elegant: {
-          name: "Elegant",
-          description: "Sophisticated gradient style",
-        },
-        professional: {
-          name: "Professional",
-          description: "Business-focused design",
-        },
+        default: "Default",
+        modern: "Modern",
+        glass: "Glass",
+        outlined: "Outlined",
+        filled: "Filled",
+        minimal: "Minimal",
+        elegant: "Elegant",
+        professional: "Professional",
+        neon: "Neon",
+        gradient: "Gradient",
+        neumorphism: "Neumorphism",
+        cyberpunk: "Cyberpunk",
+        luxury: "Luxury",
+        quantum: "Quantum",
+        nebula: "Nebula",
+        prism: "Prism",
+        stellar: "Stellar",
+        vortex: "Vortex",
+        phoenix: "Phoenix",
       },
     },
+
     logo: {
       title: "Logo Settings",
       description: "Customize your application logo appearance",
@@ -1544,5 +1532,109 @@ export const en = {
     },
   },
 
-  // Settings
+  components: {
+    multiSelect: {
+      searchStates: {
+        noResults: "No Results",
+        searching: "Searching ......",
+      },
+      currentStyle: {
+        luxury: "Luxury",
+      },
+      placeholders: {
+        selectTechnologies: "Select technologies",
+      },
+      selected: "Selected: None",
+      availableStyles: "Available Styles",
+      buttons: {
+        apply: "Apply",
+        active: "Active",
+      },
+      categories: {
+        webTech: {
+          html: "HTML",
+        },
+        design: {
+          figma: "Figma",
+        },
+        backend: {
+          nodejs: "Node.js",
+        },
+        database: {
+          mysql: "MySQL",
+        },
+        devops: {
+          git: "Git",
+          docker: "Docker",
+        },
+        cloud: {
+          aws: "Amazon Web Services (AWS)",
+        },
+        security: {
+          cybersecurity: "Cybersecurity",
+          blockchain: "Blockchain",
+        },
+        ux: {
+          uiDesign: "UI Design",
+        },
+        mobile: {
+          ios: "iOS",
+        },
+        business: {
+          premium: "Premium",
+        },
+        ai: {
+          quantumComputing: "Quantum Computing",
+        },
+        science: {
+          spaceExploration: "Space Exploration",
+          optics: "Optics",
+        },
+        energy: {
+          solarEnergy: "Solar Energy",
+        },
+        physics: {
+          fluidDynamics: "Fluid Dynamics",
+        },
+        gaming: {
+          gameDesign: "Game Design",
+        },
+      },
+      serverSearchDemo: "Server-side search demo...",
+      serverSearchDescription:
+        "This is an example of a search processed on the server.",
+      features: "Features",
+      featuresDescription:
+        "Showcase the main features of the multi-select tool.",
+    },
+    unifiedSelect: {
+      types: {
+        single: "Single Select",
+        multi: "Multi Select",
+        searchable: "Searchable",
+      },
+    },
+  },
+
+  searchPlaceholders: {
+    default: "Search default options...",
+    modern: "Search modern options...",
+    glass: "Search glass options...",
+    outlined: "Search outlined options...",
+    filled: "Search filled options...",
+    minimal: "Search minimal options...",
+    elegant: "Search elegant options...",
+    professional: "Search professional options...",
+    neon: "Search neon options...",
+    gradient: "Search gradient options...",
+    neumorphism: "Search neumorphism options...",
+    cyberpunk: "Search cyberpunk options...",
+    luxury: "Search luxury options...",
+    quantum: "Search quantum options...",
+    nebula: "Search nebula options...",
+    prism: "Search prism options...",
+    stellar: "Search stellar options...",
+    vortex: "Search vortex options...",
+    phoenix: "Search phoenix options...",
+  },
 };

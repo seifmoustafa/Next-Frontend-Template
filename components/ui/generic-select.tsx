@@ -7,10 +7,6 @@ import { cn } from "@/lib/utils";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import {
-  calculateDropdownPosition,
-  type DropdownPosition,
-} from "@/lib/dropdown-positioning";
-import {
   getGenericSelectStyles as getGenericSelectStyles,
   ResponsiveChip,
 } from "./generic-select-base";
@@ -135,14 +131,12 @@ export const GenericSelect = React.forwardRef<
     const [serverOptions, setServerOptions] = React.useState<
       GenericSelectOption[]
     >([]);
-    const [dropdownPosition, setDropdownPosition] =
-      React.useState<DropdownPosition>({
-        top: 0,
-        left: 0,
-        width: 0,
-        maxHeight: 240,
-        placement: "bottom-start",
-      });
+    const [dropdownPosition, setDropdownPosition] = React.useState({
+      top: 0,
+      left: 0,
+      width: 0,
+      maxHeight: 240,
+    });
 
     // Refs
     const containerRef = React.useRef<HTMLDivElement>(null);
@@ -161,17 +155,81 @@ export const GenericSelect = React.forwardRef<
       searchType === "server" ? serverOptions : filteredOptions;
     const showLoading = loading || isSearching;
 
-    // Client-side filtering
+    // Smart positioning with content-aware resizing and viewport detection
+    const calculateDropdownPosition = React.useCallback(() => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+
+      // Calculate available space above and below
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+
+      // Estimate content height based on current state
+      const itemHeight = 40; // Approximate height per item
+      const searchHeight = isSearchable ? 45 : 0;
+      const paddingHeight = 16;
+      const maxItemsToShow = Math.min(displayOptions.length, 8); // Show max 8 items
+
+      let estimatedContentHeight = searchHeight + paddingHeight;
+      if (showLoading) {
+        estimatedContentHeight += 60; // Loading state height
+      } else if (displayOptions.length === 0) {
+        estimatedContentHeight += 50; // "No results" height
+      } else {
+        estimatedContentHeight += maxItemsToShow * itemHeight;
+      }
+
+      // Determine optimal placement
+      const preferredHeight = Math.min(estimatedContentHeight, 320); // Max 320px
+      const shouldShowAbove =
+        spaceBelow < preferredHeight && spaceAbove > spaceBelow;
+
+      let top: number;
+      let maxHeight: number;
+
+      if (shouldShowAbove) {
+        // Position above the field with slight overlap to eliminate all space
+        const availableAbove = spaceAbove - 20; // 20px margin from top
+        maxHeight = Math.min(preferredHeight, availableAbove);
+        top = rect.top + scrollY - maxHeight + 20; // Slight overlap to eliminate any remaining space
+      } else {
+        // Position below the field with small bottom margin
+        const availableBelow = spaceBelow - 8; // Small 8px margin from bottom (same as top)
+        maxHeight = Math.min(preferredHeight, availableBelow);
+        top = rect.bottom + scrollY + 8; // 8px gap below field
+      }
+
+      // Ensure minimum usable height
+      maxHeight = Math.max(maxHeight, 120);
+
+      setDropdownPosition({
+        top: Math.max(top, scrollY + 10),
+        left: rect.left + scrollX,
+        width: rect.width,
+        maxHeight: Math.floor(maxHeight),
+      });
+    }, [displayOptions.length, showLoading, isSearchable]);
+
+    // Client-side filtering with position recalculation
     React.useEffect(() => {
-      if (searchType === "client") {
-        const filtered = options.filter(
-          (option: GenericSelectOption) =>
-            option.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            option.value.toLowerCase().includes(searchQuery.toLowerCase())
+      if (searchType === "client" && searchQuery) {
+        const filtered = options.filter((option: GenericSelectOption) =>
+          option.label.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setFilteredOptions(filtered);
+      } else {
+        setFilteredOptions(options);
       }
-    }, [searchQuery, options, searchType]);
+
+      // Recalculate position when content changes
+      if (isOpen) {
+        setTimeout(() => calculateDropdownPosition(), 10);
+      }
+    }, [searchQuery, options, searchType, isOpen, calculateDropdownPosition]);
 
     // Server-side search with debouncing
     React.useEffect(() => {
@@ -220,6 +278,13 @@ export const GenericSelect = React.forwardRef<
       }
     }, [options, searchType]);
 
+    // Recalculate position when server options change
+    React.useEffect(() => {
+      if (searchType === "server" && isOpen) {
+        setTimeout(() => calculateDropdownPosition(), 10);
+      }
+    }, [serverOptions, searchType, isOpen, calculateDropdownPosition]);
+
     // Get Generic styling
     const styles = getGenericSelectStyles(
       effectiveDesign,
@@ -251,13 +316,10 @@ export const GenericSelect = React.forwardRef<
       const newIsOpen = !isOpen;
       setIsOpen(newIsOpen);
 
-      if (newIsOpen && containerRef.current) {
-        // Use proper dropdown positioning like the old components
-        const position = calculateDropdownPosition({
-          triggerElement: containerRef.current,
-          dropdownHeight: 240,
-        });
-        setDropdownPosition(position);
+      if (newIsOpen) {
+        // Calculate position immediately and after a small delay for accuracy
+        calculateDropdownPosition();
+        setTimeout(() => calculateDropdownPosition(), 10);
 
         // Focus search input if searchable
         if (isSearchable) {
@@ -310,7 +372,7 @@ export const GenericSelect = React.forwardRef<
       return `${selectedOptions.length} ${defaultSelectedText}`;
     };
 
-    // Click outside handler - fixed for portal dropdown
+    // Click outside handler and window events for portal dropdown
     React.useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
         const target = event.target as Node;
@@ -328,12 +390,30 @@ export const GenericSelect = React.forwardRef<
         }
       };
 
+      const handleWindowResize = () => {
+        if (isOpen) {
+          calculateDropdownPosition();
+        }
+      };
+
+      const handleWindowScroll = () => {
+        if (isOpen) {
+          calculateDropdownPosition();
+        }
+      };
+
       if (isOpen) {
         document.addEventListener("mousedown", handleClickOutside);
-        return () =>
+        window.addEventListener("resize", handleWindowResize);
+        window.addEventListener("scroll", handleWindowScroll, true);
+
+        return () => {
           document.removeEventListener("mousedown", handleClickOutside);
+          window.removeEventListener("resize", handleWindowResize);
+          window.removeEventListener("scroll", handleWindowScroll, true);
+        };
       }
-    }, [isOpen, searchType, options]);
+    }, [isOpen, searchType, options, calculateDropdownPosition]);
 
     return (
       <div ref={containerRef} className="relative w-full" {...props}>
@@ -415,14 +495,14 @@ export const GenericSelect = React.forwardRef<
             <div
               ref={dropdownRef}
               className={cn(
-                "fixed z-[9999] min-w-[8rem] overflow-hidden",
+                "fixed z-[9999] min-w-[8rem] overflow-hidden shadow-lg",
                 styles.dropdown
               )}
               style={{
                 top: dropdownPosition.top,
                 left: dropdownPosition.left,
                 width: dropdownPosition.width,
-                maxHeight: dropdownPosition.maxHeight,
+                maxHeight: 300,
               }}
             >
               {/* Search input for searchable types */}
