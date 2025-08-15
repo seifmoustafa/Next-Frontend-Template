@@ -63,9 +63,7 @@ export function SettingsView() {
 
   // Multi-select demo state
   const [multiSelectDemo, setMultiSelectDemo] = useState<string[]>([]);
-  const [styleSelections, setStyleSelections] = useState<
-    Record<string, string | string[]>
-  >({});
+  const [styleSelections, setStyleSelections] = useState<Record<string, string | string[]>>({});
   const { toast: enhancedToast } = useEnhancedToast();
   const [activeTab, setActiveTab] = useState("appearance");
 
@@ -422,19 +420,9 @@ export function SettingsView() {
   const borderRadiusOptions = [
     { value: "none", name: t("radius.none"), class: "rounded-none", px: "0px" },
     { value: "small", name: t("radius.small"), class: "rounded-sm", px: "2px" },
-    {
-      value: "default",
-      name: t("radius.default"),
-      class: "rounded",
-      px: "4px",
-    },
+    { value: "default", name: t("radius.default"), class: "rounded", px: "4px" },
     { value: "large", name: t("radius.large"), class: "rounded-lg", px: "8px" },
-    {
-      value: "full",
-      name: t("radius.full"),
-      class: "rounded-full",
-      px: "9999px",
-    },
+    { value: "full", name: t("radius.full"), class: "rounded-full", px: "9999px" },
   ];
 
   // Button style options - UPDATED WITH MORE GRANULAR RADIUS OPTIONS
@@ -491,26 +479,10 @@ export function SettingsView() {
 
   // Spacing options with visual examples
   const spacingOptions = [
-    {
-      value: "compact",
-      name: t("settings.spacing.options.compact"),
-      spacing: "p-2 gap-1",
-    },
-    {
-      value: "default",
-      name: t("settings.spacing.options.default"),
-      spacing: "p-4 gap-2",
-    },
-    {
-      value: "comfortable",
-      name: t("settings.spacing.options.comfortable"),
-      spacing: "p-6 gap-3",
-    },
-    {
-      value: "spacious",
-      name: t("settings.spacing.options.spacious"),
-      spacing: "p-8 gap-4",
-    },
+    { value: "compact", name: t("settings.spacing.options.compact"), spacing: "p-2 gap-1" },
+    { value: "default", name: t("settings.spacing.options.default"), spacing: "p-4 gap-2" },
+    { value: "comfortable", name: t("settings.spacing.options.comfortable"), spacing: "p-6 gap-3" },
+    { value: "spacious", name: t("settings.spacing.options.spacious"), spacing: "p-8 gap-4" },
   ];
 
   // Shadow intensity options
@@ -557,16 +529,8 @@ export function SettingsView() {
       name: t("cardStyle.glass"),
       class: "bg-white/10 backdrop-blur border border-white/20",
     },
-    {
-      value: "solid",
-      name: t("cardStyle.solid"),
-      class: "bg-gray-100 border-0",
-    },
-    {
-      value: "bordered",
-      name: t("cardStyle.bordered"),
-      class: "border-2 bg-card",
-    },
+    { value: "solid", name: t("cardStyle.solid"), class: "bg-gray-100 border-0" },
+    { value: "bordered", name: t("cardStyle.bordered"), class: "border-2 bg-card" },
     {
       value: "elevated",
       name: t("settings.cardStyleOptions.elevated"),
@@ -849,26 +813,14 @@ export function SettingsView() {
 
   // Input style options
   const inputStyles = [
-    {
-      value: "default",
-      name: t("settings.inputStyle.options.default"),
-      class: "rounded-md border",
-    },
-    {
-      value: "rounded",
-      name: t("settings.inputStyle.options.rounded"),
-      class: "rounded-full border px-4",
-    },
+    { value: "default", name: t("settings.inputStyle.options.default"), class: "rounded-md border" },
+    { value: "rounded", name: t("settings.inputStyle.options.rounded"), class: "rounded-full border px-4" },
     {
       value: "underlined",
       name: t("settings.inputStyle.options.underlined"),
       class: "rounded-none border-0 border-b-2 px-0",
     },
-    {
-      value: "filled",
-      name: t("settings.inputStyle.options.filled"),
-      class: "rounded-lg bg-muted border-0",
-    },
+    { value: "filled", name: t("settings.inputStyle.options.filled"), class: "rounded-lg bg-muted border-0" },
   ];
 
   // DatePicker style options
@@ -883,15 +835,13 @@ export function SettingsView() {
       value: "modern",
       name: t("settings.datePickerStyle.options.modern.name"),
       description: t("settings.datePickerStyle.options.modern.description"),
-      preview:
-        "bg-gradient-to-r from-background to-muted/20 border border-border/50 rounded-md shadow-sm",
+      preview: "bg-gradient-to-r from-background to-muted/20 border border-border/50 rounded-md shadow-sm",
     },
     {
       value: "glass",
       name: t("settings.datePickerStyle.options.glass.name"),
       description: t("settings.datePickerStyle.options.glass.description"),
-      preview:
-        "bg-background/60 backdrop-blur-sm border border-white/20 rounded-md shadow-lg",
+      preview: "bg-background/60 backdrop-blur-sm border border-white/20 rounded-md shadow-lg",
     },
     {
       value: "outlined",
@@ -915,8 +865,7 @@ export function SettingsView() {
       value: "elegant",
       name: t("settings.datePickerStyle.options.elegant.name"),
       description: t("settings.datePickerStyle.options.elegant.description"),
-      preview:
-        "bg-gradient-to-br from-background via-background to-muted/10 border border-border/30 rounded-md shadow-sm",
+      preview: "bg-gradient-to-br from-background via-background to-muted/10 border border-border/30 rounded-md shadow-sm",
     },
   ];
 
@@ -954,93 +903,78 @@ export function SettingsView() {
     },
   ];
 
+
+
   // Badge style options
   const badgeStyles = [
     {
       value: "default",
       name: t("settings.badgeStyle.options.default.name"),
       description: t("settings.badgeStyle.options.default.description"),
-      class: "rounded-full border",
+      class: "rounded-full border border-border bg-background/80 text-foreground"
     },
     {
       value: "modern",
       name: t("settings.badgeStyle.options.modern.name"),
       description: t("settings.badgeStyle.options.modern.description"),
-      class: "rounded-lg border bg-white/10 backdrop-blur-sm",
+      class: "rounded-lg border border-border/50 bg-muted/50 backdrop-blur-sm text-foreground"
     },
     {
       value: "glass",
       name: t("settings.badgeStyle.options.glass.name"),
       description: t("settings.badgeStyle.options.glass.description"),
-      class: "rounded-xl border bg-white/20 backdrop-blur-md",
+      class: "rounded-xl border border-border/30 bg-background/20 backdrop-blur-md text-foreground"
     },
     {
       value: "neon",
       name: t("settings.badgeStyle.options.neon.name"),
       description: t("settings.badgeStyle.options.neon.description"),
-      class: "rounded-md border shadow-lg shadow-primary/50",
+      class: "rounded-md border border-primary/40 bg-primary/5 text-primary shadow-lg shadow-primary/20"
     },
     {
       value: "gradient",
       name: t("settings.badgeStyle.options.gradient.name"),
       description: t("settings.badgeStyle.options.gradient.description"),
-      class:
-        "rounded-full border bg-gradient-to-r from-primary/20 to-primary/30",
+      class: "rounded-full border-0 bg-gradient-to-r from-primary/70 to-primary/90 text-primary-foreground"
     },
     {
       value: "outlined",
       name: t("settings.badgeStyle.options.outlined.name"),
       description: t("settings.badgeStyle.options.outlined.description"),
-      class: "rounded-lg border-2 bg-transparent",
+      class: "rounded-lg border-2 border-primary/50 bg-transparent text-primary"
     },
     {
       value: "filled",
       name: t("settings.badgeStyle.options.filled.name"),
       description: t("settings.badgeStyle.options.filled.description"),
-      class: "rounded-md border-0 bg-primary/90",
+      class: "rounded-md border-0 bg-primary text-primary-foreground"
     },
     {
       value: "minimal",
       name: t("settings.badgeStyle.options.minimal.name"),
       description: t("settings.badgeStyle.options.minimal.description"),
-      class: "rounded-none border-0 bg-transparent",
+      class: "rounded-none border-0 bg-transparent text-muted-foreground underline decoration-muted-foreground/50"
     },
     {
       value: "pill",
       name: t("settings.badgeStyle.options.pill.name"),
       description: t("settings.badgeStyle.options.pill.description"),
-      class: "rounded-full border",
+      class: "rounded-full border border-border bg-muted/30 text-foreground px-3"
     },
     {
       value: "square",
       name: t("settings.badgeStyle.options.square.name"),
       description: t("settings.badgeStyle.options.square.description"),
-      class: "rounded-sm border",
-    },
+      class: "rounded-sm border border-border bg-muted/20 text-foreground"
+    }
   ];
 
   // Avatar style options
   const avatarStyles = [
-    {
-      value: "default",
-      name: t("settings.avatarStyle.options.default"),
-      class: "rounded-full",
-    },
-    {
-      value: "rounded",
-      name: t("settings.avatarStyle.options.rounded"),
-      class: "rounded-lg",
-    },
-    {
-      value: "square",
-      name: t("settings.avatarStyle.options.square"),
-      class: "rounded-none",
-    },
-    {
-      value: "hexagon",
-      name: t("settings.avatarStyle.options.hexagon"),
-      class: "rounded-full",
-    },
+    { value: "default", name: t("settings.avatarStyle.options.default"), class: "rounded-full" },
+    { value: "rounded", name: t("settings.avatarStyle.options.rounded"), class: "rounded-lg" },
+    { value: "square", name: t("settings.avatarStyle.options.square"), class: "rounded-none" },
+    { value: "hexagon", name: t("settings.avatarStyle.options.hexagon"), class: "rounded-full" },
   ];
 
   // Form style options
@@ -1172,16 +1106,8 @@ export function SettingsView() {
   ];
 
   const sampleTableColumns = [
-    {
-      key: "name" as const,
-      label: t("settings.sampleTable.name"),
-      sortable: true,
-    },
-    {
-      key: "email" as const,
-      label: t("settings.sampleTable.email"),
-      sortable: true,
-    },
+    { key: "name" as const, label: t("settings.sampleTable.name"), sortable: true },
+    { key: "email" as const, label: t("settings.sampleTable.email"), sortable: true },
     {
       key: "status" as const,
       label: t("settings.sampleTable.status"),
@@ -1476,7 +1402,7 @@ export function SettingsView() {
                                 "h-2 bg-primary rounded",
                                 animation.value === "high" && "animate-pulse",
                                 animation.value === "moderate" &&
-                                  "transition-all duration-300"
+                                "transition-all duration-300"
                               )}
                             ></div>
                           </div>
@@ -1571,7 +1497,7 @@ export function SettingsView() {
                                 style.value === "compact" && "h-6",
                                 style.value === "elevated" && "shadow-md",
                                 style.value === "transparent" &&
-                                  "bg-transparent border border-muted"
+                                "bg-transparent border border-muted"
                               )}
                             ></div>
                           </div>
@@ -1620,9 +1546,9 @@ export function SettingsView() {
                                   "bg-muted rounded h-8",
                                   style.value === "compact" && "w-8",
                                   style.value === "floating" &&
-                                    "w-12 shadow-md rounded-lg",
+                                  "w-12 shadow-md rounded-lg",
                                   style.value === "minimal" &&
-                                    "w-10 bg-transparent border border-muted",
+                                  "w-10 bg-transparent border border-muted",
                                   style.value === "default" && "w-12"
                                 )}
                               ></div>
@@ -1937,24 +1863,17 @@ export function SettingsView() {
                                 <ChevronRight className="h-3 w-3" />
                               </div>
                               <div className="grid grid-cols-7 gap-0.5 text-xs">
-                                {["S", "M", "T", "W", "T", "F", "S"].map(
-                                  (day, i) => (
-                                    <div
-                                      key={i}
-                                      className="h-4 w-4 flex items-center justify-center text-muted-foreground"
-                                    >
-                                      {day}
-                                    </div>
-                                  )
-                                )}
+                                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
+                                  <div key={i} className="h-4 w-4 flex items-center justify-center text-muted-foreground">
+                                    {day}
+                                  </div>
+                                ))}
                                 {Array.from({ length: 7 }, (_, i) => (
                                   <div
                                     key={i}
                                     className={cn(
                                       "h-4 w-4 flex items-center justify-center rounded-sm text-xs",
-                                      i === 3
-                                        ? "bg-primary text-primary-foreground"
-                                        : "hover:bg-muted"
+                                      i === 3 ? "bg-primary text-primary-foreground" : "hover:bg-muted"
                                     )}
                                   >
                                     {i + 1}
@@ -2093,90 +2012,62 @@ export function SettingsView() {
                         {
                           value: "default",
                           name: t("settings.tableStyle.options.default.title"),
-                          description: t(
-                            "settings.tableStyle.options.default.description"
-                          ),
+                          description: t("settings.tableStyle.options.default.description"),
                         },
                         {
                           value: "striped",
                           name: t("settings.tableStyle.options.striped.title"),
-                          description: t(
-                            "settings.tableStyle.options.striped.description"
-                          ),
+                          description: t("settings.tableStyle.options.striped.description"),
                         },
                         {
                           value: "bordered",
                           name: t("settings.tableStyle.options.bordered.title"),
-                          description: t(
-                            "settings.tableStyle.options.bordered.description"
-                          ),
+                          description: t("settings.tableStyle.options.bordered.description"),
                         },
                         {
                           value: "minimal",
                           name: t("settings.tableStyle.options.minimal.title"),
-                          description: t(
-                            "settings.tableStyle.options.minimal.description"
-                          ),
+                          description: t("settings.tableStyle.options.minimal.description"),
                         },
                         {
                           value: "glass",
                           name: t("settings.tableStyle.options.glass.title"),
-                          description: t(
-                            "settings.tableStyle.options.glass.description"
-                          ),
+                          description: t("settings.tableStyle.options.glass.description"),
                         },
                         {
                           value: "neon",
                           name: t("settings.tableStyle.options.neon.title"),
-                          description: t(
-                            "settings.tableStyle.options.neon.description"
-                          ),
+                          description: t("settings.tableStyle.options.neon.description"),
                         },
                         {
                           value: "gradient",
                           name: t("settings.tableStyle.options.gradient.title"),
-                          description: t(
-                            "settings.tableStyle.options.gradient.description"
-                          ),
+                          description: t("settings.tableStyle.options.gradient.description"),
                         },
                         {
                           value: "neumorphism",
-                          name: t(
-                            "settings.tableStyle.options.neumorphism.title"
-                          ),
-                          description: t(
-                            "settings.tableStyle.options.neumorphism.description"
-                          ),
+                          name: t("settings.tableStyle.options.neumorphism.title"),
+                          description: t("settings.tableStyle.options.neumorphism.description"),
                         },
                         {
                           value: "cyberpunk",
-                          name: t(
-                            "settings.tableStyle.options.cyberpunk.title"
-                          ),
-                          description: t(
-                            "settings.tableStyle.options.cyberpunk.description"
-                          ),
+                          name: t("settings.tableStyle.options.cyberpunk.title"),
+                          description: t("settings.tableStyle.options.cyberpunk.description"),
                         },
                         {
                           value: "luxury",
                           name: t("settings.tableStyle.options.luxury.title"),
-                          description: t(
-                            "settings.tableStyle.options.luxury.description"
-                          ),
+                          description: t("settings.tableStyle.options.luxury.description"),
                         },
                         {
                           value: "matrix",
                           name: t("settings.tableStyle.options.matrix.title"),
-                          description: t(
-                            "settings.tableStyle.options.matrix.description"
-                          ),
+                          description: t("settings.tableStyle.options.matrix.description"),
                         },
                         {
                           value: "diamond",
                           name: t("settings.tableStyle.options.diamond.title"),
-                          description: t(
-                            "settings.tableStyle.options.diamond.description"
-                          ),
+                          description: t("settings.tableStyle.options.diamond.description"),
                         },
                       ].map((style) => (
                         <div
@@ -2203,144 +2094,83 @@ export function SettingsView() {
                             <div className="flex flex-col items-center space-y-2">
                               <div className="w-full max-w-[200px] text-xs">
                                 {/* Table Container Preview */}
-                                <div
-                                  className={cn(
-                                    "overflow-hidden transition-all duration-300",
-                                    style.value === "default" &&
-                                      "rounded-lg border bg-card shadow-sm",
-                                    style.value === "striped" &&
-                                      "rounded-lg border bg-card",
-                                    style.value === "bordered" &&
-                                      "rounded-lg border-2 border-border bg-card",
-                                    style.value === "minimal" &&
-                                      "rounded-none border-0 bg-transparent",
-                                    style.value === "glass" &&
-                                      "rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl dark:bg-black/20 dark:border-white/10",
-                                    style.value === "neon" &&
-                                      "rounded-xl border-2 border-primary/30 bg-black/90 shadow-[0_0_15px_rgba(var(--primary),0.3)] dark:bg-black/95",
-                                    style.value === "gradient" &&
-                                      "rounded-2xl border-0 bg-gradient-to-br from-primary/20 via-background to-primary/10 shadow-2xl",
-                                    style.value === "neumorphism" &&
-                                      "rounded-3xl border-0 bg-background shadow-[10px_10px_20px_rgba(0,0,0,0.1),-10px_-10px_20px_rgba(255,255,255,0.1)] dark:shadow-[10px_10px_20px_rgba(0,0,0,0.3),-10px_-10px_20px_rgba(255,255,255,0.05)]",
-                                    style.value === "cyberpunk" &&
-                                      "rounded-none border-2 border-primary bg-black/95 shadow-[0_0_25px_rgba(var(--primary),0.4)]",
-                                    style.value === "luxury" &&
-                                      "rounded-2xl border border-amber-200/30 bg-gradient-to-br from-amber-50/50 to-amber-100/30 shadow-2xl dark:from-amber-900/20 dark:to-amber-800/10 dark:border-amber-400/20",
-                                    style.value === "matrix" &&
-                                      "rounded-none border-2 border-primary/30 bg-black/95 shadow-[0_0_30px_hsl(var(--primary)/0.4)] dark:bg-black/98 dark:border-primary/40",
-                                    style.value === "diamond" &&
-                                      "rounded-3xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-primary/15 shadow-[0_0_40px_hsl(var(--primary)/0.3)] dark:from-primary/20 dark:via-primary/10 dark:to-primary/25 dark:border-primary/30"
-                                  )}
-                                >
+                                <div className={cn(
+                                  "overflow-hidden transition-all duration-300",
+                                  style.value === "default" && "rounded-lg border bg-card shadow-sm",
+                                  style.value === "striped" && "rounded-lg border bg-card",
+                                  style.value === "bordered" && "rounded-lg border-2 border-border bg-card",
+                                  style.value === "minimal" && "rounded-none border-0 bg-transparent",
+                                  style.value === "glass" && "rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl dark:bg-black/20 dark:border-white/10",
+                                  style.value === "neon" && "rounded-xl border-2 border-primary/30 bg-black/90 shadow-[0_0_15px_rgba(var(--primary),0.3)] dark:bg-black/95",
+                                  style.value === "gradient" && "rounded-2xl border-0 bg-gradient-to-br from-primary/20 via-background to-primary/10 shadow-2xl",
+                                  style.value === "neumorphism" && "rounded-3xl border-0 bg-background shadow-[10px_10px_20px_rgba(0,0,0,0.1),-10px_-10px_20px_rgba(255,255,255,0.1)] dark:shadow-[10px_10px_20px_rgba(0,0,0,0.3),-10px_-10px_20px_rgba(255,255,255,0.05)]",
+                                  style.value === "cyberpunk" && "rounded-none border-2 border-primary bg-black/95 shadow-[0_0_25px_rgba(var(--primary),0.4)]",
+                                  style.value === "luxury" && "rounded-2xl border border-amber-200/30 bg-gradient-to-br from-amber-50/50 to-amber-100/30 shadow-2xl dark:from-amber-900/20 dark:to-amber-800/10 dark:border-amber-400/20",
+                                  style.value === "matrix" && "rounded-none border-2 border-primary/30 bg-black/95 shadow-[0_0_30px_hsl(var(--primary)/0.4)] dark:bg-black/98 dark:border-primary/40",
+                                  style.value === "diamond" && "rounded-3xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-primary/15 shadow-[0_0_40px_hsl(var(--primary)/0.3)] dark:from-primary/20 dark:via-primary/10 dark:to-primary/25 dark:border-primary/30"
+                                )}>
                                   {/* Table Header */}
-                                  <div
-                                    className={cn(
-                                      "font-semibold text-foreground transition-all duration-300 h-8 flex items-center px-2",
-                                      style.value === "default" &&
-                                        "bg-muted/50 border-b",
-                                      style.value === "striped" &&
-                                        "bg-muted/70 border-b-2",
-                                      style.value === "bordered" &&
-                                        "bg-muted/50 border-b-2",
-                                      style.value === "minimal" &&
-                                        "bg-transparent border-b",
-                                      style.value === "glass" &&
-                                        "bg-white/20 border-b border-white/30 backdrop-blur-md text-foreground font-bold dark:bg-black/30 dark:border-white/20",
-                                      style.value === "neon" &&
-                                        "bg-black/90 border-b-2 border-primary/50 text-primary font-bold shadow-[0_0_10px_rgba(var(--primary),0.3)] dark:bg-black/95",
-                                      style.value === "gradient" &&
-                                        "bg-gradient-to-r from-primary/30 via-primary/20 to-primary/30 border-b border-primary/30 text-foreground font-bold shadow-lg",
-                                      style.value === "neumorphism" &&
-                                        "bg-background border-b-0 font-bold shadow-[4px_4px_8px_rgba(0,0,0,0.1),-4px_-4px_8px_rgba(255,255,255,0.1)] dark:shadow-[4px_4px_8px_rgba(0,0,0,0.2),-4px_-4px_8px_rgba(255,255,255,0.05)]",
-                                      style.value === "cyberpunk" &&
-                                        "bg-black/95 border-b-2 border-primary text-primary font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(var(--primary),0.4)]",
-                                      style.value === "luxury" &&
-                                        "bg-gradient-to-r from-amber-100/50 via-amber-50/30 to-amber-100/50 border-b border-amber-300/40 dark:from-amber-900/30 dark:via-amber-800/20 dark:to-amber-900/30 dark:border-amber-400/30 text-amber-900 dark:text-amber-100 font-bold shadow-lg shadow-amber-200/20",
-                                      style.value === "matrix" &&
-                                        "bg-black/95 border-b-2 border-primary/60 text-primary font-bold uppercase tracking-widest shadow-[0_0_15px_hsl(var(--primary)/0.4)] font-mono dark:bg-black/98 dark:border-primary/70 dark:text-primary",
-                                      style.value === "diamond" &&
-                                        "bg-gradient-to-r from-primary/20 via-primary/10 to-primary/25 border-b-2 border-primary/50 text-primary font-bold shadow-lg shadow-primary/30 dark:from-primary/25 dark:via-primary/15 dark:to-primary/30 dark:border-primary/40"
-                                    )}
-                                  >
+                                  <div className={cn(
+                                    "font-semibold text-foreground transition-all duration-300 h-8 flex items-center px-2",
+                                    style.value === "default" && "bg-muted/50 border-b",
+                                    style.value === "striped" && "bg-muted/70 border-b-2",
+                                    style.value === "bordered" && "bg-muted/50 border-b-2",
+                                    style.value === "minimal" && "bg-transparent border-b",
+                                    style.value === "glass" && "bg-white/20 border-b border-white/30 backdrop-blur-md text-foreground font-bold dark:bg-black/30 dark:border-white/20",
+                                    style.value === "neon" && "bg-black/90 border-b-2 border-primary/50 text-primary font-bold shadow-[0_0_10px_rgba(var(--primary),0.3)] dark:bg-black/95",
+                                    style.value === "gradient" && "bg-gradient-to-r from-primary/30 via-primary/20 to-primary/30 border-b border-primary/30 text-foreground font-bold shadow-lg",
+                                    style.value === "neumorphism" && "bg-background border-b-0 font-bold shadow-[4px_4px_8px_rgba(0,0,0,0.1),-4px_-4px_8px_rgba(255,255,255,0.1)] dark:shadow-[4px_4px_8px_rgba(0,0,0,0.2),-4px_-4px_8px_rgba(255,255,255,0.05)]",
+                                    style.value === "cyberpunk" && "bg-black/95 border-b-2 border-primary text-primary font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(var(--primary),0.4)]",
+                                    style.value === "luxury" && "bg-gradient-to-r from-amber-100/50 via-amber-50/30 to-amber-100/50 border-b border-amber-300/40 dark:from-amber-900/30 dark:via-amber-800/20 dark:to-amber-900/30 dark:border-amber-400/30 text-amber-900 dark:text-amber-100 font-bold shadow-lg shadow-amber-200/20",
+                                    style.value === "matrix" && "bg-black/95 border-b-2 border-primary/60 text-primary font-bold uppercase tracking-widest shadow-[0_0_15px_hsl(var(--primary)/0.4)] font-mono dark:bg-black/98 dark:border-primary/70 dark:text-primary",
+                                    style.value === "diamond" && "bg-gradient-to-r from-primary/20 via-primary/10 to-primary/25 border-b-2 border-primary/50 text-primary font-bold shadow-lg shadow-primary/30 dark:from-primary/25 dark:via-primary/15 dark:to-primary/30 dark:border-primary/40"
+                                  )}>
                                     <span className="text-[10px]">Name</span>
-                                    <span className="ml-auto text-[10px]">
-                                      Status
-                                    </span>
+                                    <span className="ml-auto text-[10px]">Status</span>
                                   </div>
 
                                   {/* Table Rows */}
                                   {[0, 1, 2].map((index) => (
-                                    <div
-                                      key={index}
-                                      className={cn(
-                                        "transition-all duration-300 border-b h-6 flex items-center px-2",
-                                        style.value === "default" &&
-                                          "hover:bg-muted/30 bg-card",
-                                        style.value === "striped" &&
-                                          (index % 2 === 0
-                                            ? "bg-muted/30 hover:bg-muted/50"
-                                            : "bg-card hover:bg-muted/30"),
-                                        style.value === "bordered" &&
-                                          "border-b-2 hover:bg-muted/30 bg-card",
-                                        style.value === "minimal" &&
-                                          "border-b-0 hover:bg-muted/20 bg-transparent",
-                                        style.value === "glass" &&
-                                          cn(
-                                            "border-b border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-sm dark:border-white/5 dark:bg-black/10 dark:hover:bg-black/20",
-                                            index % 2 === 0 &&
-                                              "bg-white/10 dark:bg-black/20"
-                                          ),
-                                        style.value === "neon" &&
-                                          cn(
-                                            "border-b border-primary/20 bg-black/50 hover:bg-primary/10 dark:bg-black/70 dark:hover:bg-primary/5",
-                                            index % 2 === 0 &&
-                                              "bg-primary/5 dark:bg-primary/5"
-                                          ),
-                                        style.value === "gradient" &&
-                                          cn(
-                                            "border-b border-primary/10 bg-gradient-to-r from-transparent via-primary/5 to-transparent hover:from-primary/10 hover:via-primary/15 hover:to-primary/10",
-                                            index % 2 === 0 &&
-                                              "from-primary/5 via-primary/10 to-primary/5"
-                                          ),
-                                        style.value === "neumorphism" &&
-                                          cn(
-                                            "border-b-0 bg-background",
-                                            index % 2 === 0 &&
-                                              "shadow-[inset_1px_1px_2px_rgba(0,0,0,0.05),inset_-1px_-1px_2px_rgba(255,255,255,0.05)]"
-                                          ),
-                                        style.value === "luxury" &&
-                                          cn(
-                                            "border-b border-amber-200/20 bg-gradient-to-r from-amber-50/20 to-transparent dark:border-amber-400/20 dark:from-amber-900/10",
-                                            index % 2 === 0 &&
-                                              "from-amber-100/30 to-amber-50/10 dark:from-amber-900/20 dark:to-amber-800/10"
-                                          ),
-                                        style.value === "matrix" &&
-                                          cn(
-                                            "border-b border-primary/30 bg-black/90 text-primary font-mono dark:bg-black/95",
-                                            index % 2 === 0 &&
-                                              "bg-primary/5 border-primary/20"
-                                          ),
-                                        style.value === "diamond" &&
-                                          cn(
-                                            "border-b border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/15 text-primary dark:from-primary/10 dark:via-primary/5 dark:to-primary/15 dark:text-primary dark:border-primary/20",
-                                            index % 2 === 0 &&
-                                              "from-primary/15 via-primary/10 to-primary/20 dark:from-primary/15 dark:via-primary/10 dark:to-primary/20"
-                                          )
-                                      )}
-                                    >
-                                      <span className="text-[9px]">
-                                        Item {index + 1}
-                                      </span>
-                                      <div
-                                        className={cn(
-                                          "ml-auto w-2 h-2 rounded-full",
-                                          index === 0
-                                            ? "bg-green-500"
-                                            : index === 1
-                                            ? "bg-yellow-500"
-                                            : "bg-red-500"
-                                        )}
-                                      />
+                                    <div key={index} className={cn(
+                                      "transition-all duration-300 border-b h-6 flex items-center px-2",
+                                      style.value === "default" && "hover:bg-muted/30 bg-card",
+                                      style.value === "striped" && (index % 2 === 0 ? "bg-muted/30 hover:bg-muted/50" : "bg-card hover:bg-muted/30"),
+                                      style.value === "bordered" && "border-b-2 hover:bg-muted/30 bg-card",
+                                      style.value === "minimal" && "border-b-0 hover:bg-muted/20 bg-transparent",
+                                      style.value === "glass" && cn(
+                                        "border-b border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-sm dark:border-white/5 dark:bg-black/10 dark:hover:bg-black/20",
+                                        index % 2 === 0 && "bg-white/10 dark:bg-black/20"
+                                      ),
+                                      style.value === "neon" && cn(
+                                        "border-b border-primary/20 bg-black/50 hover:bg-primary/10 dark:bg-black/70 dark:hover:bg-primary/5",
+                                        index % 2 === 0 && "bg-primary/5 dark:bg-primary/5"
+                                      ),
+                                      style.value === "gradient" && cn(
+                                        "border-b border-primary/10 bg-gradient-to-r from-transparent via-primary/5 to-transparent hover:from-primary/10 hover:via-primary/15 hover:to-primary/10",
+                                        index % 2 === 0 && "from-primary/5 via-primary/10 to-primary/5"
+                                      ),
+                                      style.value === "neumorphism" && cn(
+                                        "border-b-0 bg-background",
+                                        index % 2 === 0 && "shadow-[inset_1px_1px_2px_rgba(0,0,0,0.05),inset_-1px_-1px_2px_rgba(255,255,255,0.05)]"
+                                      ),
+                                      style.value === "luxury" && cn(
+                                        "border-b border-amber-200/20 bg-gradient-to-r from-amber-50/20 to-transparent dark:border-amber-400/20 dark:from-amber-900/10",
+                                        index % 2 === 0 && "from-amber-100/30 to-amber-50/10 dark:from-amber-900/20 dark:to-amber-800/10"
+                                      ),
+                                      style.value === "matrix" && cn(
+                                        "border-b border-primary/30 bg-black/90 text-primary font-mono dark:bg-black/95",
+                                        index % 2 === 0 && "bg-primary/5 border-primary/20"
+                                      ),
+                                      style.value === "diamond" && cn(
+                                        "border-b border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/15 text-primary dark:from-primary/10 dark:via-primary/5 dark:to-primary/15 dark:text-primary dark:border-primary/20",
+                                        index % 2 === 0 && "from-primary/15 via-primary/10 to-primary/20 dark:from-primary/15 dark:via-primary/10 dark:to-primary/20"
+                                      )
+                                    )}>
+                                      <span className="text-[9px]">Item {index + 1}</span>
+                                      <div className={cn(
+                                        "ml-auto w-2 h-2 rounded-full",
+                                        index === 0 ? "bg-green-500" : index === 1 ? "bg-yellow-500" : "bg-red-500"
+                                      )} />
                                     </div>
                                   ))}
                                 </div>
@@ -2455,554 +2285,219 @@ export function SettingsView() {
                 {/* Multi-Select Component Showcase */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>{t("components.multiSelect.title")}</CardTitle>
+                    <CardTitle>{t('components.multiSelect.title')}</CardTitle>
                     <CardDescription>
-                      {t("components.multiSelect.description")}
+                      {t('components.multiSelect.description')}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
                       {/* Current Style Demo */}
                       <div className="space-y-3">
-                        <h4 className="font-medium">
-                          {t("components.multiSelect.currentStyle")}:{" "}
-                          {settings.selectStyle}
-                        </h4>
+                        <h4 className="font-medium">{t('components.multiSelect.currentStyle')}: {settings.selectStyle}</h4>
                         <div className="max-w-md">
                           <GenericSelect
                             type="multi"
                             options={[
-                              {
-                                value: "react",
-                                label: t(
-                                  "components.multiSelect.categories.webTech.react"
-                                ),
-                              },
-                              {
-                                value: "vue",
-                                label: t(
-                                  "components.multiSelect.categories.webTech.vue"
-                                ),
-                              },
-                              {
-                                value: "angular",
-                                label: t(
-                                  "components.multiSelect.categories.webTech.angular"
-                                ),
-                              },
-                              {
-                                value: "svelte",
-                                label: t(
-                                  "components.multiSelect.categories.webTech.svelte"
-                                ),
-                              },
-                              {
-                                value: "nextjs",
-                                label: t(
-                                  "components.multiSelect.categories.webTech.nextjs"
-                                ),
-                              },
-                              {
-                                value: "typescript",
-                                label: t(
-                                  "components.multiSelect.categories.webTech.typescript"
-                                ),
-                              },
+                              { value: "react", label: t('components.multiSelect.categories.webTech.react') },
+                              { value: "vue", label: t('components.multiSelect.categories.webTech.vue') },
+                              { value: "angular", label: t('components.multiSelect.categories.webTech.angular') },
+                              { value: "svelte", label: t('components.multiSelect.categories.webTech.svelte') },
+                              { value: "nextjs", label: t('components.multiSelect.categories.webTech.nextjs') },
+                              { value: "typescript", label: t('components.multiSelect.categories.webTech.typescript') }
                             ]}
                             value={multiSelectDemo}
-                            onValueChange={(value: string | string[]) =>
-                              setMultiSelectDemo(
-                                Array.isArray(value) ? value : [value]
-                              )
-                            }
-                            // All text will be localized automatically by the component
+                            onValueChange={(value: string | string[]) => setMultiSelectDemo(Array.isArray(value) ? value : [value])}
+                          // All text will be localized automatically by the component
                           />
                         </div>
                         <p className="text-xs text-muted-foreground">
-                          Selected:{" "}
-                          {multiSelectDemo.length > 0
-                            ? multiSelectDemo.join(", ")
-                            : "None"}
+                          Selected: {multiSelectDemo.length > 0 ? multiSelectDemo.join(", ") : "None"}
                         </p>
                       </div>
 
                       {/* Style Variations Grid */}
                       <div className="space-y-3">
-                        <h4 className="font-medium">
-                          {t("components.multiSelect.availableStyles")}
-                        </h4>
+                        <h4 className="font-medium">{t('components.multiSelect.availableStyles')}</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                           {[
                             {
                               style: "default",
-                              label: t("settings.selectStyle.options.default"),
+                              label: t('settings.selectStyle.options.default'),
                               options: [
-                                {
-                                  value: "html",
-                                  label: t(
-                                    "components.multiSelect.categories.webTech.html"
-                                  ),
-                                },
-                                {
-                                  value: "css",
-                                  label: t(
-                                    "components.multiSelect.categories.webTech.css"
-                                  ),
-                                },
-                                {
-                                  value: "javascript",
-                                  label: t(
-                                    "components.multiSelect.categories.webTech.javascript"
-                                  ),
-                                },
-                              ],
+                                { value: "html", label: t('components.multiSelect.categories.webTech.html') },
+                                { value: "css", label: t('components.multiSelect.categories.webTech.css') },
+                                { value: "javascript", label: t('components.multiSelect.categories.webTech.javascript') }
+                              ]
                             },
                             {
                               style: "modern",
-                              label: t("settings.selectStyle.options.modern"),
+                              label: t('settings.selectStyle.options.modern'),
                               options: [
-                                {
-                                  value: "react",
-                                  label: t(
-                                    "components.multiSelect.categories.webTech.react"
-                                  ),
-                                },
-                                {
-                                  value: "vue",
-                                  label: t(
-                                    "components.multiSelect.categories.webTech.vue"
-                                  ),
-                                },
-                                {
-                                  value: "angular",
-                                  label: t(
-                                    "components.multiSelect.categories.webTech.angular"
-                                  ),
-                                },
-                              ],
+                                { value: "react", label: t('components.multiSelect.categories.webTech.react') },
+                                { value: "vue", label: t('components.multiSelect.categories.webTech.vue') },
+                                { value: "angular", label: t('components.multiSelect.categories.webTech.angular') }
+                              ]
                             },
                             {
                               style: "glass",
-                              label: t("settings.selectStyle.options.glass"),
+                              label: t('settings.selectStyle.options.glass'),
                               options: [
-                                {
-                                  value: "figma",
-                                  label: t(
-                                    "components.multiSelect.categories.design.figma"
-                                  ),
-                                },
-                                {
-                                  value: "sketch",
-                                  label: t(
-                                    "components.multiSelect.categories.design.sketch"
-                                  ),
-                                },
-                                {
-                                  value: "adobe",
-                                  label: t(
-                                    "components.multiSelect.categories.design.adobe"
-                                  ),
-                                },
-                              ],
+                                { value: "figma", label: t('components.multiSelect.categories.design.figma') },
+                                { value: "sketch", label: t('components.multiSelect.categories.design.sketch') },
+                                { value: "adobe", label: t('components.multiSelect.categories.design.adobe') }
+                              ]
                             },
                             {
                               style: "outlined",
-                              label: t("settings.selectStyle.options.outlined"),
+                              label: t('settings.selectStyle.options.outlined'),
                               options: [
-                                {
-                                  value: "nodejs",
-                                  label: t(
-                                    "components.multiSelect.categories.backend.nodejs"
-                                  ),
-                                },
-                                {
-                                  value: "python",
-                                  label: t(
-                                    "components.multiSelect.categories.backend.python"
-                                  ),
-                                },
-                                {
-                                  value: "java",
-                                  label: t(
-                                    "components.multiSelect.categories.backend.java"
-                                  ),
-                                },
-                              ],
+                                { value: "nodejs", label: t('components.multiSelect.categories.backend.nodejs') },
+                                { value: "python", label: t('components.multiSelect.categories.backend.python') },
+                                { value: "java", label: t('components.multiSelect.categories.backend.java') }
+                              ]
                             },
                             {
                               style: "filled",
-                              label: t("settings.selectStyle.options.filled"),
+                              label: t('settings.selectStyle.options.filled'),
                               options: [
-                                {
-                                  value: "mysql",
-                                  label: t(
-                                    "components.multiSelect.categories.database.mysql"
-                                  ),
-                                },
-                                {
-                                  value: "postgres",
-                                  label: t(
-                                    "components.multiSelect.categories.database.postgres"
-                                  ),
-                                },
-                                {
-                                  value: "mongodb",
-                                  label: t(
-                                    "components.multiSelect.categories.database.mongodb"
-                                  ),
-                                },
-                              ],
+                                { value: "mysql", label: t('components.multiSelect.categories.database.mysql') },
+                                { value: "postgres", label: t('components.multiSelect.categories.database.postgres') },
+                                { value: "mongodb", label: t('components.multiSelect.categories.database.mongodb') }
+                              ]
                             },
                             {
                               style: "minimal",
-                              label: t("settings.selectStyle.options.minimal"),
+                              label: t('settings.selectStyle.options.minimal'),
                               options: [
-                                {
-                                  value: "git",
-                                  label: t(
-                                    "components.multiSelect.categories.devops.git"
-                                  ),
-                                },
-                                {
-                                  value: "github",
-                                  label: t(
-                                    "components.multiSelect.categories.devops.github"
-                                  ),
-                                },
-                                {
-                                  value: "gitlab",
-                                  label: t(
-                                    "components.multiSelect.categories.devops.gitlab"
-                                  ),
-                                },
-                              ],
+                                { value: "git", label: t('components.multiSelect.categories.devops.git') },
+                                { value: "github", label: t('components.multiSelect.categories.devops.github') },
+                                { value: "gitlab", label: t('components.multiSelect.categories.devops.gitlab') }
+                              ]
                             },
                             {
                               style: "elegant",
-                              label: t("settings.selectStyle.options.elegant"),
+                              label: t('settings.selectStyle.options.elegant'),
                               options: [
-                                {
-                                  value: "aws",
-                                  label: t(
-                                    "components.multiSelect.categories.cloud.aws"
-                                  ),
-                                },
-                                {
-                                  value: "azure",
-                                  label: t(
-                                    "components.multiSelect.categories.cloud.azure"
-                                  ),
-                                },
-                                {
-                                  value: "gcp",
-                                  label: t(
-                                    "components.multiSelect.categories.cloud.gcp"
-                                  ),
-                                },
-                              ],
+                                { value: "aws", label: t('components.multiSelect.categories.cloud.aws') },
+                                { value: "azure", label: t('components.multiSelect.categories.cloud.azure') },
+                                { value: "gcp", label: t('components.multiSelect.categories.cloud.gcp') }
+                              ]
                             },
                             {
                               style: "professional",
-                              label: t(
-                                "settings.selectStyle.options.professional"
-                              ),
+                              label: t('settings.selectStyle.options.professional'),
                               options: [
-                                {
-                                  value: "docker",
-                                  label: t(
-                                    "components.multiSelect.categories.devops.docker"
-                                  ),
-                                },
-                                {
-                                  value: "kubernetes",
-                                  label: t(
-                                    "components.multiSelect.categories.devops.kubernetes"
-                                  ),
-                                },
-                                {
-                                  value: "jenkins",
-                                  label: t(
-                                    "components.multiSelect.categories.devops.jenkins"
-                                  ),
-                                },
-                              ],
+                                { value: "docker", label: t('components.multiSelect.categories.devops.docker') },
+                                { value: "kubernetes", label: t('components.multiSelect.categories.devops.kubernetes') },
+                                { value: "jenkins", label: t('components.multiSelect.categories.devops.jenkins') }
+                              ]
                             },
                             {
                               style: "neon",
-                              label: t("settings.selectStyle.options.neon"),
+                              label: t('settings.selectStyle.options.neon'),
                               options: [
-                                {
-                                  value: "cybersecurity",
-                                  label: t(
-                                    "components.multiSelect.categories.security.cybersecurity"
-                                  ),
-                                },
-                                {
-                                  value: "ethicalHacking",
-                                  label: t(
-                                    "components.multiSelect.categories.security.ethicalHacking"
-                                  ),
-                                },
-                                {
-                                  value: "penetrationTesting",
-                                  label: t(
-                                    "components.multiSelect.categories.security.penetrationTesting"
-                                  ),
-                                },
-                              ],
+                                { value: "cybersecurity", label: t('components.multiSelect.categories.security.cybersecurity') },
+                                { value: "ethicalHacking", label: t('components.multiSelect.categories.security.ethicalHacking') },
+                                { value: "penetrationTesting", label: t('components.multiSelect.categories.security.penetrationTesting') }
+                              ]
                             },
                             {
                               style: "gradient",
-                              label: t("settings.selectStyle.options.gradient"),
+                              label: t('settings.selectStyle.options.gradient'),
                               options: [
-                                {
-                                  value: "uiDesign",
-                                  label: t(
-                                    "components.multiSelect.categories.ux.uiDesign"
-                                  ),
-                                },
-                                {
-                                  value: "uxResearch",
-                                  label: t(
-                                    "components.multiSelect.categories.ux.uxResearch"
-                                  ),
-                                },
-                                {
-                                  value: "userTesting",
-                                  label: t(
-                                    "components.multiSelect.categories.ux.userTesting"
-                                  ),
-                                },
-                              ],
+                                { value: "uiDesign", label: t('components.multiSelect.categories.ux.uiDesign') },
+                                { value: "uxResearch", label: t('components.multiSelect.categories.ux.uxResearch') },
+                                { value: "userTesting", label: t('components.multiSelect.categories.ux.userTesting') }
+                              ]
                             },
                             {
                               style: "neumorphism",
-                              label: t(
-                                "settings.selectStyle.options.neumorphism"
-                              ),
+                              label: t('settings.selectStyle.options.neumorphism'),
                               options: [
-                                {
-                                  value: "ios",
-                                  label: t(
-                                    "components.multiSelect.categories.mobile.ios"
-                                  ),
-                                },
-                                {
-                                  value: "android",
-                                  label: t(
-                                    "components.multiSelect.categories.mobile.android"
-                                  ),
-                                },
-                                {
-                                  value: "reactNative",
-                                  label: t(
-                                    "components.multiSelect.categories.mobile.reactNative"
-                                  ),
-                                },
-                              ],
+                                { value: "ios", label: t('components.multiSelect.categories.mobile.ios') },
+                                { value: "android", label: t('components.multiSelect.categories.mobile.android') },
+                                { value: "reactNative", label: t('components.multiSelect.categories.mobile.reactNative') }
+                              ]
                             },
                             {
                               style: "cyberpunk",
-                              label: t(
-                                "settings.selectStyle.options.cyberpunk"
-                              ),
+                              label: t('settings.selectStyle.options.cyberpunk'),
                               options: [
-                                {
-                                  value: "blockchain",
-                                  label: t(
-                                    "components.multiSelect.categories.security.blockchain"
-                                  ),
-                                },
-                                {
-                                  value: "crypto",
-                                  label: t(
-                                    "components.multiSelect.categories.security.crypto"
-                                  ),
-                                },
-                                {
-                                  value: "machineLearning",
-                                  label: t(
-                                    "components.multiSelect.categories.ai.machineLearning"
-                                  ),
-                                },
-                              ],
+                                { value: "blockchain", label: t('components.multiSelect.categories.security.blockchain') },
+                                { value: "crypto", label: t('components.multiSelect.categories.security.crypto') },
+                                { value: "machineLearning", label: t('components.multiSelect.categories.ai.machineLearning') }
+                              ]
                             },
                             {
                               style: "luxury",
-                              label: t("settings.selectStyle.options.luxury"),
+                              label: t('settings.selectStyle.options.luxury'),
                               options: [
-                                {
-                                  value: "premium",
-                                  label: t(
-                                    "components.multiSelect.categories.business.premium"
-                                  ),
-                                },
-                                {
-                                  value: "enterprise",
-                                  label: t(
-                                    "components.multiSelect.categories.business.enterprise"
-                                  ),
-                                },
-                                {
-                                  value: "consulting",
-                                  label: t(
-                                    "components.multiSelect.categories.business.consulting"
-                                  ),
-                                },
-                              ],
+                                { value: "premium", label: t('components.multiSelect.categories.business.premium') },
+                                { value: "enterprise", label: t('components.multiSelect.categories.business.enterprise') },
+                                { value: "consulting", label: t('components.multiSelect.categories.business.consulting') }
+                              ]
                             },
                             {
                               style: "quantum",
-                              label: t("settings.selectStyle.options.quantum"),
+                              label: t('settings.selectStyle.options.quantum'),
                               options: [
-                                {
-                                  value: "quantumComputing",
-                                  label: t(
-                                    "components.multiSelect.categories.ai.quantumComputing"
-                                  ),
-                                },
-                                {
-                                  value: "neuralNetworks",
-                                  label: t(
-                                    "components.multiSelect.categories.ai.neuralNetworks"
-                                  ),
-                                },
-                                {
-                                  value: "deepLearning",
-                                  label: t(
-                                    "components.multiSelect.categories.ai.deepLearning"
-                                  ),
-                                },
-                              ],
+                                { value: "quantumComputing", label: t('components.multiSelect.categories.ai.quantumComputing') },
+                                { value: "neuralNetworks", label: t('components.multiSelect.categories.ai.neuralNetworks') },
+                                { value: "deepLearning", label: t('components.multiSelect.categories.ai.deepLearning') }
+                              ]
                             },
                             {
                               style: "nebula",
-                              label: t("settings.selectStyle.options.nebula"),
+                              label: t('settings.selectStyle.options.nebula'),
                               options: [
-                                {
-                                  value: "spaceExploration",
-                                  label: t(
-                                    "components.multiSelect.categories.science.spaceExploration"
-                                  ),
-                                },
-                                {
-                                  value: "astronomy",
-                                  label: t(
-                                    "components.multiSelect.categories.science.astronomy"
-                                  ),
-                                },
-                                {
-                                  value: "astrophysics",
-                                  label: t(
-                                    "components.multiSelect.categories.science.astrophysics"
-                                  ),
-                                },
-                              ],
+                                { value: "spaceExploration", label: t('components.multiSelect.categories.science.spaceExploration') },
+                                { value: "astronomy", label: t('components.multiSelect.categories.science.astronomy') },
+                                { value: "astrophysics", label: t('components.multiSelect.categories.science.astrophysics') }
+                              ]
                             },
                             {
                               style: "prism",
-                              label: t("settings.selectStyle.options.prism"),
+                              label: t('settings.selectStyle.options.prism'),
                               options: [
-                                {
-                                  value: "optics",
-                                  label: t(
-                                    "components.multiSelect.categories.science.optics"
-                                  ),
-                                },
-                                {
-                                  value: "photography",
-                                  label: t(
-                                    "components.multiSelect.categories.creative.photography"
-                                  ),
-                                },
-                                {
-                                  value: "visualEffects",
-                                  label: t(
-                                    "components.multiSelect.categories.creative.visualEffects"
-                                  ),
-                                },
-                              ],
+                                { value: "optics", label: t('components.multiSelect.categories.science.optics') },
+                                { value: "photography", label: t('components.multiSelect.categories.creative.photography') },
+                                { value: "visualEffects", label: t('components.multiSelect.categories.creative.visualEffects') }
+                              ]
                             },
                             {
                               style: "stellar",
-                              label: t("settings.selectStyle.options.stellar"),
+                              label: t('settings.selectStyle.options.stellar'),
                               options: [
-                                {
-                                  value: "solarEnergy",
-                                  label: t(
-                                    "components.multiSelect.categories.energy.solarEnergy"
-                                  ),
-                                },
-                                {
-                                  value: "renewableEnergy",
-                                  label: t(
-                                    "components.multiSelect.categories.energy.renewableEnergy"
-                                  ),
-                                },
-                                {
-                                  value: "sustainability",
-                                  label: t(
-                                    "components.multiSelect.categories.energy.sustainability"
-                                  ),
-                                },
-                              ],
+                                { value: "solarEnergy", label: t('components.multiSelect.categories.energy.solarEnergy') },
+                                { value: "renewableEnergy", label: t('components.multiSelect.categories.energy.renewableEnergy') },
+                                { value: "sustainability", label: t('components.multiSelect.categories.energy.sustainability') }
+                              ]
                             },
                             {
                               style: "vortex",
-                              label: t("settings.selectStyle.options.vortex"),
+                              label: t('settings.selectStyle.options.vortex'),
                               options: [
-                                {
-                                  value: "fluidDynamics",
-                                  label: t(
-                                    "components.multiSelect.categories.physics.fluidDynamics"
-                                  ),
-                                },
-                                {
-                                  value: "aerodynamics",
-                                  label: t(
-                                    "components.multiSelect.categories.physics.aerodynamics"
-                                  ),
-                                },
-                                {
-                                  value: "turbulence",
-                                  label: t(
-                                    "components.multiSelect.categories.physics.turbulence"
-                                  ),
-                                },
-                              ],
+                                { value: "fluidDynamics", label: t('components.multiSelect.categories.physics.fluidDynamics') },
+                                { value: "aerodynamics", label: t('components.multiSelect.categories.physics.aerodynamics') },
+                                { value: "turbulence", label: t('components.multiSelect.categories.physics.turbulence') }
+                              ]
                             },
                             {
                               style: "phoenix",
-                              label: t("settings.selectStyle.options.phoenix"),
+                              label: t('settings.selectStyle.options.phoenix'),
                               options: [
-                                {
-                                  value: "gameDesign",
-                                  label: t(
-                                    "components.multiSelect.categories.gaming.gameDesign"
-                                  ),
-                                },
-                                {
-                                  value: "animation",
-                                  label: t(
-                                    "components.multiSelect.categories.creative.animation"
-                                  ),
-                                },
-                                {
-                                  value: "digitalArt",
-                                  label: t(
-                                    "components.multiSelect.categories.creative.digitalArt"
-                                  ),
-                                },
-                              ],
-                            },
+                                { value: "gameDesign", label: t('components.multiSelect.categories.gaming.gameDesign') },
+                                { value: "animation", label: t('components.multiSelect.categories.creative.animation') },
+                                { value: "digitalArt", label: t('components.multiSelect.categories.creative.digitalArt') }
+                              ]
+                            }
                           ].map(({ style, label, options }) => (
                             <div key={style} className="space-y-2">
                               <div className="flex items-center justify-between">
                                 <h5 className="text-sm font-medium">{label}</h5>
                                 <button
-                                  onClick={() =>
-                                    settings.setSelectStyle(style as any)
-                                  }
+                                  onClick={() => settings.setSelectStyle(style as any)}
                                   className={cn(
                                     "px-2 py-1 text-xs rounded transition-colors",
                                     settings.selectStyle === style
@@ -3010,9 +2505,7 @@ export function SettingsView() {
                                       : "bg-muted hover:bg-muted-foreground/20"
                                   )}
                                 >
-                                  {settings.selectStyle === style
-                                    ? t("components.multiSelect.buttons.active")
-                                    : t("components.multiSelect.buttons.apply")}
+                                  {settings.selectStyle === style ? t('components.multiSelect.buttons.active') : t('components.multiSelect.buttons.apply')}
                                 </button>
                               </div>
                               {/* Unified Select Preview - All Three Types */}
@@ -3020,28 +2513,17 @@ export function SettingsView() {
                                 {/* Single Select */}
                                 <div className="space-y-1">
                                   <label className="text-xs font-medium text-muted-foreground">
-                                    {t("components.unifiedSelect.types.single")}
+                                    {t('components.unifiedSelect.types.single')}
                                   </label>
                                   <GenericSelect
                                     type="single"
                                     design={style as any}
                                     options={options.slice(0, 3)}
-                                    value={
-                                      styleSelections[`${style}-single`] ||
-                                      options[0]?.value ||
-                                      ""
-                                    }
-                                    onValueChange={(
-                                      newValue: string | string[]
-                                    ) =>
-                                      setStyleSelections((prev) => ({
-                                        ...prev,
-                                        [`${style}-single`]:
-                                          typeof newValue === "string"
-                                            ? newValue
-                                            : newValue[0],
-                                      }))
-                                    }
+                                    value={styleSelections[`${style}-single`] || options[0]?.value || ""}
+                                    onValueChange={(newValue: string | string[]) => setStyleSelections(prev => ({
+                                      ...prev,
+                                      [`${style}-single`]: typeof newValue === 'string' ? newValue : newValue[0]
+                                    }))}
                                     placeholder={`${style} Single Select`}
                                   />
                                 </div>
@@ -3049,28 +2531,17 @@ export function SettingsView() {
                                 {/* Searchable Select */}
                                 <div className="space-y-1">
                                   <label className="text-xs font-medium text-muted-foreground">
-                                    {t(
-                                      "components.unifiedSelect.types.searchable"
-                                    )}
+                                    {t('components.unifiedSelect.types.searchable')}
                                   </label>
                                   <GenericSelect
                                     type="searchable"
                                     design={style as any}
                                     options={options}
-                                    value={
-                                      styleSelections[`${style}-search`] || ""
-                                    }
-                                    onValueChange={(
-                                      newValue: string | string[]
-                                    ) =>
-                                      setStyleSelections((prev) => ({
-                                        ...prev,
-                                        [`${style}-search`]:
-                                          typeof newValue === "string"
-                                            ? newValue
-                                            : newValue[0],
-                                      }))
-                                    }
+                                    value={styleSelections[`${style}-search`] || ""}
+                                    onValueChange={(newValue: string | string[]) => setStyleSelections(prev => ({
+                                      ...prev,
+                                      [`${style}-search`]: typeof newValue === 'string' ? newValue : newValue[0]
+                                    }))}
                                     placeholder={`Search ${style} options...`}
                                     searchPlaceholder="Type to search..."
                                   />
@@ -3079,28 +2550,17 @@ export function SettingsView() {
                                 {/* Multi Select */}
                                 <div className="space-y-1">
                                   <label className="text-xs font-medium text-muted-foreground">
-                                    {t("components.unifiedSelect.types.multi")}
+                                    {t('components.unifiedSelect.types.multi')}
                                   </label>
                                   <GenericSelect
                                     type="multi"
                                     design={style as any}
                                     options={options}
-                                    value={
-                                      styleSelections[`${style}-multi`] ||
-                                      [options[0]?.value].filter(Boolean)
-                                    }
-                                    onValueChange={(
-                                      newValue: string | string[]
-                                    ) =>
-                                      setStyleSelections((prev) => ({
-                                        ...prev,
-                                        [`${style}-multi`]: Array.isArray(
-                                          newValue
-                                        )
-                                          ? newValue
-                                          : [newValue],
-                                      }))
-                                    }
+                                    value={styleSelections[`${style}-multi`] || [options[0]?.value].filter(Boolean)}
+                                    onValueChange={(newValue: string | string[]) => setStyleSelections(prev => ({
+                                      ...prev,
+                                      [`${style}-multi`]: Array.isArray(newValue) ? newValue : [newValue]
+                                    }))}
                                     placeholder={`Multi-select ${style} items...`}
                                     searchPlaceholder="Search and select multiple..."
                                     maxSelectedDisplay={2}
@@ -3114,47 +2574,25 @@ export function SettingsView() {
 
                       {/* Server-Side Search Demo */}
                       <div className="space-y-3">
-                        <h4 className="font-medium">
-                          {t("components.multiSelect.serverSearchDemo")}
-                        </h4>
+                        <h4 className="font-medium">{t('components.multiSelect.serverSearchDemo')}</h4>
                         <div className="max-w-md">
                           <GenericSelect
                             type="multi"
                             searchType="server"
                             options={[]}
                             value={[]}
-                            onValueChange={(value: string | string[]) => {}}
+                            onValueChange={(value: string | string[]) => { }}
                             onServerSearch={async (query: string) => {
                               // Simulate server search
-                              await new Promise((resolve) =>
-                                setTimeout(resolve, 500)
-                              );
+                              await new Promise(resolve => setTimeout(resolve, 500))
                               const mockResults = [
-                                {
-                                  value: `${query}-1`,
-                                  label: `${query} Result 1`,
-                                },
-                                {
-                                  value: `${query}-2`,
-                                  label: `${query} Result 2`,
-                                },
-                                {
-                                  value: `${query}-3`,
-                                  label: `${query} Result 3`,
-                                },
-                                {
-                                  value: `${query}-api`,
-                                  label: `${query} API`,
-                                },
-                                {
-                                  value: `${query}-sdk`,
-                                  label: `${query} SDK`,
-                                },
-                              ];
-                              return mockResults.slice(
-                                0,
-                                Math.floor(Math.random() * 5) + 1
-                              );
+                                { value: `${query}-1`, label: `${query} Result 1` },
+                                { value: `${query}-2`, label: `${query} Result 2` },
+                                { value: `${query}-3`, label: `${query} Result 3` },
+                                { value: `${query}-api`, label: `${query} API` },
+                                { value: `${query}-sdk`, label: `${query} SDK` }
+                              ]
+                              return mockResults.slice(0, Math.floor(Math.random() * 5) + 1)
                             }}
                             placeholder="Server-side search demo..."
                             searchPlaceholder="Type to search server..."
@@ -3163,16 +2601,13 @@ export function SettingsView() {
                           />
                         </div>
                         <p className="text-xs text-muted-foreground">
-                          {t("components.multiSelect.serverSearchDescription")}
+                          {t('components.multiSelect.serverSearchDescription')}
                         </p>
                       </div>
 
                       <div className="pt-4 border-t">
                         <p className="text-xs text-muted-foreground">
-                          <strong>
-                            {t("components.multiSelect.features")}:
-                          </strong>{" "}
-                          {t("components.multiSelect.featuresDescription")}
+                          <strong>{t('components.multiSelect.features')}:</strong> {t('components.multiSelect.featuresDescription')}
                         </p>
                       </div>
                     </div>
@@ -3348,7 +2783,7 @@ export function SettingsView() {
                                 style.value === "compact" && "space-y-1",
                                 style.value === "spacious" && "space-y-3",
                                 style.value === "inline" &&
-                                  "flex space-y-0 space-x-2"
+                                "flex space-y-0 space-x-2"
                               )}
                             >
                               <div className="h-2 bg-muted rounded w-1/3"></div>
@@ -3698,11 +3133,11 @@ export function SettingsView() {
                                   className={cn(
                                     "h-6 w-6",
                                     animation.value === "spin" &&
-                                      "animate-spin",
+                                    "animate-spin",
                                     animation.value === "pulse" &&
-                                      "animate-pulse",
+                                    "animate-pulse",
                                     animation.value === "fancy" &&
-                                      "hover:scale-110 hover:rotate-12 transition-transform duration-300"
+                                    "hover:scale-110 hover:rotate-12 transition-transform duration-300"
                                   )}
                                 />
                               </div>
@@ -3804,7 +3239,9 @@ export function SettingsView() {
                           },
                           {
                             value: "modern",
-                            name: t("settings.toast.designOptions.modern.name"),
+                            name: t(
+                              "settings.toast.designOptions.modern.name"
+                            ),
                             description: t(
                               "settings.toast.designOptions.modern.description"
                             ),
@@ -3833,7 +3270,9 @@ export function SettingsView() {
                           },
                           {
                             value: "filled",
-                            name: t("settings.toast.designOptions.filled.name"),
+                            name: t(
+                              "settings.toast.designOptions.filled.name"
+                            ),
                             description: t(
                               "settings.toast.designOptions.filled.description"
                             ),
@@ -3863,9 +3302,7 @@ export function SettingsView() {
                                 {t("settings.toast.preview")}
                               </div>
                               <div className="text-center">
-                                <p className="text-sm font-medium">
-                                  {design.name}
-                                </p>
+                                <p className="text-sm font-medium">{design.name}</p>
                                 <p className="text-xs text-muted-foreground">
                                   {design.description}
                                 </p>
@@ -3941,9 +3378,7 @@ export function SettingsView() {
                               }
                             >
                               <div className="text-center space-y-1">
-                                <p className="text-lg font-bold">
-                                  {duration.name}
-                                </p>
+                                <p className="text-lg font-bold">{duration.name}</p>
                                 <p className="text-xs text-muted-foreground">
                                   {duration.description}
                                 </p>
@@ -3972,7 +3407,9 @@ export function SettingsView() {
                           size="sm"
                           onClick={() => {
                             enhancedToast({
-                              title: t("settings.toast.messages.success.title"),
+                              title: t(
+                                "settings.toast.messages.success.title"
+                              ),
                               description: t(
                                 "settings.toast.messages.success.description"
                               ),
@@ -4047,6 +3484,8 @@ export function SettingsView() {
                   </CardContent>
                 </Card>
 
+
+
                 {/* Switch Styles */}
                 <Card>
                   <CardHeader>
@@ -4061,76 +3500,52 @@ export function SettingsView() {
                         {
                           value: "default",
                           name: t("settings.switchStyle.options.default.title"),
-                          description: t(
-                            "settings.switchStyle.options.default.description"
-                          ),
+                          description: t("settings.switchStyle.options.default.description"),
                         },
                         {
                           value: "modern",
                           name: t("settings.switchStyle.options.modern.title"),
-                          description: t(
-                            "settings.switchStyle.options.modern.description"
-                          ),
+                          description: t("settings.switchStyle.options.modern.description"),
                         },
                         {
                           value: "ios",
                           name: t("settings.switchStyle.options.ios.title"),
-                          description: t(
-                            "settings.switchStyle.options.ios.description"
-                          ),
+                          description: t("settings.switchStyle.options.ios.description"),
                         },
                         {
                           value: "android",
                           name: t("settings.switchStyle.options.android.title"),
-                          description: t(
-                            "settings.switchStyle.options.android.description"
-                          ),
+                          description: t("settings.switchStyle.options.android.description"),
                         },
                         {
                           value: "toggle",
                           name: t("settings.switchStyle.options.toggle.title"),
-                          description: t(
-                            "settings.switchStyle.options.toggle.description"
-                          ),
+                          description: t("settings.switchStyle.options.toggle.description"),
                         },
                         {
                           value: "slider",
                           name: t("settings.switchStyle.options.slider.title"),
-                          description: t(
-                            "settings.switchStyle.options.slider.description"
-                          ),
+                          description: t("settings.switchStyle.options.slider.description"),
                         },
                         {
                           value: "neon",
                           name: t("settings.switchStyle.options.neon.title"),
-                          description: t(
-                            "settings.switchStyle.options.neon.description"
-                          ),
+                          description: t("settings.switchStyle.options.neon.description"),
                         },
                         {
                           value: "neumorphism",
-                          name: t(
-                            "settings.switchStyle.options.neumorphism.title"
-                          ),
-                          description: t(
-                            "settings.switchStyle.options.neumorphism.description"
-                          ),
+                          name: t("settings.switchStyle.options.neumorphism.title"),
+                          description: t("settings.switchStyle.options.neumorphism.description"),
                         },
                         {
                           value: "liquid",
                           name: t("settings.switchStyle.options.liquid.title"),
-                          description: t(
-                            "settings.switchStyle.options.liquid.description"
-                          ),
+                          description: t("settings.switchStyle.options.liquid.description"),
                         },
                         {
                           value: "cyberpunk",
-                          name: t(
-                            "settings.switchStyle.options.cyberpunk.title"
-                          ),
-                          description: t(
-                            "settings.switchStyle.options.cyberpunk.description"
-                          ),
+                          name: t("settings.switchStyle.options.cyberpunk.title"),
+                          description: t("settings.switchStyle.options.cyberpunk.description"),
                         },
                       ].map((style) => (
                         <div
@@ -4157,9 +3572,7 @@ export function SettingsView() {
                             <div className="flex flex-col items-center space-y-3">
                               {/* ON State Preview */}
                               <div className="flex items-center space-x-3">
-                                <span className="text-xs text-muted-foreground">
-                                  OFF
-                                </span>
+                                <span className="text-xs text-muted-foreground">OFF</span>
                                 <div className="relative">
                                   {style.value === "default" && (
                                     <div className="h-6 w-11 rounded-full bg-primary border-2 border-transparent flex items-center">
@@ -4282,9 +3695,7 @@ export function SettingsView() {
                                     </div>
                                   )}
                                 </div>
-                                <span className="text-xs text-muted-foreground">
-                                  ON
-                                </span>
+                                <span className="text-xs text-muted-foreground">ON</span>
                               </div>
                             </div>
                           </div>
@@ -4364,7 +3775,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>{t("settings.behavior.logo.label")}</Label>
+                          <Label>
+                            {t("settings.behavior.logo.label")}
+                          </Label>
                           <p className="text-sm text-muted-foreground">
                             {t("settings.behavior.logo.description")}
                           </p>
@@ -4439,7 +3852,9 @@ export function SettingsView() {
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label>{t("settings.behavior.sidebar.label")}</Label>
+                          <Label>
+                            {t("settings.behavior.sidebar.label")}
+                          </Label>
                           <p className="text-sm text-muted-foreground">
                             {t("settings.behavior.sidebar.description")}
                           </p>
@@ -4571,9 +3986,7 @@ export function SettingsView() {
                   <Label className="text-sm font-semibold">
                     {t("settings.preview.input.label")}
                   </Label>
-                  <Input
-                    placeholder={t("settings.preview.input.placeholder")}
-                  />
+                  <Input placeholder={t("settings.preview.input.placeholder")} />
                 </div>
 
                 <Separator />

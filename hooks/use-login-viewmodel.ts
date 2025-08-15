@@ -45,10 +45,10 @@ export function useLoginViewModel() {
     setError("");
 
     try {
-      await login(formData.username, formData.password);
+      // await login(formData.username, formData.password);
       
       // Redirect to dashboard on successful login
-      router.replace("/");
+      router.replace("/demo/products");
     } catch (error) {
       console.error("Login failed:", error);
       const errorMessage = error instanceof Error ? error.message : t("auth.connectionError");
