@@ -1,13 +1,12 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import * as SwitchPrimitives from "@radix-ui/react-switch";
-import { cn } from "@/lib/utils";
-import { useSettings } from "@/providers/settings-provider";
-import { useI18n } from "@/providers/i18n-provider";
+import * as React from "react"
+import * as SwitchPrimitives from "@radix-ui/react-switch"
+import { cn } from "@/lib/utils"
+import { useSettings } from "@/providers/settings-provider"
+import { useI18n } from "@/providers/i18n-provider"
 
-interface SwitchProps
-  extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {
+interface SwitchProps extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {
   showLabels?: boolean;
   onLabel?: string;
   offLabel?: string;
@@ -27,16 +26,15 @@ const Switch = React.forwardRef<
 
   // Get style-specific classes with RTL support
   const getSwitchStyles = () => {
-    const baseStyles =
-      "peer inline-flex shrink-0 cursor-pointer items-center transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50";
-
+    const baseStyles = "peer inline-flex shrink-0 cursor-pointer items-center transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50";
+    
     // RTL-aware thumb translations
     const getThumbTranslation = (distance: string) => {
-      return isRTL
+      return isRTL 
         ? `data-[state=checked]:-translate-x-${distance} data-[state=unchecked]:translate-x-0`
         : `data-[state=checked]:translate-x-${distance} data-[state=unchecked]:translate-x-0`;
     };
-
+    
     switch (switchStyle) {
       case "modern":
         return {
@@ -55,12 +53,12 @@ const Switch = React.forwardRef<
             "data-[state=checked]:shadow-2xl data-[state=checked]:shadow-primary/20",
             "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white before:to-gray-100 before:opacity-90",
             "relative overflow-hidden",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-5 data-[state=unchecked]:translate-x-0"
               : "data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
-          ),
+          )
         };
-
+      
       case "ios":
         return {
           root: cn(
@@ -77,12 +75,12 @@ const Switch = React.forwardRef<
             "pointer-events-none block h-7 w-7 rounded-full bg-white shadow-lg ring-0 transition-all duration-200 my-0.5",
             "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white before:to-gray-50 before:opacity-95",
             "relative overflow-hidden shadow-xl",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-6 data-[state=unchecked]:-translate-x-0.5"
               : "data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0.5"
-          ),
+          )
         };
-
+      
       case "android":
         return {
           root: cn(
@@ -100,12 +98,12 @@ const Switch = React.forwardRef<
             "data-[state=unchecked]:bg-gray-500 data-[state=unchecked]:shadow-gray-500/40",
             "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-transparent before:pointer-events-none",
             "relative overflow-hidden",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-4 data-[state=unchecked]:translate-x-0"
               : "data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0"
-          ),
+          )
         };
-
+      
       case "toggle":
         return {
           root: cn(
@@ -124,12 +122,12 @@ const Switch = React.forwardRef<
             "data-[state=unchecked]:bg-white data-[state=unchecked]:shadow-gray-400/30 dark:data-[state=unchecked]:bg-gray-300",
             "before:absolute before:inset-0 before:rounded-md before:bg-gradient-to-br before:from-white/20 before:to-transparent before:pointer-events-none",
             "relative overflow-hidden",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-8 data-[state=unchecked]:translate-x-0"
               : "data-[state=checked]:translate-x-8 data-[state=unchecked]:translate-x-0"
-          ),
+          )
         };
-
+      
       case "slider":
         return {
           root: cn(
@@ -146,12 +144,12 @@ const Switch = React.forwardRef<
             "pointer-events-none block h-4 w-4 rounded-full bg-white shadow-xl ring-0 transition-all duration-300 my-1",
             "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white before:to-gray-100 before:opacity-95",
             "relative overflow-hidden shadow-2xl",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-6 data-[state=unchecked]:-translate-x-1"
               : "data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-1"
-          ),
+          )
         };
-
+      
       case "neon":
         return {
           root: cn(
@@ -170,12 +168,12 @@ const Switch = React.forwardRef<
             "data-[state=unchecked]:bg-gray-400 data-[state=unchecked]:shadow-gray-400/50",
             "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-transparent before:pointer-events-none",
             "relative overflow-hidden",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-6 data-[state=unchecked]:translate-x-0"
               : "data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0"
-          ),
+          )
         };
-
+      
       case "neumorphism":
         return {
           root: cn(
@@ -198,12 +196,12 @@ const Switch = React.forwardRef<
             "dark:data-[state=checked]:shadow-[2px_2px_4px_rgba(0,0,0,0.4),-2px_-2px_4px_rgba(255,255,255,0.1)]",
             "dark:data-[state=unchecked]:shadow-[2px_2px_4px_rgba(0,0,0,0.4),-2px_-2px_4px_rgba(255,255,255,0.1)]",
             "relative overflow-hidden",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-8 data-[state=unchecked]:translate-x-0"
               : "data-[state=checked]:translate-x-8 data-[state=unchecked]:translate-x-0"
-          ),
+          )
         };
-
+      
       case "liquid":
         return {
           root: cn(
@@ -224,12 +222,12 @@ const Switch = React.forwardRef<
             "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/40 before:to-transparent before:pointer-events-none",
             "after:absolute after:inset-1 after:rounded-full after:bg-gradient-to-t after:from-transparent after:to-white/20 after:pointer-events-none",
             "relative overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.15)]",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-8 data-[state=unchecked]:-translate-x-0.5"
               : "data-[state=checked]:translate-x-8 data-[state=unchecked]:translate-x-0.5"
-          ),
+          )
         };
-
+      
       case "cyberpunk":
         return {
           root: cn(
@@ -250,12 +248,12 @@ const Switch = React.forwardRef<
             "before:absolute before:inset-0 before:rounded-sm before:bg-gradient-to-br before:from-white/30 before:to-transparent before:pointer-events-none",
             "after:absolute after:top-0 after:left-0 after:h-0.5 after:w-full after:bg-gradient-to-r after:from-transparent after:via-white/60 after:to-transparent after:pointer-events-none",
             "relative overflow-hidden",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-8 data-[state=unchecked]:translate-x-0"
               : "data-[state=checked]:translate-x-8 data-[state=unchecked]:translate-x-0"
-          ),
+          )
         };
-
+      
       default: // default style
         return {
           root: cn(
@@ -272,10 +270,10 @@ const Switch = React.forwardRef<
             "pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-all duration-300",
             "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white before:to-gray-50 before:opacity-90",
             "relative overflow-hidden shadow-xl",
-            isRTL
+            isRTL 
               ? "data-[state=checked]:-translate-x-5 data-[state=unchecked]:translate-x-0"
               : "data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
-          ),
+          )
         };
     }
   };
@@ -284,29 +282,27 @@ const Switch = React.forwardRef<
 
   if (showLabels) {
     return (
-      <div
-        className={cn(
-          "flex items-center gap-3",
-          isRTL ? "flex-row-reverse space-x-reverse" : ""
-        )}
-      >
-        <span
-          className={cn(
-            "text-sm font-medium transition-colors duration-200 select-none",
-            props.checked ? "text-foreground" : "text-muted-foreground"
-          )}
-        >
+      <div className={cn(
+        "flex items-center gap-3",
+        isRTL ? "flex-row-reverse space-x-reverse" : ""
+      )}>
+        <span className={cn(
+          "text-sm font-medium transition-colors duration-200 select-none",
+          props.checked ? "text-foreground" : "text-muted-foreground"
+        )}>
           {defaultOnLabel}
         </span>
-        <SwitchPrimitives.Root className={styles.root} {...props} ref={ref}>
+        <SwitchPrimitives.Root
+          className={styles.root}
+          {...props}
+          ref={ref}
+        >
           <SwitchPrimitives.Thumb className={styles.thumb} />
         </SwitchPrimitives.Root>
-        <span
-          className={cn(
-            "text-sm font-medium transition-colors duration-200 select-none",
-            props.checked ? "text-muted-foreground" : "text-foreground"
-          )}
-        >
+        <span className={cn(
+          "text-sm font-medium transition-colors duration-200 select-none",
+          props.checked ? "text-muted-foreground" : "text-foreground"
+        )}>
           {defaultOffLabel}
         </span>
       </div>
@@ -314,7 +310,11 @@ const Switch = React.forwardRef<
   }
 
   return (
-    <SwitchPrimitives.Root className={styles.root} {...props} ref={ref}>
+    <SwitchPrimitives.Root
+      className={styles.root}
+      {...props}
+      ref={ref}
+    >
       <SwitchPrimitives.Thumb className={styles.thumb} />
     </SwitchPrimitives.Root>
   );

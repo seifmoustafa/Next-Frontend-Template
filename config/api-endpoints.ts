@@ -54,4 +54,31 @@ export const API_ENDPOINTS = {
   UPDATE_CIVILIAN: (id: string) => `/Civilians/${id}`,
   DELETE_CIVILIAN: (id: string) => `/Civilians/${id}`,
 
+  GET_MILITARY_PERSONS: "/MilitaryPersons",
+  GET_MILITARY_PERSON: (id: string) => `/MilitaryPersons/${id}`,
+  CREATE_MILITARY_PERSON: "/MilitaryPersons",
+  UPDATE_MILITARY_PERSON: (id: string) => `/MilitaryPersons/${id}`,
+  DELETE_MILITARY_PERSON: (id: string) => `/MilitaryPersons/${id}`,
+
+  GET_SUBCATEGORIES: `/SubCategory`,
+  GET_SUBCATEGORY: (id: string) => `/SubCategory/${id}`,
+  GET_SUBCATEGORY_BY_CATEGORY_ID: (categoryId: string) => `/SubCategory/category/${categoryId}`,
+  CREATE_SUBCATEGORY: `/SubCategory`,
+  UPDATE_SUBCATEGORY: (id: string) => `/SubCategory/${id}`,
+  DELETE_SUBCATEGORY: (id: string) => `/SubCategory/${id}`,
+
+  GET_PRODUCTS: "/Products",
+  GET_PRODUCT: (id: string) => `/Products/${id}`,
+  GET_PRODUCT_BY_TEMP_NIIN: (tempNiin: string) => `/Products/temp-niin/${tempNiin}`,
+  CREATE_PRODUCT: "/Products",
+  UPDATE_PRODUCT: (id: string) => `/Products/${id}`,
+  DELETE_PRODUCT: (id: string) => `/Products/${id}`,
+
+
+  GET_ROLES: "/Roles",
+  GET_ROLE: (id: string) => `/Roles/${id}`,
+  CREATE_ROLE: "/Roles",
+  UPDATE_ROLE: (id: string) => `/Roles/${id}`,
+  DELETE_ROLE: (id: string) => `/Roles/${id}`,
+
 };

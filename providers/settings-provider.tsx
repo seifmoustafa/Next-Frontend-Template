@@ -128,9 +128,19 @@ export type SelectStyle =
   | "stellar"
   | "vortex"
   | "phoenix";
-export type SwitchStyle = "default" | "modern" | "ios" | "android" | "toggle" | "slider" | "neon" | "neumorphism" | "liquid" | "cyberpunk";
+export type SwitchStyle =
+  | "default"
+  | "modern"
+  | "ios"
+  | "android"
+  | "toggle"
+  | "slider"
+  | "neon"
+  | "neumorphism"
+  | "liquid"
+  | "cyberpunk";
 
-interface SettingsContextType {
+export interface SettingsContextType {
   // Existing settings
   colorTheme: ColorTheme;
   lightBackgroundTheme: LightBackgroundTheme;

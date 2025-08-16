@@ -52,12 +52,21 @@ export const navigation: NavigationItem[] = [
     icon: MapPin,
   },
   {
+    name: "nav.roles",
+    href: "/roles",
+    icon: MapPin,
+  },
+  {
     name: "nav.siteWorkers",
     icon: HardHat,
     children: [
       {
         name: "nav.civilians",
         href: "/civilians",
+      },
+      {
+        name: "nav.militaryPersons",
+        href: "/military-persons",
       },
     ],
   },
@@ -77,9 +86,25 @@ export const navigation: NavigationItem[] = [
       },
        {
         name: "nav.categories",
-        href: "/categories",
+        children:[
+          {
+            name: "nav.mainCategories",
+            href: "/categories",
+          },
+          {
+            name: "nav.subCategories",
+            href: "/sub-categories",
+          },
+          {
+            name: "nav.products",
+            href: "/products",
+          },
+        ],
         icon: BarChart,
+
       },
+       
+       
        {
         name: "nav.warehouseLocations",
         href: "/warehouseLocations",

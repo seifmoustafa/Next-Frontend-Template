@@ -260,8 +260,7 @@ export function GenericTable<T extends Record<string, any>>({
         styleClasses = cn(
           "border-b-0 bg-background hover:shadow-[inset_5px_5px_10px_rgba(0,0,0,0.1),inset_-5px_-5px_10px_rgba(255,255,255,0.1)]",
           "dark:hover:shadow-[inset_5px_5px_10px_rgba(0,0,0,0.2),inset_-5px_-5px_10px_rgba(255,255,255,0.05)]",
-          index % 2 === 0 &&
-            "shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05),inset_-2px_-2px_4px_rgba(255,255,255,0.05)]"
+          index % 2 === 0 && "shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05),inset_-2px_-2px_4px_rgba(255,255,255,0.05)]"
         );
         break;
       case "cyberpunk":
@@ -277,8 +276,7 @@ export function GenericTable<T extends Record<string, any>>({
           "border-b border-amber-200/20 bg-gradient-to-r from-amber-50/20 to-transparent",
           "hover:from-amber-100/30 hover:to-amber-50/20 hover:shadow-lg hover:shadow-amber-200/20",
           "dark:border-amber-400/20 dark:from-amber-900/10 dark:hover:from-amber-800/20",
-          index % 2 === 0 &&
-            "from-amber-100/30 to-amber-50/10 dark:from-amber-900/20 dark:to-amber-800/10"
+          index % 2 === 0 && "from-amber-100/30 to-amber-50/10 dark:from-amber-900/20 dark:to-amber-800/10"
         );
         break;
       case "matrix":
@@ -293,8 +291,7 @@ export function GenericTable<T extends Record<string, any>>({
           "border-b border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/15",
           "hover:from-primary/20 hover:via-primary/15 hover:to-primary/25 text-primary",
           "dark:from-primary/10 dark:via-primary/5 dark:to-primary/15 dark:text-primary dark:border-primary/20",
-          index % 2 === 0 &&
-            "from-primary/15 via-primary/10 to-primary/20 dark:from-primary/15 dark:via-primary/10 dark:to-primary/20"
+          index % 2 === 0 && "from-primary/15 via-primary/10 to-primary/20 dark:from-primary/15 dark:via-primary/10 dark:to-primary/20"
         );
         break;
       default:
@@ -307,32 +304,25 @@ export function GenericTable<T extends Record<string, any>>({
           styleClasses += " bg-primary/20 border-primary/30 backdrop-blur-md";
           break;
         case "neon":
-          styleClasses +=
-            " bg-primary/20 border-primary/50 shadow-[0_0_25px_rgba(var(--primary),0.4)]";
+          styleClasses += " bg-primary/20 border-primary/50 shadow-[0_0_25px_rgba(var(--primary),0.4)]";
           break;
         case "gradient":
-          styleClasses +=
-            " from-primary/20 via-primary/30 to-primary/20 shadow-lg shadow-primary/20";
+          styleClasses += " from-primary/20 via-primary/30 to-primary/20 shadow-lg shadow-primary/20";
           break;
         case "neumorphism":
-          styleClasses +=
-            " shadow-[inset_8px_8px_16px_rgba(var(--primary),0.1),inset_-8px_-8px_16px_rgba(var(--primary),0.05)]";
+          styleClasses += " shadow-[inset_8px_8px_16px_rgba(var(--primary),0.1),inset_-8px_-8px_16px_rgba(var(--primary),0.05)]";
           break;
         case "cyberpunk":
-          styleClasses +=
-            " bg-primary/20 border-primary text-primary shadow-[0_0_20px_rgba(var(--primary),0.5)]";
+          styleClasses += " bg-primary/20 border-primary text-primary shadow-[0_0_20px_rgba(var(--primary),0.5)]";
           break;
         case "luxury":
-          styleClasses +=
-            " from-amber-200/40 to-amber-100/30 border-amber-300/40 shadow-lg shadow-amber-200/30";
+          styleClasses += " from-amber-200/40 to-amber-100/30 border-amber-300/40 shadow-lg shadow-amber-200/30";
           break;
         case "matrix":
-          styleClasses +=
-            " bg-primary/20 border-primary/50 text-primary shadow-[0_0_20px_hsl(var(--primary)/0.4)]";
+          styleClasses += " bg-primary/20 border-primary/50 text-primary shadow-[0_0_20px_hsl(var(--primary)/0.4)]";
           break;
         case "diamond":
-          styleClasses +=
-            " from-primary/25 via-primary/20 to-primary/30 border-primary/40 shadow-lg shadow-primary/30";
+          styleClasses += " from-primary/25 via-primary/20 to-primary/30 border-primary/40 shadow-lg shadow-primary/30";
           break;
         default:
           styleClasses += " bg-primary/10 border-primary/20";
@@ -343,8 +333,7 @@ export function GenericTable<T extends Record<string, any>>({
   };
 
   const getHeaderClasses = () => {
-    const baseClasses =
-      "font-semibold text-foreground transition-all duration-300";
+    const baseClasses = "font-semibold text-foreground transition-all duration-300";
 
     let heightClass = "";
     switch (settings.spacingSize) {
@@ -455,8 +444,7 @@ export function GenericTable<T extends Record<string, any>>({
   };
 
   const getCardClasses = () => {
-    const baseClasses =
-      "border rounded-lg p-4 space-y-3 transition-all duration-300 hover:scale-[1.02]";
+    const baseClasses = "border rounded-lg p-4 space-y-3 transition-all duration-300 hover:scale-[1.02]";
 
     switch (settings.tableStyle) {
       case "glass":
@@ -659,15 +647,15 @@ export function GenericTable<T extends Record<string, any>>({
             <TableHeader>
               <TableRow className={getHeaderClasses()}>
                 {selectable && (
-                  <TableHead
-                    className={cn("w-12", getCellPadding(), "relative")}
-                  >
-                    <div
-                      className={cn(
-                        "absolute inset-0 flex items-center",
-                        direction === "rtl" ? "right-4" : "left-4"
-                      )}
-                    >
+                  <TableHead className={cn(
+                    "w-12", 
+                    getCellPadding(),
+                    "relative"
+                  )}>
+                    <div className={cn(
+                      "absolute inset-0 flex items-center",
+                      direction === "rtl" ? "right-4" : "left-4"
+                    )}>
                       <Checkbox
                         checked={
                           selectedItems.length === sortedData.length &&
@@ -757,22 +745,21 @@ export function GenericTable<T extends Record<string, any>>({
                       className={getRowClasses(index, isSelected)}
                     >
                       {selectable && (
-                        <TableCell className={cn(getCellPadding(), "relative")}>
-                          <div
-                            className={cn(
-                              "absolute inset-0 flex items-center",
-                              direction === "rtl" ? "right-4" : "left-4"
-                            )}
-                          >
+                        <TableCell className={cn(
+                          getCellPadding(),
+                          "relative"
+                        )}>
+                          <div className={cn(
+                            "absolute inset-0 flex items-center",
+                            direction === "rtl" ? "right-4" : "left-4"
+                          )}>
                             <Checkbox
                               checked={isSelected}
                               onCheckedChange={(checked) => {
                                 if (onSelectionChange) {
                                   const newSelected = checked
                                     ? [...selectedItems, row.id]
-                                    : selectedItems.filter(
-                                        (id) => id !== row.id
-                                      );
+                                    : selectedItems.filter((id) => id !== row.id);
                                   onSelectionChange(newSelected);
                                 }
                               }}
@@ -863,12 +850,10 @@ export function GenericTable<T extends Record<string, any>>({
                     pagination.currentPage * pagination.pageSize,
                     pagination.itemsCount
                   );
-                  return `${t("table.showing")} ${start}-${end} ${t(
-                    "table.of"
-                  )} ${pagination.itemsCount} ${t("table.results")}`;
+                  return `${t("table.showing")} ${start}-${end} ${t("table.of")} ${pagination.itemsCount} ${t("table.results")}`;
                 })()}
               </p>
-
+              
               {/* Page Size Selector */}
               {pagination.onPageSizeChange && (
                 <div className="flex items-center gap-2">
@@ -879,14 +864,10 @@ export function GenericTable<T extends Record<string, any>>({
                     type="single"
                     options={[10, 25, 50, 100].map((size) => ({
                       value: String(size),
-                      label: String(size),
+                      label: String(size)
                     }))}
                     value={String(pagination.pageSize)}
-                    onValueChange={(v: string | string[]) =>
-                      pagination.onPageSizeChange?.(
-                        Number(typeof v === "string" ? v : v[0])
-                      )
-                    }
+                    onValueChange={(v: string | string[]) => pagination.onPageSizeChange?.(Number(typeof v === 'string' ? v : v[0]))}
                     className="min-w-[100px] w-auto max-w-[120px] h-8 text-center font-medium"
                     allowClear={false}
                   />
@@ -912,18 +893,8 @@ export function GenericTable<T extends Record<string, any>>({
                   )}
                   title={t("table.firstPage")}
                 >
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-                    />
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
                   </svg>
                 </Button>
 
@@ -931,9 +902,7 @@ export function GenericTable<T extends Record<string, any>>({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() =>
-                    pagination.onPageChange(pagination.currentPage - 1)
-                  }
+                  onClick={() => pagination.onPageChange(pagination.currentPage - 1)}
                   disabled={pagination.currentPage === 1}
                   className={cn(
                     "h-8 w-8 p-0",
@@ -941,18 +910,8 @@ export function GenericTable<T extends Record<string, any>>({
                   )}
                   title={t("table.previousPage")}
                 >
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </Button>
 
@@ -984,8 +943,7 @@ export function GenericTable<T extends Record<string, any>>({
                         // Middle: 1 ... 4 5 6 ... 10
                         pages.push(1);
                         pages.push("...");
-                        for (let i = current - 1; i <= current + 1; i++)
-                          pages.push(i);
+                        for (let i = current - 1; i <= current + 1; i++) pages.push(i);
                         pages.push("...");
                         pages.push(total);
                       }
@@ -1014,8 +972,7 @@ export function GenericTable<T extends Record<string, any>>({
                           onClick={() => pagination.onPageChange(pageNum)}
                           className={cn(
                             "h-8 w-8 p-0",
-                            isActive &&
-                              "bg-primary text-primary-foreground shadow-sm"
+                            isActive && "bg-primary text-primary-foreground shadow-sm"
                           )}
                         >
                           {pageNum}
@@ -1029,9 +986,7 @@ export function GenericTable<T extends Record<string, any>>({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() =>
-                    pagination.onPageChange(pagination.currentPage + 1)
-                  }
+                  onClick={() => pagination.onPageChange(pagination.currentPage + 1)}
                   disabled={pagination.currentPage === pagination.pagesCount}
                   className={cn(
                     "h-8 w-8 p-0",
@@ -1039,18 +994,8 @@ export function GenericTable<T extends Record<string, any>>({
                   )}
                   title={t("table.nextPage")}
                 >
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Button>
 
@@ -1066,18 +1011,8 @@ export function GenericTable<T extends Record<string, any>>({
                   )}
                   title={t("table.lastPage")}
                 >
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                    />
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                   </svg>
                 </Button>
 
@@ -1093,9 +1028,7 @@ export function GenericTable<T extends Record<string, any>>({
                     className="w-16 h-8 text-center"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        const value = parseInt(
-                          (e.target as HTMLInputElement).value
-                        );
+                        const value = parseInt((e.target as HTMLInputElement).value);
                         if (value >= 1 && value <= pagination.pagesCount) {
                           pagination.onPageChange(value);
                           (e.target as HTMLInputElement).value = "";

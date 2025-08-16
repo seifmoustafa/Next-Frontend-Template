@@ -35,7 +35,7 @@ export const ar = {
     militaryPersons: "العسكريون",
     mainCategories: "التصنيفات الرئيسية",
     subCategories: "التصنيفات الفرعية",
-    roles: "وظائف المستخدمين",
+    roles: "وظائف المستخدمين"
   },
   Sites: {
     title: "المواقع",
@@ -208,7 +208,7 @@ export const ar = {
     itemType: "وظيفة المستخدم",
     name: "اسم الوظيفه",
     roleCode: "كود الوظيفة",
-    roleDescription: "توصيف الوظيفة",
+    roleDescription : "توصيف الوظيفة",
     isActive: "حالة النشاط",
     createdAt: "تاريخ الإنشاء",
     addRole: "إضافة وظيفة",
@@ -389,45 +389,45 @@ export const ar = {
       options: {
         default: {
           title: "افتراضي",
-          description: "مفتاح كلاسيكي مع تصميم محسن",
+          description: "مفتاح كلاسيكي مع تصميم محسن"
         },
         modern: {
           title: "عصري",
-          description: "تصميم متدرج أنيق مع تأثيرات زجاجية",
+          description: "تصميم متدرج أنيق مع تأثيرات زجاجية"
         },
         ios: {
           title: "نمط iOS",
-          description: "تصميم مستوحى من Apple iOS",
+          description: "تصميم مستوحى من Apple iOS"
         },
         android: {
           title: "نمط Android",
-          description: "مفتاح Material Design",
+          description: "مفتاح Material Design"
         },
         toggle: {
           title: "زر التبديل",
-          description: "تبديل مستطيل مع تأثيرات متميزة",
+          description: "تبديل مستطيل مع تأثيرات متميزة"
         },
         slider: {
           title: "نمط المنزلق",
-          description: "تصميم منزلق متدرج متميز",
+          description: "تصميم منزلق متدرج متميز"
         },
         neon: {
           title: "توهج نيون",
-          description: "توهج نيون مستقبلي مع حركة نابضة",
+          description: "توهج نيون مستقبلي مع حركة نابضة"
         },
         neumorphism: {
           title: "نيومورفيزم",
-          description: "واجهة مستخدم ناعمة مع ظلال عمق واقعية",
+          description: "واجهة مستخدم ناعمة مع ظلال عمق واقعية"
         },
         liquid: {
           title: "حركة سائلة",
-          description: "حركات وتدرجات سلسة تشبه السائل",
+          description: "حركات وتدرجات سلسة تشبه السائل"
         },
         cyberpunk: {
           title: "سايبربانك",
-          description: "تصميم تقني مستقبلي مع لمسات نيون",
-        },
-      },
+          description: "تصميم تقني مستقبلي مع لمسات نيون"
+        }
+      }
     },
     tableStyle: {
       title: "أنماط الجداول",
@@ -435,53 +435,53 @@ export const ar = {
       options: {
         default: {
           title: "افتراضي",
-          description: "تصميم جدول نظيف ومهني",
+          description: "تصميم جدول نظيف ومهني"
         },
         striped: {
           title: "مخطط",
-          description: "ألوان صفوف متناوبة لقراءة أفضل",
+          description: "ألوان صفوف متناوبة لقراءة أفضل"
         },
         bordered: {
           title: "محاط بحدود",
-          description: "حدود محسنة لفصل البيانات بوضوح",
+          description: "حدود محسنة لفصل البيانات بوضوح"
         },
         minimal: {
           title: "بسيط",
-          description: "تصميم نظيف وبسيط مع تصميم أدنى",
+          description: "تصميم نظيف وبسيط مع تصميم أدنى"
         },
         glass: {
           title: "مورفولوجيا زجاجية",
-          description: "تأثير زجاجي مذهل مع ضبابية الخلفية",
+          description: "تأثير زجاجي مذهل مع ضبابية الخلفية"
         },
         neon: {
           title: "توهج نيون",
-          description: "تصميم نيون مستقبلي مع تأثيرات متوهجة",
+          description: "تصميم نيون مستقبلي مع تأثيرات متوهجة"
         },
         gradient: {
           title: "تدفق متدرج",
-          description: "تراكبات متدرجة جميلة وانتقالات سلسة",
+          description: "تراكبات متدرجة جميلة وانتقالات سلسة"
         },
         neumorphism: {
           title: "نيومورفيزم",
-          description: "تصميم واجهة مستخدم ناعمة مع عمق وظلال واقعية",
+          description: "تصميم واجهة مستخدم ناعمة مع عمق وظلال واقعية"
         },
         cyberpunk: {
           title: "سايبربانك",
-          description: "تصميم مستوحى من التكنولوجيا مع حواف حادة ونيون",
+          description: "تصميم مستوحى من التكنولوجيا مع حواف حادة ونيون"
         },
         luxury: {
           title: "ذهبي فاخر",
-          description: "تصميم ذهبي متميز مع تصميم أنيق",
+          description: "تصميم ذهبي متميز مع تصميم أنيق"
         },
         matrix: {
           title: "كود ماتريكس",
-          description: "تصميم أخضر مستقبلي بنمط الماتريكس مع تأثيرات رقمية",
+          description: "تصميم أخضر مستقبلي بنمط الماتريكس مع تأثيرات رقمية"
         },
         diamond: {
           title: "منشور الماس",
-          description: "تصميم منشوري متعدد الألوان مع تدرجات قوس قزح",
-        },
-      },
+          description: "تصميم منشوري متعدد الألوان مع تدرجات قوس قزح"
+        }
+      }
     },
     darkMode: "الوضع المظلم",
     lightDarkToggle: "تبديل بين الوضع الفاتح والمظلم",
@@ -896,10 +896,10 @@ export const ar = {
         prism: "موشور",
         stellar: "نجمي",
         vortex: "دوامة",
-        phoenix: "عنقاء",
-      },
+        phoenix: "عنقاء"
+      }
     },
-
+    
     logo: {
       title: "إعدادات الشعار",
       description: "خصص مظهر شعار التطبيق",
@@ -1380,109 +1380,110 @@ export const ar = {
       status: "الحالة",
     },
   },
-  components: {
-    multiSelect: {
-      searchStates: {
-        noResults: "لا يوجد نتائج",
-        searching: "جاري البحث .....",
+    components: {
+      multiSelect: {
+        searchStates:{
+          noResults:"لا يوجد نتائج",
+          searching:"جاري البحث ....."
+        },
+        title:"اختيار متعدد",
+        description:"اختيار المتعدد من الاختيارات",
+        currentStyle: {
+          luxury: "فاخر"
+        },
+        placeholders: {
+          selectTechnologies: "اختر التقنيات"
+        },
+        selected: "المحدد: لا يوجد",
+        availableStyles: "الأنماط المتاحة",
+        buttons: {
+          apply: "تطبيق",
+          active: "نشط"
+        },
+        categories: {
+          webTech: {
+            html: "HTML"
+          },
+          design: {
+            figma: "فيجما"
+          },
+          backend: {
+            nodejs: "Node.js"
+          },
+          database: {
+            mysql: "MySQL"
+          },
+          devops: {
+            git: "Git",
+            docker: "Docker"
+          },
+          cloud: {
+            aws: "خدمات أمازون السحابية (AWS)"
+          },
+          security: {
+            cybersecurity: "الأمن السيبراني",
+            blockchain: "سلسلة الكتل (Blockchain)"
+          },
+          ux: {
+            uiDesign: "تصميم واجهة المستخدم"
+          },
+          mobile: {
+            ios: "iOS"
+          },
+          business: {
+            premium: "ممتاز"
+          },
+          ai: {
+            quantumComputing: "الحوسبة الكمومية"
+          },
+          science: {
+            spaceExploration: "استكشاف الفضاء",
+            optics: "البصريات"
+          },
+          energy: {
+            solarEnergy: "الطاقة الشمسية"
+          },
+          physics: {
+            fluidDynamics: "ديناميكا الموائع"
+          },
+          gaming: {
+            gameDesign: "تصميم الألعاب"
+          }
+        },
+        serverSearchDemo: "عرض توضيحي للبحث من جانب الخادم...",
+        serverSearchDescription: "هذا مثال على البحث الذي يتم معالجته في الخادم.",
+        features: "الميزات",
+        featuresDescription: "عرض أهم ميزات أداة التحديد المتعدد."
       },
-      title: "اختيار متعدد",
-      description: "اختيار المتعدد من الاختيارات",
-      currentStyle: {
-        luxury: "فاخر",
-      },
-      placeholders: {
-        selectTechnologies: "اختر التقنيات",
-      },
-      selected: "المحدد: لا يوجد",
-      availableStyles: "الأنماط المتاحة",
-      buttons: {
-        apply: "تطبيق",
-        active: "نشط",
-      },
-      categories: {
-        webTech: {
-          html: "HTML",
-        },
-        design: {
-          figma: "فيجما",
-        },
-        backend: {
-          nodejs: "Node.js",
-        },
-        database: {
-          mysql: "MySQL",
-        },
-        devops: {
-          git: "Git",
-          docker: "Docker",
-        },
-        cloud: {
-          aws: "خدمات أمازون السحابية (AWS)",
-        },
-        security: {
-          cybersecurity: "الأمن السيبراني",
-          blockchain: "سلسلة الكتل (Blockchain)",
-        },
-        ux: {
-          uiDesign: "تصميم واجهة المستخدم",
-        },
-        mobile: {
-          ios: "iOS",
-        },
-        business: {
-          premium: "ممتاز",
-        },
-        ai: {
-          quantumComputing: "الحوسبة الكمومية",
-        },
-        science: {
-          spaceExploration: "استكشاف الفضاء",
-          optics: "البصريات",
-        },
-        energy: {
-          solarEnergy: "الطاقة الشمسية",
-        },
-        physics: {
-          fluidDynamics: "ديناميكا الموائع",
-        },
-        gaming: {
-          gameDesign: "تصميم الألعاب",
-        },
-      },
-      serverSearchDemo: "عرض توضيحي للبحث من جانب الخادم...",
-      serverSearchDescription: "هذا مثال على البحث الذي يتم معالجته في الخادم.",
-      features: "الميزات",
-      featuresDescription: "عرض أهم ميزات أداة التحديد المتعدد.",
+      unifiedSelect: {
+        types: {
+          single: "اختيار مفرد",
+          multi: "اختيار متعدد",
+          searchable: "قابل للبحث"
+        }
+      }
     },
-    unifiedSelect: {
-      types: {
-        single: "اختيار مفرد",
-        multi: "اختيار متعدد",
-        searchable: "قابل للبحث",
-      },
-    },
-  },
+    
+    searchPlaceholders: {
+      default: "ابحث في الخيارات الافتراضية...",
+      modern: "ابحث في الخيارات الحديثة...",
+      glass: "ابحث في الخيارات الزجاجية...",
+      outlined: "ابحث في الخيارات محددة الإطار...",
+      filled: "ابحث في الخيارات الممتلئة...",
+      minimal: "ابحث في الخيارات البسيطة...",
+      elegant: "ابحث في الخيارات الأنيقة...",
+      professional: "ابحث في الخيارات الاحترافية...",
+      neon: "ابحث في خيارات النيون...",
+      gradient: "ابحث في خيارات التدرج اللوني...",
+      neumorphism: "ابحث في خيارات النيومورفيزم...",
+      cyberpunk: "ابحث في خيارات السايبربانك...",
+      luxury: "ابحث في الخيارات الفاخرة...",
+      quantum: "ابحث في خيارات الكم...",
+      nebula: "ابحث في خيارات السديم...",
+      prism: "ابحث في خيارات الموشور...",
+      stellar: "ابحث في الخيارات النجمية...",
+      vortex: "ابحث في خيارات الدوامة...",
+      phoenix: "ابحث في خيارات العنقاء..."
+    }
 
-  searchPlaceholders: {
-    default: "ابحث في الخيارات الافتراضية...",
-    modern: "ابحث في الخيارات الحديثة...",
-    glass: "ابحث في الخيارات الزجاجية...",
-    outlined: "ابحث في الخيارات محددة الإطار...",
-    filled: "ابحث في الخيارات الممتلئة...",
-    minimal: "ابحث في الخيارات البسيطة...",
-    elegant: "ابحث في الخيارات الأنيقة...",
-    professional: "ابحث في الخيارات الاحترافية...",
-    neon: "ابحث في خيارات النيون...",
-    gradient: "ابحث في خيارات التدرج اللوني...",
-    neumorphism: "ابحث في خيارات النيومورفيزم...",
-    cyberpunk: "ابحث في خيارات السايبربانك...",
-    luxury: "ابحث في الخيارات الفاخرة...",
-    quantum: "ابحث في خيارات الكم...",
-    nebula: "ابحث في خيارات السديم...",
-    prism: "ابحث في خيارات الموشور...",
-    stellar: "ابحث في الخيارات النجمية...",
-    vortex: "ابحث في خيارات الدوامة...",
-    phoenix: "ابحث في خيارات العنقاء...",
-  },
 };

@@ -4,14 +4,13 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import GenericSelect from "@/components/ui/generic-select";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { cn, toDateInputValue, fromDateInputValue } from "@/lib/utils";
 import { DatePicker } from "@/components/ui/date-picker";
-import GenericSelect from "@/components/ui/generic-select";
-
 
 export interface FieldOption {
   value: string;
@@ -21,17 +20,7 @@ export interface FieldOption {
 export interface FieldConfig {
   name: string;
   label?: string; // Optional for hidden fields
-  type:
-    | "text"
-    | "password"
-    | "select"
-    | "searchable-select"
-    | "server-select"
-    | "multi-select"
-    | "switch"
-    | "hidden"
-    | "date"
-    | "datetime";
+  type: "text" | "password" | "select" | "searchable-select" | "server-select" | "multi-select" | "switch" | "hidden" | "date" | "datetime";
   placeholder?: string;
   searchPlaceholder?: string; // For searchable selects
   required?: boolean;
@@ -71,15 +60,12 @@ export function GenericForm({
   const [formData, setFormData] = useState<Record<string, any>>(() => {
     const data = { ...initialValues };
     // Set default values for fields that have them and convert dates for HTML inputs
-    fields.forEach((field) => {
+    fields.forEach(field => {
       if (field.defaultValue !== undefined && data[field.name] === undefined) {
         data[field.name] = field.defaultValue;
       }
       // Convert date fields from API format to HTML input format
-      if (
-        (field.type === "date" || field.type === "datetime") &&
-        data[field.name]
-      ) {
+      if ((field.type === "date" || field.type === "datetime") && data[field.name]) {
         data[field.name] = toDateInputValue(data[field.name]);
       }
     });
@@ -90,13 +76,13 @@ export function GenericForm({
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => {
       const newData = { ...prev, [name]: value };
-
+      
       // Find the field that changed and call its onChange callback if it exists
-      const field = fields.find((f) => f.name === name);
+      const field = fields.find(f => f.name === name);
       if (field?.onChange) {
         field.onChange(value, newData);
       }
-
+      
       return newData;
     });
   };
@@ -107,11 +93,8 @@ export function GenericForm({
     try {
       // Convert date fields back to ISO format for API
       const submitData = { ...formData };
-      fields.forEach((field) => {
-        if (
-          (field.type === "date" || field.type === "datetime") &&
-          submitData[field.name]
-        ) {
+      fields.forEach(field => {
+        if ((field.type === "date" || field.type === "datetime") && submitData[field.name]) {
           submitData[field.name] = fromDateInputValue(submitData[field.name]);
         }
       });
@@ -199,203 +182,144 @@ export function GenericForm({
   };
 
   return (
-    <div
-      className={cn(
-        "w-full max-h-[70vh] overflow-y-auto p-6",
-        direction === "rtl" ? "text-right" : "text-left"
-      )}
-      dir={direction}
-    >
+    <div className={cn(
+      "w-full max-h-[70vh] overflow-y-auto p-6",
+      direction === "rtl" ? "text-right" : "text-left"
+    )} dir={direction}>
       <form onSubmit={handleSubmit} className={getFormSpacing()}>
         {fields
-          .filter((field) => !field.isVisible || field.isVisible(formData))
-          .map((field) =>
-            field.type === "hidden" ? (
-              <input
-                key={field.name}
-                type="hidden"
-                name={field.name}
-                value={formData[field.name] || ""}
-              />
-            ) : (
-              <div key={field.name} className={getFieldSpacing()}>
-                <Label
-                  htmlFor={field.name}
+          .filter(field => !field.isVisible || field.isVisible(formData))
+          .map((field) => 
+          field.type === "hidden" ? (
+            <input
+              key={field.name}
+              type="hidden"
+              name={field.name}
+              value={formData[field.name] || ""}
+            />
+          ) : (
+            <div key={field.name} className={getFieldSpacing()}>
+              <Label 
+                htmlFor={field.name} 
+                className={cn(
+                  "font-medium",
+                  direction === "rtl" ? "text-right" : "text-left"
+                )}
+              >
+                {field.label}
+              </Label>
+              {field.type === "select" ? (
+                <GenericSelect
+                  type="single"
+                  options={field.options?.map(opt => ({ value: opt.value, label: opt.label })) || []}
+                  value={formData[field.name] || ""}
+                  onValueChange={(value: string | string[]) => handleChange(field.name, typeof value === 'string' ? value : value[0])}
+                  placeholder={field.placeholder}
+                  disabled={field.disabled}
+                  className={getInputHeight()}
+                />
+              ) : field.type === "searchable-select" || field.type === "server-select" ? (
+                <GenericSelect
+                  type="searchable"
+                  options={field.options?.map(opt => ({ value: opt.value, label: opt.label })) || []}
+                  value={formData[field.name] || ""}
+                  onValueChange={(value: string | string[]) => handleChange(field.name, typeof value === 'string' ? value : value[0])}
+                  placeholder={field.placeholder}
+                  searchPlaceholder={field.searchPlaceholder}
+                  searchType={field.searchType || "client"}
+                  onServerSearch={field.onServerSearch ? async (query: string) => {
+                    const results = await field.onServerSearch!(query);
+                    return results.map(r => ({ value: r.value, label: r.label }));
+                  } : undefined}
+                  searchEndpoint={field.searchEndpoint}
+                  debounceMs={field.debounceMs}
+                  loading={field.loading}
+                  noResultsText={field.noResultsText}
+                  searchingText={field.searchingText}
+                  disabled={field.disabled}
+                  className={getInputHeight()}
+                />
+              ) : field.type === "multi-select" ? (
+                <GenericSelect
+                  type="multi"
+                  options={field.options?.map(opt => ({ value: opt.value, label: opt.label })) || []}
+                  value={formData[field.name] || []}
+                  onValueChange={(value: string | string[]) => handleChange(field.name, Array.isArray(value) ? value : [value])}
+                  placeholder={field.placeholder}
+                  searchPlaceholder={field.searchPlaceholder}
+                  searchType={field.searchType || "client"}
+                  onServerSearch={field.onServerSearch ? async (query: string) => {
+                    const results = await field.onServerSearch!(query);
+                    return results.map(r => ({ value: r.value, label: r.label }));
+                  } : undefined}
+                  searchEndpoint={field.searchEndpoint}
+                  debounceMs={field.debounceMs}
+                  loading={field.loading}
+                  noResultsText={field.noResultsText}
+                  searchingText={field.searchingText}
+                  disabled={field.disabled}
+                  className={getInputHeight()}
+                />
+              ) : field.type === "switch" ? (
+                <div className={cn(
+                  "flex items-center",
+                  direction === "rtl" ? "space-x-reverse space-x-2" : "space-x-2"
+                )}>
+                  <Switch
+                    id={field.name}
+                    checked={formData[field.name] || false}
+                    onCheckedChange={(checked) => handleChange(field.name, checked)}
+                  />
+                  <Label htmlFor={field.name} className={cn(
+                    "text-sm text-muted-foreground",
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}>
+                    {formData[field.name] ? t("common.yes") : t("common.no")}
+                  </Label>
+                </div>
+              ) : field.type === "date" || field.type === "datetime" ? (
+                <DatePicker
+                  id={field.name}
+                  type={field.type === "datetime" ? "datetime-local" : "date"}
+                  value={formData[field.name] || ""}
+                  onChange={(value) => handleChange(field.name, value)}
+                  required={field.required}
+                  className={getInputHeight()}
+                  placeholder={field.placeholder}
+                />
+              ) : (
+                <Input
+                  id={field.name}
+                  type={field.type}
+                  value={formData[field.name] || ""}
+                  onChange={(e) => handleChange(field.name, e.target.value)}
+                  required={field.required}
                   className={cn(
-                    "font-medium",
+                    getInputHeight(),
                     direction === "rtl" ? "text-right" : "text-left"
                   )}
-                >
-                  {field.label}
-                </Label>
-                {field.type === "select" ? (
-                  <GenericSelect
-                    type="single"
-                    options={
-                      field.options?.map((opt) => ({
-                        value: opt.value,
-                        label: opt.label,
-                      })) || []
-                    }
-                    value={formData[field.name] || ""}
-                    onValueChange={(value: string | string[]) =>
-                      handleChange(
-                        field.name,
-                        typeof value === "string" ? value : value[0]
-                      )
-                    }
-                    placeholder={field.placeholder}
-                    disabled={field.disabled}
-                    className={getInputHeight()}
-                  />
-                ) : field.type === "searchable-select" ||
-                  field.type === "server-select" ? (
-                  <GenericSelect
-                    type="searchable"
-                    options={
-                      field.options?.map((opt) => ({
-                        value: opt.value,
-                        label: opt.label,
-                      })) || []
-                    }
-                    value={formData[field.name] || ""}
-                    onValueChange={(value: string | string[]) =>
-                      handleChange(
-                        field.name,
-                        typeof value === "string" ? value : value[0]
-                      )
-                    }
-                    placeholder={field.placeholder}
-                    searchPlaceholder={field.searchPlaceholder}
-                    searchType={field.searchType || "client"}
-                    onServerSearch={
-                      field.onServerSearch
-                        ? async (query: string) => {
-                            const results = await field.onServerSearch!(query);
-                            return results.map((r) => ({
-                              value: r.value,
-                              label: r.label,
-                            }));
-                          }
-                        : undefined
-                    }
-                    searchEndpoint={field.searchEndpoint}
-                    debounceMs={field.debounceMs}
-                    loading={field.loading}
-                    noResultsText={field.noResultsText}
-                    searchingText={field.searchingText}
-                    disabled={field.disabled}
-                    className={getInputHeight()}
-                  />
-                ) : field.type === "multi-select" ? (
-                  <GenericSelect
-                    type="multi"
-                    options={
-                      field.options?.map((opt) => ({
-                        value: opt.value,
-                        label: opt.label,
-                      })) || []
-                    }
-                    value={formData[field.name] || []}
-                    onValueChange={(value: string | string[]) =>
-                      handleChange(
-                        field.name,
-                        Array.isArray(value) ? value : [value]
-                      )
-                    }
-                    placeholder={field.placeholder}
-                    searchPlaceholder={field.searchPlaceholder}
-                    searchType={field.searchType || "client"}
-                    onServerSearch={
-                      field.onServerSearch
-                        ? async (query: string) => {
-                            const results = await field.onServerSearch!(query);
-                            return results.map((r) => ({
-                              value: r.value,
-                              label: r.label,
-                            }));
-                          }
-                        : undefined
-                    }
-                    searchEndpoint={field.searchEndpoint}
-                    debounceMs={field.debounceMs}
-                    loading={field.loading}
-                    noResultsText={field.noResultsText}
-                    searchingText={field.searchingText}
-                    disabled={field.disabled}
-                    className={getInputHeight()}
-                  />
-                ) : field.type === "switch" ? (
-                  <div
-                    className={cn(
-                      "flex items-center",
-                      direction === "rtl"
-                        ? "space-x-reverse space-x-2"
-                        : "space-x-2"
-                    )}
-                  >
-                    <Switch
-                      id={field.name}
-                      checked={formData[field.name] || false}
-                      onCheckedChange={(checked) =>
-                        handleChange(field.name, checked)
-                      }
-                    />
-                    <Label
-                      htmlFor={field.name}
-                      className={cn(
-                        "text-sm text-muted-foreground",
-                        direction === "rtl" ? "text-right" : "text-left"
-                      )}
-                    >
-                      {formData[field.name] ? t("common.yes") : t("common.no")}
-                    </Label>
-                  </div>
-                ) : field.type === "date" || field.type === "datetime" ? (
-                  <DatePicker
-                    id={field.name}
-                    type={field.type === "datetime" ? "datetime-local" : "date"}
-                    value={formData[field.name] || ""}
-                    onChange={(value) => handleChange(field.name, value)}
-                    required={field.required}
-                    className={getInputHeight()}
-                    placeholder={field.placeholder}
-                  />
-                ) : (
-                  <Input
-                    id={field.name}
-                    type={field.type}
-                    value={formData[field.name] || ""}
-                    onChange={(e) => handleChange(field.name, e.target.value)}
-                    required={field.required}
-                    className={cn(
-                      getInputHeight(),
-                      direction === "rtl" ? "text-right" : "text-left"
-                    )}
-                    placeholder={field.placeholder}
-                    dir={direction}
-                  />
-                )}
-              </div>
-            )
-          )}
+                  placeholder={field.placeholder}
+                  dir={direction}
+                />
+              )}
+            </div>
+          )
+        )}
 
         <Separator />
 
-        <div
-          className={cn(
-            "flex flex-col sm:flex-row",
-            direction === "rtl" ? "justify-start" : "justify-end",
-            getGridGap(),
-            getSeparatorSpacing()
-          )}
-        >
+        <div className={cn(
+          "flex flex-col sm:flex-row", 
+          direction === "rtl" ? "justify-start" : "justify-end",
+          getGridGap(), 
+          getSeparatorSpacing()
+        )}>
           <Button
             type="button"
             variant="outline"
             onClick={onCancel}
             className={cn(
-              getInputHeight(),
+              getInputHeight(), 
               direction === "rtl" ? "order-1 sm:order-2" : "order-2 sm:order-1"
             )}
             disabled={loading}
@@ -407,7 +331,7 @@ export function GenericForm({
             type="submit"
             disabled={loading}
             className={cn(
-              getInputHeight(),
+              getInputHeight(), 
               "gradient-primary",
               direction === "rtl" ? "order-2 sm:order-1" : "order-1 sm:order-2"
             )}

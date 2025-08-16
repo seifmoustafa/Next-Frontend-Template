@@ -34,12 +34,7 @@ export interface GenericTreeViewProps<T extends TreeNode, TCreate, TUpdate> {
   getId: (node: T) => string;
   getLabel: (node: T) => string;
   getChildren: (node: T) => T[] | undefined;
-  renderFormFields: (
-    formValues: any,
-    setFormValues: (values: any) => void,
-    editing: T | null,
-    parentForNew: T | null
-  ) => React.ReactNode;
+  renderFormFields: (formValues: any, setFormValues: (values: any) => void, editing: T | null, parentForNew: T | null) => React.ReactNode;
   className?: string;
   showAddRoot?: boolean;
 }
@@ -76,12 +71,10 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
           type="single"
           options={[10, 25, 50, 100].map((size) => ({
             value: String(size),
-            label: String(size),
+            label: String(size)
           }))}
           value={String(vm.pagination.pageSize)}
-          onValueChange={(v: string | string[]) =>
-            vm.changePageSize(Number(typeof v === "string" ? v : v[0]))
-          }
+          onValueChange={(v: string | string[]) => vm.changePageSize(Number(typeof v === 'string' ? v : v[0]))}
           className="min-w-[100px] w-auto max-w-[120px] h-8 text-center font-medium"
           allowClear={false}
         />
@@ -125,7 +118,10 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
                   onClick={(e) => {
                     e.preventDefault();
                     vm.changePage(
-                      Math.min(vm.pagination.pagesCount, vm.pagination.page + 1)
+                      Math.min(
+                        vm.pagination.pagesCount,
+                        vm.pagination.page + 1
+                      )
                     );
                   }}
                   className={
@@ -195,13 +191,8 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
           </DialogHeader>
 
           <div className="space-y-4">
-            {renderFormFields(
-              vm.formValues,
-              vm.setFormValues,
-              vm.editing,
-              vm.parentForNew
-            )}
-
+            {renderFormFields(vm.formValues, vm.setFormValues, vm.editing, vm.parentForNew)}
+            
             <div className="grid gap-2">
               {vm.parentForNew && !vm.editing && (
                 <p className="text-xs text-muted-foreground">

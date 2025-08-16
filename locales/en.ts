@@ -380,45 +380,45 @@ export const en = {
       options: {
         default: {
           title: "Default",
-          description: "Classic switch with enhanced styling",
+          description: "Classic switch with enhanced styling"
         },
         modern: {
           title: "Modern",
-          description: "Sleek gradient design with glass effects",
+          description: "Sleek gradient design with glass effects"
         },
         ios: {
           title: "iOS Style",
-          description: "Apple iOS inspired design",
+          description: "Apple iOS inspired design"
         },
         android: {
-          title: "Android Style",
-          description: "Material Design switch",
+          title: "Android Style", 
+          description: "Material Design switch"
         },
         toggle: {
           title: "Toggle Button",
-          description: "Rectangle toggle with premium effects",
+          description: "Rectangle toggle with premium effects"
         },
         slider: {
           title: "Slider Style",
-          description: "Premium gradient slider design",
+          description: "Premium gradient slider design"
         },
         neon: {
           title: "Neon Glow",
-          description: "Futuristic neon glow with pulsing animation",
+          description: "Futuristic neon glow with pulsing animation"
         },
         neumorphism: {
           title: "Neumorphism",
-          description: "Soft UI with realistic depth shadows",
+          description: "Soft UI with realistic depth shadows"
         },
         liquid: {
           title: "Liquid Motion",
-          description: "Smooth liquid-like animations and gradients",
+          description: "Smooth liquid-like animations and gradients"
         },
         cyberpunk: {
           title: "Cyberpunk",
-          description: "Futuristic tech-inspired design with neon accents",
-        },
-      },
+          description: "Futuristic tech-inspired design with neon accents"
+        }
+      }
     },
     tableStyle: {
       title: "Table Styles",
@@ -426,53 +426,53 @@ export const en = {
       options: {
         default: {
           title: "Default",
-          description: "Clean and professional table design",
+          description: "Clean and professional table design"
         },
         striped: {
           title: "Striped",
-          description: "Alternating row colors for better readability",
+          description: "Alternating row colors for better readability"
         },
         bordered: {
           title: "Bordered",
-          description: "Enhanced borders for clear data separation",
+          description: "Enhanced borders for clear data separation"
         },
         minimal: {
           title: "Minimal",
-          description: "Clean and simple design with minimal styling",
+          description: "Clean and simple design with minimal styling"
         },
         glass: {
           title: "Glass Morphism",
-          description: "Stunning glass effect with backdrop blur",
+          description: "Stunning glass effect with backdrop blur"
         },
         neon: {
           title: "Neon Glow",
-          description: "Futuristic neon design with glowing effects",
+          description: "Futuristic neon design with glowing effects"
         },
         gradient: {
           title: "Gradient Flow",
-          description: "Beautiful gradient overlays and smooth transitions",
+          description: "Beautiful gradient overlays and smooth transitions"
         },
         neumorphism: {
           title: "Neumorphism",
-          description: "Soft UI design with realistic depth and shadows",
+          description: "Soft UI design with realistic depth and shadows"
         },
         cyberpunk: {
           title: "Cyberpunk",
-          description: "Tech-inspired design with sharp edges and neon",
+          description: "Tech-inspired design with sharp edges and neon"
         },
         luxury: {
           title: "Luxury Gold",
-          description: "Premium golden design with elegant styling",
+          description: "Premium golden design with elegant styling"
         },
         matrix: {
           title: "Matrix Code",
-          description: "Futuristic green matrix-style with digital effects",
+          description: "Futuristic green matrix-style with digital effects"
         },
         diamond: {
           title: "Diamond Prism",
-          description: "Multi-colored prismatic design with rainbow gradients",
-        },
-      },
+          description: "Multi-colored prismatic design with rainbow gradients"
+        }
+      }
     },
     darkMode: "Dark Mode",
     lightDarkToggle: "Toggle between light and dark mode",
@@ -754,7 +754,7 @@ export const en = {
         filled: "Filled",
       },
     },
-
+   
     avatarStyle: {
       title: "Avatar Style",
       description: "Choose how avatars should appear throughout the app",
@@ -819,19 +819,10 @@ export const en = {
       options: {
         default: { name: "Default", description: "Standard badge style" },
         modern: { name: "Modern", description: "Modern glass-like appearance" },
-        glass: {
-          name: "Glass",
-          description: "Transparent glass effect with blur",
-        },
+        glass: { name: "Glass", description: "Transparent glass effect with blur" },
         neon: { name: "Neon", description: "Glowing neon style with shadows" },
-        gradient: {
-          name: "Gradient",
-          description: "Colorful gradient backgrounds",
-        },
-        outlined: {
-          name: "Outlined",
-          description: "Border-only transparent style",
-        },
+        gradient: { name: "Gradient", description: "Colorful gradient backgrounds" },
+        outlined: { name: "Outlined", description: "Border-only transparent style" },
         filled: { name: "Filled", description: "Solid filled backgrounds" },
         minimal: { name: "Minimal", description: "Clean borderless style" },
         pill: { name: "Pill", description: "Fully rounded pill shape" },
@@ -947,10 +938,10 @@ export const en = {
         prism: "Prism",
         stellar: "Stellar",
         vortex: "Vortex",
-        phoenix: "Phoenix",
-      },
+        phoenix: "Phoenix"
+      }
     },
-
+    
     logo: {
       title: "Logo Settings",
       description: "Customize your application logo appearance",
@@ -1534,88 +1525,86 @@ export const en = {
 
   components: {
     multiSelect: {
-      searchStates: {
-        noResults: "No Results",
-        searching: "Searching ......",
+      searchStates:{
+        noResults:"No Results",
+        searching:"Searching ......"
       },
       currentStyle: {
-        luxury: "Luxury",
+        luxury: "Luxury"
       },
       placeholders: {
-        selectTechnologies: "Select technologies",
+        selectTechnologies: "Select technologies"
       },
       selected: "Selected: None",
       availableStyles: "Available Styles",
       buttons: {
         apply: "Apply",
-        active: "Active",
+        active: "Active"
       },
       categories: {
         webTech: {
-          html: "HTML",
+          html: "HTML"
         },
         design: {
-          figma: "Figma",
+          figma: "Figma"
         },
         backend: {
-          nodejs: "Node.js",
+          nodejs: "Node.js"
         },
         database: {
-          mysql: "MySQL",
+          mysql: "MySQL"
         },
         devops: {
           git: "Git",
-          docker: "Docker",
+          docker: "Docker"
         },
         cloud: {
-          aws: "Amazon Web Services (AWS)",
+          aws: "Amazon Web Services (AWS)"
         },
         security: {
           cybersecurity: "Cybersecurity",
-          blockchain: "Blockchain",
+          blockchain: "Blockchain"
         },
         ux: {
-          uiDesign: "UI Design",
+          uiDesign: "UI Design"
         },
         mobile: {
-          ios: "iOS",
+          ios: "iOS"
         },
         business: {
-          premium: "Premium",
+          premium: "Premium"
         },
         ai: {
-          quantumComputing: "Quantum Computing",
+          quantumComputing: "Quantum Computing"
         },
         science: {
           spaceExploration: "Space Exploration",
-          optics: "Optics",
+          optics: "Optics"
         },
         energy: {
-          solarEnergy: "Solar Energy",
+          solarEnergy: "Solar Energy"
         },
         physics: {
-          fluidDynamics: "Fluid Dynamics",
+          fluidDynamics: "Fluid Dynamics"
         },
         gaming: {
-          gameDesign: "Game Design",
-        },
+          gameDesign: "Game Design"
+        }
       },
       serverSearchDemo: "Server-side search demo...",
-      serverSearchDescription:
-        "This is an example of a search processed on the server.",
+      serverSearchDescription: "This is an example of a search processed on the server.",
       features: "Features",
-      featuresDescription:
-        "Showcase the main features of the multi-select tool.",
+      featuresDescription: "Showcase the main features of the multi-select tool."
     },
     unifiedSelect: {
       types: {
         single: "Single Select",
         multi: "Multi Select",
-        searchable: "Searchable",
-      },
-    },
+        searchable: "Searchable"
+      }
+    }
   },
-
+  
   searchPlaceholders: {
     default: "Search default options...",
     modern: "Search modern options...",
@@ -1635,6 +1624,7 @@ export const en = {
     prism: "Search prism options...",
     stellar: "Search stellar options...",
     vortex: "Search vortex options...",
-    phoenix: "Search phoenix options...",
-  },
+    phoenix: "Search phoenix options..."
+  }
+
 };
