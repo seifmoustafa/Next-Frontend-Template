@@ -4,12 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { GenericTable } from "@/components/ui/generic-table";
 import { GenericModal } from "@/components/ui/generic-modal";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { GenericForm, FieldConfig } from "@/components/forms/generic-form";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ErrorMessage } from "@/components/ui/error-message";
@@ -26,11 +21,12 @@ export interface CrudColumn {
   key: string;
   label: string;
   sortable?: boolean;
+  render?: (value: any, item?: any) => React.ReactNode;
 }
 
 export interface CrudAction<TItem> {
   label: string;
-  onClick: (item: TItem) => void;
+  onClick?: (item: TItem) => void;
   variant?: "default" | "ghost" | "destructive";
   className?: string;
 }
@@ -39,24 +35,20 @@ export interface CrudConfig<TItem> {
   // Page configuration
   titleKey: string; // Translation key for title
   subtitleKey: string; // Translation key for subtitle
-
+  
   // Table configuration
   columns: CrudColumn[];
   createFields: FieldConfig[];
   editFields: FieldConfig[];
-
-  // Actions configuration
-  getActions: (
-    vm: any,
-    t: any,
-    handleDelete?: (item: TItem) => void
-  ) => CrudAction<TItem>[];
-
+  
+  // Actions
+  getActions?: (vm: any, t: any, handleDelete?: (item: TItem) => void) => CrudAction<TItem>[];
+  
   // Delete configuration
   getItemDisplayName?: (item: TItem) => string; // For delete confirmation messages
   itemTypeKey?: string; // Translation key for item type (e.g., "vendors.itemType")
   deleteService?: (id: string) => Promise<void>; // Direct delete service function
-
+  
   // Customization options
   customHeaderContent?: React.ReactNode; // Custom content above the table
   customFooterContent?: React.ReactNode; // Custom content below the table
@@ -87,7 +79,7 @@ interface GenericCrudViewProps<T> {
     onChange: (term: string) => void;
     inputRef?: React.RefObject<HTMLInputElement>;
   };
-
+  
   // New configuration-based props
   config?: CrudConfig<T>;
 }
@@ -113,15 +105,13 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
   const { operationSuccess, operationError } = useEnhancedToast();
 
   // Enhanced delete handler with professional confirmation dialog
-  const handleDelete = useCallback(
-    async (item: T) => {
-      const itemDisplayName = config?.getItemDisplayName
-        ? config.getItemDisplayName(item)
-        : (item as any).name || "Item";
-      const itemType = config?.itemTypeKey ? t(config.itemTypeKey) : "Item";
-      const id = typeof item === "string" ? item : (item as any).id;
-
-      await deleteSystem.confirmDelete(async () => {
+  const handleDelete = useCallback(async (item: T) => {
+    const itemDisplayName = config?.getItemDisplayName ? config.getItemDisplayName(item) : (item as any).name || 'Item';
+    const itemType = config?.itemTypeKey ? t(config.itemTypeKey) : 'Item';
+    const id = typeof item === "string" ? item : (item as any).id;
+    
+    await deleteSystem.confirmDelete(
+      async () => {
         // Use the direct delete service from config
         if (config?.deleteService) {
           await config.deleteService(id);
@@ -131,43 +121,30 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
         } else {
           throw new Error("Delete service not configured");
         }
-      });
-    },
-    [deleteSystem, viewModel, config, t, operationSuccess, operationError]
-  );
+      }
+    );
+  }, [deleteSystem, viewModel, config, t, operationSuccess, operationError]);
 
   // Use config if provided, otherwise use direct props (backward compatibility)
   const title = config ? t(config.titleKey) : propTitle!;
   const subtitle = config ? t(config.subtitleKey) : propSubtitle;
   const columns = config ? config.columns : propColumns!;
-  const actions = config
-    ? config.getActions(viewModel, t, handleDelete)
-    : propActions;
+  const actions = config?.getActions ? config.getActions(viewModel, t, handleDelete) : propActions;
   const createFields = config ? config.createFields : propCreateFields!;
-  const editFields = config
-    ? config.editFields
-    : propEditFields || propCreateFields!;
-
+  const editFields = config ? config.editFields : (propEditFields || propCreateFields!);
+  
   // Auto-generate pagination and search for config-based usage
-  const pagination =
-    propPagination ||
-    (config
-      ? {
-          ...viewModel.pagination,
-          onPageChange: viewModel.changePage,
-          onPageSizeChange: viewModel.changePageSize,
-        }
-      : undefined);
-
-  const search =
-    propSearch ||
-    (config
-      ? {
-          value: viewModel.searchValue,
-          onChange: viewModel.handleSearchChange,
-          inputRef: viewModel.searchInputRef,
-        }
-      : undefined);
+  const pagination = propPagination || (config ? {
+    ...viewModel.pagination,
+    onPageChange: viewModel.changePage,
+    onPageSizeChange: viewModel.changePageSize,
+  } : undefined);
+  
+  const search = propSearch || (config ? {
+    value: viewModel.searchValue,
+    onChange: viewModel.handleSearchChange,
+    inputRef: viewModel.searchInputRef,
+  } : undefined);
   const getSpacingClasses = () => {
     switch (settings.spacingSize) {
       case "compact":
@@ -215,10 +192,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
 
   if (viewModel.error && viewModel.items.length === 0) {
     return (
-      <ErrorMessage
-        message={viewModel.error}
-        onRetry={viewModel.refreshItems}
-      />
+      <ErrorMessage message={viewModel.error} onRetry={viewModel.refreshItems} />
     );
   }
 
@@ -255,27 +229,23 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
           {/* Custom bulk actions */}
-          {config?.customBulkActions &&
-            viewModel.selectedItems.length > 0 &&
-            config.customBulkActions}
-
+          {config?.customBulkActions && viewModel.selectedItems.length > 0 && config.customBulkActions}
+          
           {/* Default bulk delete */}
-          {viewModel.selectedItems.length > 0 &&
-            !config?.customBulkActions &&
-            config?.enableBulkActions !== false && (
-              <Button
-                onClick={viewModel.deleteSelectedItems}
-                variant="destructive"
-                size={getButtonSize()}
-                className="flex-1 sm:flex-none"
-              >
-                {t("common.delete")} ({viewModel.selectedItems.length})
-              </Button>
-            )}
-
+          {viewModel.selectedItems.length > 0 && !config?.customBulkActions && (config?.enableBulkActions !== false) && (
+            <Button
+              onClick={viewModel.deleteSelectedItems}
+              variant="destructive"
+              size={getButtonSize()}
+              className="flex-1 sm:flex-none"
+            >
+              {t("common.delete")} ({viewModel.selectedItems.length})
+            </Button>
+          )}
+          
           {/* Custom toolbar actions */}
           {config?.customToolbarActions && config.customToolbarActions}
-
+          
           {/* Default actions (unless hidden) */}
           {!config?.hideDefaultActions && (
             <>
@@ -301,7 +271,9 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
 
       {/* Custom header content */}
       {config?.customHeaderContent && (
-        <div className="mb-6">{config.customHeaderContent}</div>
+        <div className="mb-6">
+          {config.customHeaderContent}
+        </div>
       )}
 
       <Card className={getCardClasses()}>
@@ -314,14 +286,10 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             selectable={config?.enableBulkActions !== false}
             selectedItems={viewModel.selectedItems}
             onSelectionChange={viewModel.setSelectedItems}
-            pagination={
-              pagination
-                ? {
-                    ...pagination,
-                    currentPage: pagination.page, // Map page to currentPage for GenericTable
-                  }
-                : undefined
-            }
+            pagination={pagination ? {
+              ...pagination,
+              currentPage: pagination.page, // Map page to currentPage for GenericTable
+            } : undefined}
             onSearch={search?.onChange}
             searchValue={search?.value}
             searchInputRef={search?.inputRef}
@@ -332,7 +300,9 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
 
       {/* Custom footer content */}
       {config?.customFooterContent && (
-        <div className="mt-6">{config.customFooterContent}</div>
+        <div className="mt-6">
+          {config.customFooterContent}
+        </div>
       )}
 
       <GenericModal
@@ -350,12 +320,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
       <Dialog
         open={viewModel.isEditModalOpen}
         onOpenChange={(open) => {
-          console.log(
-            "Edit modal onOpenChange:",
-            open,
-            "editingItem:",
-            viewModel.editingItem
-          );
+          console.log('Edit modal onOpenChange:', open, 'editingItem:', viewModel.editingItem);
           // Exact same approach as tree view
           if (!open) {
             viewModel.closeEditModal();
@@ -383,13 +348,8 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
       <ConfirmationDialog
         open={deleteSystem.showConfirmation}
         onOpenChange={deleteSystem.cancelDelete}
-        title={
-          deleteSystem.deleteOptions.confirmTitle || t("common.confirmDelete")
-        }
-        description={
-          deleteSystem.deleteOptions.confirmDescription ||
-          t("common.deleteWarning")
-        }
+        title={deleteSystem.deleteOptions.confirmTitle || t("common.confirmDelete")}
+        description={deleteSystem.deleteOptions.confirmDescription || t("common.deleteWarning")}
         confirmText={t("common.delete")}
         cancelText={t("common.cancel")}
         onConfirm={deleteSystem.executeDelete}
@@ -400,3 +360,4 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
     </div>
   );
 }
+

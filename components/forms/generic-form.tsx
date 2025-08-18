@@ -4,14 +4,18 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import GenericSelect from "@/components/ui/generic-select";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { cn, toDateInputValue, fromDateInputValue } from "@/lib/utils";
 import { DatePicker } from "@/components/ui/date-picker";
-import GenericSelect from "@/components/ui/generic-select";
-
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 
 export interface FieldOption {
   value: string;
@@ -21,22 +25,20 @@ export interface FieldOption {
 export interface FieldConfig {
   name: string;
   label?: string; // Optional for hidden fields
-  type:
-    | "text"
-    | "password"
-    | "select"
-    | "searchable-select"
-    | "server-select"
-    | "multi-select"
-    | "switch"
-    | "hidden"
-    | "date"
-    | "datetime";
+  type: "text" | "password" | "email" | "number" | "tel" | "url" | "textarea" | "richtext" | "select" | "searchable-select" | "server-select" | "multi-select" | "switch" | "checkbox" | "radio" | "slider" | "range" | "hidden" | "date" | "datetime" | "datetime-local" | "time" | "month" | "week" | "color" | "file";
   placeholder?: string;
   searchPlaceholder?: string; // For searchable selects
   required?: boolean;
   options?: FieldOption[];
   defaultValue?: any;
+  // Input specific options
+  min?: number | string; // For number, date, range inputs
+  max?: number | string; // For number, date, range inputs
+  step?: number | string; // For number, range inputs
+  rows?: number; // For textarea
+  cols?: number; // For textarea
+  accept?: string; // For file inputs
+  multiple?: boolean; // For file inputs and multi-select
   // Searchable select specific options
   searchType?: "client" | "server";
   onServerSearch?: (query: string) => Promise<FieldOption[]>;
@@ -51,6 +53,10 @@ export interface FieldConfig {
   onChange?: (value: any, formData: Record<string, any>) => void; // Callback when field value changes
   loading?: boolean; // Show loading state
   disabled?: boolean; // Disable field
+  // Validation
+  pattern?: string; // For text inputs
+  minLength?: number; // For text inputs
+  maxLength?: number; // For text inputs
 }
 
 interface GenericFormProps {
@@ -71,15 +77,12 @@ export function GenericForm({
   const [formData, setFormData] = useState<Record<string, any>>(() => {
     const data = { ...initialValues };
     // Set default values for fields that have them and convert dates for HTML inputs
-    fields.forEach((field) => {
+    fields.forEach(field => {
       if (field.defaultValue !== undefined && data[field.name] === undefined) {
         data[field.name] = field.defaultValue;
       }
       // Convert date fields from API format to HTML input format
-      if (
-        (field.type === "date" || field.type === "datetime") &&
-        data[field.name]
-      ) {
+      if ((field.type === "date" || field.type === "datetime" || field.type === "datetime-local" || field.type === "time" || field.type === "month" || field.type === "week") && data[field.name]) {
         data[field.name] = toDateInputValue(data[field.name]);
       }
     });
@@ -90,13 +93,13 @@ export function GenericForm({
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => {
       const newData = { ...prev, [name]: value };
-
+      
       // Find the field that changed and call its onChange callback if it exists
-      const field = fields.find((f) => f.name === name);
+      const field = fields.find(f => f.name === name);
       if (field?.onChange) {
         field.onChange(value, newData);
       }
-
+      
       return newData;
     });
   };
@@ -107,11 +110,8 @@ export function GenericForm({
     try {
       // Convert date fields back to ISO format for API
       const submitData = { ...formData };
-      fields.forEach((field) => {
-        if (
-          (field.type === "date" || field.type === "datetime") &&
-          submitData[field.name]
-        ) {
+      fields.forEach(field => {
+        if ((field.type === "date" || field.type === "datetime" || field.type === "datetime-local" || field.type === "time" || field.type === "month" || field.type === "week") && submitData[field.name]) {
           submitData[field.name] = fromDateInputValue(submitData[field.name]);
         }
       });
@@ -199,203 +199,259 @@ export function GenericForm({
   };
 
   return (
-    <div
-      className={cn(
-        "w-full max-h-[70vh] overflow-y-auto p-6",
-        direction === "rtl" ? "text-right" : "text-left"
-      )}
-      dir={direction}
-    >
+    <div className={cn(
+      "w-full max-h-[70vh] overflow-y-auto p-6",
+      direction === "rtl" ? "text-right" : "text-left"
+    )} dir={direction}>
       <form onSubmit={handleSubmit} className={getFormSpacing()}>
         {fields
-          .filter((field) => !field.isVisible || field.isVisible(formData))
-          .map((field) =>
-            field.type === "hidden" ? (
-              <input
-                key={field.name}
-                type="hidden"
-                name={field.name}
-                value={formData[field.name] || ""}
-              />
-            ) : (
-              <div key={field.name} className={getFieldSpacing()}>
-                <Label
-                  htmlFor={field.name}
+          .filter(field => !field.isVisible || field.isVisible(formData))
+          .map((field) => 
+          field.type === "hidden" ? (
+            <input
+              key={field.name}
+              type="hidden"
+              name={field.name}
+              value={formData[field.name] || ""}
+            />
+          ) : (
+            <div key={field.name} className={getFieldSpacing()}>
+              <Label 
+                htmlFor={field.name} 
+                className={cn(
+                  "font-medium",
+                  direction === "rtl" ? "text-right" : "text-left"
+                )}
+              >
+                {field.label}
+              </Label>
+              {field.type === "select" ? (
+                <GenericSelect
+                  type="single"
+                  options={field.options?.map(opt => ({ value: opt.value, label: opt.label })) || []}
+                  value={formData[field.name] || ""}
+                  onValueChange={(value: string | string[]) => handleChange(field.name, typeof value === 'string' ? value : value[0])}
+                  placeholder={field.placeholder}
+                  disabled={field.disabled}
+                  className={getInputHeight()}
+                />
+              ) : field.type === "searchable-select" || field.type === "server-select" ? (
+                <GenericSelect
+                  type="searchable"
+                  options={field.options?.map(opt => ({ value: opt.value, label: opt.label })) || []}
+                  value={formData[field.name] || ""}
+                  onValueChange={(value: string | string[]) => handleChange(field.name, typeof value === 'string' ? value : value[0])}
+                  placeholder={field.placeholder}
+                  searchPlaceholder={field.searchPlaceholder}
+                  searchType={field.searchType || "client"}
+                  onServerSearch={field.onServerSearch ? async (query: string) => {
+                    const results = await field.onServerSearch!(query);
+                    return results.map(r => ({ value: r.value, label: r.label }));
+                  } : undefined}
+                  searchEndpoint={field.searchEndpoint}
+                  debounceMs={field.debounceMs}
+                  loading={field.loading}
+                  noResultsText={field.noResultsText}
+                  searchingText={field.searchingText}
+                  disabled={field.disabled}
+                  className={getInputHeight()}
+                />
+              ) : field.type === "multi-select" ? (
+                <GenericSelect
+                  type="multi"
+                  options={field.options?.map(opt => ({ value: opt.value, label: opt.label })) || []}
+                  value={formData[field.name] || []}
+                  onValueChange={(value: string | string[]) => handleChange(field.name, Array.isArray(value) ? value : [value])}
+                  placeholder={field.placeholder}
+                  searchPlaceholder={field.searchPlaceholder}
+                  searchType={field.searchType || "client"}
+                  onServerSearch={field.onServerSearch ? async (query: string) => {
+                    const results = await field.onServerSearch!(query);
+                    return results.map(r => ({ value: r.value, label: r.label }));
+                  } : undefined}
+                  searchEndpoint={field.searchEndpoint}
+                  debounceMs={field.debounceMs}
+                  loading={field.loading}
+                  noResultsText={field.noResultsText}
+                  searchingText={field.searchingText}
+                  disabled={field.disabled}
+                  className={getInputHeight()}
+                />
+              ) : field.type === "textarea" ? (
+                <Textarea
+                  id={field.name}
+                  value={formData[field.name] || ""}
+                  onChange={(e) => handleChange(field.name, e.target.value)}
+                  required={field.required}
                   className={cn(
-                    "font-medium",
+                    "min-h-[80px]",
                     direction === "rtl" ? "text-right" : "text-left"
                   )}
+                  placeholder={field.placeholder}
+                  rows={field.rows || 4}
+                  disabled={field.disabled}
+                  minLength={field.minLength}
+                  maxLength={field.maxLength}
+                  dir={direction}
+                />
+              ) : field.type === "richtext" ? (
+                <RichTextEditor
+                  value={formData[field.name] || ""}
+                  onChange={(value) => handleChange(field.name, value)}
+                  placeholder={field.placeholder}
+                  disabled={field.disabled}
+                  minHeight={field.rows ? field.rows * 20 : 200}
+                  className={cn(
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}
+                />
+              ) : field.type === "switch" ? (
+                <div className={cn(
+                  "flex items-center",
+                  direction === "rtl" ? "space-x-reverse space-x-2" : "space-x-2"
+                )}>
+                  <Switch
+                    id={field.name}
+                    checked={formData[field.name] || false}
+                    onCheckedChange={(checked) => handleChange(field.name, checked)}
+                    disabled={field.disabled}
+                  />
+                  <Label htmlFor={field.name} className={cn(
+                    "text-sm text-muted-foreground",
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}>
+                    {formData[field.name] ? t("common.yes") : t("common.no")}
+                  </Label>
+                </div>
+              ) : field.type === "checkbox" ? (
+                <div className={cn(
+                  "flex items-center",
+                  direction === "rtl" ? "space-x-reverse space-x-2" : "space-x-2"
+                )}>
+                  <Checkbox
+                    id={field.name}
+                    checked={formData[field.name] || false}
+                    onCheckedChange={(checked) => handleChange(field.name, checked)}
+                    disabled={field.disabled}
+                  />
+                  <Label htmlFor={field.name} className={cn(
+                    "text-sm",
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}>
+                    {field.label}
+                  </Label>
+                </div>
+              ) : field.type === "radio" ? (
+                <RadioGroup
+                  value={formData[field.name] || ""}
+                  onValueChange={(value) => handleChange(field.name, value)}
+                  disabled={field.disabled}
                 >
-                  {field.label}
-                </Label>
-                {field.type === "select" ? (
-                  <GenericSelect
-                    type="single"
-                    options={
-                      field.options?.map((opt) => ({
-                        value: opt.value,
-                        label: opt.label,
-                      })) || []
-                    }
-                    value={formData[field.name] || ""}
-                    onValueChange={(value: string | string[]) =>
-                      handleChange(
-                        field.name,
-                        typeof value === "string" ? value : value[0]
-                      )
-                    }
-                    placeholder={field.placeholder}
-                    disabled={field.disabled}
-                    className={getInputHeight()}
-                  />
-                ) : field.type === "searchable-select" ||
-                  field.type === "server-select" ? (
-                  <GenericSelect
-                    type="searchable"
-                    options={
-                      field.options?.map((opt) => ({
-                        value: opt.value,
-                        label: opt.label,
-                      })) || []
-                    }
-                    value={formData[field.name] || ""}
-                    onValueChange={(value: string | string[]) =>
-                      handleChange(
-                        field.name,
-                        typeof value === "string" ? value : value[0]
-                      )
-                    }
-                    placeholder={field.placeholder}
-                    searchPlaceholder={field.searchPlaceholder}
-                    searchType={field.searchType || "client"}
-                    onServerSearch={
-                      field.onServerSearch
-                        ? async (query: string) => {
-                            const results = await field.onServerSearch!(query);
-                            return results.map((r) => ({
-                              value: r.value,
-                              label: r.label,
-                            }));
-                          }
-                        : undefined
-                    }
-                    searchEndpoint={field.searchEndpoint}
-                    debounceMs={field.debounceMs}
-                    loading={field.loading}
-                    noResultsText={field.noResultsText}
-                    searchingText={field.searchingText}
-                    disabled={field.disabled}
-                    className={getInputHeight()}
-                  />
-                ) : field.type === "multi-select" ? (
-                  <GenericSelect
-                    type="multi"
-                    options={
-                      field.options?.map((opt) => ({
-                        value: opt.value,
-                        label: opt.label,
-                      })) || []
-                    }
-                    value={formData[field.name] || []}
-                    onValueChange={(value: string | string[]) =>
-                      handleChange(
-                        field.name,
-                        Array.isArray(value) ? value : [value]
-                      )
-                    }
-                    placeholder={field.placeholder}
-                    searchPlaceholder={field.searchPlaceholder}
-                    searchType={field.searchType || "client"}
-                    onServerSearch={
-                      field.onServerSearch
-                        ? async (query: string) => {
-                            const results = await field.onServerSearch!(query);
-                            return results.map((r) => ({
-                              value: r.value,
-                              label: r.label,
-                            }));
-                          }
-                        : undefined
-                    }
-                    searchEndpoint={field.searchEndpoint}
-                    debounceMs={field.debounceMs}
-                    loading={field.loading}
-                    noResultsText={field.noResultsText}
-                    searchingText={field.searchingText}
-                    disabled={field.disabled}
-                    className={getInputHeight()}
-                  />
-                ) : field.type === "switch" ? (
-                  <div
-                    className={cn(
+                  {field.options?.map((option) => (
+                    <div key={option.value} className={cn(
                       "flex items-center",
-                      direction === "rtl"
-                        ? "space-x-reverse space-x-2"
-                        : "space-x-2"
-                    )}
-                  >
-                    <Switch
-                      id={field.name}
-                      checked={formData[field.name] || false}
-                      onCheckedChange={(checked) =>
-                        handleChange(field.name, checked)
-                      }
-                    />
-                    <Label
-                      htmlFor={field.name}
-                      className={cn(
-                        "text-sm text-muted-foreground",
+                      direction === "rtl" ? "space-x-reverse space-x-2" : "space-x-2"
+                    )}>
+                      <RadioGroupItem value={option.value} id={`${field.name}-${option.value}`} />
+                      <Label htmlFor={`${field.name}-${option.value}`} className={cn(
+                        "text-sm",
                         direction === "rtl" ? "text-right" : "text-left"
-                      )}
-                    >
-                      {formData[field.name] ? t("common.yes") : t("common.no")}
-                    </Label>
+                      )}>
+                        {option.label}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              ) : field.type === "slider" || field.type === "range" ? (
+                <div className="space-y-2">
+                  <Slider
+                    value={[formData[field.name] || field.min || 0]}
+                    onValueChange={(value) => handleChange(field.name, value[0])}
+                    min={Number(field.min) || 0}
+                    max={Number(field.max) || 100}
+                    step={Number(field.step) || 1}
+                    disabled={field.disabled}
+                    className="w-full"
+                  />
+                  <div className={cn(
+                    "text-sm text-muted-foreground",
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}>
+                    {t("common.value")}: {formData[field.name] || field.min || 0}
                   </div>
-                ) : field.type === "date" || field.type === "datetime" ? (
-                  <DatePicker
-                    id={field.name}
-                    type={field.type === "datetime" ? "datetime-local" : "date"}
-                    value={formData[field.name] || ""}
-                    onChange={(value) => handleChange(field.name, value)}
-                    required={field.required}
-                    className={getInputHeight()}
-                    placeholder={field.placeholder}
-                  />
-                ) : (
-                  <Input
-                    id={field.name}
-                    type={field.type}
-                    value={formData[field.name] || ""}
-                    onChange={(e) => handleChange(field.name, e.target.value)}
-                    required={field.required}
-                    className={cn(
-                      getInputHeight(),
-                      direction === "rtl" ? "text-right" : "text-left"
-                    )}
-                    placeholder={field.placeholder}
-                    dir={direction}
-                  />
-                )}
-              </div>
-            )
-          )}
+                </div>
+              ) : field.type === "date" || field.type === "datetime" || field.type === "datetime-local" || field.type === "time" || field.type === "month" || field.type === "week" ? (
+                <DatePicker
+                  id={field.name}
+                  type={field.type === "datetime" ? "datetime-local" : field.type as any}
+                  value={formData[field.name] || ""}
+                  onChange={(value) => handleChange(field.name, value)}
+                  required={field.required}
+                  className={getInputHeight()}
+                  placeholder={field.placeholder}
+                />
+              ) : field.type === "file" ? (
+                <Input
+                  id={field.name}
+                  type="file"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (field.multiple) {
+                      handleChange(field.name, files ? Array.from(files) : []);
+                    } else {
+                      handleChange(field.name, files?.[0] || null);
+                    }
+                  }}
+                  required={field.required}
+                  className={cn(
+                    getInputHeight(),
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}
+                  accept={field.accept}
+                  multiple={field.multiple}
+                  disabled={field.disabled}
+                  dir={direction}
+                />
+              ) : (
+                <Input
+                  id={field.name}
+                  type={field.type}
+                  value={formData[field.name] || ""}
+                  onChange={(e) => handleChange(field.name, e.target.value)}
+                  required={field.required}
+                  className={cn(
+                    getInputHeight(),
+                    direction === "rtl" ? "text-right" : "text-left"
+                  )}
+                  placeholder={field.placeholder}
+                  min={field.min}
+                  max={field.max}
+                  step={field.step}
+                  pattern={field.pattern}
+                  minLength={field.minLength}
+                  maxLength={field.maxLength}
+                  disabled={field.disabled}
+                  dir={direction}
+                />
+              )}
+            </div>
+          )
+        )}
 
         <Separator />
 
-        <div
-          className={cn(
-            "flex flex-col sm:flex-row",
-            direction === "rtl" ? "justify-start" : "justify-end",
-            getGridGap(),
-            getSeparatorSpacing()
-          )}
-        >
+        <div className={cn(
+          "flex flex-col sm:flex-row", 
+          direction === "rtl" ? "justify-start" : "justify-end",
+          getGridGap(), 
+          getSeparatorSpacing()
+        )}>
           <Button
             type="button"
             variant="outline"
             onClick={onCancel}
             className={cn(
-              getInputHeight(),
+              getInputHeight(), 
               direction === "rtl" ? "order-1 sm:order-2" : "order-2 sm:order-1"
             )}
             disabled={loading}
@@ -407,7 +463,7 @@ export function GenericForm({
             type="submit"
             disabled={loading}
             className={cn(
-              getInputHeight(),
+              getInputHeight(), 
               "gradient-primary",
               direction === "rtl" ? "order-2 sm:order-1" : "order-1 sm:order-2"
             )}

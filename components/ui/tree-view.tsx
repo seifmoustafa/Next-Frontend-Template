@@ -50,6 +50,10 @@ export interface TreeViewProps<T> {
   onExpandChange?: (expandedIds: string[]) => void;
   className?: string;
   variant?: TreeVariant; // override; otherwise uses settings.treeStyle
+  headerComponent?: React.ReactNode;
+  footerComponent?: React.ReactNode;
+  aboveTreeComponent?: React.ReactNode;
+  belowTreeComponent?: React.ReactNode;
 }
 
 export function TreeView<T>({
@@ -66,6 +70,10 @@ export function TreeView<T>({
   onExpandChange,
   className,
   variant,
+  headerComponent,
+  footerComponent,
+  aboveTreeComponent,
+  belowTreeComponent,
 }: TreeViewProps<T>) {
   const { direction, language, t } = useI18n();
   const settings = useSettings();
@@ -192,11 +200,15 @@ export function TreeView<T>({
 
   if (loading) {
     return (
-      <div className="space-y-3">
-        <div className="h-9 w-56 bg-muted/50 animate-pulse rounded-md" />
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="h-10 bg-muted/30 animate-pulse rounded-md" />
-        ))}
+      <div className={cn("space-y-4", className)}>
+        {headerComponent}
+        <div className="space-y-3">
+          <div className="h-9 w-56 bg-muted/50 animate-pulse rounded-md" />
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-10 bg-muted/30 animate-pulse rounded-md" />
+          ))}
+        </div>
+        {footerComponent}
       </div>
     );
   }
@@ -204,17 +216,23 @@ export function TreeView<T>({
   if (!data || data.length === 0) {
     return (
       <div className={cn("space-y-4", className)}>
+        {headerComponent}
         {Toolbar}
+        {aboveTreeComponent}
         <div className="text-center text-muted-foreground py-12">
           {emptyMessage ?? "No data"}
         </div>
+        {belowTreeComponent}
+        {footerComponent}
       </div>
     );
   }
 
   return (
     <div className={cn("space-y-4", className)}>
+      {headerComponent}
       {Toolbar}
+      {aboveTreeComponent}
       <div
         className={cn(
           "relative",
@@ -237,6 +255,8 @@ export function TreeView<T>({
           cardStyle={settings.cardStyle}
         />
       </div>
+      {belowTreeComponent}
+      {footerComponent}
     </div>
   );
 }
