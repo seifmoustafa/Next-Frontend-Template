@@ -1,16 +1,17 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { useI18n } from "@/providers/i18n-provider";
+import { useSettings } from "@/providers/settings-provider";
+import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Check, Sparkles, Shield, ImageIcon, Type } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
-import { useSettings } from "@/providers/settings-provider";
-import { useI18n } from "@/providers/i18n-provider";
 import { useEnhancedToast } from "@/hooks/use-enhanced-toast";
-import { cn } from "@/lib/utils";
 
 export function TypographyTab() {
   const { t } = useI18n();
@@ -691,6 +692,31 @@ export function TypographyTab() {
                 name: t("settings.switchStyle.options.cyberpunk.title"),
                 description: t("settings.switchStyle.options.cyberpunk.description"),
               },
+              {
+                value: "glassmorphism",
+                name: t("settings.switchStyle.options.glassmorphism.title"),
+                description: t("settings.switchStyle.options.glassmorphism.description"),
+              },
+              {
+                value: "aurora",
+                name: t("settings.switchStyle.options.aurora.title"),
+                description: t("settings.switchStyle.options.aurora.description"),
+              },
+              {
+                value: "matrix",
+                name: t("settings.switchStyle.options.matrix.title"),
+                description: t("settings.switchStyle.options.matrix.description"),
+              },
+              {
+                value: "cosmic",
+                name: t("settings.switchStyle.options.cosmic.title"),
+                description: t("settings.switchStyle.options.cosmic.description"),
+              },
+              {
+                value: "retro",
+                name: t("settings.switchStyle.options.retro.title"),
+                description: t("settings.switchStyle.options.retro.description"),
+              },
             ].map((style) => (
               <div
                 key={style.value}
@@ -712,67 +738,31 @@ export function TypographyTab() {
 
                   {/* Switch Preview */}
                   <div className="flex flex-col items-center space-y-3">
-                    {/* ON State Preview */}
+                    {/* OFF State Preview */}
                     <div className="flex items-center space-x-3">
                       <span className="text-xs text-muted-foreground">
                         {t("settings.switchStyle.labels.off")}
                       </span>
-                      <div className="relative">
-                        {style.value === "default" && (
-                          <div className="w-9 h-5 rounded-full bg-gray-200 dark:bg-gray-800 p-0.5 flex items-center transition-colors">
-                            <div className="h-4 w-4 rounded-full bg-white shadow-md transition-transform translate-x-0" />
-                          </div>
-                        )}
-                        {style.value === "modern" && (
-                          <div className="w-10 h-5 rounded-full bg-muted p-0.5 flex items-center transition-colors">
-                            <div className="h-4 w-4 rounded-full bg-background shadow-sm transition-transform translate-x-0" />
-                          </div>
-                        )}
-                        {style.value === "ios" && (
-                          <div className="w-10 h-6 rounded-full bg-gray-300 dark:bg-gray-700 p-0.5 flex items-center transition-all">
-                            <div className="h-5 w-5 rounded-full bg-white shadow-md transition-transform translate-x-0" />
-                          </div>
-                        )}
-                        {style.value === "android" && (
-                          <div className="w-10 h-4 rounded-sm bg-gray-300 dark:bg-gray-700 flex items-center transition-colors">
-                            <div className="h-4 w-4 bg-white shadow-sm transition-transform translate-x-0" />
-                          </div>
-                        )}
-                        {style.value === "toggle" && (
-                          <div className="w-10 h-6 rounded-md bg-gray-200 dark:bg-gray-800 p-0.5 flex items-center transition-colors">
-                            <div className="h-5 w-5 rounded bg-white shadow-md transition-transform translate-x-0" />
-                          </div>
-                        )}
-                        {style.value === "slider" && (
-                          <div className="w-12 h-5 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center">
-                            <div className="h-5 w-5 rounded-full bg-white shadow-md transition-transform translate-x-0" />
-                          </div>
-                        )}
-                        {style.value === "neon" && (
-                          <div className="w-10 h-5 rounded-full bg-gray-700 p-0.5 flex items-center shadow-inner shadow-purple-500/50">
-                            <div className="h-4 w-4 rounded-full bg-gray-900 shadow-[0_0_4px_rgba(168,85,247,0.8)] transition-transform translate-x-0" />
-                          </div>
-                        )}
-                        {style.value === "neumorphism" && (
-                          <div className="h-8 w-16 rounded-2xl bg-gray-200 dark:bg-gray-800 shadow-[inset_4px_4px_8px_rgba(0,0,0,0.1),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] dark:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.3),inset_-4px_-4px_8px_rgba(255,255,255,0.1)] flex items-center">
-                            <div className="h-6 w-6 rounded-xl bg-gray-300 shadow-[2px_2px_4px_rgba(0,0,0,0.2),-2px_-2px_4px_rgba(255,255,255,0.8)] dark:shadow-[2px_2px_4px_rgba(0,0,0,0.4),-2px_-2px_4px_rgba(255,255,255,0.1)] transform translate-x-0 my-1 mx-1 transition-all" />
-                          </div>
-                        )}
-                        {style.value === "liquid" && (
-                          <div className="h-8 w-16 rounded-full bg-gradient-to-r from-gray-200/80 to-gray-300/80 dark:from-gray-700/80 dark:to-gray-600/80 relative overflow-hidden flex items-center">
-                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none animate-pulse" />
-                            <div className="absolute top-0 left-0 h-full w-full rounded-full bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
-                            <div className="h-7 w-7 rounded-full bg-gradient-to-br from-white to-gray-100 dark:from-gray-300 dark:to-gray-400 shadow-2xl transform translate-x-0.5 my-0.5 transition-all duration-500" />
-                          </div>
-                        )}
-                        {style.value === "cyberpunk" && (
-                          <div className="h-6 w-14 rounded-sm border-2 border-gray-500/50 bg-gray-900/50 dark:bg-gray-800/50 relative overflow-hidden flex items-center">
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-500/10 to-transparent pointer-events-none" />
-                            <div className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-transparent via-gray-500/30 to-transparent pointer-events-none" />
-                            <div className="h-4 w-4 rounded-sm bg-gray-400 shadow-gray-400/50 transform translate-x-0 my-0.5 mx-0.5 transition-all" />
-                          </div>
-                        )}
-                      </div>
+                      <Switch
+                        checked={false}
+                        switchStyle={style.value as any}
+                        className="pointer-events-none"
+                      />
+                      <span className="text-xs text-muted-foreground opacity-50">
+                        {t("settings.switchStyle.labels.on")}
+                      </span>
+                    </div>
+                    
+                    {/* ON State Preview */}
+                    <div className="flex items-center space-x-3">
+                      <span className="text-xs text-muted-foreground opacity-50">
+                        {t("settings.switchStyle.labels.off")}
+                      </span>
+                      <Switch
+                        checked={true}
+                        switchStyle={style.value as any}
+                        className="pointer-events-none"
+                      />
                       <span className="text-xs text-muted-foreground">
                         {t("settings.switchStyle.labels.on")}
                       </span>

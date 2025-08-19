@@ -128,7 +128,7 @@ export type SelectStyle =
   | "stellar"
   | "vortex"
   | "phoenix";
-export type SwitchStyle = "default" | "modern" | "ios" | "android" | "toggle" | "slider" | "neon" | "neumorphism" | "liquid" | "cyberpunk";
+export type SwitchStyle = "default" | "modern" | "ios" | "android" | "toggle" | "slider" | "neon" | "neumorphism" | "liquid" | "cyberpunk" | "glassmorphism" | "aurora" | "matrix" | "cosmic" | "retro";
 
 interface SettingsContextType {
   // Existing settings

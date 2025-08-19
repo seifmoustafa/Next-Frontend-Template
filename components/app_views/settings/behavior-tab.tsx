@@ -6,9 +6,10 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
+import { cn } from "@/lib/utils";
 
 export function BehaviorTab() {
-  const { t } = useI18n();
+  const { t, direction } = useI18n();
   const settings = useSettings();
 
   return (
@@ -19,7 +20,10 @@ export function BehaviorTab() {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.breadcrumbs.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -34,7 +38,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.userAvatar.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -49,7 +56,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.notifications.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -64,7 +74,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.logo.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -79,7 +92,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.compact.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -94,7 +110,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.contrast.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -109,7 +128,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.motion.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -124,7 +146,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.sticky.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -139,7 +164,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.sidebar.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -154,7 +182,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.footer.label")}</Label>
               <p className="text-sm text-muted-foreground">
@@ -169,7 +200,10 @@ export function BehaviorTab() {
 
           <Separator />
 
-          <div className="flex items-center justify-between">
+          <div className={cn(
+            "flex items-center justify-between",
+            direction === "rtl" ? "flex-row-reverse" : ""
+          )}>
             <div className="space-y-0.5">
               <Label>{t("settings.behavior.autoSave.label")}</Label>
               <p className="text-sm text-muted-foreground">

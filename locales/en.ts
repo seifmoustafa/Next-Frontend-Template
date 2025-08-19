@@ -418,6 +418,26 @@ export const en = {
           title: "Cyberpunk",
           description: "Futuristic tech-inspired design with neon accents",
         },
+        glassmorphism: {
+          title: "Glassmorphism",
+          description: "Transparent glass effect with backdrop blur",
+        },
+        aurora: {
+          title: "Aurora",
+          description: "Magical aurora borealis with animated colors",
+        },
+        matrix: {
+          title: "Matrix",
+          description: "Digital matrix theme with green glow effects",
+        },
+        cosmic: {
+          title: "Cosmic",
+          description: "Deep space theme with stellar animations",
+        },
+        retro: {
+          title: "Retro",
+          description: "80s retro style with warm orange gradients",
+        },
       },
       labels: {
         off: "OFF",

@@ -427,6 +427,26 @@ export const ar = {
           title: "سايبربانك",
           description: "تصميم تقني مستقبلي مع لمسات نيون",
         },
+        glassmorphism: {
+          title: "جلاسمورفيزم",
+          description: "تأثير زجاج شفاف مع ضبابية الخلفية",
+        },
+        aurora: {
+          title: "الشفق القطبي",
+          description: "شفق قطبي سحري مع ألوان متحركة",
+        },
+        matrix: {
+          title: "ماتريكس",
+          description: "موضوع ماتريكس رقمي مع تأثيرات توهج خضراء",
+        },
+        cosmic: {
+          title: "كوني",
+          description: "موضوع الفضاء العميق مع حركات نجمية",
+        },
+        retro: {
+          title: "ريترو",
+          description: "نمط الثمانينات الريترو مع تدرجات برتقالية دافئة",
+        },
       },
       labels: {
         off: "إيقاف",
