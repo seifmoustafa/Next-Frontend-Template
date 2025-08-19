@@ -1625,6 +1625,9 @@ export const en = {
       serverSearchSearchPlaceholder: "Type to search server...",
       serverSearchSearchingText: "Searching server...",
       serverSearchNoResultsText: "No server results found",
+      serverSearchResult: "Result {{index}}",
+      serverSearchApi: "API",
+      serverSearchSdk: "SDK",
       features: "Features",
       featuresDescription:
         "Showcase the main features of the multi-select tool.",

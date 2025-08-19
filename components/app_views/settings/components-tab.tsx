@@ -1729,11 +1729,26 @@ export function ComponentsTab() {
                               // Simulate server search
                               await new Promise(resolve => setTimeout(resolve, 500))
                               const mockResults = [
-                                { value: `${query}-1`, label: `${query} Result 1` },
-                                { value: `${query}-2`, label: `${query} Result 2` },
-                                { value: `${query}-3`, label: `${query} Result 3` },
-                                { value: `${query}-api`, label: `${query} API` },
-                                { value: `${query}-sdk`, label: `${query} SDK` }
+                                {
+                                  value: `${query}-1`,
+                                  label: `${query} ${t('components.multiSelect.serverSearchResult', { index: 1 })}`
+                                },
+                                {
+                                  value: `${query}-2`,
+                                  label: `${query} ${t('components.multiSelect.serverSearchResult', { index: 2 })}`
+                                },
+                                {
+                                  value: `${query}-3`,
+                                  label: `${query} ${t('components.multiSelect.serverSearchResult', { index: 3 })}`
+                                },
+                                {
+                                  value: `${query}-api`,
+                                  label: `${query} ${t('components.multiSelect.serverSearchApi')}`
+                                },
+                                {
+                                  value: `${query}-sdk`,
+                                  label: `${query} ${t('components.multiSelect.serverSearchSdk')}`
+                                }
                               ]
                               return mockResults.slice(0, Math.floor(Math.random() * 5) + 1)
                             }}
