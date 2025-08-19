@@ -12,7 +12,7 @@ import type {
 const TOAST_LIMIT = 5
 const TOAST_REMOVE_DELAY = 2000 // 2 seconds as requested
 
-export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled"
+export type ToastDesign = "classic" | "neon" | "glassmorphism" | "neumorphism" | "aurora" | "cosmic" | "minimal" | "modern" | "gradient" | "outlined"
 
 type ToasterToast = ToastProps & {
   id: string
@@ -149,7 +149,7 @@ type Toast = Omit<ToasterToast, "id">
 
 // Default settings that can be overridden by user preferences
 let defaultToastSettings = {
-  design: "minimal" as ToastDesign,
+  design: "classic" as ToastDesign,
   showIcon: true,
   duration: TOAST_REMOVE_DELAY,
 }
@@ -240,6 +240,7 @@ function operationError(operation: string, itemName?: string, error?: string) {
 function useEnhancedToast() {
   const [state, setState] = React.useState<State>(memoryState)
   const { t } = useI18n()
+  const { toastStyle } = useSettings()
 
   React.useEffect(() => {
     listeners.push(setState)
@@ -249,7 +250,7 @@ function useEnhancedToast() {
         listeners.splice(index, 1)
       }
     }
-  }, [state])
+  }, [])
 
   return {
     ...state,

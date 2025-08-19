@@ -130,6 +130,18 @@ export type SelectStyle =
   | "phoenix";
 export type SwitchStyle = "default" | "modern" | "ios" | "android" | "toggle" | "slider" | "neon" | "neumorphism" | "liquid" | "cyberpunk" | "glassmorphism" | "aurora" | "matrix" | "cosmic" | "retro";
 
+export type ToastStyle = 
+  | "classic"
+  | "neon"
+  | "glassmorphism"
+  | "neumorphism"
+  | "aurora"
+  | "cosmic"
+  | "minimal"
+  | "modern"
+  | "gradient"
+  | "outlined";
+
 interface SettingsContextType {
   // Existing settings
   colorTheme: ColorTheme;
@@ -196,10 +208,10 @@ interface SettingsContextType {
   setSwitchStyle: (style: SwitchStyle) => void;
 
   // Toast settings
-  toastDesign: ToastDesign;
+  toastStyle: ToastStyle;
   showToastIcons: boolean;
   toastDuration: number;
-  setToastDesign: (design: ToastDesign) => void;
+  setToastStyle: (style: ToastStyle) => void;
   setShowToastIcons: (show: boolean) => void;
   setToastDuration: (duration: number) => void;
 
@@ -303,7 +315,7 @@ const defaultSettings = {
   switchStyle: "default" as SwitchStyle,
   
   // Toast settings
-  toastDesign: "minimal" as ToastDesign,
+  toastStyle: "classic" as ToastStyle,
   showToastIcons: true,
   toastDuration: 1000,
 };
@@ -504,7 +516,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setCalendarStyle: (style) => updateSetting("calendarStyle", style),
     setSelectStyle: (style) => updateSetting("selectStyle", style),
     setSwitchStyle: (style) => updateSetting("switchStyle", style),
-    setToastDesign: (design) => updateSetting("toastDesign", design),
+    setToastStyle: (style) => updateSetting("toastStyle", style),
     setShowToastIcons: (show) => updateSetting("showToastIcons", show),
     setToastDuration: (duration) => updateSetting("toastDuration", duration),
     resetSettings,
