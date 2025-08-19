@@ -3,15 +3,9 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import GenericSelect from "@/components/ui/generic-select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Check, Home, Users, Settings as SettingsIcon, User, Info, Save, CalendarDays, ChevronRight, Search } from "lucide-react";
+import { Check, Home, Users, Settings, User, Info, CalendarDays, ChevronRight } from "lucide-react";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
@@ -1217,6 +1211,210 @@ export function ComponentsTab() {
                             </div>
                           </div>
                           {settings.avatarStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Form Styles */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.formStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.formStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      {formStyles.map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.formStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setFormStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-2">
+                            <h4 className="font-semibold">{style.name}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {style.description}
+                            </p>
+                            <div
+                              className={cn(
+                                "space-y-2",
+                                style.value === "compact" && "space-y-1",
+                                style.value === "spacious" && "space-y-3",
+                                style.value === "inline" &&
+                                  "flex space-y-0 space-x-2"
+                              )}
+                            >
+                              <div className="h-2 bg-muted rounded w-1/3"></div>
+                              <div className="h-4 bg-muted rounded"></div>
+                            </div>
+                          </div>
+                          {settings.formStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Loading Styles */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.loadingStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.loadingStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      {loadingStyles.map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.loadingStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setLoadingStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-2">
+                            <h4 className="font-semibold">{style.name}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {style.description}
+                            </p>
+                            <div className="flex justify-center">
+                              {style.component}
+                            </div>
+                          </div>
+                          {settings.loadingStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Tooltip Styles */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.tooltipStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.tooltipStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      {tooltipStyles.map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.tooltipStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setTooltipStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-2">
+                            <h4 className="font-semibold">{style.name}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {style.description}
+                            </p>
+                            <div className="flex justify-center">
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button variant="outline" size="sm">
+                                    <Info className="h-4 w-4" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    Sample tooltip with {""}
+                                    {style.name.toLowerCase()} style
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </div>
+                          </div>
+                          {settings.tooltipStyle === style.value && (
+                            <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="h-3 w-3 text-primary-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Modal Styles */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.modalStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.modalStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      {modalStyles.map((style) => (
+                        <div
+                          key={style.value}
+                          className={cn(
+                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            settings.modalStyle === style.value
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-muted hover:border-muted-foreground/50"
+                          )}
+                          onClick={() =>
+                            settings.setModalStyle(style.value as any)
+                          }
+                        >
+                          <div className="space-y-2">
+                            <h4 className="font-semibold">{style.name}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {style.description}
+                            </p>
+                            <div className="relative h-12 bg-gray-100 rounded">
+                              {style.value === "default" && (
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-6 bg-white border rounded shadow"></div>
+                              )}
+                              {style.value === "centered" && (
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-6 bg-white border rounded shadow"></div>
+                              )}
+                              {style.value === "fullscreen" && (
+                                <div className="absolute inset-1 bg-white border rounded shadow"></div>
+                              )}
+                              {style.value === "drawer" && (
+                                <div className="absolute right-1 top-1 bottom-1 w-6 bg-white border rounded shadow"></div>
+                              )}
+                            </div>
+                          </div>
+                          {settings.modalStyle === style.value && (
                             <div className="absolute -top-1 -right-1 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
                               <Check className="h-3 w-3 text-primary-foreground" />
                             </div>
