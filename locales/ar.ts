@@ -428,6 +428,10 @@ export const ar = {
           description: "تصميم تقني مستقبلي مع لمسات نيون",
         },
       },
+      labels: {
+        off: "إيقاف",
+        on: "تشغيل",
+      },
     },
     tableStyle: {
       title: "أنماط الجداول",
@@ -778,6 +782,11 @@ export const ar = {
     fontSizeSection: {
       title: "حجم الخط",
       description: "اضبط حجم الخط الأساسي لقراءة أفضل",
+      sampleTexts: {
+        small: "نص تجريبي بحجم صغير",
+        default: "نص تجريبي بالحجم الافتراضي",
+        large: "نص تجريبي بحجم كبير",
+      },
     },
     borderRadius: {
       title: "استدارة الحواف",
@@ -836,6 +845,7 @@ export const ar = {
     datePickerStyle: {
       title: "نمط منتقي التاريخ",
       description: "اختر كيفية ظهور حقول منتقي التاريخ",
+      previewDate: "اليوم/الشهر/السنة",
       options: {
         default: {
           name: "افتراضي",
@@ -912,6 +922,13 @@ export const ar = {
       previewLabel: "معاينة الشعار",
       previewHelp: "معاينة حية للشعار مع الإعدادات الحالية",
       sizeOptions: { xs: "XS", sm: "SM", md: "MD", lg: "LG", xl: "XL" },
+      animationLabel: "حركة الشعار",
+      animationOptions: {
+        none: { name: "بدون", description: "بدون حركة" },
+        spin: { name: "دوران", description: "حركة دوران" },
+        pulse: { name: "نبض", description: "تأثير نابض" },
+        fancy: { name: "مميز", description: "تأثيرات عند التحويم" },
+      },
     },
     toast: {
       title: "إشعارات التوست",
@@ -1002,6 +1019,7 @@ export const ar = {
       description: "شاهد تغييراتك في الوقت الحقيقي",
       buttons: {
         label: "الأزرار",
+        primary: "زر أساسي",
         small: "زر صغير",
         default: "زر افتراضي",
         outline: "زر بإطار",
@@ -1452,6 +1470,13 @@ export const ar = {
       },
       serverSearchDemo: "عرض توضيحي للبحث من جانب الخادم...",
       serverSearchDescription: "هذا مثال على البحث الذي يتم معالجته في الخادم.",
+      serverSearchPlaceholder: "عرض توضيحي للبحث من جانب الخادم...",
+      serverSearchSearchPlaceholder: "اكتب للبحث في الخادم...",
+      serverSearchSearchingText: "جاري البحث في الخادم...",
+      serverSearchNoResultsText: "لم يتم العثور على نتائج من الخادم",
+      serverSearchResult: "النتيجة {{index}}",
+      serverSearchApi: "واجهة برمجة التطبيقات",
+      serverSearchSdk: "مجموعة تطوير البرمجيات",
       features: "الميزات",
       featuresDescription: "عرض أهم ميزات أداة التحديد المتعدد.",
     },

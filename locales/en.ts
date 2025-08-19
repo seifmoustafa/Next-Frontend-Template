@@ -419,6 +419,10 @@ export const en = {
           description: "Futuristic tech-inspired design with neon accents",
         },
       },
+      labels: {
+        off: "OFF",
+        on: "ON",
+      },
     },
     tableStyle: {
       title: "Table Styles",
@@ -768,6 +772,11 @@ export const en = {
     fontSizeSection: {
       title: "Font Size",
       description: "Adjust the base font size for better readability",
+      sampleTexts: {
+        small: "Sample text in small size",
+        default: "Sample text in default size",
+        large: "Sample text in large size",
+      },
     },
     borderRadius: {
       title: "Border Radius",
@@ -854,6 +863,7 @@ export const en = {
     datePickerStyle: {
       title: "Date Picker Style",
       description: "Choose how date picker fields should appear",
+      previewDate: "DD/MM/YYYY",
       options: {
         default: {
           name: "Default",
@@ -969,6 +979,13 @@ export const en = {
         lg: "LG",
         xl: "XL",
       },
+      animationLabel: "Logo Animation",
+      animationOptions: {
+        none: { name: "None", description: "No animation" },
+        spin: { name: "Spin", description: "Rotating animation" },
+        pulse: { name: "Pulse", description: "Pulsing effect" },
+        fancy: { name: "Fancy", description: "Hover effects" },
+      },
     },
     toast: {
       title: "Toast Notifications",
@@ -1073,6 +1090,7 @@ export const en = {
       description: "See your changes in real-time",
       buttons: {
         label: "Buttons",
+        primary: "Primary Button",
         small: "Small Button",
         default: "Default Button",
         outline: "Outline Button",
@@ -1603,6 +1621,13 @@ export const en = {
       serverSearchDemo: "Server-side search demo...",
       serverSearchDescription:
         "This is an example of a search processed on the server.",
+      serverSearchPlaceholder: "Server-side search demo...",
+      serverSearchSearchPlaceholder: "Type to search server...",
+      serverSearchSearchingText: "Searching server...",
+      serverSearchNoResultsText: "No server results found",
+      serverSearchResult: "Result {{index}}",
+      serverSearchApi: "API",
+      serverSearchSdk: "SDK",
       features: "Features",
       featuresDescription:
         "Showcase the main features of the multi-select tool.",
