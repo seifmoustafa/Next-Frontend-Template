@@ -1019,6 +1019,7 @@ export const ar = {
       description: "شاهد تغييراتك في الوقت الحقيقي",
       buttons: {
         label: "الأزرار",
+        primary: "زر أساسي",
         small: "زر صغير",
         default: "زر افتراضي",
         outline: "زر بإطار",

@@ -1090,6 +1090,7 @@ export const en = {
       description: "See your changes in real-time",
       buttons: {
         label: "Buttons",
+        primary: "Primary Button",
         small: "Small Button",
         default: "Default Button",
         outline: "Outline Button",
