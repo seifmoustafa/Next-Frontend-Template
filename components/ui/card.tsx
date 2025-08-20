@@ -9,19 +9,42 @@ const Card = React.forwardRef<
   const settings = useSettings()
   
   const getCardClasses = () => {
-    const baseClasses = "rounded-lg text-card-foreground transition-all duration-200"
+    const baseClasses = "rounded-xl text-card-foreground transition-all duration-300 ease-in-out"
     
     switch (settings.cardStyle) {
       case "glass":
-        return cn(baseClasses, "bg-white/10 backdrop-blur border border-white/20")
+        return cn(
+          baseClasses, 
+          "bg-white/5 dark:bg-white/5 backdrop-blur-xl border border-white/10 dark:border-white/10",
+          "shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]",
+          "hover:bg-white/10 dark:hover:bg-white/10 hover:border-white/20 dark:hover:border-white/20",
+          "hover:shadow-[0_12px_40px_0_rgba(31,38,135,0.5)] dark:hover:shadow-[0_12px_40px_0_rgba(255,255,255,0.15)]",
+          "hover:scale-[1.02] hover:-translate-y-2"
+        )
       case "solid":
-        return cn(baseClasses, "bg-muted border-0")
+        return cn(
+          baseClasses, 
+          "bg-muted/80 dark:bg-muted/80 border-0",
+          "hover:bg-muted hover:shadow-md hover:scale-[1.01]"
+        )
       case "bordered":
-        return cn(baseClasses, "border-2 bg-card")
+        return cn(
+          baseClasses, 
+          "border-2 border-border/50 bg-card/50 backdrop-blur-sm",
+          "hover:border-border hover:bg-card hover:shadow-lg hover:scale-[1.01]"
+        )
       case "elevated":
-        return cn(baseClasses, "shadow-lg border-0 bg-card")
+        return cn(
+          baseClasses, 
+          "shadow-xl border-0 bg-card",
+          "hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-2"
+        )
       default:
-        return cn(baseClasses, "border bg-card shadow-sm")
+        return cn(
+          baseClasses, 
+          "border border-border/30 bg-card/80 shadow-sm backdrop-blur-sm",
+          "hover:border-border/50 hover:bg-card hover:shadow-md hover:scale-[1.01]"
+        )
     }
   }
 

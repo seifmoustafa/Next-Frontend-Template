@@ -830,6 +830,14 @@ export const en = {
         dots: { name: "Dots", description: "Bouncing dots" },
         bars: { name: "Bars", description: "Loading bars" },
         pulse: { name: "Pulse", description: "Pulsing effect" },
+        wave: { name: "Wave", description: "Wave pattern animation" },
+        orbit: { name: "Orbit", description: "Orbiting dot animation" },
+        ripple: { name: "Ripple", description: "Ripple effect animation" },
+        gradient: { name: "Gradient", description: "Spinning gradient effect" },
+        matrix: { name: "Matrix", description: "Digital matrix-style columns" },
+        helix: { name: "Helix", description: "3D helix spiral animation" },
+        quantum: { name: "Quantum", description: "Quantum field effect" },
+        morphing: { name: "Morphing", description: "Shape-shifting animation" },
       },
     },
     tooltipStyle: {
@@ -840,6 +848,10 @@ export const en = {
         rounded: { name: "Rounded", description: "Rounded corners" },
         sharp: { name: "Sharp", description: "Sharp corners" },
         bubble: { name: "Bubble", description: "Speech bubble style" },
+        glass: { name: "Glass", description: "Glassmorphism with blur effect" },
+        neon: { name: "Neon", description: "Glowing neon style" },
+        minimal: { name: "Minimal", description: "Clean minimal design" },
+        elegant: { name: "Elegant", description: "Sophisticated gradient style" },
       },
     },
     badgeStyle: {
@@ -871,13 +883,14 @@ export const en = {
       title: "Modal Style",
       description: "Choose how modals should appear",
       options: {
-        default: { name: "Default", description: "Centered modal" },
-        centered: { name: "Centered", description: "Always centered" },
-        fullscreen: {
-          name: "Fullscreen",
-          description: "Full screen overlay",
-        },
-        drawer: { name: "Drawer", description: "Side drawer style" },
+        default: { name: "Default", description: "Standard modal in center" },
+        centered: { name: "Centered", description: "Always centered modal" },
+        fullscreen: { name: "Fullscreen", description: "Covers entire screen" },
+        drawer: { name: "Drawer", description: "Sliding sidebar modal" },
+        glass: { name: "Glass", description: "Glassmorphism with blur effect" },
+        floating: { name: "Floating", description: "Elevated floating appearance" },
+        card: { name: "Card", description: "Clean card-style design" },
+        overlay: { name: "Overlay", description: "Large overlay with backdrop" },
       },
     },
     datePickerStyle: {
@@ -1572,13 +1585,13 @@ export const en = {
 
   components: {
     multiSelect: {
+      title:"Multi Select",
+      description:"Choose multible choices",
       searchStates: {
         noResults: "No Results",
         searching: "Searching ......",
       },
-      currentStyle: {
-        luxury: "Luxury",
-      },
+      currentStyle: "Current Style",
       placeholders: {
         selectTechnologies: "Select technologies",
       },

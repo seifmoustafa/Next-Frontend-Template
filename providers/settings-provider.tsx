@@ -92,9 +92,9 @@ export type LogoAnimation = "none" | "spin" | "pulse" | "fancy";
 export type LogoSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 export type FormStyle = "default" | "compact" | "spacious" | "inline";
-export type LoadingStyle = "spinner" | "dots" | "bars" | "pulse";
-export type TooltipStyle = "default" | "rounded" | "sharp" | "bubble";
-export type ModalStyle = "default" | "centered" | "fullscreen" | "drawer";
+export type LoadingStyle = "spinner" | "dots" | "bars" | "pulse" | "wave" | "orbit" | "ripple" | "gradient" | "matrix" | "helix" | "quantum" | "morphing";
+export type TooltipStyle = "default" | "rounded" | "sharp" | "bubble" | "glass" | "neon" | "minimal" | "elegant";
+export type ModalStyle = "default" | "centered" | "fullscreen" | "drawer" | "glass" | "floating" | "card" | "overlay";
 
 export type TreeStyle = "lines" | "cards" | "minimal" | "bubble" | "modern" | "glass" | "elegant" | "professional" | "gradient" | "neon" | "organic" | "corporate";
 export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled";

@@ -55,40 +55,69 @@ export function GenericModal({
   };
 
   const getModalClasses = () => {
-    const baseClasses = "w-[95vw] max-h-[90vh] p-0 overflow-hidden flex flex-col";
-    
+    let baseClasses = "p-0 overflow-hidden flex flex-col";
+    let sizeClasses = "";
     let styleClasses = "";
+    
     switch (settings.modalStyle) {
       case "centered":
-        styleClasses = "items-center justify-center";
+        // Keep default centering behavior
+        sizeClasses = "w-[95vw] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl max-h-[90vh]";
         break;
       case "fullscreen":
-        styleClasses = "w-screen h-screen max-w-none max-h-none rounded-none";
+        // Responsive fullscreen - full on mobile, large on desktop
+        sizeClasses = "w-[98vw] h-[95vh] max-w-none max-h-none sm:w-[95vw] sm:h-[90vh] md:w-[90vw] md:h-[85vh]";
+        styleClasses = "sm:rounded-lg";
         break;
       case "drawer":
-        styleClasses = "fixed right-0 top-0 h-screen max-h-screen rounded-l-lg rounded-r-none";
+        // Drawer from right side - responsive width
+        sizeClasses = "w-full h-[95vh] max-w-md sm:max-w-lg md:max-w-xl max-h-none";
+        styleClasses = "!translate-x-0 !translate-y-0 !left-auto !top-0 right-0 rounded-l-lg rounded-r-none";
+        break;
+      case "glass":
+
+        sizeClasses = "w-[85vw] max-w-2xl max-h-[80vh]";
+        styleClasses = "bg-background/20 backdrop-blur-2xl border-2 border-blue-500/30 shadow-[0_0_50px_rgba(59,130,246,0.2)] rounded-3xl";
+        break;
+      case "floating":
+        // Compact floating with theme-aware colors
+        sizeClasses = "w-[70vw] max-w-sm max-h-[60vh]";
+        styleClasses = "bg-background border border-purple-500/30 shadow-[0_30px_60px_-12px_rgba(168,85,247,0.3)] rounded-2xl transform rotate-1";
+        break;
+      case "card":
+        // Wide card with proper contrast
+        sizeClasses = "w-[95vw] max-w-4xl max-h-[85vh]";
+        styleClasses = "bg-background border-4 border-emerald-500/40 shadow-2xl rounded-xl";
+        break;
+      case "overlay":
+        // Full screen with inverted theme colors
+        sizeClasses = "w-[98vw] h-[95vh] max-w-none max-h-none";
+        styleClasses = "bg-muted/95 border-2 border-orange-500/50 shadow-[0_0_100px_rgba(251,146,60,0.3)] rounded-none";
         break;
       default:
-        styleClasses = "";
+        // Default modal with responsive sizing
+        sizeClasses = "w-[95vw] max-h-[90vh]";
     }
 
-    // Apply border radius based on settings
+    // Apply border radius based on settings (except for drawer which has custom radius)
     let radiusClasses = "";
-    switch (settings.borderRadius) {
-      case "none":
-        radiusClasses = "rounded-none";
-        break;
-      case "small":
-        radiusClasses = "rounded-sm";
-        break;
-      case "large":
-        radiusClasses = "rounded-xl";
-        break;
-      case "full":
-        radiusClasses = "rounded-2xl";
-        break;
-      default:
-        radiusClasses = "rounded-lg";
+    if (settings.modalStyle !== "drawer") {
+      switch (settings.borderRadius) {
+        case "none":
+          radiusClasses = "rounded-none";
+          break;
+        case "small":
+          radiusClasses = "rounded-sm";
+          break;
+        case "large":
+          radiusClasses = "rounded-xl";
+          break;
+        case "full":
+          radiusClasses = "rounded-2xl";
+          break;
+        default:
+          radiusClasses = "rounded-lg";
+      }
     }
 
     // Apply shadow based on settings
@@ -107,7 +136,7 @@ export function GenericModal({
         shadowClasses = "shadow-lg";
     }
 
-    return cn(baseClasses, styleClasses, radiusClasses, shadowClasses);
+    return cn(baseClasses, sizeClasses, styleClasses, radiusClasses, shadowClasses);
   };
 
   const getHeaderPadding = () => {
@@ -148,8 +177,8 @@ export function GenericModal({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
-      <DialogContent className={cn(getSizeClasses(), getModalClasses())}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className={cn(getModalClasses())}>
         <DialogHeader className={cn(getHeaderPadding(), "border-b shrink-0")}>
           <DialogTitle className={cn("font-semibold", getTitleSize())}>
             {title}

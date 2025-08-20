@@ -44,13 +44,13 @@ export function NavigationHeader({
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-30 h-16 backdrop-blur-xl border-b header-shadow",
+        "fixed top-0 left-0 right-0 z-30 h-16 border-b header-shadow",
         animationClass,
         cardStyle === "glass"
-          ? "bg-background/80 border-border/30"
+          ? "bg-white/5 dark:bg-white/5 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]"
           : cardStyle === "solid"
-          ? "bg-background border-border"
-          : "bg-background/95 border-border/50"
+          ? "bg-background border-border backdrop-blur-sm"
+          : "bg-background/95 border-border/50 backdrop-blur-sm"
       )}
     >
       {/* Header Content Container */}

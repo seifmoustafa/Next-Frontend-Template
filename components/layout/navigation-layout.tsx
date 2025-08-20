@@ -2,12 +2,13 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { NavigationMainSidebar } from "@/components/layout/navigation-main-sidebar";
-import { NavigationPanelSidebar } from "@/components/layout/navigation-panel-sidebar";
-import { NavigationHeader } from "@/components/layout/navigation-header";
+import { usePathname } from "next/navigation";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 import { navigation } from "@/config/navigation";
+import { NavigationHeader } from "./navigation-header";
+import { NavigationMainSidebar } from "./navigation-main-sidebar";
+import { NavigationPanelSidebar } from "./navigation-panel-sidebar";
 import { cn } from "@/lib/utils";
 import { Footer } from "@/components/layout/footer";
 
@@ -24,9 +25,49 @@ export function NavigationLayout({
 }: NavigationLayoutProps) {
   const { direction } = useI18n();
   const settings = useSettings();
+  const pathname = usePathname();
   const [selectedMainItem, setSelectedMainItem] = useState<string>("dashboard");
   const [panelSidebarOpen, setPanelSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Helper function to find parent item for current path
+  const findParentItemForPath = (path: string) => {
+    for (const item of navigation) {
+      if (item.href === path) {
+        return item.name;
+      }
+      if (item.children) {
+        for (const child of item.children) {
+          if (child.href === path) {
+            return item.name;
+          }
+          // Check nested children
+          if (child.children) {
+            for (const nestedChild of child.children) {
+              if (nestedChild.href === path) {
+                return item.name;
+              }
+            }
+          }
+        }
+      }
+    }
+    return "dashboard"; // fallback
+  };
+
+  // Update selected item based on current pathname
+  useEffect(() => {
+    const parentItem = findParentItemForPath(pathname);
+    setSelectedMainItem(parentItem);
+    
+    // If we're on a child page, keep the panel open
+    const parentNavItem = navigation.find(item => item.name === parentItem);
+    const hasChildren = parentNavItem?.children && parentNavItem.children.length > 0;
+    
+    if (hasChildren && !isMobile) {
+      setPanelSidebarOpen(true);
+    }
+  }, [pathname, isMobile]);
 
   // Get the selected main navigation item and check if it has children
   const selectedNavItem = navigation.find(
@@ -68,32 +109,37 @@ export function NavigationLayout({
 
       if (mobile) {
         setPanelSidebarOpen(false);
-      } else if (hasChildren) {
-        setPanelSidebarOpen(true);
+      } else {
+        // Only auto-open panel if current item has children
+        const currentNavItem = navigation.find(item => item.name === selectedMainItem);
+        const currentHasChildren = currentNavItem?.children && currentNavItem.children.length > 0;
+        if (currentHasChildren) {
+          setPanelSidebarOpen(true);
+        }
       }
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [hasChildren]);
+  }, [selectedMainItem]);
 
   // Close sidebar when clicking outside on mobile
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      if (!isMobile || !event.target) return;
+      
       const sidebar = document.querySelector(".navigation-main-sidebar");
       const panelSidebar = document.querySelector(".navigation-panel-sidebar");
       const sidebarTrigger = document.querySelector(".sidebar-trigger");
+      const target = event.target as Node;
 
-      if (
-        sidebar &&
-        !sidebar.contains(event.target as Node) &&
-        panelSidebar &&
-        !panelSidebar.contains(event.target as Node) &&
-        sidebarTrigger &&
-        !sidebarTrigger.contains(event.target as Node) &&
-        isMobile
-      ) {
+      const clickedOutside = 
+        (!sidebar || !sidebar.contains(target)) &&
+        (!panelSidebar || !panelSidebar.contains(target)) &&
+        (!sidebarTrigger || !sidebarTrigger.contains(target));
+
+      if (clickedOutside) {
         onSidebarOpenChange(false);
       }
     };
@@ -184,9 +230,9 @@ export function NavigationLayout({
         getAnimationClass(),
         getFontSizeClass(),
         direction === "rtl" ? "rtl" : "ltr",
-        settings.compactMode && "compact-mode",
-        settings.highContrast && "high-contrast",
-        settings.reducedMotion && "reduce-motion"
+        settings.compactMode === true && "compact-mode",
+        settings.highContrast === true && "high-contrast",
+        settings.reducedMotion === true && "reduce-motion"
       )}
       style={{
         fontSize: `var(--font-size-base)`,
@@ -204,7 +250,7 @@ export function NavigationLayout({
       {hasChildren && (
         <NavigationPanelSidebar
           selectedMainItem={selectedMainItem}
-          open={shouldShowPanel}
+          open={!!shouldShowPanel}
           onOpenChange={setPanelSidebarOpen}
           hasChildren={hasChildren}
         />
@@ -214,8 +260,8 @@ export function NavigationLayout({
       <NavigationHeader
         onMenuClick={() => onSidebarOpenChange(true)}
         onPanelToggle={handlePanelToggle}
-        panelOpen={shouldShowPanel}
-        hasPanel={hasChildren}
+        panelOpen={!!shouldShowPanel}
+        hasPanel={!!hasChildren}
         selectedMainItem={selectedMainItem}
         isMobile={isMobile}
       />
@@ -224,7 +270,7 @@ export function NavigationLayout({
       <div
         className={cn(
           "min-h-screen",
-          settings.stickyHeader ? "pt-16" : "pt-4",
+          settings.stickyHeader === true ? "pt-16" : "pt-4",
           getAnimationClass(),
           // Dynamic margins based on sidebar states and direction
           direction === "rtl"
@@ -268,7 +314,7 @@ export function NavigationLayout({
             </div>
           </div>
         </main>
-        {settings.showFooter && <Footer />}
+        {settings.showFooter === true && <Footer />}
       </div>
 
       {/* Mobile Overlay */}

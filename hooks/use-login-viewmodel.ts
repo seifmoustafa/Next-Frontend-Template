@@ -45,7 +45,7 @@ export function useLoginViewModel() {
     setError("");
 
     try {
-      // await login(formData.username, formData.password);
+      await login(formData.username, formData.password);
       
       // Redirect to dashboard on successful login
       router.replace("/demo/products");

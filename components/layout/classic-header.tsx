@@ -20,17 +20,18 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
     getShadowClass,
     getAnimationClass,
     getBorderRadiusClass,
+    getCardStyleClass,
   } = useLayoutStyles();
 
   const animationClass = getAnimationClass();
 
+  const cardStyleClass = getCardStyleClass();
+  
   const headerClass = getHeaderStyleClass({
-    compact: "h-14 bg-background/95 border-b",
-    elevated:
-      "bg-gradient-to-r from-background via-background/98 to-background border-b-2 border-border/80 shadow-xl shadow-primary/10",
-    transparent: "bg-transparent backdrop-blur-xl border-b border-border/30",
-    default:
-      "bg-gradient-to-r from-background via-background/95 to-background border-b-2 border-border/80 shadow-lg shadow-primary/5 backdrop-blur-sm",
+    compact: cn("h-14 border-b", cardStyleClass),
+    elevated: cn("border-b-2 border-border/80 shadow-xl shadow-primary/10", cardStyleClass),
+    transparent: cn("bg-transparent backdrop-blur-xl border-b border-border/30", cardStyleClass),
+    default: cn("border-b-2 border-border/80 shadow-lg shadow-primary/5", cardStyleClass),
   });
 
   return (

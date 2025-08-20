@@ -38,6 +38,8 @@ export function NavigationPanelSidebar({
     cardStyle,
     animationLevel,
     borderRadius,
+    navigationStyle,
+    iconStyle,
   } = useSettings();
 
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
@@ -80,6 +82,80 @@ export function NavigationPanelSidebar({
     if (animationLevel === "minimal") return "transition-colors duration-200";
     if (animationLevel === "moderate") return "transition-all duration-200";
     return "transition-all duration-300 hover:scale-[1.02]";
+  };
+
+  const getIconClasses = () => {
+    const baseClasses = "w-4 h-4";
+    
+    switch (iconStyle) {
+      case "filled":
+        return cn(baseClasses, "fill-current");
+      case "duotone":
+        return cn(baseClasses, "fill-current opacity-75");
+      case "minimal":
+        return cn(baseClasses, "stroke-2");
+      default: // "outline"
+        return cn(baseClasses, "stroke-current fill-none");
+    }
+  };
+
+  const getNavigationStyleClasses = (isActive: boolean, level: number = 0) => {
+    const baseClasses = "w-full gap-2 h-10 px-3";
+    const indent = level * 16;
+    
+    if (!isActive) {
+      return cn(baseClasses, "hover:bg-accent hover:text-accent-foreground");
+    }
+
+    // Active item styling based on navigation style
+    switch (navigationStyle) {
+      case "pills":
+        return cn(
+          baseClasses,
+          "text-white shadow-sm rounded-full",
+          colorTheme === "blue" && "bg-blue-600 hover:bg-blue-700",
+          colorTheme === "purple" && "bg-purple-600 hover:bg-purple-700",
+          colorTheme === "green" && "bg-green-600 hover:bg-green-700",
+          colorTheme === "orange" && "bg-orange-600 hover:bg-orange-700",
+          colorTheme === "red" && "bg-red-600 hover:bg-red-700",
+          colorTheme === "teal" && "bg-teal-600 hover:bg-teal-700"
+        );
+      case "underline":
+        return cn(
+          baseClasses,
+          "rounded-none border-b-2",
+          colorTheme === "blue" && "border-blue-600 text-blue-600",
+          colorTheme === "purple" && "border-purple-600 text-purple-600",
+          colorTheme === "green" && "border-green-600 text-green-600",
+          colorTheme === "orange" && "border-orange-600 text-orange-600",
+          colorTheme === "red" && "border-red-600 text-red-600",
+          colorTheme === "teal" && "border-teal-600 text-teal-600"
+        );
+      case "sidebar":
+        return cn(
+          baseClasses,
+          "rounded-none", // Remove border radius for clean sidebar style
+          // Panel sidebar: left border for RTL, right border for LTR (opposite of main sidebar)
+          direction === "rtl" ? "border-l-4" : "border-r-4",
+          colorTheme === "blue" && "bg-blue-600/20 border-blue-600 text-blue-600",
+          colorTheme === "purple" && "bg-purple-600/20 border-purple-600 text-purple-600",
+          colorTheme === "green" && "bg-green-600/20 border-green-600 text-green-600",
+          colorTheme === "orange" && "bg-orange-600/20 border-orange-600 text-orange-600",
+          colorTheme === "red" && "bg-red-600/20 border-red-600 text-red-600",
+          colorTheme === "teal" && "bg-teal-600/20 border-teal-600 text-teal-600"
+        );
+      default: // "default"
+        return cn(
+          baseClasses,
+          "text-white shadow-sm",
+          colorTheme === "blue" && "bg-blue-600 hover:bg-blue-700",
+          colorTheme === "purple" && "bg-purple-600 hover:bg-purple-700",
+          colorTheme === "green" && "bg-green-600 hover:bg-green-700",
+          colorTheme === "orange" && "bg-orange-600 hover:bg-orange-700",
+          colorTheme === "red" && "bg-red-600 hover:bg-red-700",
+          colorTheme === "teal" && "bg-teal-600 hover:bg-teal-700"
+        );
+    }
   };
 
   const renderNavigationItem = (item: any, level: number = 0) => {
@@ -128,7 +204,7 @@ export function NavigationPanelSidebar({
                   )}
                   <span className="flex-1 text-right">{displayName}</span>
                   {item.icon ? (
-                    <item.icon className="w-4 h-4" />
+                    <item.icon className={getIconClasses()} />
                   ) : (
                     <div className="w-2 h-2 rounded-full bg-primary" />
                   )}
@@ -136,7 +212,7 @@ export function NavigationPanelSidebar({
               ) : (
                 <>
                   {item.icon ? (
-                    <item.icon className="w-4 h-4" />
+                    <item.icon className={getIconClasses()} />
                   ) : (
                     <div className="w-2 h-2 rounded-full bg-primary" />
                   )}
@@ -170,25 +246,11 @@ export function NavigationPanelSidebar({
         variant="ghost"
         asChild
         className={cn(
-          "w-full gap-2 h-10 px-3",
+          getNavigationStyleClasses(isActive, level),
           // RTL/LTR alignment
           direction === "rtl" ? "justify-end" : "justify-start",
           getBorderRadiusClass(),
           getAnimationClass(),
-          isActive
-            ? cn(
-                "text-white shadow-sm",
-                colorTheme === "blue" && "bg-blue-500 hover:bg-blue-600",
-                colorTheme === "purple" && "bg-purple-500 hover:bg-purple-600",
-                colorTheme === "green" && "bg-green-500 hover:bg-green-600",
-                colorTheme === "orange" && "bg-orange-500 hover:bg-orange-600",
-                colorTheme === "red" && "bg-red-500 hover:bg-red-600",
-                colorTheme === "teal" && "bg-teal-500 hover:bg-teal-600",
-                colorTheme === "pink" && "bg-pink-500 hover:bg-pink-600",
-                colorTheme === "indigo" && "bg-indigo-500 hover:bg-indigo-600",
-                colorTheme === "cyan" && "bg-cyan-500 hover:bg-cyan-600"
-              )
-            : "hover:bg-accent hover:text-accent-foreground",
           item.disabled && "opacity-50 cursor-not-allowed"
         )}
         style={
@@ -249,12 +311,12 @@ export function NavigationPanelSidebar({
   return (
     <div
       className={cn(
-        "navigation-panel-sidebar fixed inset-y-0 z-40 w-64 backdrop-blur-xl transform transition-all duration-300 ease-in-out sidebar-shadow",
+        "navigation-panel-sidebar fixed inset-y-0 z-40 w-64 transform transition-all duration-300 ease-in-out sidebar-shadow",
         cardStyle === "glass"
-          ? "bg-background/90 border-border/50"
+          ? "bg-white/5 dark:bg-white/5 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]"
           : cardStyle === "solid"
-          ? "bg-background border-border"
-          : "bg-background/95 border-border/50",
+          ? "bg-background border-border backdrop-blur-sm"
+          : "bg-background/95 border-border/50 backdrop-blur-sm",
         // RTL/LTR positioning and borders
         direction === "rtl" ? "right-16 border-l" : "left-16 border-r",
         "lg:translate-x-0"

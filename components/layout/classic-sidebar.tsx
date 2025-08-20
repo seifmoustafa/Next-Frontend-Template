@@ -45,6 +45,7 @@ export function ClassicSidebar({
     getBorderRadiusClass,
     getShadowClass,
     getAnimationClass,
+    getCardStyleClass,
   } = useLayoutStyles();
   const borderRadiusClass = getBorderRadiusClass({
     large: "rounded-2xl",
@@ -261,8 +262,8 @@ export function ClassicSidebar({
     <>
       <div
         className={cn(
-          "sidebar fixed inset-y-0 z-50 w-80 bg-gradient-to-b from-sidebar via-sidebar/98 to-sidebar border-r-2 border-sidebar-border transform lg:translate-x-0 custom-scrollbar overflow-y-auto",
-          "backdrop-blur-sm",
+          "sidebar fixed inset-y-0 z-50 w-80 border-r-2 border-sidebar-border transform lg:translate-x-0 custom-scrollbar overflow-y-auto",
+          getCardStyleClass(),
           shadowClass,
           animationClass,
           direction === "rtl" ? "right-0" : "left-0",

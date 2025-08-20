@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import GenericSelect from "@/components/ui/generic-select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { GenericModal } from "@/components/ui/generic-modal";
 import { Check, Home, Users, Settings, User, Info, CalendarDays, ChevronRight } from "lucide-react";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
@@ -15,6 +16,9 @@ export function ComponentsTab() {
   const settings = useSettings();
   const [multiSelectDemo, setMultiSelectDemo] = useState<string[]>([]);
   const [styleSelections, setStyleSelections] = useState<Record<string, string | string[]>>({});
+  const [testModalOpen, setTestModalOpen] = useState<string | null>(null);
+  
+  const { setModalStyle } = settings;
 
   const buttonStyles = [
     {
@@ -505,6 +509,115 @@ export function ComponentsTab() {
         <div className="w-6 h-6 bg-primary rounded animate-pulse"></div>
       ),
     },
+    {
+      value: "wave",
+      name: t("settings.loadingStyle.options.wave.name"),
+      description: t("settings.loadingStyle.options.wave.description"),
+      component: (
+        <div className="flex space-x-1 items-end">
+          <div className="w-1 h-3 bg-primary rounded-full animate-pulse"></div>
+          <div className="w-1 h-4 bg-primary rounded-full animate-pulse delay-75"></div>
+          <div className="w-1 h-6 bg-primary rounded-full animate-pulse delay-150"></div>
+          <div className="w-1 h-4 bg-primary rounded-full animate-pulse delay-225"></div>
+          <div className="w-1 h-3 bg-primary rounded-full animate-pulse delay-300"></div>
+        </div>
+      ),
+    },
+    {
+      value: "orbit",
+      name: t("settings.loadingStyle.options.orbit.name"),
+      description: t("settings.loadingStyle.options.orbit.description"),
+      component: (
+        <div className="relative w-6 h-6">
+          <div className="absolute inset-0 border border-primary/20 rounded-full"></div>
+          <div className="absolute top-0 left-1/2 w-1.5 h-1.5 -ml-0.75 -mt-0.75 bg-primary rounded-full animate-spin origin-[0_12px]"></div>
+        </div>
+      ),
+    },
+    {
+      value: "ripple",
+      name: t("settings.loadingStyle.options.ripple.name"),
+      description: t("settings.loadingStyle.options.ripple.description"),
+      component: (
+        <div className="relative w-6 h-6">
+          <div className="absolute inset-0 border border-primary rounded-full animate-ping"></div>
+          <div className="absolute inset-0 border border-primary rounded-full animate-ping delay-150"></div>
+        </div>
+      ),
+    },
+    {
+      value: "gradient",
+      name: t("settings.loadingStyle.options.gradient.name"),
+      description: t("settings.loadingStyle.options.gradient.description"),
+      component: (
+        <div className="w-6 h-6 bg-gradient-to-r from-primary via-primary/50 to-transparent rounded-full animate-spin"></div>
+      ),
+    },
+    {
+      value: "matrix",
+      name: t("settings.loadingStyle.options.matrix.name"),
+      description: t("settings.loadingStyle.options.matrix.description"),
+      component: (
+        <div className="grid grid-cols-4 gap-0.5">
+          <div className="w-1 h-4 bg-primary animate-pulse opacity-100"></div>
+          <div className="w-1 h-5 bg-primary animate-pulse delay-100 opacity-75"></div>
+          <div className="w-1 h-3 bg-primary animate-pulse delay-200 opacity-50"></div>
+          <div className="w-1 h-4 bg-primary animate-pulse delay-300 opacity-75"></div>
+          <div className="w-1 h-3 bg-primary animate-pulse delay-75 opacity-60"></div>
+          <div className="w-1 h-5 bg-primary animate-pulse delay-175 opacity-90"></div>
+          <div className="w-1 h-4 bg-primary animate-pulse delay-250 opacity-70"></div>
+          <div className="w-1 h-3 bg-primary animate-pulse delay-325 opacity-80"></div>
+        </div>
+      ),
+    },
+    {
+      value: "helix",
+      name: t("settings.loadingStyle.options.helix.name"),
+      description: t("settings.loadingStyle.options.helix.description"),
+      component: (
+        <div className="relative w-6 h-6">
+          <div className="absolute w-2 h-2 bg-primary rounded-full animate-spin" style={{
+            animation: 'spin 1.5s linear infinite, helixMove 3s ease-in-out infinite',
+            left: '50%', top: '50%', transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="absolute w-1.5 h-1.5 bg-primary/70 rounded-full animate-spin" style={{
+            animation: 'spin 1.5s linear infinite reverse, helixMove 3s ease-in-out infinite reverse',
+            left: '50%', top: '50%', transform: 'translate(-50%, -50%)'
+          }}></div>
+        </div>
+      ),
+    },
+    {
+      value: "quantum",
+      name: t("settings.loadingStyle.options.quantum.name"),
+      description: t("settings.loadingStyle.options.quantum.description"),
+      component: (
+        <div className="relative w-6 h-6">
+          <div className="absolute inset-0 border border-primary/20 rounded-full animate-pulse"></div>
+          <div className="absolute inset-1 border border-primary/40 rounded-full animate-pulse delay-200"></div>
+          <div className="absolute inset-2 border border-primary/60 rounded-full animate-pulse delay-400"></div>
+          <div className="absolute inset-3 bg-primary rounded-full animate-pulse delay-600"></div>
+          <div className="absolute top-1/2 left-1/2 w-0.5 h-0.5 bg-primary rounded-full animate-ping transform -translate-x-1/2 -translate-y-1/2"></div>
+        </div>
+      ),
+    },
+    {
+      value: "morphing",
+      name: t("settings.loadingStyle.options.morphing.name"),
+      description: t("settings.loadingStyle.options.morphing.description"),
+      component: (
+        <div className="relative w-6 h-6">
+          <div className="absolute inset-0 bg-primary animate-pulse" style={{
+            animation: 'morphShape 3s ease-in-out infinite',
+            borderRadius: '50%'
+          }}></div>
+          <div className="absolute inset-1 bg-primary/70 animate-pulse" style={{
+            animation: 'morphShape 3s ease-in-out infinite reverse',
+            borderRadius: '20%'
+          }}></div>
+        </div>
+      ),
+    },
   ];
   // Tooltip style options - UPDATED WITH ACTUAL TOOLTIPS
   const tooltipStyles = [
@@ -528,6 +641,26 @@ export function ComponentsTab() {
       name: t("settings.tooltipStyle.options.bubble.name"),
       description: t("settings.tooltipStyle.options.bubble.description"),
     },
+    {
+      value: "glass",
+      name: t("settings.tooltipStyle.options.glass.name"),
+      description: t("settings.tooltipStyle.options.glass.description"),
+    },
+    {
+      value: "neon",
+      name: t("settings.tooltipStyle.options.neon.name"),
+      description: t("settings.tooltipStyle.options.neon.description"),
+    },
+    {
+      value: "minimal",
+      name: t("settings.tooltipStyle.options.minimal.name"),
+      description: t("settings.tooltipStyle.options.minimal.description"),
+    },
+    {
+      value: "elegant",
+      name: t("settings.tooltipStyle.options.elegant.name"),
+      description: t("settings.tooltipStyle.options.elegant.description"),
+    },
   ];
   const modalStyles = [
     {
@@ -549,6 +682,26 @@ export function ComponentsTab() {
       value: "drawer",
       name: t("settings.modalStyle.options.drawer.name"),
       description: t("settings.modalStyle.options.drawer.description"),
+    },
+    {
+      value: "glass",
+      name: t("settings.modalStyle.options.glass.name"),
+      description: t("settings.modalStyle.options.glass.description"),
+    },
+    {
+      value: "floating",
+      name: t("settings.modalStyle.options.floating.name"),
+      description: t("settings.modalStyle.options.floating.description"),
+    },
+    {
+      value: "card",
+      name: t("settings.modalStyle.options.card.name"),
+      description: t("settings.modalStyle.options.card.description"),
+    },
+    {
+      value: "overlay",
+      name: t("settings.modalStyle.options.overlay.name"),
+      description: t("settings.modalStyle.options.overlay.description"),
     },
   ];
   return (
@@ -1771,6 +1924,82 @@ export function ComponentsTab() {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Modal Style Testing */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t("settings.modalStyle.title")}</CardTitle>
+                    <CardDescription>
+                      {t("settings.modalStyle.description")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      {modalStyles.map((style) => (
+                        <div key={style.value} className="space-y-2">
+                          <Button
+                            variant={settings.modalStyle === style.value ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => setModalStyle(style.value as any)}
+                            className="w-full"
+                          >
+                            {style.name}
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => setTestModalOpen(style.value)}
+                            className="w-full text-xs"
+                          >
+                            Test {style.name}
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Click "Test" buttons to preview each modal style with sample content
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Test Modal for Preview */}
+                <GenericModal
+                  open={testModalOpen !== null}
+                  onOpenChange={(open) => !open && setTestModalOpen(null)}
+                  title={`${testModalOpen} Modal Style Preview`}
+                >
+                  <div className="space-y-4">
+                    <div className="text-sm text-muted-foreground">
+                      This is a preview of the <strong>{testModalOpen}</strong> modal style.
+                    </div>
+                    <div className="space-y-3">
+                      <div className="p-4 bg-muted/50 rounded-lg">
+                        <h4 className="font-medium mb-2">Sample Content</h4>
+                        <p className="text-sm text-muted-foreground">
+                          This modal demonstrates the visual appearance and behavior of the {testModalOpen} style.
+                          Notice the unique styling, positioning, and visual effects.
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button size="sm" onClick={() => setTestModalOpen(null)}>
+                          Close Preview
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => {
+                            if (testModalOpen) {
+                              setModalStyle(testModalOpen as any);
+                              setTestModalOpen(null);
+                            }
+                          }}
+                        >
+                          Apply This Style
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </GenericModal>
     </>
   );
 }

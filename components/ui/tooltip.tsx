@@ -27,6 +27,14 @@ const TooltipContent = React.forwardRef<
         return cn(baseClasses, "rounded-none")
       case "bubble":
         return cn(baseClasses, "rounded-lg relative after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-popover")
+      case "glass":
+        return cn(baseClasses, "rounded-xl bg-background/80 backdrop-blur-md border-white/20 shadow-2xl")
+      case "neon":
+        return cn(baseClasses, "rounded-lg bg-primary/10 border-primary/50 shadow-lg shadow-primary/25 text-primary-foreground")
+      case "minimal":
+        return cn(baseClasses, "rounded-sm bg-foreground text-primary-foreground border-none shadow-sm px-2 py-1")
+      case "elegant":
+        return cn(baseClasses, "rounded-2xl bg-gradient-to-br from-background to-muted border-2 border-border/50 shadow-xl px-4 py-2")
       default:
         return cn(baseClasses, "rounded-md")
     }

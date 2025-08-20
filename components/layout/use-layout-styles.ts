@@ -7,6 +7,7 @@ import type {
   SidebarStyle,
   ShadowIntensity,
   SpacingSize,
+  CardStyle,
 } from "@/providers/settings-provider";
 
 // Utility hook that exposes common style helpers based on global settings
@@ -19,6 +20,7 @@ export function useLayoutStyles() {
     animationLevel,
     shadowIntensity,
     buttonStyle,
+    cardStyle,
   } = useSettings();
 
   const merge = <T extends string>(
@@ -91,6 +93,17 @@ export function useLayoutStyles() {
       default: "rounded-lg",
     }, overrides);
 
+  const getCardStyleClass = (
+    overrides?: Partial<Record<CardStyle | "default", string>>
+  ) =>
+    merge(cardStyle, {
+      glass: "bg-white/5 dark:bg-white/5 backdrop-blur-xl border border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]",
+      solid: "bg-muted/80 dark:bg-muted/80 border-0",
+      bordered: "border-2 border-border/50 bg-card/50 backdrop-blur-sm",
+      elevated: "shadow-xl border-0 bg-card",
+      default: "border border-border/30 bg-card/80 shadow-sm backdrop-blur-sm",
+    }, overrides);
+
   return {
     getSpacingClass,
     getHeaderStyleClass,
@@ -99,6 +112,7 @@ export function useLayoutStyles() {
     getAnimationClass,
     getBorderRadiusClass,
     getButtonStyleClass,
+    getCardStyleClass,
   };
 }
 

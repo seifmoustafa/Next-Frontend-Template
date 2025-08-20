@@ -8,6 +8,68 @@
   }
 }
 
+/* Custom Loading Animations */
+@keyframes helixMove {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  25% { transform: translate(-30%, -70%) scale(0.8); }
+  50% { transform: translate(-70%, -50%) scale(1.2); }
+  75% { transform: translate(-50%, -30%) scale(0.9); }
+}
+
+@keyframes morphShape {
+  0%, 100% { 
+    border-radius: 50% 20% 50% 20%;
+    transform: rotate(0deg) scale(1);
+  }
+  25% { 
+    border-radius: 20% 50% 20% 50%;
+    transform: rotate(90deg) scale(1.1);
+  }
+  50% { 
+    border-radius: 50% 20% 50% 20%;
+    transform: rotate(180deg) scale(0.9);
+  }
+  75% { 
+    border-radius: 20% 50% 20% 50%;
+    transform: rotate(270deg) scale(1.1);
+  }
+}
+
+/* Enhanced Modal Animations */
+@keyframes glassShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes floatGlow {
+  0%, 100% { 
+    box-shadow: 0 20px 60px -12px rgba(0,0,0,0.25), 0 8px 25px -5px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.05);
+  }
+  50% { 
+    box-shadow: 0 25px 80px -12px rgba(0,0,0,0.35), 0 12px 35px -5px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.1);
+  }
+}
+
+@keyframes cardBorderGlow {
+  0%, 100% { 
+    background: linear-gradient(135deg, rgba(var(--primary), 0.2), rgba(var(--secondary), 0.2));
+  }
+  50% { 
+    background: linear-gradient(135deg, rgba(var(--primary), 0.4), rgba(var(--secondary), 0.4));
+  }
+}
+
+@keyframes overlayPulse {
+  0%, 100% { 
+    backdrop-filter: blur(8px);
+    background: linear-gradient(135deg, rgba(var(--background), 0.95), rgba(var(--background), 0.90), rgba(var(--background), 0.95));
+  }
+  50% { 
+    backdrop-filter: blur(12px);
+    background: linear-gradient(135deg, rgba(var(--background), 0.98), rgba(var(--background), 0.93), rgba(var(--background), 0.98));
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

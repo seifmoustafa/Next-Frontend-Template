@@ -37,6 +37,8 @@ export function NavigationMainSidebar({
     cardStyle,
     animationLevel,
     borderRadius,
+    navigationStyle,
+    iconStyle,
   } = useSettings();
 
 
@@ -60,6 +62,83 @@ export function NavigationMainSidebar({
     if (animationLevel === "minimal") return "transition-colors duration-200";
     if (animationLevel === "moderate") return "transition-all duration-200";
     return "transition-all duration-300 hover:scale-105";
+  };
+
+  const getIconClasses = () => {
+    const baseClasses = "w-5 h-5";
+    
+    switch (iconStyle) {
+      case "filled":
+        return cn(baseClasses, "fill-current");
+      case "duotone":
+        return cn(baseClasses, "fill-current opacity-75");
+      case "minimal":
+        return cn(baseClasses, "stroke-2");
+      default: // "outline"
+        return cn(baseClasses, "stroke-current fill-none");
+    }
+  };
+
+  const getNavigationStyleClasses = (isActive: boolean, isMobile = false) => {
+    const baseClasses = isMobile ? "w-full justify-start gap-3 h-12" : "w-12 h-12 relative group";
+    
+    if (!isActive) {
+      return cn(baseClasses, "hover:bg-accent hover:text-accent-foreground");
+    }
+
+    // Active item styling based on navigation style
+    switch (navigationStyle) {
+      case "pills":
+        return cn(
+          baseClasses,
+          "text-white shadow-lg",
+          isMobile ? "rounded-full" : "rounded-full",
+          colorTheme === "blue" && "bg-blue-600 hover:bg-blue-700",
+          colorTheme === "purple" && "bg-purple-600 hover:bg-purple-700",
+          colorTheme === "green" && "bg-green-600 hover:bg-green-700",
+          colorTheme === "orange" && "bg-orange-600 hover:bg-orange-700",
+          colorTheme === "red" && "bg-red-600 hover:bg-red-700",
+          colorTheme === "teal" && "bg-teal-600 hover:bg-teal-700"
+        );
+      case "underline":
+        return cn(
+          baseClasses,
+          "rounded-none border-b-2",
+          colorTheme === "blue" && "border-blue-600 text-blue-600",
+          colorTheme === "purple" && "border-purple-600 text-purple-600",
+          colorTheme === "green" && "border-green-600 text-green-600",
+          colorTheme === "orange" && "border-orange-600 text-orange-600",
+          colorTheme === "red" && "border-red-600 text-red-600",
+          colorTheme === "teal" && "border-teal-600 text-teal-600"
+        );
+      case "sidebar":
+        return cn(
+          baseClasses,
+          "rounded-none", // Remove border radius for clean sidebar style
+          // For desktop main sidebar: right border for LTR, left border for RTL
+          // For mobile: left border for LTR, right border for RTL
+          isMobile 
+            ? (direction === "rtl" ? "border-r-4" : "border-l-4")
+            : (direction === "rtl" ? "border-l-4" : "border-r-4"),
+          colorTheme === "blue" && "bg-blue-600/20 border-blue-600 text-blue-600",
+          colorTheme === "purple" && "bg-purple-600/20 border-purple-600 text-purple-600",
+          colorTheme === "green" && "bg-green-600/20 border-green-600 text-green-600",
+          colorTheme === "orange" && "bg-orange-600/20 border-orange-600 text-orange-600",
+          colorTheme === "red" && "bg-red-600/20 border-red-600 text-red-600",
+          colorTheme === "teal" && "bg-teal-600/20 border-teal-600 text-teal-600"
+        );
+      default: // "default"
+        return cn(
+          baseClasses,
+          "text-white shadow-lg",
+          colorTheme === "blue" && "bg-blue-600 hover:bg-blue-700",
+          colorTheme === "purple" && "bg-purple-600 hover:bg-purple-700",
+          colorTheme === "green" && "bg-green-600 hover:bg-green-700",
+          colorTheme === "orange" && "bg-orange-600 hover:bg-orange-700",
+          colorTheme === "red" && "bg-red-600 hover:bg-red-700",
+          colorTheme === "teal" && "bg-teal-600 hover:bg-teal-700"
+        );
+    }
   };
 
   const handleItemClick = (item: any) => {
@@ -96,36 +175,22 @@ export function NavigationMainSidebar({
               variant="ghost"
               size="icon"
               className={cn(
-                "w-12 h-12 relative group",
+                getNavigationStyleClasses(isActive),
                 getBorderRadiusClass(),
                 getAnimationClass(),
-                isActive
-                  ? cn(
-                      "text-white shadow-lg",
-                      colorTheme === "blue" && "bg-blue-600 hover:bg-blue-700",
-                      colorTheme === "purple" &&
-                        "bg-purple-600 hover:bg-purple-700",
-                      colorTheme === "green" &&
-                        "bg-green-600 hover:bg-green-700",
-                      colorTheme === "orange" &&
-                        "bg-orange-600 hover:bg-orange-700",
-                      colorTheme === "red" && "bg-red-600 hover:bg-red-700",
-                      colorTheme === "teal" && "bg-teal-600 hover:bg-teal-700"
-                    )
-                  : "hover:bg-accent hover:text-accent-foreground",
                 item.disabled && "opacity-50 cursor-not-allowed"
               )}
               onClick={() => handleItemClick(item)}
               disabled={item.disabled}
             >
               {item.icon ? (
-                <item.icon className="w-5 h-5" />
+                <item.icon className={getIconClasses()} />
               ) : (
                 <div className="w-2.5 h-2.5 rounded-full bg-white" />
               )}
 
-              {/* Active indicator */}
-              {isActive && (
+              {/* Active indicator - only show for non-sidebar navigation styles */}
+              {isActive && navigationStyle !== "sidebar" && (
                 <div
                   className={cn(
                     "absolute w-1 h-8 rounded-full",
@@ -184,12 +249,12 @@ export function NavigationMainSidebar({
       {/* Desktop Sidebar */}
       <aside
         className={cn(
-          "navigation-main-sidebar fixed inset-y-0 z-50 w-16 backdrop-blur-xl border-r transform transition-all duration-300 ease-in-out hidden lg:flex flex-col",
+          "navigation-main-sidebar fixed inset-y-0 z-50 w-16 border-r transform transition-all duration-300 ease-in-out hidden lg:flex flex-col",
           cardStyle === "glass"
-            ? "bg-background/90 border-border/50"
+            ? "bg-white/5 dark:bg-white/5 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]"
             : cardStyle === "solid"
-            ? "bg-background border-border"
-            : "bg-background/95 border-border/50",
+            ? "bg-background border-border backdrop-blur-sm"
+            : "bg-background/95 border-border/50 backdrop-blur-sm",
           direction === "rtl" ? "right-0" : "left-0"
         )}
       >
@@ -209,12 +274,12 @@ export function NavigationMainSidebar({
       {/* Mobile Sidebar */}
       <aside
         className={cn(
-          "navigation-main-sidebar fixed inset-y-0 z-50 w-64 backdrop-blur-xl border-r transform transition-all duration-300 ease-in-out lg:hidden",
+          "navigation-main-sidebar fixed inset-y-0 z-50 w-64 border-r transform transition-all duration-300 ease-in-out lg:hidden",
           cardStyle === "glass"
-            ? "bg-background/95 border-border/50"
+            ? "bg-white/5 dark:bg-white/5 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]"
             : cardStyle === "solid"
-            ? "bg-background border-border"
-            : "bg-background/98 border-border/50",
+            ? "bg-background border-border backdrop-blur-sm"
+            : "bg-background/98 border-border/50 backdrop-blur-sm",
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
@@ -250,32 +315,16 @@ export function NavigationMainSidebar({
                   key={item.name}
                   variant="ghost"
                   className={cn(
-                    "w-full justify-start gap-3 h-12",
+                    getNavigationStyleClasses(isActive, true),
                     getBorderRadiusClass(),
                     getAnimationClass(),
-                    isActive
-                      ? cn(
-                          "text-white shadow-sm",
-                          colorTheme === "blue" &&
-                            "bg-blue-600 hover:bg-blue-700",
-                          colorTheme === "purple" &&
-                            "bg-purple-600 hover:bg-purple-700",
-                          colorTheme === "green" &&
-                            "bg-green-600 hover:bg-green-700",
-                          colorTheme === "orange" &&
-                            "bg-orange-600 hover:bg-orange-700",
-                          colorTheme === "red" && "bg-red-600 hover:bg-red-700",
-                          colorTheme === "teal" &&
-                            "bg-teal-600 hover:bg-teal-700"
-                        )
-                      : "hover:bg-accent hover:text-accent-foreground",
                     item.disabled && "opacity-50 cursor-not-allowed"
                   )}
                   onClick={() => handleItemClick(item)}
                   disabled={item.disabled}
                 >
                   {item.icon ? (
-                    <item.icon className="w-5 h-5" />
+                    <item.icon className={getIconClasses()} />
                   ) : (
                     <div className="w-2.5 h-2.5 rounded-full bg-white" />
                   )}
