@@ -7,6 +7,7 @@ import GenericSelect from "@/components/ui/generic-select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { GenericModal } from "@/components/ui/generic-modal";
 import { Check, Home, Users, Settings, User, Info, CalendarDays, ChevronRight } from "lucide-react";
+import { GenericTable } from "@/components/ui/generic-table";
 import { useSettings } from "@/providers/settings-provider";
 import { useI18n } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,193 @@ export function ComponentsTab() {
   const [testModalOpen, setTestModalOpen] = useState<string | null>(null);
   
   const { setModalStyle } = settings;
+
+  // Sample data for table preview
+  const sampleTableData = [
+    { id: "1", name: "John Doe", role: "Admin", status: "Active" },
+    { id: "2", name: "Jane Smith", role: "User", status: "Pending" },
+    { id: "3", name: "Bob Johnson", role: "Editor", status: "Inactive" },
+  ];
+
+  const sampleTableColumns = [
+    { key: "name" as const, label: "Name", sortable: true },
+    { key: "role" as const, label: "Role", sortable: true },
+    {
+      key: "status" as const,
+      label: "Status",
+      render: (value: string) => (
+        <span
+          className={cn(
+            "px-2 py-1 rounded-full text-xs font-medium",
+            value === "Active" && "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+            value === "Pending" && "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+            value === "Inactive" && "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+          )}
+        >
+          {value}
+        </span>
+      ),
+    },
+  ];
+
+  // Simple table preview component for settings
+  const TablePreview = ({ style }: { style: string }) => {
+    
+    const getTableClasses = () => {
+      const baseClasses = "overflow-hidden transition-all duration-300 w-full";
+      
+      switch (style) {
+        case "striped":
+          return cn(baseClasses, "rounded-lg border bg-card");
+        case "bordered":
+          return cn(baseClasses, "rounded-lg border-2 border-border bg-card");
+        case "minimal":
+          return cn(baseClasses, "rounded-none border-0 bg-transparent");
+        case "glass":
+          return cn(
+            baseClasses,
+            "rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl",
+            "dark:bg-black/20 dark:border-white/10"
+          );
+        case "neon":
+          return cn(
+            baseClasses,
+            "rounded-xl border-2 border-primary/30 bg-background shadow-[0_0_30px_rgba(var(--primary),0.3)]",
+            "dark:bg-black/95"
+          );
+        case "gradient":
+          return cn(
+            baseClasses,
+            "rounded-2xl border-0 bg-gradient-to-br from-primary/20 via-background to-primary/10 shadow-2xl"
+          );
+        case "neumorphism":
+          return cn(
+            baseClasses,
+            "rounded-3xl border-0 bg-background",
+            "shadow-[20px_20px_40px_rgba(0,0,0,0.1),-20px_-20px_40px_rgba(255,255,255,0.1)]",
+            "dark:shadow-[20px_20px_40px_rgba(0,0,0,0.3),-20px_-20px_40px_rgba(255,255,255,0.05)]"
+          );
+        case "cyberpunk":
+          return cn(
+            baseClasses,
+            "rounded-none border-2 border-primary bg-background shadow-[0_0_50px_rgba(var(--primary),0.4)]",
+            "dark:bg-black/95"
+          );
+        case "luxury":
+          return cn(
+            baseClasses,
+            "rounded-2xl border border-amber-200/30 bg-gradient-to-br from-amber-50/50 to-amber-100/30 shadow-2xl",
+            "dark:from-amber-900/20 dark:to-amber-800/10 dark:border-amber-400/20"
+          );
+        case "matrix":
+          return cn(
+            baseClasses,
+            "rounded-none border-2 border-primary/30 bg-background shadow-[0_0_30px_hsl(var(--primary)/0.4)]",
+            "dark:bg-black/95"
+          );
+        case "diamond":
+          return cn(
+            baseClasses,
+            "rounded-3xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-primary/15",
+            "shadow-[0_0_40px_hsl(var(--primary)/0.3)] backdrop-blur-xl"
+          );
+        default:
+          return cn(baseClasses, "rounded-lg border bg-card shadow-sm");
+      }
+    };
+
+    const getHeaderClasses = () => {
+      switch (style) {
+        case "striped":
+          return "bg-muted/50 border-b-2 border-border";
+        case "bordered":
+          return "bg-muted/40 border-b-2 border-border";
+        case "minimal":
+          return "bg-transparent border-b border-border/50";
+        case "glass":
+          return "bg-white/10 border-b border-white/20 backdrop-blur-sm";
+        case "neon":
+          return "bg-primary/10 border-b border-primary/30";
+        case "gradient":
+          return "bg-gradient-to-r from-primary/10 to-primary/15 border-b border-primary/20";
+        case "neumorphism":
+          return "bg-background/80 border-b border-border/40";
+        case "cyberpunk":
+          return "bg-primary/10 border-b border-primary/40";
+        case "luxury":
+          return "bg-amber-100/40 border-b border-amber-200/30 dark:bg-amber-900/20";
+        case "matrix":
+          return "bg-primary/10 border-b border-primary/30";
+        case "diamond":
+          return "bg-primary/10 border-b border-primary/30";
+        default:
+          return "bg-muted/40 border-b border-border";
+      }
+    };
+
+    const getRowClasses = (index: number) => {
+      switch (style) {
+        case "striped":
+          return index % 2 === 0 ? "bg-muted/20 hover:bg-muted/30" : "bg-card hover:bg-muted/20";
+        case "bordered":
+          return "border-b bg-card hover:bg-muted/20";
+        case "minimal":
+          return "border-b border-border/30 bg-transparent hover:bg-muted/10";
+        case "glass":
+          return "bg-white/5 border-b border-white/10 backdrop-blur-sm hover:bg-white/10";
+        case "neon":
+          return "bg-primary/5 border-b border-primary/20 hover:bg-primary/10";
+        case "gradient":
+          return "bg-gradient-to-r from-primary/5 to-primary/10 border-b border-primary/10 hover:from-primary/10 hover:to-primary/15";
+        case "neumorphism":
+          return "bg-background/30 border-b border-border/20 hover:bg-background/50";
+        case "cyberpunk":
+          return "bg-primary/5 border-b border-primary/30 hover:bg-primary/10";
+        case "luxury":
+          return "bg-amber-50/20 border-b border-amber-200/20 dark:bg-amber-900/10 hover:bg-amber-50/30";
+        case "matrix":
+          return "bg-primary/5 border-b border-primary/20 hover:bg-primary/10";
+        case "diamond":
+          return "bg-primary/5 border-b border-primary/20 hover:bg-primary/10";
+        default:
+          return "bg-card border-b hover:bg-muted/20";
+      }
+    };
+
+    return (
+      <div className={getTableClasses()}>
+        <table className="w-full text-xs">
+          <thead>
+            <tr className={cn("font-medium text-muted-foreground", getHeaderClasses())}>
+              <th className="text-left py-1.5 px-2 font-semibold">Name</th>
+              <th className="text-left py-1.5 px-2 font-semibold">Role</th>
+              <th className="text-left py-1.5 px-2 font-semibold">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sampleTableData.map((row, index) => (
+              <tr key={row.id} className={getRowClasses(index)}>
+                <td className="py-1.5 px-2 font-medium">{row.name}</td>
+                <td className="py-1.5 px-2 text-muted-foreground">{row.role}</td>
+                <td className="py-1.5 px-2">
+                  <span
+                    className={cn(
+                      "px-1.5 py-0.5 rounded text-[10px] font-medium",
+                      row.status === "Active" && "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+                      row.status === "Pending" && "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+                      row.status === "Inactive" && "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                    )}
+                  >
+                    {row.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
 
   const buttonStyles = [
     {
@@ -467,7 +655,192 @@ export function ComponentsTab() {
       name: t("settings.formStyle.options.inline.name"),
       description: t("settings.formStyle.options.inline.description"),
     },
+    {
+      value: "modern",
+      name: t("settings.formStyle.options.modern.name"),
+      description: t("settings.formStyle.options.modern.description"),
+    },
+    {
+      value: "glass",
+      name: t("settings.formStyle.options.glass.name"),
+      description: t("settings.formStyle.options.glass.description"),
+    },
+    {
+      value: "minimal",
+      name: t("settings.formStyle.options.minimal.name"),
+      description: t("settings.formStyle.options.minimal.description"),
+    },
+    {
+      value: "card",
+      name: t("settings.formStyle.options.card.name"),
+      description: t("settings.formStyle.options.card.description"),
+    },
+    {
+      value: "neon",
+      name: t("settings.formStyle.options.neon.name"),
+      description: t("settings.formStyle.options.neon.description"),
+    },
+    {
+      value: "elegant",
+      name: t("settings.formStyle.options.elegant.name"),
+      description: t("settings.formStyle.options.elegant.description"),
+    },
+    {
+      value: "organic",
+      name: t("settings.formStyle.options.organic.name"),
+      description: t("settings.formStyle.options.organic.description"),
+    },
+    {
+      value: "retro",
+      name: t("settings.formStyle.options.retro.name"),
+      description: t("settings.formStyle.options.retro.description"),
+    },
   ];
+
+  // Form preview component
+  const FormPreview = ({ style, isSelected }: { style: string; isSelected?: boolean }) => {
+    const getContainerClasses = () => {
+      const baseClasses = "p-3 space-y-3";
+      
+      switch (style) {
+        case "compact":
+          return cn(baseClasses, "space-y-1.5");
+        case "spacious":
+          return cn(baseClasses, "space-y-4 p-4");
+        case "inline":
+          return cn(baseClasses, "space-y-2");
+        case "modern":
+          return cn(baseClasses, "bg-gradient-to-br from-background to-muted/20 rounded-xl border shadow-sm");
+        case "glass":
+          return cn(baseClasses, "bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl dark:bg-black/20");
+        case "minimal":
+          return cn(baseClasses, "bg-transparent border-0");
+        case "card":
+          return cn(baseClasses, "bg-card border rounded-lg shadow-md p-4");
+        case "neon":
+          return cn(baseClasses, "bg-black/90 border-2 border-cyan-400/50 rounded-xl shadow-lg shadow-cyan-400/20");
+        case "elegant":
+          return cn(baseClasses, "bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-xl");
+        case "organic":
+          return cn(baseClasses, "bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-700 rounded-3xl shadow-lg");
+        case "retro":
+          return cn(baseClasses, "bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 border-2 border-orange-300 dark:border-orange-600 rounded-lg shadow-lg");
+        default:
+          return baseClasses;
+      }
+    };
+
+    const getLabelClasses = () => {
+      switch (style) {
+        case "compact":
+          return "text-xs font-medium text-muted-foreground mb-1";
+        case "spacious":
+          return "text-sm font-semibold text-foreground mb-2";
+        case "modern":
+          return "text-sm font-medium text-foreground mb-1.5";
+        case "glass":
+          return "text-sm font-medium text-foreground/90 mb-1.5";
+        case "minimal":
+          return "text-xs font-normal text-muted-foreground mb-1";
+        case "card":
+          return "text-sm font-semibold text-foreground mb-2";
+        case "neon":
+          return "text-xs font-bold text-cyan-400 mb-1 uppercase tracking-wider";
+        case "elegant":
+          return "text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2";
+        case "organic":
+          return "text-sm font-medium text-green-700 dark:text-green-300 mb-1.5";
+        case "retro":
+          return "text-sm font-bold text-orange-700 dark:text-orange-300 mb-1.5";
+        default:
+          return "text-sm font-medium text-muted-foreground mb-1.5";
+      }
+    };
+
+    const getInputClasses = () => {
+      const baseClasses = "w-full text-xs transition-all duration-200";
+      
+      switch (style) {
+        case "compact":
+          return cn(baseClasses, "h-6 px-2 border rounded bg-background");
+        case "spacious":
+          return cn(baseClasses, "h-9 px-3 border rounded-lg bg-background shadow-sm");
+        case "inline":
+          return cn(baseClasses, "h-7 px-2 border rounded bg-background");
+        case "modern":
+          return cn(baseClasses, "h-8 px-3 border-2 border-border/50 rounded-xl bg-background/50 shadow-sm hover:border-primary/50 focus:border-primary");
+        case "glass":
+          return cn(baseClasses, "h-8 px-3 border border-white/30 rounded-xl bg-white/20 backdrop-blur-sm placeholder:text-white/60 dark:bg-black/20");
+        case "minimal":
+          return cn(baseClasses, "h-7 px-2 border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-primary");
+        case "card":
+          return cn(baseClasses, "h-8 px-3 border border-border rounded-lg bg-muted/30 shadow-inner");
+        case "neon":
+          return cn(baseClasses, "h-8 px-3 border-2 border-cyan-400/50 rounded-xl bg-black/50 text-cyan-100 placeholder:text-cyan-400/60 focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/20");
+        case "elegant":
+          return cn(baseClasses, "h-8 px-4 border border-slate-300 dark:border-slate-600 rounded-2xl bg-white dark:bg-slate-800 shadow-inner focus:ring-2 focus:ring-slate-400/20");
+        case "organic":
+          return cn(baseClasses, "h-8 px-3 border-2 border-green-300 dark:border-green-600 rounded-full bg-green-50 dark:bg-green-900/20 focus:border-green-500 focus:bg-green-100 dark:focus:bg-green-900/30");
+        case "retro":
+          return cn(baseClasses, "h-8 px-3 border-2 border-orange-400 dark:border-orange-500 rounded bg-orange-50 dark:bg-orange-900/20 focus:border-orange-600 shadow-sm");
+        default:
+          return cn(baseClasses, "h-7 px-2 border rounded bg-background");
+      }
+    };
+
+    const getFieldClasses = () => {
+      switch (style) {
+        case "inline":
+          return "flex items-center gap-2";
+        default:
+          return "space-y-1";
+      }
+    };
+
+    return (
+      <div className={cn(getContainerClasses(), isSelected && "ring-2 ring-primary/20 bg-primary/5")}>
+        <div className={getFieldClasses()}>
+          <label className={getLabelClasses()}>Name</label>
+          <input 
+            className={getInputClasses()} 
+            placeholder="John Doe" 
+            readOnly 
+          />
+        </div>
+        <div className={getFieldClasses()}>
+          <label className={getLabelClasses()}>Email</label>
+          <input 
+            className={getInputClasses()} 
+            placeholder="john@example.com" 
+            readOnly 
+          />
+        </div>
+        {style !== "inline" && (
+          <div className="pt-1">
+            <button 
+              className={cn(
+                "px-3 py-1.5 text-xs font-medium rounded transition-colors",
+                style === "modern" && "bg-primary text-primary-foreground rounded-xl shadow-md hover:shadow-lg",
+                style === "glass" && "bg-white/20 text-foreground border border-white/30 rounded-xl backdrop-blur-sm",
+                style === "minimal" && "bg-transparent text-primary border-b-2 border-primary rounded-none",
+                style === "card" && "bg-primary text-primary-foreground rounded-lg shadow-sm",
+                style === "compact" && "bg-primary text-primary-foreground rounded",
+                style === "spacious" && "bg-primary text-primary-foreground rounded-lg px-4 py-2",
+                !["modern", "glass", "minimal", "card", "compact", "spacious"].includes(style) && "bg-primary text-primary-foreground rounded"
+              )}
+            >
+              Submit
+            </button>
+          </div>
+        )}
+        {isSelected && (
+          <div className="absolute top-1 right-1 text-xs text-primary font-medium bg-primary/10 px-2 py-0.5 rounded">
+            Current
+          </div>
+        )}
+      </div>
+    );
+  };
   const loadingStyles = [
     {
       value: "spinner",
@@ -1183,90 +1556,8 @@ export function ComponentsTab() {
                             </div>
 
                             {/* Table Preview */}
-                            <div className="flex flex-col items-center space-y-2">
-                              <div className="w-full max-w-[200px] text-xs">
-                                {/* Table Container Preview */}
-                                <div className={cn(
-                                  "overflow-hidden transition-all duration-300",
-                                  style.value === "default" && "rounded-lg border bg-card shadow-sm",
-                                  style.value === "striped" && "rounded-lg border bg-card",
-                                  style.value === "bordered" && "rounded-lg border-2 border-border bg-card",
-                                  style.value === "minimal" && "rounded-none border-0 bg-transparent",
-                                  style.value === "glass" && "rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl dark:bg-black/20 dark:border-white/10",
-                                  style.value === "neon" && "rounded-xl border-2 border-primary/30 bg-black/90 shadow-[0_0_15px_rgba(var(--primary),0.3)] dark:bg-black/95",
-                                  style.value === "gradient" && "rounded-2xl border-0 bg-gradient-to-br from-primary/20 via-background to-primary/10 shadow-2xl",
-                                  style.value === "neumorphism" && "rounded-3xl border-0 bg-background shadow-[10px_10px_20px_rgba(0,0,0,0.1),-10px_-10px_20px_rgba(255,255,255,0.1)] dark:shadow-[10px_10px_20px_rgba(0,0,0,0.3),-10px_-10px_20px_rgba(255,255,255,0.05)]",
-                                  style.value === "cyberpunk" && "rounded-none border-2 border-primary bg-black/95 shadow-[0_0_25px_rgba(var(--primary),0.4)]",
-                                  style.value === "luxury" && "rounded-2xl border border-amber-200/30 bg-gradient-to-br from-amber-50/50 to-amber-100/30 shadow-2xl dark:from-amber-900/20 dark:to-amber-800/10 dark:border-amber-400/20",
-                                  style.value === "matrix" && "rounded-none border-2 border-primary/30 bg-black/95 shadow-[0_0_30px_hsl(var(--primary)/0.4)] dark:bg-black/98 dark:border-primary/40",
-                                  style.value === "diamond" && "rounded-3xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-primary/15 shadow-[0_0_40px_hsl(var(--primary)/0.3)] dark:from-primary/20 dark:via-primary/10 dark:to-primary/25 dark:border-primary/30"
-                                )}>
-                                  {/* Table Header */}
-                                  <div className={cn(
-                                    "font-semibold text-foreground transition-all duration-300 h-8 flex items-center px-2",
-                                    style.value === "default" && "bg-muted/50 border-b",
-                                    style.value === "striped" && "bg-muted/70 border-b-2",
-                                    style.value === "bordered" && "bg-muted/50 border-b-2",
-                                    style.value === "minimal" && "bg-transparent border-b",
-                                    style.value === "glass" && "bg-white/20 border-b border-white/30 backdrop-blur-md text-foreground font-bold dark:bg-black/30 dark:border-white/20",
-                                    style.value === "neon" && "bg-black/90 border-b-2 border-primary/50 text-primary font-bold shadow-[0_0_10px_rgba(var(--primary),0.3)] dark:bg-black/95",
-                                    style.value === "gradient" && "bg-gradient-to-r from-primary/30 via-primary/20 to-primary/30 border-b border-primary/30 text-foreground font-bold shadow-lg",
-                                    style.value === "neumorphism" && "bg-background border-b-0 font-bold shadow-[4px_4px_8px_rgba(0,0,0,0.1),-4px_-4px_8px_rgba(255,255,255,0.1)] dark:shadow-[4px_4px_8px_rgba(0,0,0,0.2),-4px_-4px_8px_rgba(255,255,255,0.05)]",
-                                    style.value === "cyberpunk" && "bg-black/95 border-b-2 border-primary text-primary font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(var(--primary),0.4)]",
-                                    style.value === "luxury" && "bg-gradient-to-r from-amber-100/50 via-amber-50/30 to-amber-100/50 border-b border-amber-300/40 dark:from-amber-900/30 dark:via-amber-800/20 dark:to-amber-900/30 dark:border-amber-400/30 text-amber-900 dark:text-amber-100 font-bold shadow-lg shadow-amber-200/20",
-                                    style.value === "matrix" && "bg-black/95 border-b-2 border-primary/60 text-primary font-bold uppercase tracking-widest shadow-[0_0_15px_hsl(var(--primary)/0.4)] font-mono dark:bg-black/98 dark:border-primary/70 dark:text-primary",
-                                    style.value === "diamond" && "bg-gradient-to-r from-primary/20 via-primary/10 to-primary/25 border-b-2 border-primary/50 text-primary font-bold shadow-lg shadow-primary/30 dark:from-primary/25 dark:via-primary/15 dark:to-primary/30 dark:border-primary/40"
-                                  )}>
-                                    <span className="text-[10px]">Name</span>
-                                    <span className="ml-auto text-[10px]">Status</span>
-                                  </div>
-
-                                  {/* Table Rows */}
-                                  {[0, 1, 2].map((index) => (
-                                    <div key={index} className={cn(
-                                      "transition-all duration-300 border-b h-6 flex items-center px-2",
-                                      style.value === "default" && "hover:bg-muted/30 bg-card",
-                                      style.value === "striped" && (index % 2 === 0 ? "bg-muted/30 hover:bg-muted/50" : "bg-card hover:bg-muted/30"),
-                                      style.value === "bordered" && "border-b-2 hover:bg-muted/30 bg-card",
-                                      style.value === "minimal" && "border-b-0 hover:bg-muted/20 bg-transparent",
-                                      style.value === "glass" && cn(
-                                        "border-b border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-sm dark:border-white/5 dark:bg-black/10 dark:hover:bg-black/20",
-                                        index % 2 === 0 && "bg-white/10 dark:bg-black/20"
-                                      ),
-                                      style.value === "neon" && cn(
-                                        "border-b border-primary/20 bg-black/50 hover:bg-primary/10 dark:bg-black/70 dark:hover:bg-primary/5",
-                                        index % 2 === 0 && "bg-primary/5 dark:bg-primary/5"
-                                      ),
-                                      style.value === "gradient" && cn(
-                                        "border-b border-primary/10 bg-gradient-to-r from-transparent via-primary/5 to-transparent hover:from-primary/10 hover:via-primary/15 hover:to-primary/10",
-                                        index % 2 === 0 && "from-primary/5 via-primary/10 to-primary/5"
-                                      ),
-                                      style.value === "neumorphism" && cn(
-                                        "border-b-0 bg-background",
-                                        index % 2 === 0 && "shadow-[inset_1px_1px_2px_rgba(0,0,0,0.05),inset_-1px_-1px_2px_rgba(255,255,255,0.05)]"
-                                      ),
-                                      style.value === "luxury" && cn(
-                                        "border-b border-amber-200/20 bg-gradient-to-r from-amber-50/20 to-transparent dark:border-amber-400/20 dark:from-amber-900/10",
-                                        index % 2 === 0 && "from-amber-100/30 to-amber-50/10 dark:from-amber-900/20 dark:to-amber-800/10"
-                                      ),
-                                      style.value === "matrix" && cn(
-                                        "border-b border-primary/30 bg-black/90 text-primary font-mono dark:bg-black/95",
-                                        index % 2 === 0 && "bg-primary/5 border-primary/20"
-                                      ),
-                                      style.value === "diamond" && cn(
-                                        "border-b border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/15 text-primary dark:from-primary/10 dark:via-primary/5 dark:to-primary/15 dark:text-primary dark:border-primary/20",
-                                        index % 2 === 0 && "from-primary/15 via-primary/10 to-primary/20 dark:from-primary/15 dark:via-primary/10 dark:to-primary/20"
-                                      )
-                                    )}>
-                                      <span className="text-[9px]">Item {index + 1}</span>
-                                      <div className={cn(
-                                        "ml-auto w-2 h-2 rounded-full",
-                                        index === 0 ? "bg-green-500" : index === 1 ? "bg-yellow-500" : "bg-red-500"
-                                      )} />
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
+                            <div className="w-full scale-90 origin-center">
+                              <TablePreview style={style.value} />
                             </div>
                           </div>
                           {settings.tableStyle === style.value && (
@@ -1383,12 +1674,12 @@ export function ComponentsTab() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       {formStyles.map((style) => (
                         <div
                           key={style.value}
                           className={cn(
-                            "relative cursor-pointer rounded-lg border-2 p-4 transition-all hover:scale-105",
+                            "relative cursor-pointer rounded-lg border-2 transition-all hover:scale-105",
                             settings.formStyle === style.value
                               ? "border-primary ring-2 ring-primary/20"
                               : "border-muted hover:border-muted-foreground/50"
@@ -1397,22 +1688,20 @@ export function ComponentsTab() {
                             settings.setFormStyle(style.value as any)
                           }
                         >
-                          <div className="space-y-2">
-                            <h4 className="font-semibold">{style.name}</h4>
-                            <p className="text-sm text-muted-foreground">
-                              {style.description}
-                            </p>
-                            <div
-                              className={cn(
-                                "space-y-2",
-                                style.value === "compact" && "space-y-1",
-                                style.value === "spacious" && "space-y-3",
-                                style.value === "inline" &&
-                                  "flex space-y-0 space-x-2"
-                              )}
-                            >
-                              <div className="h-2 bg-muted rounded w-1/3"></div>
-                              <div className="h-4 bg-muted rounded"></div>
+                          <div className="space-y-3 p-3">
+                            <div className="text-center">
+                              <h4 className="font-semibold text-sm">{style.name}</h4>
+                              <p className="text-xs text-muted-foreground">
+                                {style.description}
+                              </p>
+                            </div>
+                            
+                            {/* Form Preview */}
+                            <div className="scale-90 origin-center">
+                              <FormPreview 
+                                style={style.value} 
+                                isSelected={settings.formStyle === style.value}
+                              />
                             </div>
                           </div>
                           {settings.formStyle === style.value && (

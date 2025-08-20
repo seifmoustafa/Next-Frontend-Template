@@ -72,6 +72,7 @@ interface GenericTableProps<T> {
   onSearch?: (term: string) => void;
   searchValue?: string;
   searchInputRef?: React.RefObject<HTMLInputElement>;
+  overrideTableStyle?: string;
 }
 
 export function GenericTable<T extends Record<string, any>>({
@@ -88,6 +89,7 @@ export function GenericTable<T extends Record<string, any>>({
   onSearch,
   searchValue,
   searchInputRef,
+  overrideTableStyle,
 }: GenericTableProps<T>) {
   const { t, direction } = useI18n();
   const settings = useSettings();
@@ -138,11 +140,12 @@ export function GenericTable<T extends Record<string, any>>({
     return 0;
   });
 
-  // Get table style classes based on settings
+  // Get table style classes based on settings or override
   const getTableContainerClasses = () => {
     const baseClasses = "overflow-hidden transition-all duration-300";
+    const currentStyle = overrideTableStyle || settings.tableStyle;
 
-    switch (settings.tableStyle) {
+    switch (currentStyle) {
       case "striped":
         return cn(baseClasses, "rounded-lg border bg-card");
       case "bordered":
@@ -160,11 +163,11 @@ export function GenericTable<T extends Record<string, any>>({
       case "neon":
         return cn(
           baseClasses,
-          "rounded-xl border-2 border-primary/30 bg-black/90 shadow-[0_0_30px_rgba(var(--primary),0.3)]",
+          "rounded-xl border-2 border-primary/30 bg-background shadow-[0_0_30px_rgba(var(--primary),0.3)]",
           "dark:bg-black/95",
           "before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-primary/10 before:to-transparent before:pointer-events-none",
           "after:absolute after:inset-0 after:rounded-xl after:shadow-[inset_0_0_20px_rgba(var(--primary),0.1)] after:pointer-events-none",
-          "relative animate-pulse"
+          "relative"
         );
       case "gradient":
         return cn(
@@ -185,9 +188,10 @@ export function GenericTable<T extends Record<string, any>>({
       case "cyberpunk":
         return cn(
           baseClasses,
-          "rounded-none border-2 border-primary bg-black/95 shadow-[0_0_50px_rgba(var(--primary),0.4)]",
-          "before:absolute before:top-0 before:left-0 before:h-0.5 before:w-full before:bg-gradient-to-r before:from-transparent before:via-primary before:to-transparent before:animate-pulse",
-          "after:absolute after:bottom-0 after:right-0 after:h-full after:w-0.5 after:bg-gradient-to-t after:from-transparent after:via-primary after:to-transparent after:animate-pulse",
+          "rounded-none border-2 border-primary bg-background shadow-[0_0_50px_rgba(var(--primary),0.4)]",
+          "dark:bg-black/95",
+          "before:absolute before:top-0 before:left-0 before:h-0.5 before:w-full before:bg-gradient-to-r before:from-transparent before:via-primary before:to-transparent",
+          "after:absolute after:bottom-0 after:right-0 after:h-full after:w-0.5 after:bg-gradient-to-t after:from-transparent after:via-primary after:to-transparent",
           "relative"
         );
       case "luxury":
@@ -200,10 +204,11 @@ export function GenericTable<T extends Record<string, any>>({
       case "matrix":
         return cn(
           baseClasses,
-          "rounded-none border-2 border-primary/30 bg-black/95 shadow-[0_0_30px_hsl(var(--primary)/0.4)]",
+          "rounded-none border-2 border-primary/30 bg-background shadow-[0_0_30px_hsl(var(--primary)/0.4)]",
+          "dark:bg-black/95",
           "backdrop-blur-sm relative overflow-hidden",
-          "before:absolute before:inset-0 before:bg-[linear-gradient(90deg,transparent_0%,hsl(var(--primary)/0.1)_50%,transparent_100%)] before:animate-pulse",
-          "dark:bg-black/98 dark:border-primary/40"
+          "before:absolute before:inset-0 before:bg-[linear-gradient(90deg,transparent_0%,hsl(var(--primary)/0.1)_50%,transparent_100%)]",
+          "dark:border-primary/40"
         );
       case "diamond":
         return cn(
@@ -220,9 +225,10 @@ export function GenericTable<T extends Record<string, any>>({
 
   const getRowClasses = (index: number, isSelected: boolean = false) => {
     const baseClasses = "transition-all duration-300 border-b";
+    const currentStyle = overrideTableStyle || settings.tableStyle;
 
     let styleClasses = "";
-    switch (settings.tableStyle) {
+    switch (currentStyle) {
       case "striped":
         styleClasses =
           index % 2 === 0
@@ -244,7 +250,7 @@ export function GenericTable<T extends Record<string, any>>({
         break;
       case "neon":
         styleClasses = cn(
-          "border-b border-primary/20 bg-black/50 hover:bg-primary/10 hover:shadow-[0_0_20px_rgba(var(--primary),0.2)]",
+          "border-b border-primary/20 bg-background hover:bg-primary/10 hover:shadow-[0_0_20px_rgba(var(--primary),0.2)]",
           "dark:bg-black/70 dark:hover:bg-primary/5",
           index % 2 === 0 && "bg-primary/5 dark:bg-primary/5"
         );
@@ -266,9 +272,9 @@ export function GenericTable<T extends Record<string, any>>({
         break;
       case "cyberpunk":
         styleClasses = cn(
-          "border-b border-primary/30 bg-black/80 hover:bg-primary/10 hover:border-primary/50",
-          "hover:shadow-[0_0_15px_rgba(var(--primary),0.3)] hover:text-primary",
+          "border-b border-primary/30 bg-background hover:bg-primary/10 hover:border-primary/50",
           "dark:bg-black/90",
+          "hover:shadow-[0_0_15px_rgba(var(--primary),0.3)] hover:text-primary",
           index % 2 === 0 && "bg-primary/5 border-primary/20"
         );
         break;
@@ -283,8 +289,9 @@ export function GenericTable<T extends Record<string, any>>({
         break;
       case "matrix":
         styleClasses = cn(
-          "border-b border-primary/30 bg-black/90 hover:bg-primary/10 hover:border-primary/50",
-          "text-primary font-mono text-sm dark:bg-black/95",
+          "border-b border-primary/30 bg-background hover:bg-primary/10 hover:border-primary/50",
+          "dark:bg-black/95",
+          "text-primary font-mono text-sm",
           index % 2 === 0 && "bg-primary/5 border-primary/20"
         );
         break;
@@ -302,7 +309,7 @@ export function GenericTable<T extends Record<string, any>>({
     }
 
     if (isSelected) {
-      switch (settings.tableStyle) {
+      switch (currentStyle) {
         case "glass":
           styleClasses += " bg-primary/20 border-primary/30 backdrop-blur-md";
           break;
@@ -345,6 +352,7 @@ export function GenericTable<T extends Record<string, any>>({
   const getHeaderClasses = () => {
     const baseClasses =
       "font-semibold text-foreground transition-all duration-300";
+    const currentStyle = overrideTableStyle || settings.tableStyle;
 
     let heightClass = "";
     switch (settings.spacingSize) {
@@ -361,7 +369,7 @@ export function GenericTable<T extends Record<string, any>>({
         heightClass = "h-12";
     }
 
-    switch (settings.tableStyle) {
+    switch (currentStyle) {
       case "striped":
         return cn(baseClasses, heightClass, "bg-muted/70 border-b-2");
       case "bordered":
@@ -380,9 +388,9 @@ export function GenericTable<T extends Record<string, any>>({
         return cn(
           baseClasses,
           heightClass,
-          "bg-black/90 border-b-2 border-primary/50 text-primary font-bold",
-          "shadow-[0_0_15px_rgba(var(--primary),0.3)]",
+          "bg-background border-b-2 border-primary/50 text-primary font-bold",
           "dark:bg-black/95",
+          "shadow-[0_0_15px_rgba(var(--primary),0.3)]",
           "hover:border-primary hover:shadow-[0_0_25px_rgba(var(--primary),0.4)]"
         );
       case "gradient":
@@ -406,9 +414,10 @@ export function GenericTable<T extends Record<string, any>>({
         return cn(
           baseClasses,
           heightClass,
-          "bg-black/95 border-b-2 border-primary text-primary font-bold uppercase tracking-wider",
-          "shadow-[0_0_20px_rgba(var(--primary),0.4)] text-center",
-          "hover:bg-primary/10 hover:shadow-[0_0_30px_rgba(var(--primary),0.6)]"
+          "bg-background border-b-2 border-primary/60 text-primary font-bold",
+          "dark:bg-black/95",
+          "shadow-[0_0_20px_rgba(var(--primary),0.4)]",
+          "hover:border-primary hover:shadow-[0_0_30px_rgba(var(--primary),0.5)]"
         );
       case "luxury":
         return cn(
@@ -424,9 +433,10 @@ export function GenericTable<T extends Record<string, any>>({
         return cn(
           baseClasses,
           heightClass,
-          "bg-black/95 border-b-2 border-primary/60 text-primary font-bold uppercase tracking-widest",
+          "bg-background border-b-2 border-primary/60 text-primary font-bold uppercase tracking-widest",
+          "dark:bg-black/98",
           "shadow-[0_0_15px_hsl(var(--primary)/0.4)] font-mono text-sm",
-          "dark:bg-black/98 dark:border-primary/70 dark:text-primary"
+          "dark:border-primary/70 dark:text-primary"
         );
       case "diamond":
         return cn(
@@ -457,8 +467,9 @@ export function GenericTable<T extends Record<string, any>>({
   const getCardClasses = () => {
     const baseClasses =
       "border rounded-lg p-4 space-y-3 transition-all duration-300 hover:scale-[1.02]";
+    const currentStyle = overrideTableStyle || settings.tableStyle;
 
-    switch (settings.tableStyle) {
+    switch (currentStyle) {
       case "glass":
         return cn(
           baseClasses,
@@ -469,7 +480,7 @@ export function GenericTable<T extends Record<string, any>>({
       case "neon":
         return cn(
           baseClasses,
-          "bg-black/90 border-2 border-primary/30 shadow-[0_0_20px_rgba(var(--primary),0.3)] rounded-xl",
+          "bg-background border-2 border-primary/30 shadow-[0_0_20px_rgba(var(--primary),0.3)] rounded-xl",
           "dark:bg-black/95",
           "hover:border-primary/50 hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:bg-primary/5"
         );
@@ -490,7 +501,8 @@ export function GenericTable<T extends Record<string, any>>({
       case "cyberpunk":
         return cn(
           baseClasses,
-          "bg-black/95 border-2 border-primary rounded-none shadow-[0_0_25px_rgba(var(--primary),0.4)]",
+          "bg-background border-2 border-primary rounded-none shadow-[0_0_25px_rgba(var(--primary),0.4)]",
+          "dark:bg-black/95",
           "before:absolute before:top-0 before:left-0 before:h-0.5 before:w-full before:bg-gradient-to-r before:from-transparent before:via-primary before:to-transparent",
           "relative",
           "hover:bg-primary/10 hover:shadow-[0_0_40px_rgba(var(--primary),0.6)]"
@@ -506,7 +518,7 @@ export function GenericTable<T extends Record<string, any>>({
       case "matrix":
         return cn(
           baseClasses,
-          "bg-black/95 border-2 border-green-400/40 shadow-[0_0_20px_rgba(34,197,94,0.4)] rounded-lg",
+          "bg-background border-2 border-green-400/40 shadow-[0_0_20px_rgba(34,197,94,0.4)] rounded-lg",
           "dark:bg-black/98 dark:border-green-400/50",
           "hover:border-green-400/60 hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] hover:bg-green-400/5"
         );
@@ -540,17 +552,19 @@ export function GenericTable<T extends Record<string, any>>({
 
   return (
     <div className="space-y-4">
-      {/* Search Bar */}
-      <div className="relative">
-        <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <Input
-          ref={searchInputRef}
-          placeholder={placeholder}
-          className="pl-10 rtl:pl-4 rtl:pr-10"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+      {/* Search Bar - Only show if search functionality is enabled */}
+      {onSearch !== undefined && (
+        <div className="relative">
+          <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            ref={searchInputRef}
+            placeholder={placeholder}
+            className="pl-10 rtl:pl-4 rtl:pr-10"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      )}
 
       {/* Mobile Cards View */}
       <div className="block md:hidden space-y-4">

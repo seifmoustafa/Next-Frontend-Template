@@ -135,14 +135,28 @@ export function GenericForm({
   };
 
   const getFieldSpacing = () => {
-    switch (settings.spacingSize) {
+    // Use formStyle for spacing if available, otherwise fallback to spacingSize
+    const style = settings.formStyle || settings.spacingSize;
+    switch (style) {
       case "compact":
         return "space-y-1";
-      case "comfortable":
-        return "space-y-3";
       case "spacious":
         return "space-y-4";
+      case "inline":
+        return "flex items-center gap-4";
+      case "modern":
+        return "space-y-3";
+      case "glass":
+        return "space-y-3";
+      case "minimal":
+        return "space-y-2";
+      case "card":
+        return "space-y-3";
       default:
+        // Handle spacingSize fallback for comfortable
+        if (settings.spacingSize === "comfortable") {
+          return "space-y-3";
+        }
         return "space-y-2";
     }
   };
@@ -198,9 +212,70 @@ export function GenericForm({
     }
   };
 
+  const getFormContainerClasses = () => {
+    const style = settings.formStyle;
+    const baseClasses = "w-full max-h-[70vh] overflow-y-auto p-6";
+    
+    switch (style) {
+      case "modern":
+        return cn(baseClasses, "bg-gradient-to-br from-background to-muted/20 rounded-2xl border shadow-lg");
+      case "glass":
+        return cn(baseClasses, "bg-white/10 backdrop-blur-md rounded-2xl border border-white/20");
+      case "minimal":
+        return cn(baseClasses, "bg-transparent border-none shadow-none p-4");
+      case "card":
+        return cn(baseClasses, "bg-card rounded-xl border shadow-md");
+      default:
+        return cn(baseClasses);
+    }
+  };
+
+  const getLabelClasses = () => {
+    const style = settings.formStyle;
+    const baseClasses = "font-medium";
+    
+    switch (style) {
+      case "modern":
+        return cn(baseClasses, "text-foreground/90 font-semibold");
+      case "glass":
+        return cn(baseClasses, "text-foreground/80");
+      case "minimal":
+        return cn(baseClasses, "text-sm text-muted-foreground uppercase tracking-wide");
+      case "card":
+        return cn(baseClasses, "text-card-foreground");
+      default:
+        return cn(baseClasses);
+    }
+  };
+
+  const getInputClasses = (baseInputClasses: string) => {
+    const style = settings.formStyle;
+    
+    switch (style) {
+      case "modern":
+        return cn(baseInputClasses, "rounded-xl border-2 bg-background/50 focus:bg-background transition-colors");
+      case "glass":
+        return cn(baseInputClasses, "rounded-xl bg-white/10 border-white/30 backdrop-blur-sm");
+      case "minimal":
+        return cn(baseInputClasses, "border-0 border-b-2 rounded-none bg-transparent focus:border-primary");
+      case "card":
+        return cn(baseInputClasses, "rounded-lg bg-muted/30 border-muted");
+      case "neon":
+        return cn(baseInputClasses, "rounded-xl border-2 border-cyan-400/50 bg-black/50 text-cyan-100 placeholder:text-cyan-400/60 focus:border-cyan-400 focus:shadow-lg focus:shadow-cyan-400/20");
+      case "elegant":
+        return cn(baseInputClasses, "rounded-2xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 shadow-inner focus:ring-2 focus:ring-slate-400/20");
+      case "organic":
+        return cn(baseInputClasses, "rounded-full border-2 border-green-300 dark:border-green-600 bg-green-50 dark:bg-green-900/20 focus:border-green-500 focus:bg-green-100 dark:focus:bg-green-900/30");
+      case "retro":
+        return cn(baseInputClasses, "rounded border-2 border-orange-400 dark:border-orange-500 bg-orange-50 dark:bg-orange-900/20 focus:border-orange-600 shadow-sm");
+      default:
+        return cn(baseInputClasses);
+    }
+  };
+
   return (
     <div className={cn(
-      "w-full max-h-[70vh] overflow-y-auto p-6",
+      getFormContainerClasses(),
       direction === "rtl" ? "text-right" : "text-left"
     )} dir={direction}>
       <form onSubmit={handleSubmit} className={getFormSpacing()}>
@@ -219,7 +294,7 @@ export function GenericForm({
               <Label 
                 htmlFor={field.name} 
                 className={cn(
-                  "font-medium",
+                  getLabelClasses(),
                   direction === "rtl" ? "text-right" : "text-left"
                 )}
               >
@@ -233,7 +308,7 @@ export function GenericForm({
                   onValueChange={(value: string | string[]) => handleChange(field.name, typeof value === 'string' ? value : value[0])}
                   placeholder={field.placeholder}
                   disabled={field.disabled}
-                  className={getInputHeight()}
+                  className={getInputClasses(getInputHeight())}
                 />
               ) : field.type === "searchable-select" || field.type === "server-select" ? (
                 <GenericSelect
@@ -254,7 +329,7 @@ export function GenericForm({
                   noResultsText={field.noResultsText}
                   searchingText={field.searchingText}
                   disabled={field.disabled}
-                  className={getInputHeight()}
+                  className={getInputClasses(getInputHeight())}
                 />
               ) : field.type === "multi-select" ? (
                 <GenericSelect
@@ -275,7 +350,7 @@ export function GenericForm({
                   noResultsText={field.noResultsText}
                   searchingText={field.searchingText}
                   disabled={field.disabled}
-                  className={getInputHeight()}
+                  className={getInputClasses(getInputHeight())}
                 />
               ) : field.type === "textarea" ? (
                 <Textarea
@@ -284,7 +359,7 @@ export function GenericForm({
                   onChange={(e) => handleChange(field.name, e.target.value)}
                   required={field.required}
                   className={cn(
-                    "min-h-[80px]",
+                    getInputClasses("min-h-[80px]"),
                     direction === "rtl" ? "text-right" : "text-left"
                   )}
                   placeholder={field.placeholder}
@@ -387,7 +462,7 @@ export function GenericForm({
                   value={formData[field.name] || ""}
                   onChange={(value) => handleChange(field.name, value)}
                   required={field.required}
-                  className={getInputHeight()}
+                  className={getInputClasses(getInputHeight())}
                   placeholder={field.placeholder}
                 />
               ) : field.type === "file" ? (
@@ -404,7 +479,7 @@ export function GenericForm({
                   }}
                   required={field.required}
                   className={cn(
-                    getInputHeight(),
+                    getInputClasses(getInputHeight()),
                     direction === "rtl" ? "text-right" : "text-left"
                   )}
                   accept={field.accept}
@@ -420,7 +495,7 @@ export function GenericForm({
                   onChange={(e) => handleChange(field.name, e.target.value)}
                   required={field.required}
                   className={cn(
-                    getInputHeight(),
+                    getInputClasses(getInputHeight()),
                     direction === "rtl" ? "text-right" : "text-left"
                   )}
                   placeholder={field.placeholder}
