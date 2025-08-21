@@ -2173,15 +2173,15 @@ export function ComponentsTab() {
                               const mockResults = [
                                 {
                                   value: `${query}-1`,
-                                  label: `${query} ${t('components.multiSelect.serverSearchResult', { index: 1 })}`
+                                  label: `${query} ${t('components.multiSelect.serverSearchResult')} 1`
                                 },
                                 {
                                   value: `${query}-2`,
-                                  label: `${query} ${t('components.multiSelect.serverSearchResult', { index: 2 })}`
+                                  label: `${query} ${t('components.multiSelect.serverSearchResult')} 2`
                                 },
                                 {
                                   value: `${query}-3`,
-                                  label: `${query} ${t('components.multiSelect.serverSearchResult', { index: 3 })}`
+                                  label: `${query} ${t('components.multiSelect.serverSearchResult')} 3`
                                 },
                                 {
                                   value: `${query}-api`,

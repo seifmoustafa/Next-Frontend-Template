@@ -147,6 +147,68 @@ export const en = {
     userGrowth: "User Growth",
     revenueTrend: "Revenue Trend",
     combined: "Combined Analytics",
+  },
+
+  // Charts
+  charts: {
+    title: "Chart Components",
+    description: "Interactive chart components with sample data",
+    lineCharts: "Line Charts",
+    areaCharts: "Area Charts", 
+    barCharts: "Bar Charts",
+    pieDonutCharts: "Pie & Donut Charts",
+    scatterBubbleCharts: "Scatter & Bubble Charts",
+    mixedCharts: "Mixed Charts",
+    radarGaugeCharts: "Radar & Gauge Charts",
+    heatmapTreemapCharts: "Heatmap & Treemap Charts",
+    timelineFunnelCharts: "Timeline & Funnel Charts",
+    lineDesc: "Display trends and changes over time with connected data points",
+    areaDesc: "Emphasize magnitude of change with filled areas under lines",
+    barDesc: "Compare categories with horizontal or vertical bars",
+    pieDesc: "Show proportional data with circular visualizations",
+    scatterDesc: "Visualize relationships between variables with plotted points",
+    mixedDesc: "Combine different chart types for comprehensive data views",
+    radarDesc: "Multi-dimensional data and KPI visualization",
+    heatmapDesc: "Pattern recognition and hierarchical data visualization",
+    timelineDesc: "Project tracking and conversion process visualization",
+    
+    // Chart types
+    basicLine: "Basic Line Chart",
+    multiSeries: "Multi-Series Line",
+    curved: "Curved Line",
+    stepped: "Stepped Line",
+    basicArea: "Basic Area Chart",
+    stackedArea: "Stacked Area Chart",
+    basicBar: "Basic Bar Chart",
+    stackedBar: "Stacked Bar Chart",
+    horizontalBar: "Horizontal Bar Chart",
+    negativeBar: "Negative Values Bar",
+    pieChart: "Pie Chart",
+    donutChart: "Donut Chart",
+    scatterChart: "Scatter Chart",
+    bubbleChart: "Bubble Chart",
+    composedChart: "Composed Chart",
+    dualAxisChart: "Dual Axis Chart",
+    radarChart: "Radar Chart",
+    gaugeChart: "Gauge Chart",
+    heatmapChart: "Heatmap Chart",
+    treemapChart: "Treemap Chart",
+    timelineChart: "Timeline Chart",
+    funnelChart: "Funnel Chart",
+    salesFunnel: "Sales Funnel",
+    
+    // Sample data labels
+    sampleData: "Sample Data",
+    monthlyRevenue: "Monthly Revenue",
+    userGrowth: "User Growth",
+    salesData: "Sales Data",
+    performanceMetrics: "Performance Metrics",
+    marketShare: "Market Share",
+    conversionRates: "Conversion Rates",
+    trafficSources: "Traffic Sources",
+    
+    // Chart descriptions (removed duplicates)
+    // lineDesc, areaDesc, etc. already defined above
     users: "Users",
     revenue: "Revenue",
   },
@@ -555,8 +617,204 @@ export const en = {
       appearance: "Appearance",
       layout: "Layout",
       components: "Components",
+      charts: "Charts",
       typography: "Typography",
       behavior: "Behavior",
+    },
+    charts: {
+      title: "Charts & Analytics",
+      description: "Preview and customize chart components for data visualization",
+      tabs: {
+        line: "Line",
+        area: "Area", 
+        bar: "Bar",
+        pie: "Pie",
+        scatter: "Scatter",
+        mixed: "Mixed",
+        radar: "Radar",
+        heatmap: "Heatmap",
+        timeline: "Timeline",
+      },
+      line: {
+        title: "Line Charts",
+        description: "Display trends and changes over time with connected data points",
+        basic: {
+          title: "Basic Line Chart",
+          description: "Simple line chart showing sales data over time",
+        },
+        multiSeries: {
+          title: "Multi-Series Line Chart", 
+          description: "Compare multiple data series on the same chart",
+        },
+        curved: {
+          title: "Curved Line Chart",
+          description: "Smooth curved lines with enhanced visual appeal",
+        },
+        stepped: {
+          title: "Stepped Line Chart",
+          description: "Step-like progression ideal for discrete data changes",
+        },
+      },
+      area: {
+        title: "Area Charts",
+        description: "Emphasize magnitude of change with filled areas under lines",
+        basic: {
+          title: "Basic Area Chart",
+          description: "Simple area chart with gradient fill",
+        },
+        stacked: {
+          title: "Stacked Area Chart",
+          description: "Multiple data series stacked on top of each other",
+        },
+        gradient: {
+          title: "Gradient Area Chart",
+          description: "Beautiful gradient fills for enhanced visual impact",
+        },
+        percent: {
+          title: "100% Stacked Area Chart",
+          description: "Show proportional relationships as percentages",
+        },
+      },
+      bar: {
+        title: "Bar Charts",
+        description: "Compare categories with horizontal or vertical bars",
+        basic: {
+          title: "Basic Bar Chart",
+          description: "Simple vertical bars for category comparison",
+        },
+        stacked: {
+          title: "Stacked Bar Chart",
+          description: "Multiple data series stacked in single bars",
+        },
+        multiColor: {
+          title: "Multi-Color Bar Chart",
+          description: "Each bar with different colors for visual distinction",
+        },
+        positiveNegative: {
+          title: "Positive/Negative Bar Chart",
+          description: "Display both positive and negative values",
+        },
+      },
+      pie: {
+        title: "Pie & Donut Charts",
+        description: "Show proportional data with circular visualizations",
+        basic: {
+          title: "Basic Pie Chart",
+          description: "Traditional pie chart with percentage labels",
+        },
+        donut: {
+          title: "Donut Chart",
+          description: "Pie chart with hollow center for additional information",
+        },
+        semiCircle: {
+          title: "Semi-Circle Chart",
+          description: "Half-circle visualization for gauge-like displays",
+        },
+        nested: {
+          title: "Nested Pie Chart",
+          description: "Multiple data layers in concentric circles",
+        },
+      },
+      scatter: {
+        title: "Scatter & Bubble Charts",
+        description: "Visualize relationships between variables with plotted points",
+        basic: {
+          title: "Basic Scatter Chart",
+          description: "Plot data points to show correlation patterns",
+        },
+        multiSeries: {
+          title: "Multi-Series Scatter Chart",
+          description: "Compare multiple data sets on same axes",
+        },
+        bubble: {
+          title: "Bubble Chart",
+          description: "Three-dimensional data with bubble sizes",
+        },
+        customShape: {
+          title: "Custom Shape Scatter Chart",
+          description: "Use different shapes for data point visualization",
+        },
+      },
+      mixed: {
+        title: "Mixed Charts",
+        description: "Combine different chart types for comprehensive data views",
+        lineBar: {
+          title: "Line + Bar Chart",
+          description: "Combine line and bar charts for dual perspective",
+        },
+        areaLine: {
+          title: "Area + Line Chart",
+          description: "Layer area and line charts for rich visualization",
+        },
+        barAreaLine: {
+          title: "Bar + Area + Line Chart",
+          description: "Triple combination for complex data relationships",
+        },
+        dualAxis: {
+          title: "Dual Y-Axis Chart",
+          description: "Two different scales on left and right axes",
+        },
+      },
+      radar: {
+        title: "Radar & Gauge Charts",
+        description: "Multi-dimensional data and KPI visualization",
+        basic: {
+          title: "Basic Radar Chart",
+          description: "Multi-dimensional data on polar coordinates",
+        },
+        multiSeries: {
+          title: "Multi-Series Radar Chart",
+          description: "Compare multiple entities across dimensions",
+        },
+        skills: {
+          title: "Skills Radar Chart",
+          description: "Visualize competency levels across skills",
+        },
+      },
+      gauge: {
+        title: "Gauge Charts",
+        description: "KPI and performance indicators with gauge displays",
+      },
+      heatmap: {
+        title: "Heatmap & Treemap Charts",
+        description: "Pattern recognition and hierarchical data visualization",
+        calendar: {
+          title: "Calendar Heatmap",
+          description: "Activity patterns over time periods",
+        },
+      },
+      treemap: {
+        basic: {
+          title: "Basic Treemap",
+          description: "Hierarchical data with nested rectangles",
+        },
+        hierarchical: {
+          title: "Hierarchical Treemap",
+          description: "Multi-level organizational data structure",
+        },
+      },
+      timeline: {
+        title: "Timeline & Funnel Charts",
+        description: "Project tracking and conversion process visualization",
+        project: {
+          title: "Project Timeline",
+          description: "Track project milestones and progress",
+        },
+        multiTrack: {
+          title: "Multi-Track Timeline",
+          description: "Parallel timelines for different workstreams",
+        },
+      },
+      funnel: {
+        conversion: {
+          title: "Conversion Funnel",
+          description: "Visualize user journey and conversion rates",
+        },
+        pyramid: {
+          title: "Sales Pyramid",
+          description: "Hierarchical sales process visualization",
+        },
+      },
     },
     lightBackground: {
       title: "Light Background Theme",

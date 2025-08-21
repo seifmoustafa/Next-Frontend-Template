@@ -22,6 +22,7 @@ import {
   BehaviorTab,
   PreviewPanel,
 } from "./settings";
+import { ChartsTab } from "./settings/charts-tab";
 
 export function SettingsView() {
   const { t } = useI18n();
@@ -148,7 +149,7 @@ export function SettingsView() {
               onValueChange={setActiveTab}
               className="space-y-6"
             >
-              <TabsList className="grid w-full grid-cols-5">
+              <TabsList className="grid w-full grid-cols-6">
                 <TabsTrigger value="appearance">
                   {t("settings.tabs.appearance")}
                 </TabsTrigger>
@@ -157,6 +158,9 @@ export function SettingsView() {
                 </TabsTrigger>
                 <TabsTrigger value="components">
                   {t("settings.tabs.components")}
+                </TabsTrigger>
+                <TabsTrigger value="charts">
+                  {t("settings.tabs.charts")}
                 </TabsTrigger>
                 <TabsTrigger value="typography">
                   {t("settings.tabs.typography")}
@@ -174,6 +178,9 @@ export function SettingsView() {
               </TabsContent>
               <TabsContent value="components">
                 <ComponentsTab />
+              </TabsContent>
+              <TabsContent value="charts">
+                <ChartsTab />
               </TabsContent>
               <TabsContent value="typography">
                 <TypographyTab />
