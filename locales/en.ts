@@ -621,9 +621,14 @@ export const en = {
       typography: "Typography",
       behavior: "Behavior",
     },
+    devices: {
+      desktop: "Desktop",
+      mobile: "Mobile",
+      tablet: "Tablet",
+      smarttv: "Smart TV",
+      other: "Other"
+    },
     charts: {
-      title: "Charts & Analytics",
-      description: "Preview and customize chart components for data visualization",
       tabs: {
         line: "Line",
         area: "Area", 
@@ -633,7 +638,7 @@ export const en = {
         mixed: "Mixed",
         radar: "Radar",
         heatmap: "Heatmap",
-        timeline: "Timeline",
+        timeline: "Timeline"
       },
       line: {
         title: "Line Charts",

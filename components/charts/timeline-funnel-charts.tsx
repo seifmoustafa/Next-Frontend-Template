@@ -83,9 +83,13 @@ const FunnelChart = ({ data, title }: { data: any[]; title: string }) => {
 
 export function TimelineFunnelCharts({ 
   data = [],
+  conversionData = [],
+  salesData = [],
   funnelData = [],
   salesFunnelData = []
 }: GenericChartsProps & {
+  conversionData?: any[];
+  salesData?: any[];
   funnelData?: any[];
   salesFunnelData?: any[];
 }) {
@@ -102,20 +106,20 @@ export function TimelineFunnelCharts({
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <TimelineChart data={data} title="Project Timeline" />
-            <FunnelChart data={funnelData} title="Sales Funnel" />
+            <FunnelChart data={conversionData.length > 0 ? conversionData : funnelData} title="Conversion Funnel" />
           </div>
         </CardContent>
       </Card>
 
       {/* Advanced Funnel Chart */}
-      {salesFunnelData.length > 0 && (
+      {(salesData.length > 0 || salesFunnelData.length > 0) && (
         <Card>
           <CardHeader>
             <CardTitle>{t("charts.funnel.advanced.title")}</CardTitle>
             <CardDescription>{t("charts.funnel.advanced.description")}</CardDescription>
           </CardHeader>
           <CardContent>
-            <FunnelChart data={salesFunnelData} title="Sales Process Funnel" />
+            <FunnelChart data={salesData.length > 0 ? salesData : salesFunnelData} title="Sales Process Funnel" />
           </CardContent>
         </Card>
       )}

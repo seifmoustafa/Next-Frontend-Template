@@ -18,8 +18,9 @@ import { GenericChartsProps } from "./types";
 
 export function ScatterBubbleCharts({ 
   data = [],
+  scatterData = [],
   bubbleData = []
-}: GenericChartsProps & { bubbleData?: any[] }) {
+}: GenericChartsProps & { scatterData?: any[]; bubbleData?: any[] }) {
   const { t } = useI18n();
   
   const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300"];
@@ -46,7 +47,7 @@ export function ScatterBubbleCharts({
               <XAxis type="number" dataKey="x" name="stature" unit="cm" />
               <YAxis type="number" dataKey="y" name="weight" unit="kg" />
               <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-              <Scatter name="A school" data={data} fill="#8884d8" />
+              <Scatter name="A school" data={scatterData.length > 0 ? scatterData : data} fill="#8884d8" />
             </ScatterChart>
           </ResponsiveContainer>
         </CardContent>
@@ -72,10 +73,10 @@ export function ScatterBubbleCharts({
               <XAxis type="number" dataKey="x" name="stature" unit="cm" />
               <YAxis type="number" dataKey="y" name="weight" unit="kg" />
               <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-              <Scatter name="A school" data={data} fill="#8884d8" />
+              <Scatter name="A school" data={scatterData.length > 0 ? scatterData : data} fill="#8884d8" />
               <Scatter 
                 name="B school" 
-                data={data.map(d => ({ x: d.x + 20, y: d.y - 50, z: d.z }))} 
+                data={bubbleData.length > 0 ? bubbleData : data.map(d => ({ x: d.x + 20, y: d.y - 50, z: d.z }))} 
                 fill="#82ca9d" 
               />
             </ScatterChart>

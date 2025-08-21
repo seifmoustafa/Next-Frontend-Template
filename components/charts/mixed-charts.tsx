@@ -19,8 +19,10 @@ import { GenericChartsProps } from "./types";
 
 export function MixedCharts({ 
   data = [],
-  dualAxisData = []
-}: GenericChartsProps & { dualAxisData?: any[] }) {
+  lineBarData = [],
+  dualAxisData = [],
+  areaLineData = []
+}: GenericChartsProps & { lineBarData?: any[]; dualAxisData?: any[]; areaLineData?: any[] }) {
   const { t } = useI18n();
 
   return (
@@ -33,14 +35,14 @@ export function MixedCharts({
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <ComposedChart data={data}>
+            <ComposedChart data={lineBarData.length > 0 ? lineBarData : data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="sales" barSize={20} fill="#8884d8" />
-              <Line type="monotone" dataKey="profit" stroke="#ff7300" strokeWidth={2} />
+              <Bar dataKey="revenue" barSize={20} fill="#8884d8" />
+              <Line type="monotone" dataKey="users" stroke="#ff7300" strokeWidth={2} />
             </ComposedChart>
           </ResponsiveContainer>
         </CardContent>
@@ -54,14 +56,14 @@ export function MixedCharts({
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <ComposedChart data={data}>
+            <ComposedChart data={areaLineData.length > 0 ? areaLineData : data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
               <Legend />
               <Area type="monotone" dataKey="revenue" fill="#82ca9d" stroke="#82ca9d" />
-              <Line type="monotone" dataKey="profit" stroke="#ff7300" strokeWidth={2} />
+              <Line type="monotone" dataKey="orders" stroke="#ff7300" strokeWidth={2} />
             </ComposedChart>
           </ResponsiveContainer>
         </CardContent>

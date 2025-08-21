@@ -31,12 +31,15 @@ export interface LineChartsProps extends BaseChartProps {
 
 export interface ScatterBubbleChartsProps extends BaseChartProps {
   data?: Array<{ x: number; y: number; [key: string]: any }>;
+  scatterData?: Array<{ x: number; y: number; [key: string]: any }>;
   bubbleData?: Array<{ x: number; y: number; z: number; [key: string]: any }>;
 }
 
 export interface MixedChartsProps extends BaseChartProps {
   data?: ChartData[];
+  lineBarData?: ChartData[];
   dualAxisData?: Array<{ name: string; [key: string]: string | number }>;
+  areaLineData?: ChartData[];
 }
 
 export interface HeatmapTreemapChartsProps extends BaseChartProps {
@@ -48,7 +51,9 @@ export interface HeatmapTreemapChartsProps extends BaseChartProps {
 
 export interface TimelineFunnelChartsProps extends BaseChartProps {
   data?: ChartData[];
+  conversionData?: Array<{ name: string; value: number; fill?: string }>;
   funnelData?: Array<{ name: string; value: number; fill?: string }>;
+  salesData?: Array<{ name: string; value: number; fill?: string }>;
   salesFunnelData?: Array<{ name: string; value: number; fill?: string }>;
 }
 
