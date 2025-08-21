@@ -313,6 +313,16 @@ export const ar = {
     dec: "ديسمبر",
   },
 
+  daysShort: {
+    sun: "ح",
+    mon: "ن",
+    tue: "ث",
+    wed: "ر",
+    thu: "خ",
+    fri: "ج",
+    sat: "س",
+  },
+
   // Users
   users: {
     title: "إدارة المستخدمين",
@@ -826,6 +836,18 @@ export const ar = {
       status: "الحالة",
       active: "نشط",
       inactive: "غير نشط",
+      pending: "قيد الانتظار",
+      role: "الدور",
+      roles: {
+        admin: "مسؤول",
+        user: "مستخدم",
+        editor: "محرر",
+      },
+      data: {
+        john: "جون دو",
+        jane: "جين سميث",
+        bob: "بوب جونسون",
+      },
     },
 
     layoutTemplate: {
@@ -1091,6 +1113,16 @@ export const ar = {
         card: { name: "بطاقة", description: "تصميم نظيف على شكل بطاقة" },
         overlay: { name: "تراكب", description: "تراكب كبير مع خلفية" },
       },
+      testButton: "اختبار {{style}}",
+      testInstructions:
+        'انقر أزرار "اختبار" لمعاينة كل نمط حوار مع محتوى تجريبي',
+      previewTitle: "معاينة نمط حوار {{style}}",
+      previewDescription: "هذه معاينة لنمط حوار {{style}}.",
+      sampleContentTitle: "محتوى تجريبي",
+      sampleContentDescription:
+        "يعرض هذا الحوار مظهر وسلوك نمط {{style}}. لاحظ الأسلوب والتنسيق والتأثيرات المختلفة.",
+      closePreview: "إغلاق المعاينة",
+      applyStyle: "تطبيق هذا النمط",
     },
     datePickerStyle: {
       title: "نمط منتقي التاريخ",

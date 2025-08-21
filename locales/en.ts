@@ -229,6 +229,16 @@ export const en = {
     dec: "Dec",
   },
 
+  daysShort: {
+    sun: "S",
+    mon: "M",
+    tue: "T",
+    wed: "W",
+    thu: "T",
+    fri: "F",
+    sat: "S",
+  },
+
   // Users
   users: {
     title: "User Management",
@@ -898,6 +908,18 @@ export const en = {
       status: "Status",
       active: "Active",
       inactive: "Inactive",
+      pending: "Pending",
+      role: "Role",
+      roles: {
+        admin: "Admin",
+        user: "User",
+        editor: "Editor",
+      },
+      data: {
+        john: "John Doe",
+        jane: "Jane Smith",
+        bob: "Bob Johnson",
+      },
     },
 
     layoutTemplate: {
@@ -1173,6 +1195,16 @@ export const en = {
         card: { name: "Card", description: "Clean card-style design" },
         overlay: { name: "Overlay", description: "Large overlay with backdrop" },
       },
+      testButton: "Test {{style}}",
+      testInstructions:
+        'Click "Test" buttons to preview each modal style with sample content',
+      previewTitle: "{{style}} Modal Style Preview",
+      previewDescription: "This is a preview of the {{style}} modal style.",
+      sampleContentTitle: "Sample Content",
+      sampleContentDescription:
+        "This modal demonstrates the visual appearance and behavior of the {{style}} style. Notice the unique styling, positioning, and visual effects.",
+      closePreview: "Close Preview",
+      applyStyle: "Apply This Style",
     },
     datePickerStyle: {
       title: "Date Picker Style",
