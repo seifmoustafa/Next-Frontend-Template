@@ -1056,6 +1056,11 @@ export const ar = {
         jane: "جين سميث",
         bob: "بوب جونسون",
       },
+      emails: {
+        john: "john@example.com",
+        jane: "jane@example.com",
+        bob: "bob@example.com",
+      },
     },
 
     layoutTemplate: {

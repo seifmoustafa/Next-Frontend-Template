@@ -1170,6 +1170,11 @@ export const en = {
         jane: "Jane Smith",
         bob: "Bob Johnson",
       },
+      emails: {
+        john: "john@example.com",
+        jane: "jane@example.com",
+        bob: "bob@example.com",
+      },
     },
 
     layoutTemplate: {

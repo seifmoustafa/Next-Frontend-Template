@@ -19,19 +19,19 @@ export function PreviewPanel() {
       {
         id: 1,
         name: t("settings.sampleTable.data.john"),
-        email: "john@example.com",
+        email: t("settings.sampleTable.emails.john"),
         status: "active",
       },
       {
         id: 2,
         name: t("settings.sampleTable.data.jane"),
-        email: "jane@example.com",
+        email: t("settings.sampleTable.emails.jane"),
         status: "inactive",
       },
       {
         id: 3,
         name: t("settings.sampleTable.data.bob"),
-        email: "bob@example.com",
+        email: t("settings.sampleTable.emails.bob"),
         status: "active",
       },
     ];
