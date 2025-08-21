@@ -13,7 +13,7 @@ import { useI18n } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
 
 export function ComponentsTab() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const settings = useSettings();
   const [multiSelectDemo, setMultiSelectDemo] = useState<string[]>([]);
   const [styleSelections, setStyleSelections] =
@@ -31,7 +31,10 @@ export function ComponentsTab() {
     t("daysShort.fri"),
     t("daysShort.sat"),
   ];
-  const sampleMonthLabel = `${t("months.jan")} 2024`;
+  const sampleMonthLabel = t("settings.calendar.sampleLabel", {
+    month: t("months.jan"),
+    year: new Intl.NumberFormat(language).format(2024),
+  });
 
   // Sample data for table preview
   const sampleTableData = [

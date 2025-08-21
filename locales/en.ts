@@ -1496,6 +1496,9 @@ export const en = {
         },
       },
     },
+    calendar: {
+      sampleLabel: "{{month}} {{year}}",
+    },
     calendarStyle: {
       title: "Calendar Style",
       description: "Choose how calendar dropdowns should appear",

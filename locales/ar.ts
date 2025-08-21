@@ -1354,6 +1354,9 @@ export const ar = {
         elegant: { name: "أنيق", description: "تدرج متطور مع خط مميز" },
       },
     },
+    calendar: {
+      sampleLabel: "{{month}} {{year}}",
+    },
     calendarStyle: {
       title: "نمط التقويم",
       description: "اختر كيفية ظهور قوائم التقويم المنسدلة",
