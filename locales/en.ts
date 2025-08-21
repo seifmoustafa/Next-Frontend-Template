@@ -787,8 +787,18 @@ export const en = {
           title: "Calendar Heatmap",
           description: "Activity patterns over time periods",
         },
+        basic: {
+          title: "Basic Heatmap",
+          description: "Grid-based intensity visualization with color mapping",
+        },
+        intensity: {
+          title: "Intensity Heatmap",
+          description: "Data intensity visualization with gradient colors",
+        },
       },
       treemap: {
+        title: "Treemap Charts",
+        description: "Hierarchical data visualization with nested rectangles",
         basic: {
           title: "Basic Treemap",
           description: "Hierarchical data with nested rectangles",
@@ -801,23 +811,23 @@ export const en = {
       timeline: {
         title: "Timeline & Funnel Charts",
         description: "Project tracking and conversion process visualization",
-        project: {
+        basic: {
           title: "Project Timeline",
-          description: "Track project milestones and progress",
+          description: "Track project milestones and progress over time",
         },
-        multiTrack: {
-          title: "Multi-Track Timeline",
-          description: "Parallel timelines for different workstreams",
+        funnel: {
+          title: "Conversion Funnel",
+          description: "Visualize step-by-step conversion process",
         },
       },
       funnel: {
-        conversion: {
-          title: "Conversion Funnel",
-          description: "Visualize user journey and conversion rates",
+        basic: {
+          title: "Basic Funnel Chart",
+          description: "Step-by-step process visualization",
         },
-        pyramid: {
-          title: "Sales Pyramid",
-          description: "Hierarchical sales process visualization",
+        advanced: {
+          title: "Advanced Funnel Chart",
+          description: "Enhanced funnel with detailed metrics",
         },
       },
     },

@@ -1,18 +1,47 @@
 "use client";
 
 import React from "react";
-import {
-  Treemap,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
+import { Treemap, ResponsiveContainer, Tooltip, Cell } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useI18n } from "@/providers/i18n-provider";
-import { GenericChartsProps } from "./types";
+import { HeatmapTreemapChartsProps } from "./types";
+import { CustomChartTooltip, HeatmapTooltip } from "./chart-tooltip";
 
-// Custom Treemap Content Component
+// Infinite color palette generator
+const generateColor = (index: number) => {
+  const baseColors = [
+    "#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#8dd1e1", "#d084d0", "#387908", 
+    "#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#ffeaa7", "#dda0dd", "#98d8c8", 
+    "#f7dc6f", "#bb8fce", "#85c1e9", "#f8c471", "#82e0aa", "#f1948a", "#85929e",
+    "#a569bd", "#5dade2", "#58d68d", "#f4d03f", "#ec7063", "#af7ac5", "#5499c7",
+    "#52be80", "#f7dc6f", "#e74c3c", "#9b59b6", "#3498db", "#2ecc71", "#f39c12"
+  ];
+  
+  if (index < baseColors.length) {
+    return baseColors[index];
+  }
+  
+  // Generate colors dynamically for unlimited series
+  const hue = (index * 137.508) % 360; // Golden angle approximation
+  const saturation = 65 + (index % 3) * 15; // Vary saturation
+  const lightness = 45 + (index % 4) * 10; // Vary lightness
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+// Enhanced Custom Treemap Content Component
 const CustomTreemapContent = (props: any) => {
-  const { root, depth, x, y, width, height, index, payload, colors, rank, name } = props;
+  const { root, depth, x, y, width, height, index, payload, name, value } = props;
+
+  // Don't render if too small
+  if (width < 10 || height < 10) return null;
+
+  const isLeaf = !payload?.children || payload.children.length === 0;
+  const colorIndex = depth === 0 ? index : (payload?.parentIndex || 0) + index;
+  const fillColor = generateColor(colorIndex);
+  const textColor = depth === 0 ? '#fff' : '#333';
+  const fontSize = Math.min(width / 8, height / 4, 14);
+  const shouldShowText = width > 30 && height > 20;
+  const shouldShowValue = width > 50 && height > 30;
 
   return (
     <g>
@@ -22,71 +51,110 @@ const CustomTreemapContent = (props: any) => {
         width={width}
         height={height}
         style={{
-          fill: depth < 2 ? colors[Math.floor((index / root.children.length) * 6)] : '#fff',
+          fill: fillColor,
+          fillOpacity: depth === 0 ? 0.8 : 0.6,
           stroke: '#fff',
-          strokeWidth: 2 / (depth + 1e-10),
-          strokeOpacity: 1 / (depth + 1e-10),
+          strokeWidth: depth === 0 ? 2 : 1,
+          strokeOpacity: 1,
         }}
       />
-      {depth === 1 ? (
-        <text x={x + width / 2} y={y + height / 2 + 7} textAnchor="middle" fill="#fff" fontSize={14}>
-          {name}
+      
+      {/* Main label */}
+      {shouldShowText && name && (
+        <text 
+          x={x + width / 2} 
+          y={y + height / 2 - (shouldShowValue ? fontSize / 2 : 0)} 
+          textAnchor="middle" 
+          fill={textColor} 
+          fontSize={fontSize}
+          fontWeight={depth === 0 ? 'bold' : 'normal'}
+        >
+          {name.length > width / 8 ? name.substring(0, Math.floor(width / 8)) + '...' : name}
         </text>
-      ) : null}
-      {depth === 1 ? (
-        <text x={x + 4} y={y + 18} fill="#fff" fontSize={16} fillOpacity={0.9}>
-          {index + 1}
+      )}
+      
+      {/* Value label */}
+      {shouldShowValue && value && (
+        <text 
+          x={x + width / 2} 
+          y={y + height / 2 + fontSize} 
+          textAnchor="middle" 
+          fill={textColor} 
+          fontSize={fontSize * 0.8}
+          opacity={0.8}
+        >
+          {typeof value === 'number' ? value.toLocaleString() : value}
         </text>
-      ) : null}
+      )}
+      
+      {/* Depth indicator for debugging */}
+      {depth === 0 && width > 20 && height > 20 && (
+        <text 
+          x={x + 4} 
+          y={y + 16} 
+          fill={textColor} 
+          fontSize={10}
+          opacity={0.7}
+        >
+          L{depth}
+        </text>
+      )}
     </g>
   );
 };
 
-// Custom Heatmap Component with Enhanced Tooltips
-const HeatmapChart = ({ data, title }: { data: any[]; title: string }) => {
-  if (!data || data.length === 0) return null;
+// Enhanced Generic Heatmap Component
+const HeatmapChart = ({ data, title, rows = 12, cols = 12 }: { data: any[]; title: string; rows?: number; cols?: number }) => {
   
-  // Handle both array of arrays and array of objects
+  
+  // Handle multiple data formats
   const processedData = Array.isArray(data[0]) ? 
     data.map((row, rowIndex) => 
       row.map((value: number, colIndex: number) => ({
         x: colIndex,
         y: rowIndex, 
         value,
-        label: `Day ${rowIndex + 1}, Week ${colIndex + 1}`
+        label: `Row ${rowIndex + 1}, Col ${colIndex + 1}`
       }))
     ).flat() :
-    data;
+    data.map((item: any, index: number) => ({
+      x: item.x ?? (index % cols),
+      y: item.y ?? Math.floor(index / cols),
+      value: item.value ?? item,
+      label: item.label ?? `Cell ${Math.floor(index / cols) + 1}-${(index % cols) + 1}`,
+      ...item
+    }));
     
-  const maxValue = Math.max(...processedData.map((item: any) => item.value || 0));
-  const minValue = Math.min(...processedData.map((item: any) => item.value || 0));
+  const maxValue = Math.max(...processedData.map((item: any) => Number(item.value) || 0));
+  const minValue = Math.min(...processedData.map((item: any) => Number(item.value) || 0));
+  const range = maxValue - minValue || 1;
   
   return (
     <div className="space-y-2">
       <h4 className="text-sm font-medium">{title}</h4>
-      <div className="grid grid-cols-12 gap-1 max-w-2xl">
+      <div className={`grid gap-1 max-w-2xl`} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
         {processedData.map((item: any, index: number) => {
-          const intensity = (item.value - minValue) / (maxValue - minValue);
+          const intensity = (Number(item.value) - minValue) / range;
+          const colorIndex = Math.floor(intensity * 10);
           return (
-            <div
-              key={index}
-              className="w-6 h-6 rounded flex items-center justify-center text-xs font-medium cursor-pointer hover:scale-110 transition-transform relative group"
-              style={{
-                backgroundColor: `hsl(${120 - intensity * 120}, 70%, ${50 + intensity * 30}%)`,
-                color: intensity > 0.6 ? 'white' : 'black',
-              }}
-            >
-              <span className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-2 py-1 rounded text-xs whitespace-nowrap z-10">
-                {item.label || `Value: ${item.value}`}
-              </span>
-              {item.value}
-            </div>
+            <HeatmapTooltip key={index} item={item}>
+              <div
+                className="w-6 h-6 rounded flex items-center justify-center text-xs font-medium cursor-pointer hover:scale-110 transition-transform"
+                style={{
+                  backgroundColor: generateColor(colorIndex),
+                  opacity: 0.3 + intensity * 0.7,
+                  color: intensity > 0.6 ? 'white' : 'black',
+                }}
+              >
+                {item.showValue !== false && (Number(item.value) < 100 ? item.value : '')}
+              </div>
+            </HeatmapTooltip>
           );
         })}
       </div>
       <div className="flex items-center justify-between text-xs text-muted-foreground mt-2">
-        <span>Low: {minValue}</span>
-        <span>High: {maxValue}</span>
+        <span>Min: {minValue}</span>
+        <span>Max: {maxValue}</span>
       </div>
     </div>
   );
@@ -96,11 +164,15 @@ export function HeatmapTreemapCharts({
   data = [],
   heatmapData1 = [],
   heatmapData2 = [],
-  hierarchicalData = []
-}: GenericChartsProps & {
+  calendarData = [],
+  hierarchicalData = [],
+  treemapData = []
+}: HeatmapTreemapChartsProps & { 
   heatmapData1?: any[];
   heatmapData2?: any[];
   hierarchicalData?: any[];
+  calendarData?: any[];
+  treemapData?: any[];
 }) {
   const { t } = useI18n();
   
@@ -124,24 +196,32 @@ export function HeatmapTreemapCharts({
   return (
     <div className="space-y-6">
       {/* Basic Treemap */}
-      <Card>
-        <CardHeader>
-          <CardTitle>{t("charts.treemap.basic.title")}</CardTitle>
-          <CardDescription>{t("charts.treemap.basic.description")}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <Treemap
-              data={data}
-              dataKey="size"
-              stroke="#fff"
-              fill="#8884d8"
-            >
-              <Tooltip />
-            </Treemap>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      {(data.length > 0 || treemapData.length > 0) && (
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("charts.treemap.basic.title")}</CardTitle>
+            <CardDescription>{t("charts.treemap.basic.description")}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <Treemap
+                data={treemapData.length > 0 ? treemapData : data.length > 0 ? data : [
+                  { name: "Technology", size: 400, fill: generateColor(0) },
+                  { name: "Marketing", size: 300, fill: generateColor(1) },
+                  { name: "Sales", size: 250, fill: generateColor(2) },
+                  { name: "Support", size: 200, fill: generateColor(3) },
+                  { name: "Operations", size: 150, fill: generateColor(4) }
+                ]}
+                dataKey="size"
+                stroke="#fff"
+                fill="#8884d8"
+              >
+                <CustomChartTooltip />
+              </Treemap>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Hierarchical Treemap */}
       {hierarchicalData.length > 0 && (
@@ -156,9 +236,9 @@ export function HeatmapTreemapCharts({
                 data={hierarchicalData}
                 dataKey="size"
                 stroke="#fff"
-                content={<CustomTreemapContent colors={["#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#8dd1e1", "#d084d0"]} />}
+                content={<CustomTreemapContent />}
               >
-                <Tooltip />
+                <CustomChartTooltip />
               </Treemap>
             </ResponsiveContainer>
           </CardContent>
@@ -190,17 +270,17 @@ export function HeatmapTreemapCharts({
         <CardContent>
           <div className="space-y-2">
             <div className="grid grid-cols-12 gap-1">
-              {Array.from({ length: 365 }, (_, i) => {
-                const intensity = Math.random();
+              {(calendarData.length > 0 ? calendarData : data.length > 0 ? data : []).map((item: any, i: number) => {
+                const intensity = typeof item === 'object' ? (item.value || Math.random()) : Math.random();
                 return (
-                  <div
-                    key={i}
-                    className="w-3 h-3 rounded-sm"
-                    style={{
-                      backgroundColor: `rgba(34, 197, 94, ${intensity})`,
-                    }}
-                    title={`Day ${i + 1}: ${Math.floor(intensity * 100)} commits`}
-                  />
+                  <HeatmapTooltip key={i} item={{ ...item, label: `Day ${i + 1}`, value: Math.floor(intensity * 100) }}>
+                    <div
+                      className="w-3 h-3 rounded-sm cursor-pointer hover:scale-110 transition-transform"
+                      style={{
+                        backgroundColor: `rgba(34, 197, 94, ${intensity})`,
+                      }}
+                    />
+                  </HeatmapTooltip>
                 );
               })}
             </div>

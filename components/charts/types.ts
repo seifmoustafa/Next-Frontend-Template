@@ -44,9 +44,11 @@ export interface MixedChartsProps extends BaseChartProps {
 
 export interface HeatmapTreemapChartsProps extends BaseChartProps {
   data?: ChartData[];
-  heatmapData1?: Array<{ x: number; y: number; value: number }>;
-  heatmapData2?: Array<{ x: number; y: number; value: number }>;
+  heatmapData1?: Array<{ x: number; y: number; value: number; label?: string }>;
+  heatmapData2?: Array<{ x: number; y: number; value: number; label?: string }>;
+  calendarData?: Array<{ date: string; value: number; count?: number; label?: string }>;
   hierarchicalData?: Array<{ name: string; size: number; children?: any[] }>;
+  treemapData?: Array<{ name: string; size: number; fill?: string }>;
 }
 
 export interface TimelineFunnelChartsProps extends BaseChartProps {

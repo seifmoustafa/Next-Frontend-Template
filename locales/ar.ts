@@ -236,10 +236,42 @@ export const ar = {
     heatmap: {
       title: "خرائط الحرارة والشجرة",
       description: "التعرف على الأنماط وتصور البيانات الهرمية",
+      calendar: {
+        title: "خريطة حرارية تقويمية",
+        description: "أنماط النشاط عبر فترات زمنية",
+      },
+      basic: {
+        title: "خريطة حرارية أساسية",
+        description: "تصور كثافة قائم على الشبكة مع تخطيط الألوان",
+      },
+      intensity: {
+        title: "خريطة حرارية للكثافة",
+        description: "تصور كثافة البيانات بألوان متدرجة",
+      },
+    },
+    treemap: {
+      title: "خرائط الشجرة",
+      description: "تصور البيانات الهرمية بمستطيلات متداخلة",
+      basic: {
+        title: "خريطة شجرية أساسية",
+        description: "بيانات هرمية بمستطيلات متداخلة",
+      },
+      hierarchical: {
+        title: "خريطة شجرية هرمية",
+        description: "هيكل بيانات تنظيمي متعدد المستويات",
+      },
     },
     timeline: {
       title: "رسوم الجدول الزمني والقمع",
       description: "تتبع المشاريع وتصور عمليات التحويل",
+      basic: {
+        title: "جدول زمني للمشروع",
+        description: "تتبع معالم المشروع والتقدم عبر الزمن",
+      },
+      funnel: {
+        title: "قمع التحويل",
+        description: "تصور عملية التحويل خطوة بخطوة",
+      },
     },
     funnel: {
       advanced: {
@@ -709,6 +741,7 @@ export const ar = {
       components: "المكونات",
       typography: "الخطوط",
       behavior: "السلوك",
+      charts:"رسومات بيانية"
     },
     lightBackground: {
       title: "سمة الخلفية الفاتحة",

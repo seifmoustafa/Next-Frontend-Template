@@ -1,19 +1,32 @@
 "use client";
 
 import React from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useI18n } from "@/providers/i18n-provider";
-import { PieChartProps } from "./types";
+import { GenericChartsProps } from "./types";
+import { CustomChartTooltip } from "./chart-tooltip";
 
-const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#8dd1e1"];
+// Infinite color palette generator
+const generateColor = (index: number) => {
+  const baseColors = [
+    "#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#8dd1e1", "#d084d0", "#387908", 
+    "#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#ffeaa7", "#dda0dd", "#98d8c8", 
+    "#f7dc6f", "#bb8fce", "#85c1e9", "#f8c471", "#82e0aa", "#f1948a", "#85929e",
+    "#a569bd", "#5dade2", "#58d68d", "#f4d03f", "#ec7063", "#af7ac5", "#5499c7",
+    "#52be80", "#f7dc6f", "#e74c3c", "#9b59b6", "#3498db", "#2ecc71", "#f39c12"
+  ];
+  
+  if (index < baseColors.length) {
+    return baseColors[index];
+  }
+  
+  // Generate colors dynamically for unlimited series
+  const hue = (index * 137.508) % 360; // Golden angle approximation
+  const saturation = 65 + (index % 3) * 15; // Vary saturation
+  const lightness = 45 + (index % 4) * 10; // Vary lightness
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
 
 const renderCustomizedLabel = ({
   cx,
@@ -70,10 +83,10 @@ export function PieDonutCharts({
                 dataKey="value"
               >
                 {data.map((entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={generateColor(index)} />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip content={<CustomChartTooltip />} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
@@ -100,10 +113,10 @@ export function PieDonutCharts({
                 label={({ name, percent }: any) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
               >
                 {data.map((entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill || COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={entry.fill || generateColor(index)} />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip content={<CustomChartTooltip />} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
@@ -131,10 +144,10 @@ export function PieDonutCharts({
                 dataKey="value"
               >
                 {data.map((entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={generateColor(index)} />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip content={<CustomChartTooltip />} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
@@ -160,7 +173,7 @@ export function PieDonutCharts({
                 dataKey="value"
               >
                 {data.map((entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={generateColor(index)} />
                 ))}
               </Pie>
               <Pie
@@ -173,10 +186,10 @@ export function PieDonutCharts({
                 dataKey="value"
               >
                 {data.map((entry: any, index: number) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[(index + 2) % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={generateColor(index + data.length)} />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip content={<CustomChartTooltip />} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>

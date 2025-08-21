@@ -21,27 +21,29 @@ export function ChartsTab() {
 
   // Comprehensive sample data for all chart types
   const monthlyRevenueData = [
-    { name: t("months.jan"), value: 4000, revenue: 4000, users: 2400, orders: 1200 },
-    { name: t("months.feb"), value: 3000, revenue: 3000, users: 1398, orders: 800 },
-    { name: t("months.mar"), value: 2000, revenue: 2000, users: 9800, orders: 1500 },
-    { name: t("months.apr"), value: 2780, revenue: 2780, users: 3908, orders: 1200 },
-    { name: t("months.may"), value: 1890, revenue: 1890, users: 4800, orders: 900 },
-    { name: t("months.jun"), value: 2390, revenue: 2390, users: 3800, orders: 1100 },
-    { name: t("months.jul"), value: 3490, revenue: 3490, users: 4300, orders: 1300 },
-    { name: t("months.aug"), value: 4000, revenue: 4000, users: 2400, orders: 1200 },
-    { name: t("months.sep"), value: 3000, revenue: 3000, users: 1398, orders: 800 },
-    { name: t("months.oct"), value: 2000, revenue: 2000, users: 9800, orders: 1500 },
-    { name: t("months.nov"), value: 2780, revenue: 2780, users: 3908, orders: 1200 },
-    { name: t("months.dec"), value: 1890, revenue: 1890, users: 4800, orders: 900 },
+    { name: t("months.jan"), value: 4000, revenue: 4000, users: 2400, orders: 1200, profit: 3200, expenses: 800, growth: 12.5 },
+    { name: t("months.feb"), value: 3000, revenue: 3000, users: 1398, orders: 800, profit: 2400, expenses: 600, growth: -25.0 },
+    { name: t("months.mar"), value: 2000, revenue: 2000, users: 9800, orders: 1500, profit: 1600, expenses: 400, growth: -33.3 },
+    { name: t("months.apr"), value: 2780, revenue: 2780, users: 3908, orders: 1200, profit: 2224, expenses: 556, growth: 39.0 },
+    { name: t("months.may"), value: 1890, revenue: 1890, users: 4800, orders: 900, profit: 1512, expenses: 378, growth: -32.0 },
+    { name: t("months.jun"), value: 2390, revenue: 2390, users: 3800, orders: 1100, profit: 1912, expenses: 478, growth: 26.5 },
+    { name: t("months.jul"), value: 3490, revenue: 3490, users: 4300, orders: 1300, profit: 2792, expenses: 698, growth: 46.0 },
+    { name: t("months.aug"), value: 4000, revenue: 4000, users: 2400, orders: 1200, profit: 3200, expenses: 800, growth: 14.6 },
+    { name: t("months.sep"), value: 3000, revenue: 3000, users: 1398, orders: 800, profit: 2400, expenses: 600, growth: -25.0 },
+    { name: t("months.oct"), value: 2000, revenue: 2000, users: 9800, orders: 1500, profit: 1600, expenses: 400, growth: -33.3 },
+    { name: t("months.nov"), value: 2780, revenue: 2780, users: 3908, orders: 1200, profit: 2224, expenses: 556, growth: 39.0 },
+    { name: t("months.dec"), value: 1890, revenue: 1890, users: 4800, orders: 900, profit: 1512, expenses: 378, growth: -32.0 },
   ];
 
   const stackedAreaData = [
-    { name: t("months.jan"), desktop: 4000, mobile: 2400, tablet: 1200 },
-    { name: t("months.feb"), desktop: 3000, mobile: 1398, tablet: 800 },
-    { name: t("months.mar"), desktop: 2000, mobile: 9800, tablet: 1500 },
-    { name: t("months.apr"), desktop: 2780, mobile: 3908, tablet: 1200 },
-    { name: t("months.may"), desktop: 1890, mobile: 4800, tablet: 900 },
-    { name: t("months.jun"), desktop: 2390, mobile: 3800, tablet: 1100 },
+    { name: t("months.jan"), desktop: 4000, mobile: 2400, tablet: 1200, smartwatch: 300, tv: 150, other: 100 },
+    { name: t("months.feb"), desktop: 3000, mobile: 1398, tablet: 800, smartwatch: 250, tv: 120, other: 80 },
+    { name: t("months.mar"), desktop: 2000, mobile: 9800, tablet: 1500, smartwatch: 400, tv: 200, other: 120 },
+    { name: t("months.apr"), desktop: 2780, mobile: 3908, tablet: 1200, smartwatch: 350, tv: 180, other: 90 },
+    { name: t("months.may"), desktop: 1890, mobile: 4800, tablet: 900, smartwatch: 320, tv: 160, other: 85 },
+    { name: t("months.jun"), desktop: 2390, mobile: 3800, tablet: 1100, smartwatch: 380, tv: 190, other: 95 },
+    { name: t("months.jul"), desktop: 3200, mobile: 4200, tablet: 1300, smartwatch: 420, tv: 210, other: 110 },
+    { name: t("months.aug"), desktop: 3800, mobile: 3600, tablet: 1400, smartwatch: 450, tv: 225, other: 115 },
   ];
 
   const marketShareData = [
@@ -82,12 +84,14 @@ export function ChartsTab() {
   ];
 
   const performanceData = [
-    { subject: "Performance", A: 120, B: 110, fullMark: 150 },
-    { subject: "Quality", A: 98, B: 130, fullMark: 150 },
-    { subject: "Efficiency", A: 86, B: 130, fullMark: 150 },
-    { subject: "Reliability", A: 99, B: 100, fullMark: 150 },
-    { subject: "Innovation", A: 85, B: 90, fullMark: 150 },
-    { subject: "Support", A: 65, B: 85, fullMark: 150 },
+    { subject: "Performance", teamA: 120, teamB: 110, teamC: 95, teamD: 105, fullMark: 150 },
+    { subject: "Quality", teamA: 98, teamB: 130, teamC: 115, teamD: 125, fullMark: 150 },
+    { subject: "Efficiency", teamA: 86, teamB: 130, teamC: 140, teamD: 120, fullMark: 150 },
+    { subject: "Reliability", teamA: 99, teamB: 100, teamC: 110, teamD: 95, fullMark: 150 },
+    { subject: "Innovation", teamA: 85, teamB: 90, teamC: 75, teamD: 100, fullMark: 150 },
+    { subject: "Support", teamA: 65, teamB: 85, teamC: 90, teamD: 80, fullMark: 150 },
+    { subject: "Security", teamA: 110, teamB: 95, teamC: 105, teamD: 115, fullMark: 150 },
+    { subject: "Scalability", teamA: 75, teamB: 120, teamC: 100, teamD: 90, fullMark: 150 },
   ];
 
   // Enhanced heatmap data with better examples
@@ -128,19 +132,21 @@ export function ChartsTab() {
   ];
 
   const conversionFunnelData = [
-    { name: "Website Visitors", value: 10000, fill: "#8884d8" },
-    { name: "Product Views", value: 8000, fill: "#82ca9d" },
-    { name: "Add to Cart", value: 6000, fill: "#ffc658" },
-    { name: "Checkout Started", value: 4000, fill: "#ff7300" },
-    { name: "Purchase Completed", value: 2000, fill: "#8dd1e1" },
+    { stage: "Website Visitors", value: 10000, description: "Total unique visitors to the website" },
+    { stage: "Product Views", value: 8000, description: "Users who viewed at least one product" },
+    { stage: "Add to Cart", value: 6000, description: "Users who added items to their cart" },
+    { stage: "Checkout Started", value: 4000, description: "Users who initiated the checkout process" },
+    { stage: "Payment Info", value: 3200, description: "Users who entered payment information" },
+    { stage: "Purchase Completed", value: 2000, description: "Successfully completed purchases" },
   ];
 
   const salesFunnelData = [
-    { name: "Awareness", value: 5000, fill: "#8884d8" },
-    { name: "Interest", value: 3500, fill: "#82ca9d" },
-    { name: "Consideration", value: 2500, fill: "#ffc658" },
-    { name: "Intent", value: 1500, fill: "#ff7300" },
-    { name: "Purchase", value: 800, fill: "#8dd1e1" },
+    { stage: "Lead Generation", value: 5000, description: "Marketing qualified leads" },
+    { stage: "Initial Contact", value: 3500, description: "Leads contacted by sales team" },
+    { stage: "Needs Assessment", value: 2500, description: "Qualified prospects with identified needs" },
+    { stage: "Proposal Sent", value: 1500, description: "Formal proposals submitted" },
+    { stage: "Negotiation", value: 1200, description: "Active negotiations in progress" },
+    { stage: "Closed Won", value: 800, description: "Successfully closed deals" },
   ];
 
   const profitLossData = [
@@ -157,6 +163,28 @@ export function ChartsTab() {
     { name: t("months.nov"), profit: 2780, loss: -1200 },
     { name: t("months.dec"), profit: 1890, loss: -900 },
   ];
+
+  // Mixed chart specific data for Bar+Area+Line combination
+  const barAreaLineData = [
+    { name: t("months.jan"), area1: 2000, area2: 1500, bar1: 3000, bar2: 2500, line1: 4000, line2: 3500 },
+    { name: t("months.feb"), area1: 1800, area2: 1300, bar1: 2800, bar2: 2300, line1: 3800, line2: 3300 },
+    { name: t("months.mar"), area1: 2200, area2: 1700, bar1: 3200, bar2: 2700, line1: 4200, line2: 3700 },
+    { name: t("months.apr"), area1: 2400, area2: 1900, bar1: 3400, bar2: 2900, line1: 4400, line2: 3900 },
+    { name: t("months.may"), area1: 2100, area2: 1600, bar1: 3100, bar2: 2600, line1: 4100, line2: 3600 },
+    { name: t("months.jun"), area1: 2300, area2: 1800, bar1: 3300, bar2: 2800, line1: 4300, line2: 3800 },
+  ];
+
+  // Calendar heatmap data (GitHub-style activity calendar)
+  const calendarData = Array.from({ length: 365 }, (_, dayIndex) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (365 - dayIndex));
+    return {
+      date: date.toISOString().split('T')[0],
+      value: Math.floor(Math.random() * 5), // 0-4 activity levels
+      count: Math.floor(Math.random() * 20),
+      label: `${date.toLocaleDateString()}: ${Math.floor(Math.random() * 20)} contributions`
+    };
+  });
 
   return (
     <div className="space-y-6">
@@ -279,6 +307,7 @@ export function ChartsTab() {
               lineBarData={monthlyRevenueData}
               dualAxisData={dualAxisData}
               areaLineData={monthlyRevenueData}
+              barAreaLineData={barAreaLineData}
             />
           </CardContent>
         </Card>
@@ -308,9 +337,9 @@ export function ChartsTab() {
           </CardHeader>
           <CardContent>
             <HeatmapTreemapCharts 
-              data={hierarchicalData}
               heatmapData1={heatmapData1}
               heatmapData2={heatmapData2}
+              calendarData={calendarData}
               hierarchicalData={hierarchicalData}
             />
           </CardContent>
@@ -327,6 +356,15 @@ export function ChartsTab() {
           </CardHeader>
           <CardContent>
             <TimelineFunnelCharts 
+              data={[
+                { task: "Project Planning", status: "completed", date: "2024-01-15", duration: 2, progress: 100, description: "Initial project scope and requirements gathering" },
+                { task: "UI/UX Design", status: "completed", date: "2024-02-01", duration: 3, progress: 100, description: "User interface and experience design phase" },
+                { task: "Frontend Development", status: "in-progress", date: "2024-02-15", duration: 6, progress: 75, description: "React components and user interface implementation" },
+                { task: "Backend Development", status: "in-progress", date: "2024-03-01", duration: 8, progress: 60, description: "API development and database design" },
+                { task: "Integration Testing", status: "pending", date: "2024-04-01", duration: 2, progress: 0, description: "End-to-end system integration testing" },
+                { task: "User Acceptance Testing", status: "pending", date: "2024-04-15", duration: 2, progress: 0, description: "Client testing and feedback collection" },
+                { task: "Deployment", status: "pending", date: "2024-05-01", duration: 1, progress: 0, description: "Production deployment and go-live" }
+              ]}
               conversionData={conversionFunnelData}
               salesData={salesFunnelData}
             />
