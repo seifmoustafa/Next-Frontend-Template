@@ -423,73 +423,53 @@ export function TypographyTab() {
               {[
                 {
                   value: "classic",
-                  name: t("settings.toast.designOptions.classic.name"),
-                  description: t(
-                    "settings.toast.designOptions.classic.description"
-                  ),
+                  name: "Classic",
+                  description: "Traditional design with subtle borders",
                 },
                 {
                   value: "minimal",
-                  name: t("settings.toast.designOptions.minimal.name"),
-                  description: t(
-                    "settings.toast.designOptions.minimal.description"
-                  ),
+                  name: "Minimal",
+                  description: "Clean and simple design",
                 },
                 {
                   value: "modern",
-                  name: t("settings.toast.designOptions.modern.name"),
-                  description: t(
-                    "settings.toast.designOptions.modern.description"
-                  ),
+                  name: "Modern",
+                  description: "Contemporary with blur effects",
                 },
                 {
                   value: "gradient",
-                  name: t("settings.toast.designOptions.gradient.name"),
-                  description: t(
-                    "settings.toast.designOptions.gradient.description"
-                  ),
+                  name: "Gradient",
+                  description: "Colorful gradient backgrounds",
                 },
                 {
                   value: "outlined",
-                  name: t("settings.toast.designOptions.outlined.name"),
-                  description: t(
-                    "settings.toast.designOptions.outlined.description"
-                  ),
+                  name: "Outlined",
+                  description: "Border focused transparent design",
                 },
                 {
                   value: "neon",
-                  name: t("settings.toast.designOptions.neon.name"),
-                  description: t(
-                    "settings.toast.designOptions.neon.description"
-                  ),
+                  name: "Neon",
+                  description: "Glowing cyberpunk style with pulsing effects",
                 },
                 {
                   value: "glassmorphism",
-                  name: t("settings.toast.designOptions.glassmorphism.name"),
-                  description: t(
-                    "settings.toast.designOptions.glassmorphism.description"
-                  ),
+                  name: "Glassmorphism",
+                  description: "Transparent glass effect with backdrop blur",
                 },
                 {
                   value: "neumorphism",
-                  name: t("settings.toast.designOptions.neumorphism.name"),
-                  description: t(
-                    "settings.toast.designOptions.neumorphism.description"
-                  ),
+                  name: "Neumorphism",
+                  description: "Soft 3D effect with inset shadows",
                 },
                 {
                   value: "aurora",
-                  name: t("settings.toast.designOptions.aurora.name"),
-                  description: t(
-                    "settings.toast.designOptions.aurora.description"
-                  ),
+                  name: "Aurora",
+                  description: "Magical gradient animations",
                 },
                 {
                   value: "cosmic",
-                  name: t("settings.toast.designOptions.cosmic.name"),
-                  description: t(
-                    "settings.toast.designOptions.cosmic.description"
-                  ),
+                  name: "Cosmic",
+                  description: "Space theme with stellar gradients",
                 },
               ].map((design) => (
                 <div
@@ -516,10 +496,10 @@ export function TypographyTab() {
                       <div className="w-full">
                         <ToastProvider>
                           <Toast variant="success" design={design.value as ToastStyle} className="pointer-events-none text-xs">
-                            <ToastContent
-                              variant="success"
-                              title={t("settings.toast.preview.successTitle")}
-                              description={t("settings.toast.preview.successDesc")}
+                            <ToastContent 
+                              variant="success" 
+                              title="Success" 
+                              description="Task completed"
                               showIcon={true}
                             />
                           </Toast>
@@ -530,10 +510,10 @@ export function TypographyTab() {
                       <div className="w-full">
                         <ToastProvider>
                           <Toast variant="destructive" design={design.value as ToastStyle} className="pointer-events-none text-xs">
-                            <ToastContent
-                              variant="destructive"
-                              title={t("settings.toast.preview.errorTitle")}
-                              description={t("settings.toast.preview.errorDesc")}
+                            <ToastContent 
+                              variant="destructive" 
+                              title="Error" 
+                              description="Something went wrong"
                               showIcon={true}
                             />
                           </Toast>
@@ -628,52 +608,44 @@ export function TypographyTab() {
               <Button
                 variant="default"
                 size="sm"
-                onClick={() =>
-                  success({
-                    title: t("settings.toast.testMessages.success.title"),
-                    description: t("settings.toast.testMessages.success.desc"),
-                    design: settings.toastStyle as any,
-                  })
-                }
+                onClick={() => success({
+                  title: "Success Toast",
+                  description: "This is a success toast with the selected design",
+                  design: settings.toastStyle as any,
+                })}
               >
                 {t("settings.toast.testButtons.success")}
               </Button>
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={() =>
-                  error({
-                    title: t("settings.toast.testMessages.error.title"),
-                    description: t("settings.toast.testMessages.error.desc"),
-                    design: settings.toastStyle as any,
-                  })
-                }
+                onClick={() => error({
+                  title: "Error Toast",
+                  description: "This is an error toast with the selected design",
+                  design: settings.toastStyle as any,
+                })}
               >
                 {t("settings.toast.testButtons.error")}
               </Button>
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() =>
-                  warning({
-                    title: t("settings.toast.testMessages.warning.title"),
-                    description: t("settings.toast.testMessages.warning.desc"),
-                    design: settings.toastStyle as any,
-                  })
-                }
+                onClick={() => warning({
+                  title: "Warning Toast",
+                  description: "This is a warning toast with the selected design",
+                  design: settings.toastStyle as any,
+                })}
               >
                 {t("settings.toast.testButtons.warning")}
               </Button>
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() =>
-                  info({
-                    title: t("settings.toast.testMessages.info.title"),
-                    description: t("settings.toast.testMessages.info.desc"),
-                    design: settings.toastStyle as any,
-                  })
-                }
+                onClick={() => info({
+                  title: "Info Toast",
+                  description: "This is an info toast with the selected design",
+                  design: settings.toastStyle as any,
+                })}
               >
                 {t("settings.toast.testButtons.info")}
               </Button>
