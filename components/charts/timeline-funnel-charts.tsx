@@ -29,14 +29,13 @@ const generateColor = (index: number) => {
 
 // Enhanced Generic Timeline Component
 const TimelineChart = ({ data, title, showProgress = true }: { data: any[]; title: string; showProgress?: boolean }) => {
-  const { t } = useI18n();
   // Return empty state if no data provided
   if (!data || data.length === 0) {
     return (
       <div className="space-y-4">
         <h4 className="text-sm font-medium">{title}</h4>
         <div className="text-center py-8 text-muted-foreground">
-          <p>{t("charts.timeline.noData")}</p>
+          <p>No timeline data available</p>
         </div>
       </div>
     );
@@ -76,22 +75,14 @@ const TimelineChart = ({ data, title, showProgress = true }: { data: any[]; titl
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <span className="text-sm font-medium text-foreground">
-                        {item.task || item.name || t("charts.timeline.defaultTask", { index: index + 1 })}
-                      </span>
+                      <span className="text-sm font-medium text-foreground">{item.task || item.name || `Task ${index + 1}`}</span>
                       <div className="text-xs text-muted-foreground mt-1">
-                        {item.date && (
-                          <span>{t("charts.timeline.date")}: {item.date}</span>
-                        )}
-                        {item.duration && (
-                          <span className="ml-3">
-                            {t("charts.timeline.duration")}: {item.duration} {t(`charts.timeline.${item.durationUnit || 'weeks'}`)}
-                          </span>
-                        )}
+                        {item.date && <span>Date: {item.date}</span>}
+                        {item.duration && <span className="ml-3">Duration: {item.duration} {item.durationUnit || 'weeks'}</span>}
                       </div>
                     </div>
                     <span className="text-xs px-2 py-1 rounded-full text-white" style={{ backgroundColor: statusColor }}>
-                      {t(`charts.timeline.statuses.${item.status}`)}
+                      {item.status}
                     </span>
                   </div>
                   
@@ -99,7 +90,7 @@ const TimelineChart = ({ data, title, showProgress = true }: { data: any[]; titl
                   {showProgress && (
                     <div className="mt-2">
                       <div className="flex justify-between text-xs text-muted-foreground mb-1">
-                        <span>{t("charts.timeline.progress")}</span>
+                        <span>Progress</span>
                         <span>{progress}%</span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
@@ -130,20 +121,19 @@ const TimelineChart = ({ data, title, showProgress = true }: { data: any[]; titl
 };
 
 // Enhanced Generic Funnel Component
-const FunnelChart = ({ data, title, showConversion = true, showDropoff = false }: {
-  data: any[];
-  title: string;
+const FunnelChart = ({ data, title, showConversion = true, showDropoff = false }: { 
+  data: any[]; 
+  title: string; 
   showConversion?: boolean;
   showDropoff?: boolean;
 }) => {
-  const { t } = useI18n();
   // Return empty state if no data provided
   if (!data || data.length === 0) {
     return (
       <div className="space-y-4">
         <h4 className="text-sm font-medium">{title}</h4>
         <div className="text-center py-8 text-muted-foreground">
-          <p>{t("charts.funnel.noData")}</p>
+          <p>No funnel data available</p>
         </div>
       </div>
     );
@@ -168,19 +158,17 @@ const FunnelChart = ({ data, title, showConversion = true, showDropoff = false }
           return (
             <div key={index} className="space-y-2">
               <div className="flex justify-between items-center text-sm">
-                <span className="font-medium">
-                  {item.stage || item.name || t("charts.funnel.defaultStage", { index: index + 1 })}
-                </span>
+                <span className="font-medium">{item.stage || item.name || `Stage ${index + 1}`}</span>
                 <div className="text-right">
                   <div className="font-bold">{value.toLocaleString()}</div>
                   {showConversion && (
                     <div className="text-xs text-muted-foreground">
-                      {t("charts.funnel.conversion")}: {conversionRate}%
+                      Conversion: {conversionRate}%
                     </div>
                   )}
                   {showDropoff && index > 0 && (
                     <div className="text-xs text-red-500">
-                      {t("charts.funnel.dropoff")}: {dropoffCount.toLocaleString()} ({dropoffRate}%)
+                      Dropoff: {dropoffCount.toLocaleString()} ({dropoffRate}%)
                     </div>
                   )}
                 </div>
@@ -225,14 +213,14 @@ const FunnelChart = ({ data, title, showConversion = true, showDropoff = false }
       <div className="mt-4 p-3 bg-muted rounded-lg">
         <div className="grid grid-cols-2 gap-4 text-xs">
           <div>
-            <span className="text-muted-foreground">{t("charts.funnel.totalConversion")}</span>
+            <span className="text-muted-foreground">Total Conversion:</span>
             <div className="font-medium">
               {data.length > 0 && maxValue > 0 ? 
                 ((Number(data[data.length - 1]?.value) || 0) / maxValue * 100).toFixed(1) : '0.0'}%
             </div>
           </div>
           <div>
-            <span className="text-muted-foreground">{t("charts.funnel.totalVolume")}</span>
+            <span className="text-muted-foreground">Total Volume:</span>
             <div className="font-medium">{maxValue.toLocaleString()}</div>
           </div>
         </div>
@@ -288,9 +276,9 @@ export function TimelineFunnelCharts({
             <CardDescription>{t("charts.funnel.advanced.description")}</CardDescription>
           </CardHeader>
           <CardContent>
-            <FunnelChart
-              data={salesData.length > 0 ? salesData : salesFunnelData}
-              title={t("charts.funnel.advanced.salesTitle")}
+            <FunnelChart 
+              data={salesData.length > 0 ? salesData : salesFunnelData} 
+              title="Advanced Sales Funnel"
               showConversion={true}
               showDropoff={true}
             />

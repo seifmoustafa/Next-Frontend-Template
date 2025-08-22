@@ -149,130 +149,11 @@ export const ar = {
     marketShare: "حصة السوق",
     conversionRates: "معدلات التحويل",
     trafficSources: "مصادر الزيارات",
-
+    
     // Chart descriptions (removed duplicates)
     // lineDesc, areaDesc, etc. already defined above
     users: "المستخدمون",
     revenue: "الإيرادات",
-
-    radarSubjects: {
-      performance: "الأداء",
-      quality: "الجودة",
-      efficiency: "الكفاءة",
-      reliability: "الموثوقية",
-      innovation: "الابتكار",
-      support: "الدعم",
-      security: "الأمان",
-      scalability: "قابلية التوسع",
-    },
-
-    heatmap: {
-      weekDayActivity: "الأسبوع {week}، {day}: مستوى النشاط",
-      monthDaySales: "{month} {day}: المبيعات",
-      contributions: "{date}: {count} مساهمات",
-    },
-
-    conversionFunnel: {
-      websiteVisitors: {
-        stage: "زوار الموقع",
-        desc: "إجمالي الزوار الفريدين للموقع",
-      },
-      productViews: {
-        stage: "مشاهدات المنتج",
-        desc: "المستخدمون الذين شاهدوا منتجًا واحدًا على الأقل",
-      },
-      addToCart: {
-        stage: "إضافة إلى السلة",
-        desc: "المستخدمون الذين أضافوا عناصر إلى سلتهم",
-      },
-      checkoutStarted: {
-        stage: "بدء الدفع",
-        desc: "المستخدمون الذين بدأوا عملية الدفع",
-      },
-      paymentInfo: {
-        stage: "معلومات الدفع",
-        desc: "المستخدمون الذين أدخلوا معلومات الدفع",
-      },
-      purchaseCompleted: {
-        stage: "إكمال الشراء",
-        desc: "المشتريات المكتملة بنجاح",
-      },
-    },
-
-    salesFunnel: {
-      leadGeneration: {
-        stage: "توليد العملاء المحتملين",
-        desc: "العملاء المحتملون المؤهلون من التسويق",
-      },
-      initialContact: {
-        stage: "الاتصال الأولي",
-        desc: "العملاء المحتملون الذين تم الاتصال بهم من قبل فريق المبيعات",
-      },
-      needsAssessment: {
-        stage: "تقييم الاحتياجات",
-        desc: "العملاء المحتملون المؤهلون مع احتياجات محددة",
-      },
-      proposalSent: {
-        stage: "إرسال العرض",
-        desc: "العروض الرسمية المرسلة",
-      },
-      negotiation: {
-        stage: "التفاوض",
-        desc: "المفاوضات النشطة الجارية",
-      },
-      closedWon: {
-        stage: "صفقات ناجحة",
-        desc: "الصفقات التي تمت بنجاح",
-      },
-    },
-
-    timeline: {
-      noData: "لا توجد بيانات للجدول الزمني",
-      defaultTask: "مهمة {index}",
-      date: "التاريخ",
-      duration: "المدة",
-      weeks: "أسابيع",
-      progress: "التقدم",
-      statuses: {
-        completed: "مكتمل",
-        "in-progress": "جارٍ",
-        pending: "قيد الانتظار",
-        cancelled: "ملغى",
-        "on-hold": "معلق",
-      },
-      tasks: {
-        projectPlanning: "تخطيط المشروع",
-        uiuxDesign: "تصميم واجهة وتجربة المستخدم",
-        frontendDevelopment: "تطوير الواجهة الأمامية",
-        backendDevelopment: "تطوير الخلفية",
-        integrationTesting: "اختبار التكامل",
-        userAcceptance: "اختبار قبول المستخدم",
-        deployment: "النشر",
-      },
-      descriptions: {
-        projectPlanning: "تحديد نطاق المشروع وجمع المتطلبات",
-        uiuxDesign: "مرحلة تصميم واجهة وتجربة المستخدم",
-        frontendDevelopment: "تنفيذ مكونات React وواجهة المستخدم",
-        backendDevelopment: "تطوير واجهات برمجة التطبيقات وتصميم قاعدة البيانات",
-        integrationTesting: "اختبار تكامل النظام من البداية للنهاية",
-        userAcceptance: "اختبار العميل وجمع الملاحظات",
-        deployment: "نشر الإنتاج وتشغيل النظام",
-      },
-    },
-
-    funnel: {
-      noData: "لا توجد بيانات للقمع",
-      defaultStage: "المرحلة {index}",
-      conversion: "التحويل",
-      dropoff: "التسرب",
-      totalConversion: "إجمالي التحويل:",
-      totalVolume: "إجمالي الحجم:",
-      advanced: {
-        title: "قمع متقدم",
-        description: "قمع مبيعات مفصل مع مقاييس التحويل",
-        salesTitle: "قمع المبيعات المتقدم",
-      },
-    },
     
     // Chart tabs
     tabs: {
@@ -430,61 +311,6 @@ export const ar = {
     oct: "أكتوبر",
     nov: "نوفمبر",
     dec: "ديسمبر",
-  },
-
-  daysShort: {
-    sun: "ح",
-    mon: "ن",
-    tue: "ث",
-    wed: "ر",
-    thu: "خ",
-    fri: "ج",
-    sat: "س",
-  },
-
-  daysFull: {
-    mon: "الاثنين",
-    tue: "الثلاثاء",
-    wed: "الأربعاء",
-    thu: "الخميس",
-    fri: "الجمعة",
-    sat: "السبت",
-    sun: "الأحد",
-  },
-
-  products: {
-    productA: "المنتج أ",
-    productB: "المنتج ب",
-    productC: "المنتج ج",
-    productD: "المنتج د",
-    productE: "المنتج هـ",
-    productF: "المنتج و",
-    productG: "المنتج ز",
-    productH: "المنتج ح",
-  },
-
-  campaigns: {
-    campaignA: "الحملة أ",
-    campaignB: "الحملة ب",
-    campaignC: "الحملة ج",
-    campaignD: "الحملة د",
-    campaignE: "الحملة هـ",
-    campaignF: "الحملة و",
-  },
-
-  departments: {
-    technology: "التقنية",
-    marketing: "التسويق",
-    sales: "المبيعات",
-    support: "الدعم",
-    operations: "العمليات",
-    frontend: "الواجهة الأمامية",
-    backend: "الواجهة الخلفية",
-    devops: "ديف أوبس",
-    digital: "رقمي",
-    content: "المحتوى",
-    enterprise: "المؤسسات",
-    smb: "الشركات الصغيرة والمتوسطة",
   },
 
   // Users
@@ -886,50 +712,6 @@ export const ar = {
         },
       },
     },
-    toast: {
-      title: "إشعارات التوست",
-      description: "خصص مظهر وسلوك التوست",
-      designLabel: "التصميم",
-      designOptions: {
-        classic: { name: "كلاسيكي", description: "تصميم تقليدي بحواف خفيفة" },
-        minimal: { name: "بسيط", description: "تصميم نظيف وبسيط" },
-        modern: { name: "حديث", description: "معاصر مع تأثيرات ضبابية" },
-        gradient: { name: "متدرج", description: "خلفيات متدرجة ملونة" },
-        outlined: { name: "محاط", description: "تصميم شفاف يركز على الحدود" },
-        neon: { name: "نيون", description: "نمط سايبربانك متوهج" },
-        glassmorphism: { name: "زجاجي", description: "تأثير زجاجي شفاف مع ضبابية" },
-        neumorphism: { name: "نيومورفيزم", description: "تأثير ثلاثي الأبعاد ناعم" },
-        aurora: { name: "شفق", description: "تدرجات متحركة سحرية" },
-        cosmic: { name: "كوني", description: "سمة فضائية مع تدرجات نجمية" },
-      },
-      preview: {
-        successTitle: "نجاح",
-        successDesc: "تم إكمال المهمة",
-        errorTitle: "خطأ",
-        errorDesc: "حدث خطأ ما",
-      },
-      durationLabel: "المدة",
-      durationOptions: {
-        quick: { name: "سريع", description: "يظهر لمدة ثانية واحدة" },
-        normal: { name: "عادي", description: "يظهر لمدة 3 ثوان" },
-        long: { name: "طويل", description: "يظهر لمدة 5 ثوان" },
-        extended: { name: "ممتد", description: "يظهر لمدة 10 ثوان" },
-      },
-      testLabel: "اختبار التوست",
-      testButtons: {
-        success: "نجاح",
-        error: "خطأ",
-        warning: "تحذير",
-        info: "معلومة",
-      },
-      testHint: "اضغط على الأزرار لمعاينة التصميم المختار",
-      testMessages: {
-        success: { title: "توست النجاح", desc: "هذا توست نجاح مع التصميم المختار" },
-        error: { title: "توست الخطأ", desc: "هذا توست خطأ مع التصميم المختار" },
-        warning: { title: "توست التحذير", desc: "هذا توست تحذير مع التصميم المختار" },
-        info: { title: "توست المعلومات", desc: "هذا توست معلومات مع التصميم المختار" },
-      },
-    },
     darkMode: "الوضع المظلم",
     lightDarkToggle: "تبديل بين الوضع الفاتح والمظلم",
     selectColorTheme: "اختر سمة الألوان",
@@ -1044,23 +826,6 @@ export const ar = {
       status: "الحالة",
       active: "نشط",
       inactive: "غير نشط",
-      pending: "قيد الانتظار",
-      role: "الدور",
-      roles: {
-        admin: "مسؤول",
-        user: "مستخدم",
-        editor: "محرر",
-      },
-      data: {
-        john: "جون دو",
-        jane: "جين سميث",
-        bob: "بوب جونسون",
-      },
-      emails: {
-        john: "john@example.com",
-        jane: "jane@example.com",
-        bob: "bob@example.com",
-      },
     },
 
     layoutTemplate: {
@@ -1326,16 +1091,6 @@ export const ar = {
         card: { name: "بطاقة", description: "تصميم نظيف على شكل بطاقة" },
         overlay: { name: "تراكب", description: "تراكب كبير مع خلفية" },
       },
-      testButton: "اختبار {{style}}",
-      testInstructions:
-        'انقر أزرار "اختبار" لمعاينة كل نمط حوار مع محتوى تجريبي',
-      previewTitle: "معاينة نمط حوار {{style}}",
-      previewDescription: "هذه معاينة لنمط حوار {{style}}.",
-      sampleContentTitle: "محتوى تجريبي",
-      sampleContentDescription:
-        "يعرض هذا الحوار مظهر وسلوك نمط {{style}}. لاحظ الأسلوب والتنسيق والتأثيرات المختلفة.",
-      closePreview: "إغلاق المعاينة",
-      applyStyle: "تطبيق هذا النمط",
     },
     datePickerStyle: {
       title: "نمط منتقي التاريخ",
@@ -1353,9 +1108,6 @@ export const ar = {
         minimal: { name: "بسيط", description: "حد سفلي فقط، نظيف وبسيط" },
         elegant: { name: "أنيق", description: "تدرج متطور مع خط مميز" },
       },
-    },
-    calendar: {
-      sampleLabel: "{{month}} {{year}}",
     },
     calendarStyle: {
       title: "نمط التقويم",
