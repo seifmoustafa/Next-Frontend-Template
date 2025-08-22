@@ -18,6 +18,7 @@ import {
 
 export function ChartsTab() {
   const { t } = useI18n();
+  const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
   // Comprehensive sample data for all chart types
   const monthlyRevenueData = [
@@ -47,31 +48,31 @@ export function ChartsTab() {
   ];
 
   const marketShareData = [
-    { name: t("devices.desktop") || "Desktop", value: 400, fill: "#8884d8" },
-    { name: t("devices.mobile") || "Mobile", value: 300, fill: "#82ca9d" },
-    { name: t("devices.tablet") || "Tablet", value: 300, fill: "#ffc658" },
-    { name: t("devices.smarttv") || "Smart TV", value: 200, fill: "#ff7300" },
-    { name: t("devices.other") || "Other", value: 100, fill: "#8dd1e1" },
+    { name: t("settings.devices.desktop"), value: 400, fill: "#8884d8" },
+    { name: t("settings.devices.mobile"), value: 300, fill: "#82ca9d" },
+    { name: t("settings.devices.tablet"), value: 300, fill: "#ffc658" },
+    { name: t("settings.devices.smarttv"), value: 200, fill: "#ff7300" },
+    { name: t("settings.devices.other"), value: 100, fill: "#8dd1e1" },
   ];
 
   const scatterData = [
-    { x: 100, y: 200, z: 20, name: t("products.productA") || "Product A" },
-    { x: 120, y: 100, z: 15, name: t("products.productB") || "Product B" },
-    { x: 170, y: 300, z: 25, name: t("products.productC") || "Product C" },
-    { x: 140, y: 250, z: 18, name: t("products.productD") || "Product D" },
-    { x: 150, y: 400, z: 30, name: t("products.productE") || "Product E" },
-    { x: 110, y: 280, z: 22, name: t("products.productF") || "Product F" },
-    { x: 180, y: 350, z: 28, name: t("products.productG") || "Product G" },
-    { x: 130, y: 180, z: 16, name: t("products.productH") || "Product H" },
+    { x: 100, y: 200, z: 20, name: t("products.productA") },
+    { x: 120, y: 100, z: 15, name: t("products.productB") },
+    { x: 170, y: 300, z: 25, name: t("products.productC") },
+    { x: 140, y: 250, z: 18, name: t("products.productD") },
+    { x: 150, y: 400, z: 30, name: t("products.productE") },
+    { x: 110, y: 280, z: 22, name: t("products.productF") },
+    { x: 180, y: 350, z: 28, name: t("products.productG") },
+    { x: 130, y: 180, z: 16, name: t("products.productH") },
   ];
 
   const bubbleData = [
-    { x: 100, y: 200, z: 200, name: t("campaigns.campaignA") || "Campaign A" },
-    { x: 120, y: 100, z: 260, name: t("campaigns.campaignB") || "Campaign B" },
-    { x: 170, y: 300, z: 400, name: t("campaigns.campaignC") || "Campaign C" },
-    { x: 140, y: 250, z: 280, name: t("campaigns.campaignD") || "Campaign D" },
-    { x: 150, y: 400, z: 500, name: t("campaigns.campaignE") || "Campaign E" },
-    { x: 110, y: 280, z: 200, name: t("campaigns.campaignF") || "Campaign F" },
+    { x: 100, y: 200, z: 200, name: t("campaigns.campaignA") },
+    { x: 120, y: 100, z: 260, name: t("campaigns.campaignB") },
+    { x: 170, y: 300, z: 400, name: t("campaigns.campaignC") },
+    { x: 140, y: 250, z: 280, name: t("campaigns.campaignD") },
+    { x: 150, y: 400, z: 500, name: t("campaigns.campaignE") },
+    { x: 110, y: 280, z: 200, name: t("campaigns.campaignF") },
   ];
 
   const dualAxisData = [
@@ -84,69 +85,135 @@ export function ChartsTab() {
   ];
 
   const performanceData = [
-    { subject: "Performance", teamA: 120, teamB: 110, teamC: 95, teamD: 105, fullMark: 150 },
-    { subject: "Quality", teamA: 98, teamB: 130, teamC: 115, teamD: 125, fullMark: 150 },
-    { subject: "Efficiency", teamA: 86, teamB: 130, teamC: 140, teamD: 120, fullMark: 150 },
-    { subject: "Reliability", teamA: 99, teamB: 100, teamC: 110, teamD: 95, fullMark: 150 },
-    { subject: "Innovation", teamA: 85, teamB: 90, teamC: 75, teamD: 100, fullMark: 150 },
-    { subject: "Support", teamA: 65, teamB: 85, teamC: 90, teamD: 80, fullMark: 150 },
-    { subject: "Security", teamA: 110, teamB: 95, teamC: 105, teamD: 115, fullMark: 150 },
-    { subject: "Scalability", teamA: 75, teamB: 120, teamC: 100, teamD: 90, fullMark: 150 },
+    { subject: t("charts.radarSubjects.performance"), teamA: 120, teamB: 110, teamC: 95, teamD: 105, fullMark: 150 },
+    { subject: t("charts.radarSubjects.quality"), teamA: 98, teamB: 130, teamC: 115, teamD: 125, fullMark: 150 },
+    { subject: t("charts.radarSubjects.efficiency"), teamA: 86, teamB: 130, teamC: 140, teamD: 120, fullMark: 150 },
+    { subject: t("charts.radarSubjects.reliability"), teamA: 99, teamB: 100, teamC: 110, teamD: 95, fullMark: 150 },
+    { subject: t("charts.radarSubjects.innovation"), teamA: 85, teamB: 90, teamC: 75, teamD: 100, fullMark: 150 },
+    { subject: t("charts.radarSubjects.support"), teamA: 65, teamB: 85, teamC: 90, teamD: 80, fullMark: 150 },
+    { subject: t("charts.radarSubjects.security"), teamA: 110, teamB: 95, teamC: 105, teamD: 115, fullMark: 150 },
+    { subject: t("charts.radarSubjects.scalability"), teamA: 75, teamB: 120, teamC: 100, teamD: 90, fullMark: 150 },
   ];
 
   // Enhanced heatmap data with better examples
-  const heatmapData1 = Array.from({ length: 52 }, (_, week) => 
+  const heatmapData1 = Array.from({ length: 52 }, (_, week) =>
     Array.from({ length: 7 }, (_, day) => ({
       x: day,
       y: week,
       value: Math.floor(Math.random() * 100) + 1,
-      label: `Week ${week + 1}, ${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][day]}: Activity Level`
+      label: t("charts.heatmap.weekDayActivity", {
+        week: week + 1,
+        day: t(`daysFull.${days[day]}`)
+      })
     }))
   ).flat();
 
-  const heatmapData2 = Array.from({ length: 12 }, (_, month) => 
+  const heatmapData2 = Array.from({ length: 12 }, (_, month) =>
     Array.from({ length: 31 }, (_, day) => ({
       x: day,
       y: month,
       value: Math.floor(Math.random() * 50) + 10,
-      label: `${t(`months.${['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'][month]}`)} ${day + 1}: Sales`
+      label: t("charts.heatmap.monthDaySales", {
+        month: t(`months.${['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'][month]}`),
+        day: day + 1
+      })
     }))
   ).flat();
 
   const hierarchicalData = [
-    { name: t("departments.technology") || "Technology", size: 400, children: [
-      { name: "Frontend", size: 200 },
-      { name: "Backend", size: 150 },
-      { name: "DevOps", size: 50 }
-    ]},
-    { name: t("departments.marketing") || "Marketing", size: 300, children: [
-      { name: "Digital", size: 180 },
-      { name: "Content", size: 120 }
-    ]},
-    { name: t("departments.sales") || "Sales", size: 300, children: [
-      { name: "Enterprise", size: 200 },
-      { name: "SMB", size: 100 }
-    ]},
-    { name: t("departments.support") || "Support", size: 200 },
-    { name: t("departments.operations") || "Operations", size: 150 },
+    {
+      name: t("departments.technology"),
+      size: 400,
+      children: [
+        { name: t("departments.frontend"), size: 200 },
+        { name: t("departments.backend"), size: 150 },
+        { name: t("departments.devops"), size: 50 }
+      ]
+    },
+    {
+      name: t("departments.marketing"),
+      size: 300,
+      children: [
+        { name: t("departments.digital"), size: 180 },
+        { name: t("departments.content"), size: 120 }
+      ]
+    },
+    {
+      name: t("departments.sales"),
+      size: 300,
+      children: [
+        { name: t("departments.enterprise"), size: 200 },
+        { name: t("departments.smb"), size: 100 }
+      ]
+    },
+    { name: t("departments.support"), size: 200 },
+    { name: t("departments.operations"), size: 150 },
   ];
 
   const conversionFunnelData = [
-    { stage: "Website Visitors", value: 10000, description: "Total unique visitors to the website" },
-    { stage: "Product Views", value: 8000, description: "Users who viewed at least one product" },
-    { stage: "Add to Cart", value: 6000, description: "Users who added items to their cart" },
-    { stage: "Checkout Started", value: 4000, description: "Users who initiated the checkout process" },
-    { stage: "Payment Info", value: 3200, description: "Users who entered payment information" },
-    { stage: "Purchase Completed", value: 2000, description: "Successfully completed purchases" },
+    {
+      stage: t("charts.conversionFunnel.websiteVisitors.stage"),
+      value: 10000,
+      description: t("charts.conversionFunnel.websiteVisitors.desc"),
+    },
+    {
+      stage: t("charts.conversionFunnel.productViews.stage"),
+      value: 8000,
+      description: t("charts.conversionFunnel.productViews.desc"),
+    },
+    {
+      stage: t("charts.conversionFunnel.addToCart.stage"),
+      value: 6000,
+      description: t("charts.conversionFunnel.addToCart.desc"),
+    },
+    {
+      stage: t("charts.conversionFunnel.checkoutStarted.stage"),
+      value: 4000,
+      description: t("charts.conversionFunnel.checkoutStarted.desc"),
+    },
+    {
+      stage: t("charts.conversionFunnel.paymentInfo.stage"),
+      value: 3200,
+      description: t("charts.conversionFunnel.paymentInfo.desc"),
+    },
+    {
+      stage: t("charts.conversionFunnel.purchaseCompleted.stage"),
+      value: 2000,
+      description: t("charts.conversionFunnel.purchaseCompleted.desc"),
+    },
   ];
 
   const salesFunnelData = [
-    { stage: "Lead Generation", value: 5000, description: "Marketing qualified leads" },
-    { stage: "Initial Contact", value: 3500, description: "Leads contacted by sales team" },
-    { stage: "Needs Assessment", value: 2500, description: "Qualified prospects with identified needs" },
-    { stage: "Proposal Sent", value: 1500, description: "Formal proposals submitted" },
-    { stage: "Negotiation", value: 1200, description: "Active negotiations in progress" },
-    { stage: "Closed Won", value: 800, description: "Successfully closed deals" },
+    {
+      stage: t("charts.salesFunnel.leadGeneration.stage"),
+      value: 5000,
+      description: t("charts.salesFunnel.leadGeneration.desc"),
+    },
+    {
+      stage: t("charts.salesFunnel.initialContact.stage"),
+      value: 3500,
+      description: t("charts.salesFunnel.initialContact.desc"),
+    },
+    {
+      stage: t("charts.salesFunnel.needsAssessment.stage"),
+      value: 2500,
+      description: t("charts.salesFunnel.needsAssessment.desc"),
+    },
+    {
+      stage: t("charts.salesFunnel.proposalSent.stage"),
+      value: 1500,
+      description: t("charts.salesFunnel.proposalSent.desc"),
+    },
+    {
+      stage: t("charts.salesFunnel.negotiation.stage"),
+      value: 1200,
+      description: t("charts.salesFunnel.negotiation.desc"),
+    },
+    {
+      stage: t("charts.salesFunnel.closedWon.stage"),
+      value: 800,
+      description: t("charts.salesFunnel.closedWon.desc"),
+    },
   ];
 
   const profitLossData = [
@@ -178,11 +245,15 @@ export function ChartsTab() {
   const calendarData = Array.from({ length: 365 }, (_, dayIndex) => {
     const date = new Date();
     date.setDate(date.getDate() - (365 - dayIndex));
+    const count = Math.floor(Math.random() * 20);
     return {
-      date: date.toISOString().split('T')[0],
+      date: date.toISOString().split("T")[0],
       value: Math.floor(Math.random() * 5), // 0-4 activity levels
-      count: Math.floor(Math.random() * 20),
-      label: `${date.toLocaleDateString()}: ${Math.floor(Math.random() * 20)} contributions`
+      count,
+      label: t("charts.heatmap.contributions", {
+        date: date.toLocaleDateString(),
+        count,
+      }),
     };
   });
 
@@ -355,15 +426,72 @@ export function ChartsTab() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <TimelineFunnelCharts 
+            <TimelineFunnelCharts
               data={[
-                { task: "Project Planning", status: "completed", date: "2024-01-15", duration: 2, progress: 100, description: "Initial project scope and requirements gathering" },
-                { task: "UI/UX Design", status: "completed", date: "2024-02-01", duration: 3, progress: 100, description: "User interface and experience design phase" },
-                { task: "Frontend Development", status: "in-progress", date: "2024-02-15", duration: 6, progress: 75, description: "React components and user interface implementation" },
-                { task: "Backend Development", status: "in-progress", date: "2024-03-01", duration: 8, progress: 60, description: "API development and database design" },
-                { task: "Integration Testing", status: "pending", date: "2024-04-01", duration: 2, progress: 0, description: "End-to-end system integration testing" },
-                { task: "User Acceptance Testing", status: "pending", date: "2024-04-15", duration: 2, progress: 0, description: "Client testing and feedback collection" },
-                { task: "Deployment", status: "pending", date: "2024-05-01", duration: 1, progress: 0, description: "Production deployment and go-live" }
+                {
+                  task: t("charts.timeline.tasks.projectPlanning"),
+                  status: "completed",
+                  date: "2024-01-15",
+                  duration: 2,
+                  progress: 100,
+                  description: t("charts.timeline.descriptions.projectPlanning"),
+                },
+                {
+                  task: t("charts.timeline.tasks.uiuxDesign"),
+                  status: "completed",
+                  date: "2024-02-01",
+                  duration: 3,
+                  progress: 100,
+                  description: t("charts.timeline.descriptions.uiuxDesign"),
+                },
+                {
+                  task: t("charts.timeline.tasks.frontendDevelopment"),
+                  status: "in-progress",
+                  date: "2024-02-15",
+                  duration: 6,
+                  progress: 75,
+                  description: t(
+                    "charts.timeline.descriptions.frontendDevelopment"
+                  ),
+                },
+                {
+                  task: t("charts.timeline.tasks.backendDevelopment"),
+                  status: "in-progress",
+                  date: "2024-03-01",
+                  duration: 8,
+                  progress: 60,
+                  description: t(
+                    "charts.timeline.descriptions.backendDevelopment"
+                  ),
+                },
+                {
+                  task: t("charts.timeline.tasks.integrationTesting"),
+                  status: "pending",
+                  date: "2024-04-01",
+                  duration: 2,
+                  progress: 0,
+                  description: t(
+                    "charts.timeline.descriptions.integrationTesting"
+                  ),
+                },
+                {
+                  task: t("charts.timeline.tasks.userAcceptance"),
+                  status: "pending",
+                  date: "2024-04-15",
+                  duration: 2,
+                  progress: 0,
+                  description: t(
+                    "charts.timeline.descriptions.userAcceptance"
+                  ),
+                },
+                {
+                  task: t("charts.timeline.tasks.deployment"),
+                  status: "pending",
+                  date: "2024-05-01",
+                  duration: 1,
+                  progress: 0,
+                  description: t("charts.timeline.descriptions.deployment"),
+                },
               ]}
               conversionData={conversionFunnelData}
               salesData={salesFunnelData}

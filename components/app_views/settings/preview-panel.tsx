@@ -15,11 +15,26 @@ import { useI18n } from "@/providers/i18n-provider";
 export function PreviewPanel() {
   const { t } = useI18n();
 
-  const sampleTableData = [
-    { id: 1, name: "John Doe", email: "john@example.com", status: "active" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", status: "inactive" },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com", status: "active" },
-  ];
+    const sampleTableData = [
+      {
+        id: 1,
+        name: t("settings.sampleTable.data.john"),
+        email: t("settings.sampleTable.emails.john"),
+        status: "active",
+      },
+      {
+        id: 2,
+        name: t("settings.sampleTable.data.jane"),
+        email: t("settings.sampleTable.emails.jane"),
+        status: "inactive",
+      },
+      {
+        id: 3,
+        name: t("settings.sampleTable.data.bob"),
+        email: t("settings.sampleTable.emails.bob"),
+        status: "active",
+      },
+    ];
 
   const sampleTableColumns = [
     { key: "name" as const, label: t("settings.sampleTable.name"), sortable: true },
