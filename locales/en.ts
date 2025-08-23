@@ -211,6 +211,137 @@ export const en = {
     // lineDesc, areaDesc, etc. already defined above
     users: "Users",
     revenue: "Revenue",
+
+    radarSubjects: {
+      performance: "Performance",
+      quality: "Quality",
+      efficiency: "Efficiency",
+      reliability: "Reliability",
+      innovation: "Innovation",
+      support: "Support",
+      security: "Security",
+      scalability: "Scalability",
+    },
+
+    heatmap: {
+      weekDayActivity: "Week {week}, {day}: Activity Level",
+      monthDaySales: "{month} {day}: Sales",
+      contributions: "{date}: {count} contributions",
+      value: "Value: {value}",
+      rowCol: "Row {row}, Col {col}",
+      cell: "Cell {row}-{col}",
+      min: "Min: {value}",
+      max: "Max: {value}",
+      patternA: "Activity Pattern A",
+      patternB: "Activity Pattern B",
+      calendar: {
+        dayLabel: "Day {day}",
+        less: "Less",
+        more: "More",
+      },
+    },
+
+    conversionFunnel: {
+      websiteVisitors: {
+        stage: "Website Visitors",
+        desc: "Total unique visitors to the website",
+      },
+      productViews: {
+        stage: "Product Views",
+        desc: "Users who viewed at least one product",
+      },
+      addToCart: {
+        stage: "Add to Cart",
+        desc: "Users who added items to their cart",
+      },
+      checkoutStarted: {
+        stage: "Checkout Started",
+        desc: "Users who initiated the checkout process",
+      },
+      paymentInfo: {
+        stage: "Payment Info",
+        desc: "Users who entered payment information",
+      },
+      purchaseCompleted: {
+        stage: "Purchase Completed",
+        desc: "Successfully completed purchases",
+      },
+    },
+
+    salesFunnel: {
+      leadGeneration: {
+        stage: "Lead Generation",
+        desc: "Marketing qualified leads",
+      },
+      initialContact: {
+        stage: "Initial Contact",
+        desc: "Leads contacted by sales team",
+      },
+      needsAssessment: {
+        stage: "Needs Assessment",
+        desc: "Qualified prospects with identified needs",
+      },
+      proposalSent: {
+        stage: "Proposal Sent",
+        desc: "Formal proposals submitted",
+      },
+      negotiation: {
+        stage: "Negotiation",
+        desc: "Active negotiations in progress",
+      },
+      closedWon: {
+        stage: "Closed Won",
+        desc: "Successfully closed deals",
+      },
+    },
+
+    timeline: {
+      noData: "No timeline data available",
+      defaultTask: "Task {index}",
+      date: "Date",
+      duration: "Duration",
+      weeks: "weeks",
+      progress: "Progress",
+      statuses: {
+        completed: "Completed",
+        "in-progress": "In Progress",
+        pending: "Pending",
+        cancelled: "Cancelled",
+        "on-hold": "On Hold",
+      },
+      tasks: {
+        projectPlanning: "Project Planning",
+        uiuxDesign: "UI/UX Design",
+        frontendDevelopment: "Frontend Development",
+        backendDevelopment: "Backend Development",
+        integrationTesting: "Integration Testing",
+        userAcceptance: "User Acceptance Testing",
+        deployment: "Deployment",
+      },
+      descriptions: {
+        projectPlanning: "Initial project scope and requirements gathering",
+        uiuxDesign: "User interface and experience design phase",
+        frontendDevelopment: "React components and user interface implementation",
+        backendDevelopment: "API development and database design",
+        integrationTesting: "End-to-end system integration testing",
+        userAcceptance: "Client testing and feedback collection",
+        deployment: "Production deployment and go-live",
+      },
+    },
+
+    funnel: {
+      noData: "No funnel data available",
+      defaultStage: "Stage {index}",
+      conversion: "Conversion",
+      dropoff: "Dropoff",
+      totalConversion: "Total Conversion:",
+      totalVolume: "Total Volume:",
+      advanced: {
+        title: "Advanced Funnel",
+        description: "Detailed sales funnel with conversion metrics",
+        salesTitle: "Advanced Sales Funnel",
+      },
+    },
   },
 
   // Months
@@ -227,6 +358,61 @@ export const en = {
     oct: "Oct",
     nov: "Nov",
     dec: "Dec",
+  },
+
+  daysShort: {
+    sun: "S",
+    mon: "M",
+    tue: "T",
+    wed: "W",
+    thu: "T",
+    fri: "F",
+    sat: "S",
+  },
+
+  daysFull: {
+    mon: "Mon",
+    tue: "Tue",
+    wed: "Wed",
+    thu: "Thu",
+    fri: "Fri",
+    sat: "Sat",
+    sun: "Sun",
+  },
+
+  products: {
+    productA: "Product A",
+    productB: "Product B",
+    productC: "Product C",
+    productD: "Product D",
+    productE: "Product E",
+    productF: "Product F",
+    productG: "Product G",
+    productH: "Product H",
+  },
+
+  campaigns: {
+    campaignA: "Campaign A",
+    campaignB: "Campaign B",
+    campaignC: "Campaign C",
+    campaignD: "Campaign D",
+    campaignE: "Campaign E",
+    campaignF: "Campaign F",
+  },
+
+  departments: {
+    technology: "Technology",
+    marketing: "Marketing",
+    sales: "Sales",
+    support: "Support",
+    operations: "Operations",
+    frontend: "Frontend",
+    backend: "Backend",
+    devops: "DevOps",
+    digital: "Digital",
+    content: "Content",
+    enterprise: "Enterprise",
+    smb: "SMB",
   },
 
   // Users
@@ -557,6 +743,92 @@ export const en = {
         diamond: {
           title: "Diamond Prism",
           description: "Multi-colored prismatic design with rainbow gradients",
+        },
+      },
+    },
+    toast: {
+      title: "Toast Notifications",
+      description: "Customize toast appearance and behavior",
+      designLabel: "Design",
+      designOptions: {
+        classic: {
+          name: "Classic",
+          description: "Traditional design with subtle borders",
+        },
+        minimal: {
+          name: "Minimal",
+          description: "Clean and simple design",
+        },
+        modern: {
+          name: "Modern",
+          description: "Contemporary with blur effects",
+        },
+        gradient: {
+          name: "Gradient",
+          description: "Colorful gradient backgrounds",
+        },
+        outlined: {
+          name: "Outlined",
+          description: "Border focused transparent design",
+        },
+        neon: {
+          name: "Neon",
+          description: "Glowing cyberpunk style with pulsing effects",
+        },
+        glassmorphism: {
+          name: "Glassmorphism",
+          description: "Transparent glass effect with backdrop blur",
+        },
+        neumorphism: {
+          name: "Neumorphism",
+          description: "Soft 3D effect with inset shadows",
+        },
+        aurora: {
+          name: "Aurora",
+          description: "Magical gradient animations",
+        },
+        cosmic: {
+          name: "Cosmic",
+          description: "Space theme with stellar gradients",
+        },
+      },
+      preview: {
+        successTitle: "Success",
+        successDesc: "Task completed",
+        errorTitle: "Error",
+        errorDesc: "Something went wrong",
+      },
+      durationLabel: "Duration",
+      durationOptions: {
+        quick: { name: "Quick", description: "Shows for 1 second" },
+        normal: { name: "Normal", description: "Shows for 3 seconds" },
+        long: { name: "Long", description: "Shows for 5 seconds" },
+        extended: { name: "Extended", description: "Shows for 10 seconds" },
+      },
+      testLabel: "Test Toasts",
+      testButtons: {
+        success: "Success",
+        error: "Error",
+        warning: "Warning",
+        info: "Info",
+      },
+      testHint: "Click buttons to preview selected design",
+      testMessages: {
+        success: {
+          title: "Success Toast",
+          desc: "This is a success toast with the selected design",
+        },
+        error: {
+          title: "Error Toast",
+          desc: "This is an error toast with the selected design",
+        },
+        warning: {
+          title: "Warning Toast",
+          desc: "This is a warning toast with the selected design",
+        },
+        info: {
+          title: "Info Toast",
+          desc: "This is an info toast with the selected design",
         },
       },
     },
@@ -898,6 +1170,23 @@ export const en = {
       status: "Status",
       active: "Active",
       inactive: "Inactive",
+      pending: "Pending",
+      role: "Role",
+      roles: {
+        admin: "Admin",
+        user: "User",
+        editor: "Editor",
+      },
+      data: {
+        john: "John Doe",
+        jane: "Jane Smith",
+        bob: "Bob Johnson",
+      },
+      emails: {
+        john: "john@example.com",
+        jane: "jane@example.com",
+        bob: "bob@example.com",
+      },
     },
 
     layoutTemplate: {
@@ -1173,6 +1462,16 @@ export const en = {
         card: { name: "Card", description: "Clean card-style design" },
         overlay: { name: "Overlay", description: "Large overlay with backdrop" },
       },
+      testButton: "Test {{style}}",
+      testInstructions:
+        'Click "Test" buttons to preview each modal style with sample content',
+      previewTitle: "{{style}} Modal Style Preview",
+      previewDescription: "This is a preview of the {{style}} modal style.",
+      sampleContentTitle: "Sample Content",
+      sampleContentDescription:
+        "This modal demonstrates the visual appearance and behavior of the {{style}} style. Notice the unique styling, positioning, and visual effects.",
+      closePreview: "Close Preview",
+      applyStyle: "Apply This Style",
     },
     datePickerStyle: {
       title: "Date Picker Style",
@@ -1208,6 +1507,9 @@ export const en = {
           description: "Sophisticated gradient with accent line",
         },
       },
+    },
+    calendar: {
+      sampleLabel: "{{month}} {{year}}",
     },
     calendarStyle: {
       title: "Calendar Style",
