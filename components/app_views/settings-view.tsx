@@ -23,6 +23,7 @@ import {
   PreviewPanel,
 } from "./settings";
 import { ChartsTab } from "./settings/charts-tab";
+import { CheckboxRadioTab } from "./settings/checkbox-radio-tab";
 
 export function SettingsView() {
   const { t } = useI18n();
@@ -149,7 +150,7 @@ export function SettingsView() {
               onValueChange={setActiveTab}
               className="space-y-6"
             >
-              <TabsList className="grid w-full grid-cols-6">
+              <TabsList className="grid w-full grid-cols-7">
                 <TabsTrigger value="appearance">
                   {t("settings.tabs.appearance")}
                 </TabsTrigger>
@@ -158,6 +159,9 @@ export function SettingsView() {
                 </TabsTrigger>
                 <TabsTrigger value="components">
                   {t("settings.tabs.components")}
+                </TabsTrigger>
+                <TabsTrigger value="checkboxRadio">
+                  {t("settings.tabs.checkboxRadio")}
                 </TabsTrigger>
                 <TabsTrigger value="charts">
                   {t("settings.tabs.charts")}
@@ -178,6 +182,9 @@ export function SettingsView() {
               </TabsContent>
               <TabsContent value="components">
                 <ComponentsTab />
+              </TabsContent>
+              <TabsContent value="checkboxRadio">
+                <CheckboxRadioTab />
               </TabsContent>
               <TabsContent value="charts">
                 <ChartsTab />

@@ -101,10 +101,7 @@ export function ChartsTab() {
       x: day,
       y: week,
       value: Math.floor(Math.random() * 100) + 1,
-      label: t("charts.heatmap.weekDayActivity", {
-        week: week + 1,
-        day: t(`daysFull.${days[day]}`)
-      })
+      label: `Week ${week + 1}, ${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][day]}: Activity Level`,
     }))
   ).flat();
 
@@ -113,10 +110,7 @@ export function ChartsTab() {
       x: day,
       y: month,
       value: Math.floor(Math.random() * 50) + 10,
-      label: t("charts.heatmap.monthDaySales", {
-        month: t(`months.${['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'][month]}`),
-        day: day + 1
-      })
+      label: `${t(`months.${['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'][month]}`)} ${day + 1}: Sales`
     }))
   ).flat();
 
@@ -250,10 +244,7 @@ export function ChartsTab() {
       date: date.toISOString().split("T")[0],
       value: Math.floor(Math.random() * 5), // 0-4 activity levels
       count,
-      label: t("charts.heatmap.contributions", {
-        date: date.toLocaleDateString(),
-        count,
-      }),
+      label: `${date.toLocaleDateString()}: ${count} contributions`
     };
   });
 
@@ -268,23 +259,23 @@ export function ChartsTab() {
 
       <Tabs defaultValue="line" className="w-full">
         <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-1">
-          <TabsTrigger value="line" className="text-xs">{t("settings.charts.tabs.line")}</TabsTrigger>
-          <TabsTrigger value="area" className="text-xs">{t("settings.charts.tabs.area")}</TabsTrigger>
-          <TabsTrigger value="bar" className="text-xs">{t("settings.charts.tabs.bar")}</TabsTrigger>
-          <TabsTrigger value="pie" className="text-xs">{t("settings.charts.tabs.pie")}</TabsTrigger>
-          <TabsTrigger value="scatter" className="text-xs">{t("settings.charts.tabs.scatter")}</TabsTrigger>
-          <TabsTrigger value="mixed" className="text-xs">{t("settings.charts.tabs.mixed")}</TabsTrigger>
-          <TabsTrigger value="radar" className="text-xs">{t("settings.charts.tabs.radar")}</TabsTrigger>
-          <TabsTrigger value="heatmap" className="text-xs">{t("settings.charts.tabs.heatmap")}</TabsTrigger>
-          <TabsTrigger value="timeline" className="text-xs">{t("settings.charts.tabs.timeline")}</TabsTrigger>
+          <TabsTrigger value="line" className="text-xs">{t("charts.tabs.line")}</TabsTrigger>
+          <TabsTrigger value="area" className="text-xs">{t("charts.tabs.area")}</TabsTrigger>
+          <TabsTrigger value="bar" className="text-xs">{t("charts.tabs.bar")}</TabsTrigger>
+          <TabsTrigger value="pie" className="text-xs">{t("charts.tabs.pie")}</TabsTrigger>
+          <TabsTrigger value="scatter" className="text-xs">{t("charts.tabs.scatter")}</TabsTrigger>
+          <TabsTrigger value="mixed" className="text-xs">{t("charts.tabs.mixed")}</TabsTrigger>
+          <TabsTrigger value="radar" className="text-xs">{t("charts.tabs.radar")}</TabsTrigger>
+          <TabsTrigger value="heatmap" className="text-xs">{t("charts.tabs.heatmap")}</TabsTrigger>
+          <TabsTrigger value="timeline" className="text-xs">{t("charts.tabs.timeline")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="line" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>{t("settings.charts.line.title")}</CardTitle>
+              <CardTitle>{t("charts.line.title")}</CardTitle>
               <CardDescription>
-                {t("settings.charts.line.description")}
+                {t("charts.line.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -301,9 +292,9 @@ export function ChartsTab() {
         <TabsContent value="area" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>{t("settings.charts.area.title")}</CardTitle>
+              <CardTitle>{t("charts.area.title")}</CardTitle>
               <CardDescription>
-                {t("settings.charts.area.description")}
+                {t("charts.area.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -318,9 +309,9 @@ export function ChartsTab() {
       <TabsContent value="bar" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.charts.bar.title")}</CardTitle>
+            <CardTitle>{t("charts.bar.title")}</CardTitle>
             <CardDescription>
-              {t("settings.charts.bar.description")}
+              {t("charts.bar.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -337,9 +328,9 @@ export function ChartsTab() {
       <TabsContent value="pie" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.charts.pie.title")}</CardTitle>
+            <CardTitle>{t("charts.pie.title")}</CardTitle>
             <CardDescription>
-              {t("settings.charts.pie.description")}
+              {t("charts.pie.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -351,9 +342,9 @@ export function ChartsTab() {
       <TabsContent value="scatter" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.charts.scatter.title")}</CardTitle>
+            <CardTitle>{t("charts.scatter.title")}</CardTitle>
             <CardDescription>
-              {t("settings.charts.scatter.description")}
+              {t("charts.scatter.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -368,9 +359,9 @@ export function ChartsTab() {
       <TabsContent value="mixed" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.charts.mixed.title")}</CardTitle>
+            <CardTitle>{t("charts.mixed.title")}</CardTitle>
             <CardDescription>
-              {t("settings.charts.mixed.description")}
+              {t("charts.mixed.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -387,9 +378,9 @@ export function ChartsTab() {
       <TabsContent value="radar" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.charts.radar.title")}</CardTitle>
+            <CardTitle>{t("charts.radar.title")}</CardTitle>
             <CardDescription>
-              {t("settings.charts.radar.description")}
+              {t("charts.radar.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -401,9 +392,9 @@ export function ChartsTab() {
       <TabsContent value="heatmap" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.charts.heatmap.title")}</CardTitle>
+            <CardTitle>{t("charts.heatmap.title")}</CardTitle>
             <CardDescription>
-              {t("settings.charts.heatmap.description")}
+              {t("charts.heatmap.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -420,9 +411,9 @@ export function ChartsTab() {
       <TabsContent value="timeline" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.charts.timeline.title")}</CardTitle>
+            <CardTitle>{t("charts.timeline.title")}</CardTitle>
             <CardDescription>
-              {t("settings.charts.timeline.description")}
+              {t("charts.timeline.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>

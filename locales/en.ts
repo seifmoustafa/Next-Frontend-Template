@@ -195,7 +195,6 @@ export const en = {
     treemapChart: "Treemap Chart",
     timelineChart: "Timeline Chart",
     funnelChart: "Funnel Chart",
-    salesFunnel: "Sales Funnel",
     
     // Sample data labels
     sampleData: "Sample Data",
@@ -380,16 +379,7 @@ export const en = {
     sun: "Sun",
   },
 
-  products: {
-    productA: "Product A",
-    productB: "Product B",
-    productC: "Product C",
-    productD: "Product D",
-    productE: "Product E",
-    productF: "Product F",
-    productG: "Product G",
-    productH: "Product H",
-  },
+
 
   campaigns: {
     campaignA: "Campaign A",
@@ -746,92 +736,7 @@ export const en = {
         },
       },
     },
-    toast: {
-      title: "Toast Notifications",
-      description: "Customize toast appearance and behavior",
-      designLabel: "Design",
-      designOptions: {
-        classic: {
-          name: "Classic",
-          description: "Traditional design with subtle borders",
-        },
-        minimal: {
-          name: "Minimal",
-          description: "Clean and simple design",
-        },
-        modern: {
-          name: "Modern",
-          description: "Contemporary with blur effects",
-        },
-        gradient: {
-          name: "Gradient",
-          description: "Colorful gradient backgrounds",
-        },
-        outlined: {
-          name: "Outlined",
-          description: "Border focused transparent design",
-        },
-        neon: {
-          name: "Neon",
-          description: "Glowing cyberpunk style with pulsing effects",
-        },
-        glassmorphism: {
-          name: "Glassmorphism",
-          description: "Transparent glass effect with backdrop blur",
-        },
-        neumorphism: {
-          name: "Neumorphism",
-          description: "Soft 3D effect with inset shadows",
-        },
-        aurora: {
-          name: "Aurora",
-          description: "Magical gradient animations",
-        },
-        cosmic: {
-          name: "Cosmic",
-          description: "Space theme with stellar gradients",
-        },
-      },
-      preview: {
-        successTitle: "Success",
-        successDesc: "Task completed",
-        errorTitle: "Error",
-        errorDesc: "Something went wrong",
-      },
-      durationLabel: "Duration",
-      durationOptions: {
-        quick: { name: "Quick", description: "Shows for 1 second" },
-        normal: { name: "Normal", description: "Shows for 3 seconds" },
-        long: { name: "Long", description: "Shows for 5 seconds" },
-        extended: { name: "Extended", description: "Shows for 10 seconds" },
-      },
-      testLabel: "Test Toasts",
-      testButtons: {
-        success: "Success",
-        error: "Error",
-        warning: "Warning",
-        info: "Info",
-      },
-      testHint: "Click buttons to preview selected design",
-      testMessages: {
-        success: {
-          title: "Success Toast",
-          desc: "This is a success toast with the selected design",
-        },
-        error: {
-          title: "Error Toast",
-          desc: "This is an error toast with the selected design",
-        },
-        warning: {
-          title: "Warning Toast",
-          desc: "This is a warning toast with the selected design",
-        },
-        info: {
-          title: "Info Toast",
-          desc: "This is an info toast with the selected design",
-        },
-      },
-    },
+   
     darkMode: "Dark Mode",
     lightDarkToggle: "Toggle between light and dark mode",
     selectColorTheme: "Select Color Theme",
@@ -892,6 +797,7 @@ export const en = {
       charts: "Charts",
       typography: "Typography",
       behavior: "Behavior",
+      checkboxRadio: "Checkbox & Radio",
     },
     devices: {
       desktop: "Desktop",
@@ -1192,8 +1098,9 @@ export const en = {
     layoutTemplate: {
       title: "Layout Template",
       description: "Choose your preferred layout style",
-      options: {
-        modern: { name: "Modern", description: "Clean and contemporary" },
+      designOptions: {
+        default: { name: "Default", description: "Standard layout" },
+        modern: { name: "Modern", description: "Clean contemporary design" },
         classic: { name: "Classic", description: "Traditional layout" },
         compact: { name: "Compact", description: "Space-efficient" },
         elegant: { name: "Elegant", description: "Sophisticated design" },
@@ -1603,56 +1510,7 @@ export const en = {
         fancy: { name: "Fancy", description: "Hover effects" },
       },
     },
-    toast: {
-      title: "Toast Notifications",
-      description:
-        "Customize the appearance and behavior of toast notifications",
-      designLabel: "Toast Design",
-      designOptions: {
-        minimal: { name: "Minimal", description: "Clean and simple" },
-        modern: { name: "Modern", description: "Blur and transparency" },
-        gradient: { name: "Gradient", description: "Colorful gradients" },
-        outlined: { name: "Outlined", description: "Bold borders" },
-        filled: { name: "Filled", description: "Solid backgrounds" },
-      },
-      preview: "Toast Preview",
-      showIconsLabel: "Show Icons in Toasts",
-      showIconsDesc: "Display icons in toast notifications",
-      durationLabel: "Toast Duration",
-      durationOptions: {
-        quick: { name: "1s", description: "Quick" },
-        normal: { name: "3s", description: "Normal" },
-        long: { name: "5s", description: "Long" },
-        extended: { name: "10s", description: "Extended" },
-      },
-      testLabel: "Test Toasts",
-      testButtons: {
-        success: "Success",
-        error: "Error",
-        warning: "Warning",
-        info: "Info",
-      },
-      messages: {
-        success: {
-          title: "Success!",
-          description: "Operation completed successfully.",
-        },
-        error: {
-          title: "Error!",
-          description: "Something went wrong.",
-        },
-        warning: {
-          title: "Warning!",
-          description: "Please check your input.",
-        },
-        info: {
-          title: "Info",
-          description: "Here's some information.",
-        },
-      },
-      testHint:
-        "Click buttons to test different toast styles with your current settings",
-    },
+   
     behavior: {
       title: "UI Behavior",
       description: "Control how the interface behaves",
@@ -1700,6 +1558,72 @@ export const en = {
         label: "Auto Save",
         description: "Automatically save settings changes",
       },
+    },
+    inputs: {
+      title: "Input Components",
+      description: "Customize the appearance of form inputs",
+      checkbox: {
+        title: "Checkbox Design",
+        description: "Choose the visual style for checkboxes",
+        designOptions: {
+          default: { name: "Default", description: "Standard checkbox design" },
+          modern: { name: "Modern", description: "Clean contemporary design" },
+          glass: { name: "Glass", description: "Translucent glassmorphism effect" },
+          neon: { name: "Neon", description: "Bright glowing borders" },
+          gradient: { name: "Gradient", description: "Colorful gradient backgrounds" },
+          neumorphism: { name: "Neumorphism", description: "Soft 3D raised appearance" },
+          cyberpunk: { name: "Cyberpunk", description: "Futuristic tech aesthetic" },
+          luxury: { name: "Luxury", description: "Premium gold accents" },
+          aurora: { name: "Aurora", description: "Northern lights inspired" },
+          cosmic: { name: "Cosmic", description: "Space-themed design" },
+          minimal: { name: "Minimal", description: "Ultra-clean simplicity" },
+          elegant: { name: "Elegant", description: "Sophisticated styling" },
+          organic: { name: "Organic", description: "Natural curved shapes" },
+          retro: { name: "Retro", description: "Vintage computing style" },
+          matrix: { name: "Matrix", description: "Digital rain effect" },
+          diamond: { name: "Diamond", description: "Crystalline faceted design" },
+          liquid: { name: "Liquid", description: "Fluid morphing shapes" },
+          crystal: { name: "Crystal", description: "Transparent crystalline" },
+          plasma: { name: "Plasma", description: "Electric energy effects" },
+          quantum: { name: "Quantum", description: "Particle physics inspired" },
+          holographic: { name: "Holographic", description: "Iridescent rainbow shifts" },
+          stellar: { name: "Stellar", description: "Star field background" },
+          vortex: { name: "Vortex", description: "Swirling energy patterns" },
+          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" }
+        }
+      },
+      radio: {
+        title: "Radio Button Design",
+        description: "Choose the visual style for radio buttons",
+        designOptions: {
+          default: { name: "Default", description: "Standard radio button design" },
+          modern: { name: "Modern", description: "Clean contemporary design" },
+          glass: { name: "Glass", description: "Translucent glassmorphism effect" },
+          neon: { name: "Neon", description: "Bright glowing borders" },
+          gradient: { name: "Gradient", description: "Colorful gradient backgrounds" },
+          neumorphism: { name: "Neumorphism", description: "Soft 3D raised appearance" },
+          cyberpunk: { name: "Cyberpunk", description: "Futuristic tech aesthetic" },
+          luxury: { name: "Luxury", description: "Premium gold accents" },
+          aurora: { name: "Aurora", description: "Northern lights inspired" },
+          cosmic: { name: "Cosmic", description: "Space-themed design" },
+          minimal: { name: "Minimal", description: "Ultra-clean simplicity" },
+          elegant: { name: "Elegant", description: "Sophisticated styling" },
+          organic: { name: "Organic", description: "Natural curved shapes" },
+          retro: { name: "Retro", description: "Vintage computing style" },
+          matrix: { name: "Matrix", description: "Digital rain effect" },
+          diamond: { name: "Diamond", description: "Crystalline faceted design" },
+          liquid: { name: "Liquid", description: "Fluid morphing shapes" },
+          crystal: { name: "Crystal", description: "Transparent crystalline" },
+          plasma: { name: "Plasma", description: "Electric energy effects" },
+          quantum: { name: "Quantum", description: "Particle physics inspired" },
+          holographic: { name: "Holographic", description: "Iridescent rainbow shifts" },
+          stellar: { name: "Stellar", description: "Star field background" },
+          vortex: { name: "Vortex", description: "Swirling energy patterns" },
+          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" }
+        }
+      },
+      preview: "Live Preview",
+      previewDescription: "See how your selected styles look in action"
     },
     preview: {
       title: "Live Preview",
@@ -1945,6 +1869,117 @@ export const en = {
 
   // Toast Messages
   toast: {
+    title: "Toast Notifications",
+    description: "Customize toast appearance and behavior",
+    designLabel: "Design",
+    designOptions: {
+      classic: {
+        name: "Classic",
+        description: "Traditional design with subtle borders",
+      },
+      minimal: {
+        name: "Minimal",
+        description: "Clean and simple design",
+      },
+      modern: {
+        name: "Modern",
+        description: "Contemporary with blur effects",
+      },
+      gradient: {
+        name: "Gradient",
+        description: "Colorful gradient backgrounds",
+      },
+      outlined: {
+        name: "Outlined",
+        description: "Border focused transparent design",
+      },
+      neon: {
+        name: "Neon",
+        description: "Glowing cyberpunk style with pulsing effects",
+      },
+      glassmorphism: {
+        name: "Glassmorphism",
+        description: "Transparent glass effect with backdrop blur",
+      },
+      neumorphism: {
+        name: "Neumorphism",
+        description: "Soft 3D effect with inset shadows",
+      },
+      aurora: {
+        name: "Aurora",
+        description: "Magical gradient animations",
+      },
+      cosmic: {
+        name: "Cosmic",
+        description: "Space theme with stellar gradients",
+      },
+ 
+      filled: { name: "Filled", description: "Solid backgrounds" },
+    },
+    preview: {
+      successTitle: "Success",
+      successDesc: "Task completed",
+      errorTitle: "Error",
+      errorDesc: "Something went wrong",
+    },
+    durationLabel: "Duration",
+    durationOptions: {
+      quick: { name: "Quick", description: "Shows for 1 second" },
+      normal: { name: "Normal", description: "Shows for 3 seconds" },
+      long: { name: "Long", description: "Shows for 5 seconds" },
+      extended: { name: "Extended", description: "Shows for 10 seconds" },
+    },
+    testLabel: "Test Toasts",
+    testButtons: {
+      success: "Success",
+      error: "Error",
+      warning: "Warning",
+      info: "Info",
+    },
+    testHint: "Click buttons to preview selected design",
+    testMessages: {
+      success: {
+        title: "Success Toast",
+        desc: "This is a success toast with the selected design",
+      },
+      error: {
+        title: "Error Toast",
+        desc: "This is an error toast with the selected design",
+      },
+      warning: {
+        title: "Warning Toast",
+        desc: "This is a warning toast with the selected design",
+      },
+      info: {
+        title: "Info Toast",
+        desc: "This is an info toast with the selected design",
+      },
+    },
+   
+    
+    showIconsLabel: "Show Icons in Toasts",
+    showIconsDesc: "Display icons in toast notifications",
+   
+    
+    messages: {
+      success: {
+        title: "Success!",
+        description: "Operation completed successfully.",
+      },
+      error: {
+        title: "Error!",
+        description: "Something went wrong.",
+      },
+      warning: {
+        title: "Warning!",
+        description: "Please check your input.",
+      },
+      info: {
+        title: "Info",
+        description: "Here's some information.",
+      },
+    },
+    
     created: "{itemType} Created",
     updated: "{itemType} Updated",
     deleted: "{itemType} Deleted",
@@ -2137,6 +2172,14 @@ export const en = {
     },
   },
   products: {
+    productA: "Product A",
+    productB: "Product B",
+    productC: "Product C",
+    productD: "Product D",
+    productE: "Product E",
+    productF: "Product F",
+    productG: "Product G",
+    productH: "Product H",
     title: "Products",
     itemType: "Product",
     searchPlaceholder: "Search products...",

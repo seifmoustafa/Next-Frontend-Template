@@ -97,7 +97,7 @@ export const ar = {
     title: "مكونات الرسوم البيانية",
     description: "مكونات رسوم بيانية تفاعلية مع بيانات نموذجية",
     lineCharts: "الرسوم الخطية",
-    areaCharts: "رسوم المساحة", 
+    areaCharts: "رسوم المساحة",
     barCharts: "الرسوم العمودية",
     pieDonutCharts: "الرسوم الدائرية والحلقية",
     scatterBubbleCharts: "رسوم التشتت والفقاعات",
@@ -114,7 +114,7 @@ export const ar = {
     radarDesc: "بيانات متعددة الأبعاد وتصور مؤشرات الأداء الرئيسية",
     heatmapDesc: "التعرف على الأنماط وتصور البيانات الهرمية",
     timelineDesc: "تتبع المشاريع وتصور عمليات التحويل",
-    
+
     // Chart types
     basicLine: "رسم خطي أساسي",
     multiSeries: "خط متعدد السلاسل",
@@ -138,8 +138,7 @@ export const ar = {
     treemapChart: "خريطة شجرية",
     timelineChart: "رسم زمني",
     funnelChart: "رسم قمع",
-    salesFunnel: "قمع المبيعات",
-    
+
     // Sample data labels
     sampleData: "بيانات نموذجية",
     monthlyRevenue: "الإيرادات الشهرية",
@@ -285,11 +284,11 @@ export const ar = {
         salesTitle: "قمع المبيعات المتقدم",
       },
     },
-    
+
     // Chart tabs
     tabs: {
       line: "خطي",
-      area: "مساحة", 
+      area: "مساحة",
       bar: "عمودي",
       pie: "دائري",
       scatter: "تشتت",
@@ -298,7 +297,7 @@ export const ar = {
       heatmap: "حراري",
       timeline: "زمني"
     },
-    
+
     // Chart sections
     line: {
       title: "الرسوم الخطية",
@@ -308,7 +307,7 @@ export const ar = {
         description: "رسم خطي بسيط يظهر بيانات المبيعات عبر الزمن",
       },
       multiSeries: {
-        title: "رسم خطي متعدد السلاسل", 
+        title: "رسم خطي متعدد السلاسل",
         description: "مقارنة سلاسل بيانات متعددة على نفس الرسم",
       },
       curved: {
@@ -380,22 +379,7 @@ export const ar = {
       title: "رسوم الرادار والمقياس",
       description: "بيانات متعددة الأبعاد وتصور مؤشرات الأداء الرئيسية",
     },
-    heatmap: {
-      title: "خرائط الحرارة والشجرة",
-      description: "التعرف على الأنماط وتصور البيانات الهرمية",
-      calendar: {
-        title: "خريطة حرارية تقويمية",
-        description: "أنماط النشاط عبر فترات زمنية",
-      },
-      basic: {
-        title: "خريطة حرارية أساسية",
-        description: "تصور كثافة قائم على الشبكة مع تخطيط الألوان",
-      },
-      intensity: {
-        title: "خريطة حرارية للكثافة",
-        description: "تصور كثافة البيانات بألوان متدرجة",
-      },
-    },
+   
     treemap: {
       title: "خرائط الشجرة",
       description: "تصور البيانات الهرمية بمستطيلات متداخلة",
@@ -408,24 +392,8 @@ export const ar = {
         description: "هيكل بيانات تنظيمي متعدد المستويات",
       },
     },
-    timeline: {
-      title: "رسوم الجدول الزمني والقمع",
-      description: "تتبع المشاريع وتصور عمليات التحويل",
-      basic: {
-        title: "جدول زمني للمشروع",
-        description: "تتبع معالم المشروع والتقدم عبر الزمن",
-      },
-      funnel: {
-        title: "قمع التحويل",
-        description: "تصور عملية التحويل خطوة بخطوة",
-      },
-    },
-    funnel: {
-      advanced: {
-        title: "رسم قمع متقدم",
-        description: "تصور عملية المبيعات المتقدمة",
-      },
-    },
+    
+    
   },
 
   // Months
@@ -464,16 +432,7 @@ export const ar = {
     sun: "الأحد",
   },
 
-  products: {
-    productA: "المنتج أ",
-    productB: "المنتج ب",
-    productC: "المنتج ج",
-    productD: "المنتج د",
-    productE: "المنتج هـ",
-    productF: "المنتج و",
-    productG: "المنتج ز",
-    productH: "المنتج ح",
-  },
+
 
   campaigns: {
     campaignA: "الحملة أ",
@@ -766,6 +725,13 @@ export const ar = {
 
   // Settings
   settings: {
+    devices:{
+      desktop: "Desktop",
+      mobile: "Mobile",
+      tablet: "Tablet",
+      smarttv: "Smart TV",
+      other: "Other"
+    },
     appearance: "المظهر",
     layout: "التخطيط",
     localization: "اللغة",
@@ -900,8 +866,33 @@ export const ar = {
     },
     toast: {
       title: "إشعارات التوست",
-      description: "خصص مظهر وسلوك التوست",
-      designLabel: "التصميم",
+      description: "خصص مظهر وسلوك إشعارات التوست",
+      designLabel: "تصميم التوست",
+
+      showIconsLabel: "عرض الأيقونات في التوست",
+      showIconsDesc: "إظهار الأيقونات في إشعارات التوست",
+      durationLabel: "مدة التوست",
+      durationOptions: {
+        quick: { name: "1ث", description: "سريعة" },
+        normal: { name: "3ث", description: "عادية" },
+        long: { name: "5ث", description: "طويلة" },
+        extended: { name: "10ث", description: "ممتدة" },
+      },
+      testLabel: "اختبار التوست",
+      testButtons: {
+        success: "نجاح",
+        error: "خطأ",
+        warning: "تحذير",
+        info: "معلومة",
+      },
+      messages: {
+        success: { title: "نجاح!", description: "تمت العملية بنجاح." },
+        error: { title: "خطأ!", description: "حدث خطأ ما." },
+        warning: { title: "تحذير!", description: "يرجى التحقق من الإدخال." },
+        info: { title: "معلومة", description: "إليك بعض المعلومات." },
+      },
+      testHint: "انقر الأزرار لاختبار أنماط التوست مع إعداداتك الحالية",
+
       designOptions: {
         classic: { name: "كلاسيكي", description: "تصميم تقليدي بحواف خفيفة" },
         minimal: { name: "بسيط", description: "تصميم نظيف وبسيط" },
@@ -913,6 +904,10 @@ export const ar = {
         neumorphism: { name: "نيومورفيزم", description: "تأثير ثلاثي الأبعاد ناعم" },
         aurora: { name: "شفق", description: "تدرجات متحركة سحرية" },
         cosmic: { name: "كوني", description: "سمة فضائية مع تدرجات نجمية" },
+        quick: { name: "سريع", description: "يظهر لمدة ثانية واحدة" },
+        normal: { name: "عادي", description: "يظهر لمدة 3 ثوان" },
+        long: { name: "طويل", description: "يظهر لمدة 5 ثوان" },
+        extended: { name: "ممتد", description: "يظهر لمدة 10 ثوان" },
       },
       preview: {
         successTitle: "نجاح",
@@ -920,21 +915,6 @@ export const ar = {
         errorTitle: "خطأ",
         errorDesc: "حدث خطأ ما",
       },
-      durationLabel: "المدة",
-      durationOptions: {
-        quick: { name: "سريع", description: "يظهر لمدة ثانية واحدة" },
-        normal: { name: "عادي", description: "يظهر لمدة 3 ثوان" },
-        long: { name: "طويل", description: "يظهر لمدة 5 ثوان" },
-        extended: { name: "ممتد", description: "يظهر لمدة 10 ثوان" },
-      },
-      testLabel: "اختبار التوست",
-      testButtons: {
-        success: "نجاح",
-        error: "خطأ",
-        warning: "تحذير",
-        info: "معلومة",
-      },
-      testHint: "اضغط على الأزرار لمعاينة التصميم المختار",
       testMessages: {
         success: { title: "توست النجاح", desc: "هذا توست نجاح مع التصميم المختار" },
         error: { title: "توست الخطأ", desc: "هذا توست خطأ مع التصميم المختار" },
@@ -987,7 +967,8 @@ export const ar = {
       components: "المكونات",
       typography: "الخطوط",
       behavior: "السلوك",
-      charts:"رسومات بيانية"
+      charts: "رسومات بيانية",
+      checkboxRadio: "كشوفات & راديو",
     },
     lightBackground: {
       title: "سمة الخلفية الفاتحة",
@@ -1440,42 +1421,73 @@ export const ar = {
         fancy: { name: "مميز", description: "تأثيرات عند التحويم" },
       },
     },
-    toast: {
-      title: "إشعارات التوست",
-      description: "خصص مظهر وسلوك إشعارات التوست",
-      designLabel: "تصميم التوست",
-      designOptions: {
-        minimal: { name: "بسيط", description: "نظيف وبسيط" },
-        modern: { name: "حديث", description: "ضبابية وشفافية" },
-        gradient: { name: "متدرج", description: "تدرجات لونية" },
-        outlined: { name: "مخطط", description: "حدود بارزة" },
-        filled: { name: "ممتلئ", description: "خلفيات صلبة" },
+    inputs: {
+      title: "مكونات الإدخال",
+      description: "تخصيص مظهر عناصر النماذج",
+      checkbox: {
+        title: "تصميم مربع الاختيار",
+        description: "اختر النمط البصري لمربعات الاختيار",
+        designOptions: {
+          default: { name: "افتراضي", description: "تصميم مربع اختيار قياسي" },
+          modern: { name: "عصري", description: "تصميم معاصر نظيف" },
+          glass: { name: "زجاجي", description: "تأثير شفاف زجاجي" },
+          neon: { name: "نيون", description: "حدود متوهجة مشرقة" },
+          gradient: { name: "متدرج", description: "خلفيات متدرجة ملونة" },
+          neumorphism: { name: "نيومورفيزم", description: "مظهر ثلاثي الأبعاد ناعم" },
+          cyberpunk: { name: "سايبربانك", description: "جمالية تقنية مستقبلية" },
+          luxury: { name: "فاخر", description: "لمسات ذهبية راقية" },
+          aurora: { name: "شفق", description: "مستوحى من الأضواء الشمالية" },
+          cosmic: { name: "كوني", description: "تصميم بموضوع الفضاء" },
+          minimal: { name: "بسيط", description: "بساطة فائقة النظافة" },
+          elegant: { name: "أنيق", description: "تصميم راقي ومتطور" },
+          organic: { name: "عضوي", description: "أشكال منحنية طبيعية" },
+          retro: { name: "ريترو", description: "نمط الحاسوب القديم" },
+          matrix: { name: "ماتريكس", description: "تأثير المطر الرقمي" },
+          diamond: { name: "ماسي", description: "تصميم بلوري متعدد الوجوه" },
+          liquid: { name: "سائل", description: "أشكال متحولة سائلة" },
+          crystal: { name: "كريستال", description: "بلوري شفاف" },
+          plasma: { name: "بلازما", description: "تأثيرات طاقة كهربائية" },
+          quantum: { name: "كمي", description: "مستوحى من فيزياء الجسيمات" },
+          holographic: { name: "هولوغرافي", description: "تحولات قوس قزح متلألئة" },
+          stellar: { name: "نجمي", description: "خلفية حقل النجوم" },
+          vortex: { name: "دوامة", description: "أنماط طاقة دوارة" },
+          phoenix: { name: "عنقاء", description: "موضوع النار والولادة الجديدة" }
+        }
       },
-      preview: "معاينة التوست",
-      showIconsLabel: "عرض الأيقونات في التوست",
-      showIconsDesc: "إظهار الأيقونات في إشعارات التوست",
-      durationLabel: "مدة التوست",
-      durationOptions: {
-        quick: { name: "1ث", description: "سريعة" },
-        normal: { name: "3ث", description: "عادية" },
-        long: { name: "5ث", description: "طويلة" },
-        extended: { name: "10ث", description: "ممتدة" },
+      radio: {
+        title: "تصميم أزرار الراديو",
+        description: "اختر النمط البصري لأزرار الراديو",
+        designOptions: {
+          default: { name: "افتراضي", description: "تصميم زر راديو قياسي" },
+          modern: { name: "عصري", description: "تصميم معاصر نظيف" },
+          glass: { name: "زجاجي", description: "تأثير شفاف زجاجي" },
+          neon: { name: "نيون", description: "حدود متوهجة مشرقة" },
+          gradient: { name: "متدرج", description: "خلفيات متدرجة ملونة" },
+          neumorphism: { name: "نيومورفيزم", description: "مظهر ثلاثي الأبعاد ناعم" },
+          cyberpunk: { name: "سايبربانك", description: "جمالية تقنية مستقبلية" },
+          luxury: { name: "فاخر", description: "لمسات ذهبية راقية" },
+          aurora: { name: "شفق", description: "مستوحى من الأضواء الشمالية" },
+          cosmic: { name: "كوني", description: "تصميم بموضوع الفضاء" },
+          minimal: { name: "بسيط", description: "بساطة فائقة النظافة" },
+          elegant: { name: "أنيق", description: "تصميم راقي ومتطور" },
+          organic: { name: "عضوي", description: "أشكال منحنية طبيعية" },
+          retro: { name: "ريترو", description: "نمط الحاسوب القديم" },
+          matrix: { name: "ماتريكس", description: "تأثير المطر الرقمي" },
+          diamond: { name: "ماسي", description: "تصميم بلوري متعدد الوجوه" },
+          liquid: { name: "سائل", description: "أشكال متحولة سائلة" },
+          crystal: { name: "كريستال", description: "بلوري شفاف" },
+          plasma: { name: "بلازما", description: "تأثيرات طاقة كهربائية" },
+          quantum: { name: "كمي", description: "مستوحى من فيزياء الجسيمات" },
+          holographic: { name: "هولوغرافي", description: "تحولات قوس قزح متلألئة" },
+          stellar: { name: "نجمي", description: "خلفية حقل النجوم" },
+          vortex: { name: "دوامة", description: "أنماط طاقة دوارة" },
+          phoenix: { name: "عنقاء", description: "موضوع النار والولادة الجديدة" }
+        }
       },
-      testLabel: "اختبار التوست",
-      testButtons: {
-        success: "نجاح",
-        error: "خطأ",
-        warning: "تحذير",
-        info: "معلومة",
-      },
-      messages: {
-        success: { title: "نجاح!", description: "تمت العملية بنجاح." },
-        error: { title: "خطأ!", description: "حدث خطأ ما." },
-        warning: { title: "تحذير!", description: "يرجى التحقق من الإدخال." },
-        info: { title: "معلومة", description: "إليك بعض المعلومات." },
-      },
-      testHint: "انقر الأزرار لاختبار أنماط التوست مع إعداداتك الحالية",
+      preview: "معاينة مباشرة",
+      previewDescription: "شاهد كيف تبدو الأنماط المحددة في العمل"
     },
+
     behavior: {
       title: "سلوك الواجهة",
       description: "تحكم في كيفية تصرف الواجهة",
@@ -1710,18 +1722,7 @@ export const ar = {
     deleting: "جاري الحذف...",
   },
 
-  // Toast Messages
-  toast: {
-    created: "تم إنشاء {itemType}",
-    updated: "تم تحديث {itemType}",
-    deleted: "تم حذف {itemType}",
-    createSuccess: "تم إنشاء {itemName} بنجاح.",
-    updateSuccess: "تم تحديث {itemName} بنجاح.",
-    deleteSuccess: "تم حذف {itemName} بنجاح.",
-    createError: "فشل في إنشاء {itemType}. يرجى المحاولة مرة أخرى.",
-    updateError: "فشل في تحديث {itemType}. يرجى المحاولة مرة أخرى.",
-    deleteError: "فشل في حذف {itemType}. يرجى المحاولة مرة أخرى.",
-  },
+
 
   // Table
   table: {
@@ -1880,6 +1881,14 @@ export const ar = {
   },
 
   products: {
+    productA: "المنتج أ",
+    productB: "المنتج ب",
+    productC: "المنتج ج",
+    productD: "المنتج د",
+    productE: "المنتج هـ",
+    productF: "المنتج و",
+    productG: "المنتج ز",
+    productH: "المنتج ح",
     title: "المنتجات",
     itemType: "منتج",
     searchPlaceholder: "البحث في المنتجات...",

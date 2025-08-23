@@ -130,6 +130,58 @@ export type SelectStyle =
   | "phoenix";
 export type SwitchStyle = "default" | "modern" | "ios" | "android" | "toggle" | "slider" | "neon" | "neumorphism" | "liquid" | "cyberpunk" | "glassmorphism" | "aurora" | "matrix" | "cosmic" | "retro";
 
+export type CheckboxStyle = 
+  | "default"
+  | "modern"
+  | "glass"
+  | "neon"
+  | "gradient"
+  | "neumorphism"
+  | "cyberpunk"
+  | "luxury"
+  | "aurora"
+  | "cosmic"
+  | "minimal"
+  | "elegant"
+  | "organic"
+  | "retro"
+  | "matrix"
+  | "diamond"
+  | "liquid"
+  | "crystal"
+  | "plasma"
+  | "quantum"
+  | "holographic"
+  | "stellar"
+  | "vortex"
+  | "phoenix";
+
+export type RadioStyle = 
+  | "default"
+  | "modern"
+  | "glass"
+  | "neon"
+  | "gradient"
+  | "neumorphism"
+  | "cyberpunk"
+  | "luxury"
+  | "aurora"
+  | "cosmic"
+  | "minimal"
+  | "elegant"
+  | "organic"
+  | "retro"
+  | "matrix"
+  | "diamond"
+  | "liquid"
+  | "crystal"
+  | "plasma"
+  | "quantum"
+  | "holographic"
+  | "stellar"
+  | "vortex"
+  | "phoenix";
+
 export type ToastStyle = 
   | "classic"
   | "neon"
@@ -206,6 +258,12 @@ interface SettingsContextType {
 
   switchStyle: SwitchStyle;
   setSwitchStyle: (style: SwitchStyle) => void;
+
+  checkboxStyle: CheckboxStyle;
+  setCheckboxStyle: (style: CheckboxStyle) => void;
+
+  radioStyle: RadioStyle;
+  setRadioStyle: (style: RadioStyle) => void;
 
   // Toast settings
   toastStyle: ToastStyle;
@@ -313,6 +371,8 @@ const defaultSettings = {
   calendarStyle: "modern" as CalendarStyle,
   selectStyle: "default" as SelectStyle,
   switchStyle: "default" as SwitchStyle,
+  checkboxStyle: "default" as CheckboxStyle,
+  radioStyle: "default" as RadioStyle,
   
   // Toast settings
   toastStyle: "classic" as ToastStyle,
@@ -392,6 +452,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       root.setAttribute("data-tooltip-style", settings.tooltipStyle);
       root.setAttribute("data-modal-style", settings.modalStyle);
       root.setAttribute("data-tree-style", settings.treeStyle);
+      root.setAttribute("data-checkbox-design", settings.checkboxStyle);
+      root.setAttribute("data-radio-design", settings.radioStyle);
 
       // Apply CSS custom properties for responsive design
       root.style.setProperty(
@@ -516,6 +578,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setCalendarStyle: (style) => updateSetting("calendarStyle", style),
     setSelectStyle: (style) => updateSetting("selectStyle", style),
     setSwitchStyle: (style) => updateSetting("switchStyle", style),
+    setCheckboxStyle: (style) => updateSetting("checkboxStyle", style),
+    setRadioStyle: (style) => updateSetting("radioStyle", style),
     setToastStyle: (style) => updateSetting("toastStyle", style),
     setShowToastIcons: (show) => updateSetting("showToastIcons", show),
     setToastDuration: (duration) => updateSetting("toastDuration", duration),

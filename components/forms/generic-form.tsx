@@ -408,6 +408,7 @@ export function GenericForm({
                     checked={formData[field.name] || false}
                     onCheckedChange={(checked) => handleChange(field.name, checked)}
                     disabled={field.disabled}
+                    design={settings.checkboxStyle}
                   />
                   <Label htmlFor={field.name} className={cn(
                     "text-sm",
@@ -421,13 +422,18 @@ export function GenericForm({
                   value={formData[field.name] || ""}
                   onValueChange={(value) => handleChange(field.name, value)}
                   disabled={field.disabled}
+                  design={settings.radioStyle}
                 >
                   {field.options?.map((option) => (
                     <div key={option.value} className={cn(
                       "flex items-center",
                       direction === "rtl" ? "space-x-reverse space-x-2" : "space-x-2"
                     )}>
-                      <RadioGroupItem value={option.value} id={`${field.name}-${option.value}`} />
+                      <RadioGroupItem 
+                        value={option.value} 
+                        id={`${field.name}-${option.value}`}
+                        design={settings.radioStyle}
+                      />
                       <Label htmlFor={`${field.name}-${option.value}`} className={cn(
                         "text-sm",
                         direction === "rtl" ? "text-right" : "text-left"
