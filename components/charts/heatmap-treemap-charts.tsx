@@ -35,7 +35,6 @@ const CustomTreemapContent = (props: any) => {
   // Don't render if too small
   if (width < 10 || height < 10) return null;
 
-  const isLeaf = !payload?.children || payload.children.length === 0;
   const colorIndex = depth === 0 ? index : (payload?.parentIndex || 0) + index;
   const fillColor = generateColor(colorIndex);
   const textColor = depth === 0 ? '#fff' : '#333';
@@ -87,52 +86,51 @@ const CustomTreemapContent = (props: any) => {
         </text>
       )}
       
-      {/* Depth indicator for debugging */}
-      {depth === 0 && width > 20 && height > 20 && (
-        <text 
-          x={x + 4} 
-          y={y + 16} 
-          fill={textColor} 
-          fontSize={10}
-          opacity={0.7}
-        >
-          L{depth}
-        </text>
-      )}
+      {/* Depth indicator removed for localization */}
     </g>
   );
 };
 
 // Enhanced Generic Heatmap Component
 const HeatmapChart = ({ data, title, rows = 12, cols = 12 }: { data: any[]; title: string; rows?: number; cols?: number }) => {
-  
-  
+  const { t } = useI18n();
+
   // Handle multiple data formats
-  const processedData = Array.isArray(data[0]) ? 
-    data.map((row, rowIndex) => 
-      row.map((value: number, colIndex: number) => ({
-        x: colIndex,
-        y: rowIndex, 
-        value,
-        label: `Row ${rowIndex + 1}, Col ${colIndex + 1}`
-      }))
-    ).flat() :
-    data.map((item: any, index: number) => ({
-      x: item.x ?? (index % cols),
-      y: item.y ?? Math.floor(index / cols),
-      value: item.value ?? item,
-      label: item.label ?? `Cell ${Math.floor(index / cols) + 1}-${(index % cols) + 1}`,
-      ...item
-    }));
-    
+  const processedData = Array.isArray(data[0])
+    ? data
+        .map((row, rowIndex) =>
+          row.map((value: number, colIndex: number) => ({
+            x: colIndex,
+            y: rowIndex,
+            value,
+            label: t("charts.heatmap.rowCol", { row: rowIndex + 1, col: colIndex + 1 }),
+          }))
+        )
+        .flat()
+    : data.map((item: any, index: number) => ({
+        x: item.x ?? (index % cols),
+        y: item.y ?? Math.floor(index / cols),
+        value: item.value ?? item,
+        label:
+          item.label ||
+          t("charts.heatmap.cell", {
+            row: Math.floor(index / cols) + 1,
+            col: (index % cols) + 1,
+          }),
+        ...item,
+      }));
+
   const maxValue = Math.max(...processedData.map((item: any) => Number(item.value) || 0));
   const minValue = Math.min(...processedData.map((item: any) => Number(item.value) || 0));
   const range = maxValue - minValue || 1;
-  
+
   return (
     <div className="space-y-2">
       <h4 className="text-sm font-medium">{title}</h4>
-      <div className={`grid gap-1 max-w-2xl`} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+      <div
+        className={`grid gap-1 max-w-2xl`}
+        style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+      >
         {processedData.map((item: any, index: number) => {
           const intensity = (Number(item.value) - minValue) / range;
           const colorIndex = Math.floor(intensity * 10);
@@ -143,18 +141,18 @@ const HeatmapChart = ({ data, title, rows = 12, cols = 12 }: { data: any[]; titl
                 style={{
                   backgroundColor: generateColor(colorIndex),
                   opacity: 0.3 + intensity * 0.7,
-                  color: intensity > 0.6 ? 'white' : 'black',
+                  color: intensity > 0.6 ? "white" : "black",
                 }}
               >
-                {item.showValue !== false && (Number(item.value) < 100 ? item.value : '')}
+                {item.showValue !== false && (Number(item.value) < 100 ? item.value : "")}
               </div>
             </HeatmapTooltip>
           );
         })}
       </div>
       <div className="flex items-center justify-between text-xs text-muted-foreground mt-2">
-        <span>Min: {minValue}</span>
-        <span>Max: {maxValue}</span>
+        <span>{t("charts.heatmap.min", { value: minValue })}</span>
+        <span>{t("charts.heatmap.max", { value: maxValue })}</span>
       </div>
     </div>
   );
@@ -205,13 +203,19 @@ export function HeatmapTreemapCharts({
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <Treemap
-                data={treemapData.length > 0 ? treemapData : data.length > 0 ? data : [
-                  { name: "Technology", size: 400, fill: generateColor(0) },
-                  { name: "Marketing", size: 300, fill: generateColor(1) },
-                  { name: "Sales", size: 250, fill: generateColor(2) },
-                  { name: "Support", size: 200, fill: generateColor(3) },
-                  { name: "Operations", size: 150, fill: generateColor(4) }
-                ]}
+                data={
+                  treemapData.length > 0
+                    ? treemapData
+                    : data.length > 0
+                    ? data
+                    : [
+                        { name: t("departments.technology"), size: 400, fill: generateColor(0) },
+                        { name: t("departments.marketing"), size: 300, fill: generateColor(1) },
+                        { name: t("departments.sales"), size: 250, fill: generateColor(2) },
+                        { name: t("departments.support"), size: 200, fill: generateColor(3) },
+                        { name: t("departments.operations"), size: 150, fill: generateColor(4) },
+                      ]
+                }
                 dataKey="size"
                 stroke="#fff"
                 fill="#8884d8"
@@ -254,8 +258,18 @@ export function HeatmapTreemapCharts({
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {heatmapData1.length > 0 && <HeatmapChart data={heatmapData1} title="Activity Pattern A" />}
-              {heatmapData2.length > 0 && <HeatmapChart data={heatmapData2} title="Activity Pattern B" />}
+              {heatmapData1.length > 0 && (
+                <HeatmapChart
+                  data={heatmapData1}
+                  title={t("charts.heatmap.patternA")}
+                />
+              )}
+              {heatmapData2.length > 0 && (
+                <HeatmapChart
+                  data={heatmapData2}
+                  title={t("charts.heatmap.patternB")}
+                />
+              )}
             </div>
           </CardContent>
         </Card>
@@ -270,22 +284,32 @@ export function HeatmapTreemapCharts({
         <CardContent>
           <div className="space-y-2">
             <div className="grid grid-cols-12 gap-1">
-              {(calendarData.length > 0 ? calendarData : data.length > 0 ? data : []).map((item: any, i: number) => {
-                const intensity = typeof item === 'object' ? (item.value || Math.random()) : Math.random();
-                return (
-                  <HeatmapTooltip key={i} item={{ ...item, label: `Day ${i + 1}`, value: Math.floor(intensity * 100) }}>
-                    <div
-                      className="w-3 h-3 rounded-sm cursor-pointer hover:scale-110 transition-transform"
-                      style={{
-                        backgroundColor: `rgba(34, 197, 94, ${intensity})`,
+              {(calendarData.length > 0 ? calendarData : data.length > 0 ? data : []).map(
+                (item: any, i: number) => {
+                  const intensity =
+                    typeof item === "object" ? item.value || Math.random() : Math.random();
+                  return (
+                    <HeatmapTooltip
+                      key={i}
+                      item={{
+                        ...item,
+                        label: t("charts.heatmap.calendar.dayLabel", { day: i + 1 }),
+                        value: Math.floor(intensity * 100),
                       }}
-                    />
-                  </HeatmapTooltip>
-                );
-              })}
+                    >
+                      <div
+                        className="w-3 h-3 rounded-sm cursor-pointer hover:scale-110 transition-transform"
+                        style={{
+                          backgroundColor: `rgba(34, 197, 94, ${intensity})`,
+                        }}
+                      />
+                    </HeatmapTooltip>
+                  );
+                },
+              )}
             </div>
             <div className="flex items-center justify-between text-xs text-gray-500">
-              <span>Less</span>
+              <span>{t("charts.heatmap.calendar.less")}</span>
               <div className="flex space-x-1">
                 {[0, 0.25, 0.5, 0.75, 1].map((intensity, i) => (
                   <div
@@ -297,7 +321,7 @@ export function HeatmapTreemapCharts({
                   />
                 ))}
               </div>
-              <span>More</span>
+              <span>{t("charts.heatmap.calendar.more")}</span>
             </div>
           </div>
         </CardContent>

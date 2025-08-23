@@ -227,6 +227,18 @@ export const en = {
       weekDayActivity: "Week {week}, {day}: Activity Level",
       monthDaySales: "{month} {day}: Sales",
       contributions: "{date}: {count} contributions",
+      value: "Value: {value}",
+      rowCol: "Row {row}, Col {col}",
+      cell: "Cell {row}-{col}",
+      min: "Min: {value}",
+      max: "Max: {value}",
+      patternA: "Activity Pattern A",
+      patternB: "Activity Pattern B",
+      calendar: {
+        dayLabel: "Day {day}",
+        less: "Less",
+        more: "More",
+      },
     },
 
     conversionFunnel: {

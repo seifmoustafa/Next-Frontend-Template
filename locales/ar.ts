@@ -170,6 +170,18 @@ export const ar = {
       weekDayActivity: "الأسبوع {week}، {day}: مستوى النشاط",
       monthDaySales: "{month} {day}: المبيعات",
       contributions: "{date}: {count} مساهمات",
+      value: "القيمة: {value}",
+      rowCol: "الصف {row}، العمود {col}",
+      cell: "الخانة {row}-{col}",
+      min: "الحد الأدنى: {value}",
+      max: "الحد الأقصى: {value}",
+      patternA: "نمط النشاط أ",
+      patternB: "نمط النشاط ب",
+      calendar: {
+        dayLabel: "اليوم {day}",
+        less: "أقل",
+        more: "أكثر",
+      },
     },
 
     conversionFunnel: {

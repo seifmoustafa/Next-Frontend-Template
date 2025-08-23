@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useI18n } from "@/providers/i18n-provider";
 
 // Custom Chart Tooltip for Recharts
 export const CustomChartTooltip = ({ active, payload, label }: any) => {
@@ -50,13 +51,14 @@ export const ChartTooltipWrapper = ({
 };
 
 // Heatmap tooltip component
-export const HeatmapTooltip = ({ 
-  item, 
-  children 
-}: { 
-  item: any; 
+export const HeatmapTooltip = ({
+  item,
+  children
+}: {
+  item: any;
   children: React.ReactNode;
 }) => {
+  const { t } = useI18n();
   return (
     <TooltipProvider>
       <Tooltip>
@@ -64,7 +66,7 @@ export const HeatmapTooltip = ({
           {children}
         </TooltipTrigger>
         <TooltipContent>
-          <p>{item.label || `Value: ${item.value}`}</p>
+          <p>{item.label || t("charts.heatmap.value", { value: item.value })}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
