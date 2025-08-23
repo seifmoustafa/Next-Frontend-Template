@@ -29,7 +29,7 @@ export interface GenericSelectProps {
 
   // Select type configuration
   type?: "single" | "searchable" | "multi"
-  
+
   // Search configuration (for searchable and multi types)
   searchable?: boolean
   searchPlaceholder?: string
@@ -81,19 +81,19 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
 }, ref) => {
   const { selectStyle } = useSettings()
   const { direction, t } = useI18n()
-  
+
   // Use the design prop if provided, otherwise fall back to global selectStyle
   const effectiveDesign = design || selectStyle
-  
+
   // Determine if this is a multi-select based on type or value array
   const isMultiSelect = type === "multi" || Array.isArray(value)
   const isSearchable = type === "searchable" || searchable || type === "multi"
-  
+
   // Default localized text values
-  const defaultPlaceholder = placeholder || (isMultiSelect 
+  const defaultPlaceholder = placeholder || (isMultiSelect
     ? t('components.multiSelect.placeholders.selectTechnologies')
     : t('components.select.placeholder'))
-  const defaultSearchPlaceholder = searchPlaceholder || (isMultiSelect 
+  const defaultSearchPlaceholder = searchPlaceholder || (isMultiSelect
     ? t('components.multiSelect.placeholders.searchTechnologies')
     : t('components.searchableSelect.placeholder'))
   const defaultNoResultsText = noResultsText || t('components.multiSelect.searchStates.noResults')
@@ -108,10 +108,10 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
   const [filteredOptions, setFilteredOptions] = React.useState<GenericSelectOption[]>(options)
   const [isSearching, setIsSearching] = React.useState(false)
   const [serverOptions, setServerOptions] = React.useState<GenericSelectOption[]>([])
-  const [dropdownPosition, setDropdownPosition] = React.useState({ 
-    top: 0, 
-    left: 0, 
-    width: 0, 
+  const [dropdownPosition, setDropdownPosition] = React.useState({
+    top: 0,
+    left: 0,
+    width: 0,
     maxHeight: 240
   })
 
@@ -125,7 +125,7 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
   // Get current values
   const currentValues = Array.isArray(value) ? value : (value ? [value] : [])
   const selectedOptions = options.filter((option: GenericSelectOption) => currentValues.includes(option.value))
-  
+
   // Get display options based on search type
   const displayOptions = searchType === "server" ? serverOptions : filteredOptions
   const showLoading = loading || isSearching
@@ -133,20 +133,20 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
   // Fixed positioning that stays attached to field with 5px gap
   const calculateDropdownPosition = React.useCallback(() => {
     if (!containerRef.current) return
-    
+
     const rect = containerRef.current.getBoundingClientRect()
     const viewportHeight = window.innerHeight
-    
+
     // Calculate available space above and below
     const spaceBelow = viewportHeight - rect.bottom - 5 // 5px gap
     const spaceAbove = rect.top - 5 // 5px gap
-    
+
     // Estimate content height based on current state
     const itemHeight = 40 // Approximate height per item
     const searchHeight = isSearchable ? 45 : 0
     const paddingHeight = 16
     const maxItemsToShow = Math.min(displayOptions.length, 8) // Show max 8 items
-    
+
     let estimatedContentHeight = searchHeight + paddingHeight
     if (showLoading) {
       estimatedContentHeight += 60 // Loading state height
@@ -155,14 +155,14 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
     } else {
       estimatedContentHeight += maxItemsToShow * itemHeight
     }
-    
+
     // Determine optimal placement with 5px gap
     const preferredHeight = Math.min(estimatedContentHeight, 320) // Max 320px
     const shouldShowAbove = spaceBelow < preferredHeight && spaceAbove > spaceBelow
-    
+
     let top: number
     let maxHeight: number
-    
+
     if (shouldShowAbove) {
       // Position above the field with exactly 5px gap
       const availableAbove = spaceAbove - 10 // 10px margin from viewport top
@@ -177,7 +177,7 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
       maxHeight = Math.max(maxHeight, 120)
       top = rect.bottom + 5 // 5px gap below field
     }
-    
+
     setDropdownPosition({
       top: Math.max(top, 1), // Minimum 10px from viewport top
       left: rect.left,
@@ -196,7 +196,7 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
     } else {
       setFilteredOptions(options)
     }
-    
+
     // Recalculate position when content changes
     if (isOpen) {
       setTimeout(() => calculateDropdownPosition(), 10)
@@ -270,21 +270,21 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
   // Handle toggle
   const handleToggle = () => {
     if (disabled) return
-    
+
     const newIsOpen = !isOpen
     setIsOpen(newIsOpen)
-    
+
     if (newIsOpen) {
       // Calculate position immediately and after a small delay for accuracy
       calculateDropdownPosition()
       setTimeout(() => calculateDropdownPosition(), 10)
-      
+
       // Focus search input if searchable
       if (isSearchable) {
         setTimeout(() => searchInputRef.current?.focus(), 50)
       }
     }
-    
+
     if (!newIsOpen) {
       setSearchQuery("")
       if (searchType === "server") {
@@ -311,19 +311,19 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
     if (selectedOptions.length === 0) {
       return defaultPlaceholder
     }
-    
+
     if (!isMultiSelect) {
       return selectedOptions[0]?.label || defaultPlaceholder
     }
-    
+
     if (selectedOptions.length <= maxSelectedDisplay) {
       // For small selections, show truncated labels to prevent overflow
-      const labels = selectedOptions.map((opt: GenericSelectOption) => 
+      const labels = selectedOptions.map((opt: GenericSelectOption) =>
         opt.label.length > 15 ? opt.label.substring(0, 15) + '...' : opt.label
       )
       return labels.join(", ")
     }
-    
+
     // For large selections, show count with localized text
     return `${selectedOptions.length} ${defaultSelectedText}`
   }
@@ -334,7 +334,7 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
       const target = event.target as Node
       const isClickInTrigger = containerRef.current && containerRef.current.contains(target)
       const isClickInDropdown = dropdownRef.current && dropdownRef.current.contains(target)
-      
+
       if (!isClickInTrigger && !isClickInDropdown) {
         setIsOpen(false)
         setSearchQuery("")
@@ -355,11 +355,11 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
         // Check if field is starting to hide (more sensitive detection)
         const rect = containerRef.current.getBoundingClientRect()
         const threshold = 10 // Close when field is 10px from edge
-        const isFieldStartingToHide = rect.top < threshold || 
-                                     rect.bottom > (window.innerHeight - threshold) ||
-                                     rect.left < threshold || 
-                                     rect.right > (window.innerWidth - threshold)
-        
+        const isFieldStartingToHide = rect.top < threshold ||
+          rect.bottom > (window.innerHeight - threshold) ||
+          rect.left < threshold ||
+          rect.right > (window.innerWidth - threshold)
+
         if (isFieldStartingToHide) {
           // Field is starting to hide, close dropdown
           setIsOpen(false)
@@ -380,7 +380,7 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
       document.addEventListener('mousedown', handleClickOutside)
       window.addEventListener('resize', handleWindowResize)
       window.addEventListener('scroll', handleWindowScroll, true)
-      
+
       return () => {
         document.removeEventListener('mousedown', handleClickOutside)
         window.removeEventListener('resize', handleWindowResize)
@@ -431,7 +431,7 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
             </span>
           )}
         </div>
-        
+
         <div className="flex items-center gap-2 flex-shrink-0">
           {allowClear && selectedOptions.length > 0 && (
             <button
@@ -459,8 +459,10 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
       {isOpen && createPortal(
         <div
           ref={dropdownRef}
+          data-dropdown-portal="true"
+          data-searchable-select="true"
           className={cn(
-            "fixed z-[9999] min-w-[8rem] overflow-hidden shadow-lg",
+            "fixed z-[9999] min-w-[8rem] overflow-hidden shadow-lg pointer-events-auto",
             styles.dropdown
           )}
           style={{

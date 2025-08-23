@@ -20,9 +20,9 @@ const Switch = React.forwardRef<
 >(({ className, showLabels = false, onLabel, offLabel, switchStyle: overrideSwitchStyle, ...props }, ref) => {
   const { switchStyle: settingsSwitchStyle, colorTheme } = useSettings();
   const { t, direction } = useI18n();
-  
+
   // Use override style if provided, otherwise use settings
-  const switchStyle = overrideSwitchStyle || settingsSwitchStyle;
+  const switchStyle = overrideSwitchStyle || settingsSwitchStyle || "default";
 
   // Default labels
   const defaultOnLabel = onLabel || t("common.yes");
@@ -432,9 +432,11 @@ const Switch = React.forwardRef<
   }
 
   return (
-    <SwitchPrimitives.Root className={styles.root} {...props} ref={ref}>
-      <SwitchPrimitives.Thumb className={styles.thumb} />
-    </SwitchPrimitives.Root>
+    <div dir="ltr">
+      <SwitchPrimitives.Root className={styles.root} {...props} ref={ref}>
+        <SwitchPrimitives.Thumb className={styles.thumb} />
+      </SwitchPrimitives.Root>
+    </div>
   );
 });
 
