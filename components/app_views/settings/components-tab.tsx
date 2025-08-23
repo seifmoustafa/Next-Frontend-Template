@@ -13,37 +13,75 @@ import { useI18n } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
 
 export function ComponentsTab() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const settings = useSettings();
   const [multiSelectDemo, setMultiSelectDemo] = useState<string[]>([]);
-  const [styleSelections, setStyleSelections] = useState<Record<string, string | string[]>>({});
+  const [styleSelections, setStyleSelections] =
+    useState<Record<string, string | string[]>>({});
   const [testModalOpen, setTestModalOpen] = useState<string | null>(null);
-  
+
   const { setModalStyle } = settings;
+
+  const weekDays = [
+    t("daysShort.sun"),
+    t("daysShort.mon"),
+    t("daysShort.tue"),
+    t("daysShort.wed"),
+    t("daysShort.thu"),
+    t("daysShort.fri"),
+    t("daysShort.sat"),
+  ];
+  const sampleMonthLabel = t("settings.calendar.sampleLabel", {
+    month: t("months.jan"),
+    year: new Intl.NumberFormat(language).format(2024),
+  });
 
   // Sample data for table preview
   const sampleTableData = [
-    { id: "1", name: "John Doe", role: "Admin", status: "Active" },
-    { id: "2", name: "Jane Smith", role: "User", status: "Pending" },
-    { id: "3", name: "Bob Johnson", role: "Editor", status: "Inactive" },
+    {
+      id: "1",
+      name: t("settings.sampleTable.data.john"),
+      role: "admin",
+      status: "active",
+    },
+    {
+      id: "2",
+      name: t("settings.sampleTable.data.jane"),
+      role: "user",
+      status: "pending",
+    },
+    {
+      id: "3",
+      name: t("settings.sampleTable.data.bob"),
+      role: "editor",
+      status: "inactive",
+    },
   ];
 
   const sampleTableColumns = [
-    { key: "name" as const, label: "Name", sortable: true },
-    { key: "role" as const, label: "Role", sortable: true },
+    { key: "name" as const, label: t("settings.sampleTable.name"), sortable: true },
+    {
+      key: "role" as const,
+      label: t("settings.sampleTable.role"),
+      sortable: true,
+      render: (value: string) => t(`settings.sampleTable.roles.${value}`),
+    },
     {
       key: "status" as const,
-      label: "Status",
+      label: t("settings.sampleTable.status"),
       render: (value: string) => (
         <span
           className={cn(
             "px-2 py-1 rounded-full text-xs font-medium",
-            value === "Active" && "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-            value === "Pending" && "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
-            value === "Inactive" && "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+            value === "active" &&
+              "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+            value === "pending" &&
+              "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+            value === "inactive" &&
+              "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
           )}
         >
-          {value}
+          {t(`settings.sampleTable.${value}`)}
         </span>
       ),
     },
@@ -178,26 +216,37 @@ export function ComponentsTab() {
         <table className="w-full text-xs">
           <thead>
             <tr className={cn("font-medium text-muted-foreground", getHeaderClasses())}>
-              <th className="text-left py-1.5 px-2 font-semibold">Name</th>
-              <th className="text-left py-1.5 px-2 font-semibold">Role</th>
-              <th className="text-left py-1.5 px-2 font-semibold">Status</th>
+              <th className="text-left py-1.5 px-2 font-semibold">
+                {t("settings.sampleTable.name")}
+              </th>
+              <th className="text-left py-1.5 px-2 font-semibold">
+                {t("settings.sampleTable.role")}
+              </th>
+              <th className="text-left py-1.5 px-2 font-semibold">
+                {t("settings.sampleTable.status")}
+              </th>
             </tr>
           </thead>
           <tbody>
             {sampleTableData.map((row, index) => (
               <tr key={row.id} className={getRowClasses(index)}>
                 <td className="py-1.5 px-2 font-medium">{row.name}</td>
-                <td className="py-1.5 px-2 text-muted-foreground">{row.role}</td>
+                <td className="py-1.5 px-2 text-muted-foreground">
+                  {t(`settings.sampleTable.roles.${row.role}`)}
+                </td>
                 <td className="py-1.5 px-2">
                   <span
                     className={cn(
                       "px-1.5 py-0.5 rounded text-[10px] font-medium",
-                      row.status === "Active" && "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-                      row.status === "Pending" && "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
-                      row.status === "Inactive" && "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                      row.status === "active" &&
+                        "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+                      row.status === "pending" &&
+                        "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+                      row.status === "inactive" &&
+                        "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
                     )}
                   >
-                    {row.status}
+                    {t(`settings.sampleTable.${row.status}`)}
                   </span>
                 </td>
               </tr>
@@ -1077,6 +1126,9 @@ export function ComponentsTab() {
       description: t("settings.modalStyle.options.overlay.description"),
     },
   ];
+  const previewStyleName = modalStyles.find(
+    (s) => s.value === testModalOpen,
+  )?.name;
   return (
     <>
                 {/* Button Styles - UPDATED WITH MORE OPTIONS */}
@@ -1324,12 +1376,15 @@ export function ComponentsTab() {
                             <div className="space-y-2">
                               <div className="flex items-center justify-between text-xs">
                                 <CalendarDays className="h-3 w-3" />
-                                <span>Jan 2024</span>
+                                <span>{sampleMonthLabel}</span>
                                 <ChevronRight className="h-3 w-3" />
                               </div>
                               <div className="grid grid-cols-7 gap-0.5 text-xs">
-                                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
-                                  <div key={i} className="h-4 w-4 flex items-center justify-center text-muted-foreground">
+                                {weekDays.map((day, i) => (
+                                  <div
+                                    key={i}
+                                    className="h-4 w-4 flex items-center justify-center text-muted-foreground"
+                                  >
                                     {day}
                                   </div>
                                 ))}
@@ -2240,13 +2295,13 @@ export function ComponentsTab() {
                             onClick={() => setTestModalOpen(style.value)}
                             className="w-full text-xs"
                           >
-                            Test {style.name}
+                            {t("settings.modalStyle.testButton", { style: style.name })}
                           </Button>
                         </div>
                       ))}
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      Click "Test" buttons to preview each modal style with sample content
+                      {t("settings.modalStyle.testInstructions")}
                     </div>
                   </CardContent>
                 </Card>
@@ -2255,27 +2310,34 @@ export function ComponentsTab() {
                 <GenericModal
                   open={testModalOpen !== null}
                   onOpenChange={(open) => !open && setTestModalOpen(null)}
-                  title={`${testModalOpen} Modal Style Preview`}
+                  title={t("settings.modalStyle.previewTitle", {
+                    style: previewStyleName || "",
+                  })}
                 >
                   <div className="space-y-4">
                     <div className="text-sm text-muted-foreground">
-                      This is a preview of the <strong>{testModalOpen}</strong> modal style.
+                      {t("settings.modalStyle.previewDescription", {
+                        style: previewStyleName || "",
+                      })}
                     </div>
                     <div className="space-y-3">
                       <div className="p-4 bg-muted/50 rounded-lg">
-                        <h4 className="font-medium mb-2">Sample Content</h4>
+                        <h4 className="font-medium mb-2">
+                          {t("settings.modalStyle.sampleContentTitle")}
+                        </h4>
                         <p className="text-sm text-muted-foreground">
-                          This modal demonstrates the visual appearance and behavior of the {testModalOpen} style.
-                          Notice the unique styling, positioning, and visual effects.
+                          {t("settings.modalStyle.sampleContentDescription", {
+                            style: previewStyleName || "",
+                          })}
                         </p>
                       </div>
                       <div className="flex gap-2">
                         <Button size="sm" onClick={() => setTestModalOpen(null)}>
-                          Close Preview
+                          {t("settings.modalStyle.closePreview")}
                         </Button>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
+                        <Button
+                          variant="outline"
+                          size="sm"
                           onClick={() => {
                             if (testModalOpen) {
                               setModalStyle(testModalOpen as any);
@@ -2283,7 +2345,7 @@ export function ComponentsTab() {
                             }
                           }}
                         >
-                          Apply This Style
+                          {t("settings.modalStyle.applyStyle")}
                         </Button>
                       </div>
                     </div>
