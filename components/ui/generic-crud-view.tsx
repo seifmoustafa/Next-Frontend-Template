@@ -35,20 +35,21 @@ export interface CrudConfig<TItem> {
   // Page configuration
   titleKey: string; // Translation key for title
   subtitleKey: string; // Translation key for subtitle
-  
+  customSubtitle?: string; // Custom subtitle text (overrides subtitleKey)
+
   // Table configuration
   columns: CrudColumn[];
   createFields: FieldConfig[];
   editFields: FieldConfig[];
-  
+
   // Actions
   getActions?: (vm: any, t: any, handleDelete?: (item: TItem) => void) => CrudAction<TItem>[];
-  
+
   // Delete configuration
   getItemDisplayName?: (item: TItem) => string; // For delete confirmation messages
   itemTypeKey?: string; // Translation key for item type (e.g., "vendors.itemType")
   deleteService?: (id: string) => Promise<void>; // Direct delete service function
-  
+
   // Customization options
   customHeaderContent?: React.ReactNode; // Custom content above the table
   customFooterContent?: React.ReactNode; // Custom content below the table
@@ -79,7 +80,7 @@ interface GenericCrudViewProps<T> {
     onChange: (term: string) => void;
     inputRef?: React.RefObject<HTMLInputElement>;
   };
-  
+
   // New configuration-based props
   config?: CrudConfig<T>;
 }
@@ -109,7 +110,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
     const itemDisplayName = config?.getItemDisplayName ? config.getItemDisplayName(item) : (item as any).name || 'Item';
     const itemType = config?.itemTypeKey ? t(config.itemTypeKey) : 'Item';
     const id = typeof item === "string" ? item : (item as any).id;
-    
+
     await deleteSystem.confirmDelete(
       async () => {
         // Use the direct delete service from config
@@ -127,19 +128,19 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
 
   // Use config if provided, otherwise use direct props (backward compatibility)
   const title = config ? t(config.titleKey) : propTitle!;
-  const subtitle = config ? t(config.subtitleKey) : propSubtitle;
+  const subtitle = config ? (config.customSubtitle || t(config.subtitleKey)) : propSubtitle;
   const columns = config ? config.columns : propColumns!;
   const actions = config?.getActions ? config.getActions(viewModel, t, handleDelete) : propActions;
   const createFields = config ? config.createFields : propCreateFields!;
   const editFields = config ? config.editFields : (propEditFields || propCreateFields!);
-  
+
   // Auto-generate pagination and search for config-based usage
   const pagination = propPagination || (config ? {
     ...viewModel.pagination,
     onPageChange: viewModel.changePage,
     onPageSizeChange: viewModel.changePageSize,
   } : undefined);
-  
+
   const search = propSearch || (config ? {
     value: viewModel.searchValue,
     onChange: viewModel.handleSearchChange,
@@ -206,8 +207,8 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
               settings.fontSize === "small"
                 ? "text-2xl sm:text-3xl"
                 : settings.fontSize === "large"
-                ? "text-4xl sm:text-5xl"
-                : "text-3xl sm:text-4xl"
+                  ? "text-4xl sm:text-5xl"
+                  : "text-3xl sm:text-4xl"
             )}
           >
             {title}
@@ -219,8 +220,8 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
                 settings.fontSize === "small"
                   ? "text-sm sm:text-base"
                   : settings.fontSize === "large"
-                  ? "text-lg sm:text-xl"
-                  : "text-base sm:text-lg"
+                    ? "text-lg sm:text-xl"
+                    : "text-base sm:text-lg"
               )}
             >
               {subtitle}
@@ -230,7 +231,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
         <div className="flex items-center gap-3 w-full sm:w-auto">
           {/* Custom bulk actions */}
           {config?.customBulkActions && viewModel.selectedItems.length > 0 && config.customBulkActions}
-          
+
           {/* Default bulk delete */}
           {viewModel.selectedItems.length > 0 && !config?.customBulkActions && (config?.enableBulkActions !== false) && (
             <Button
@@ -242,10 +243,10 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
               {t("common.delete")} ({viewModel.selectedItems.length})
             </Button>
           )}
-          
+
           {/* Custom toolbar actions */}
           {config?.customToolbarActions && config.customToolbarActions}
-          
+
           {/* Default actions (unless hidden) */}
           {!config?.hideDefaultActions && (
             <>
