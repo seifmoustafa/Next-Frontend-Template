@@ -73,6 +73,7 @@ export function useGenericCrudViewModel<
   const [searchValue, setSearchValue] = useState<string>(""); // what user types
   const [searchTerm, setSearchTerm] = useState<string>(""); // debounced, used for API
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Dropdown state
   const [dropdownOptions, setDropdownOptions] = useState<TDropdownItem[]>([]);
@@ -96,22 +97,38 @@ export function useGenericCrudViewModel<
   const updateRef = useRef(service.update);
   const deleteRef = useRef(service.delete);
 
-  useEffect(() => { getDataRef.current = service.getData; }, [service.getData]);
-  useEffect(() => { createRef.current  = service.create;   }, [service.create]);
-  useEffect(() => { updateRef.current  = service.update;   }, [service.update]);
-  useEffect(() => { deleteRef.current  = service.delete;   }, [service.delete]);
+  useEffect(() => {
+    getDataRef.current = service.getData;
+  }, [service.getData]);
+  useEffect(() => {
+    createRef.current = service.create;
+  }, [service.create]);
+  useEffect(() => {
+    updateRef.current = service.update;
+  }, [service.update]);
+  useEffect(() => {
+    deleteRef.current = service.delete;
+  }, [service.delete]);
 
   // Keep config bits in refs
   const searchParamNameRef = useRef(config.searchParamName);
   const getItemDisplayNameRef = useRef(config.getItemDisplayName);
-  useEffect(() => { searchParamNameRef.current = config.searchParamName; }, [config.searchParamName]);
-  useEffect(() => { getItemDisplayNameRef.current = config.getItemDisplayName; }, [config.getItemDisplayName]);
+  useEffect(() => {
+    searchParamNameRef.current = config.searchParamName;
+  }, [config.searchParamName]);
+  useEffect(() => {
+    getItemDisplayNameRef.current = config.getItemDisplayName;
+  }, [config.getItemDisplayName]);
 
   // Dropdown service refs
   const dropdownServiceRef = useRef(config.dropdownService);
   const dropdownSearchParamNameRef = useRef(config.dropdownSearchParamName);
-  useEffect(() => { dropdownServiceRef.current = config.dropdownService; }, [config.dropdownService]);
-  useEffect(() => { dropdownSearchParamNameRef.current = config.dropdownSearchParamName; }, [config.dropdownSearchParamName]);
+  useEffect(() => {
+    dropdownServiceRef.current = config.dropdownService;
+  }, [config.dropdownService]);
+  useEffect(() => {
+    dropdownSearchParamNameRef.current = config.dropdownSearchParamName;
+  }, [config.dropdownSearchParamName]);
 
   // Core list function — ALWAYS returns TItem[]
   const list = useCallback(async (): Promise<TItem[]> => {
@@ -119,8 +136,13 @@ export function useGenericCrudViewModel<
     const currentSearchTerm = searchTermRef.current;
     const wasSearchFocused = searchInputRef.current === document.activeElement;
 
+    // Maintain focus during the entire API request process
     const maintainFocus = () => {
-      if (wasSearchFocused && searchInputRef.current && document.activeElement !== searchInputRef.current) {
+      if (
+        wasSearchFocused &&
+        searchInputRef.current &&
+        document.activeElement !== searchInputRef.current
+      ) {
         searchInputRef.current.focus();
       }
     };
@@ -132,8 +154,16 @@ export function useGenericCrudViewModel<
       const paramName = searchParamNameRef.current;
       const apiParams =
         paramName === "search"
-          ? { page: currentPagination.page, pageSize: currentPagination.pageSize, search: currentSearchTerm }
-          : { page: currentPagination.page, pageSize: currentPagination.pageSize, PageSearch: currentSearchTerm };
+          ? {
+              page: currentPagination.page,
+              pageSize: currentPagination.pageSize,
+              search: currentSearchTerm,
+            }
+          : {
+              page: currentPagination.page,
+              pageSize: currentPagination.pageSize,
+              PageSearch: currentSearchTerm,
+            };
 
       const res = await getDataRef.current(apiParams);
 
@@ -142,21 +172,28 @@ export function useGenericCrudViewModel<
         return [];
       }
 
+      // Maintain focus immediately after getting response
       maintainFocus();
 
       // Update pagination but preserve user-selected page & pageSize
-      setPagination(prev => {
-        const next: PaginationInfo = { ...res.pagination, page: prev.page, pageSize: prev.pageSize };
+      setPagination((prev) => {
+        const next: PaginationInfo = {
+          ...res.pagination,
+          page: prev.page,
+          pageSize: prev.pageSize,
+        };
         const same =
           prev.itemsCount === next.itemsCount &&
-          prev.pageSize   === next.pageSize &&
-          prev.page       === next.page &&
+          prev.pageSize === next.pageSize &&
+          prev.page === next.page &&
           prev.pagesCount === next.pagesCount;
         return same ? prev : next;
       });
 
       setData(res.data ?? []);
-      setTimeout(maintainFocus, 10);
+
+      // Maintain focus after state updates
+      setTimeout(() => maintainFocus(), 10);
 
       // Always return array
       return res.data ?? [];
@@ -164,28 +201,16 @@ export function useGenericCrudViewModel<
       setError(err instanceof Error ? err.message : "Failed to load data");
       return []; // return empty array on error
     } finally {
-      if (!mountedRef.current) return[];
+      if (!mountedRef.current) return [];
       setLoading(false);
-      // focus restoration
-      setTimeout(() => {
-        const wasFocused = searchInputRef.current === document.activeElement;
-        if (wasFocused && searchInputRef.current) searchInputRef.current.focus();
-      }, 50);
-      setTimeout(() => {
-        const wasFocused = searchInputRef.current === document.activeElement;
-        if (wasFocused && searchInputRef.current) searchInputRef.current.focus();
-      }, 100);
+
+      // Final focus restoration (exactly like tree view)
+      setTimeout(() => maintainFocus(), 50);
+      setTimeout(() => maintainFocus(), 100);
     }
   }, []); // stable
 
-  // Debounce search input -> term
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearchTerm(searchValue);
-      setPagination(prev => ({ ...prev, page: 1 }));
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [searchValue]);
+  // Remove the old useEffect since we now handle debouncing in handleSearchChange
 
   // Debounced dropdown search
   useEffect(() => {
@@ -237,9 +262,28 @@ export function useGenericCrudViewModel<
     },
   });
 
-  // Handle input change
+  // Handle input change (exactly like tree view)
   const handleSearchChange = useCallback((value: string) => {
-    setSearchValue(value);
+    setSearchValue(value); // Update display immediately
+
+    // Clear existing timeout
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    // Set new timeout for debounced API call
+    searchTimeoutRef.current = setTimeout(() => {
+      // Ensure focus is maintained before making the API call
+      if (
+        searchInputRef.current &&
+        document.activeElement !== searchInputRef.current
+      ) {
+        searchInputRef.current.focus();
+      }
+
+      setPagination((prev) => ({ ...prev, page: 1 }));
+      setSearchTerm(value); // This triggers the API call
+    }, 300); // 300ms debounce
   }, []);
 
   // Mount / unmount
@@ -257,25 +301,38 @@ export function useGenericCrudViewModel<
   }, [searchTerm, list]);
 
   // Pagination handlers
-  const changePage = useCallback((page: number) => {
-    setPagination(prev => ({ ...prev, page }));
-    setTimeout(() => { list(); }, 0);
-  }, [list]);
+  const changePage = useCallback(
+    (page: number) => {
+      setPagination((prev) => ({ ...prev, page }));
+      setTimeout(() => {
+        list();
+      }, 0);
+    },
+    [list]
+  );
 
-  const changePageSize = useCallback((pageSize: number) => {
-    setPagination(prev => ({ ...prev, pageSize, page: 1 }));
-    setTimeout(() => { list(); }, 0);
-  }, [list]);
+  const changePageSize = useCallback(
+    (pageSize: number) => {
+      setPagination((prev) => ({ ...prev, pageSize, page: 1 }));
+      setTimeout(() => {
+        list();
+      }, 0);
+    },
+    [list]
+  );
 
   // Legacy compatibility
-  const searchItems = useCallback((term: string) => {
-    handleSearchChange(term);
-  }, [handleSearchChange]);
+  const searchItems = useCallback(
+    (term: string) => {
+      handleSearchChange(term);
+    },
+    [handleSearchChange]
+  );
 
   const dropdownOptionsMapped = useMemo(() => {
     const svc = dropdownServiceRef.current;
     if (!svc) return [];
-    return dropdownOptions.map(item => ({
+    return dropdownOptions.map((item) => ({
       label: svc.getLabel(item),
       value: svc.getValue(item),
     }));
