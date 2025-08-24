@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
@@ -8,6 +8,7 @@ import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
+import { useRouter } from "next/navigation";
 import { useSettings } from "@/providers/settings-provider";
 
 interface ElegantHeaderProps {
@@ -17,6 +18,7 @@ interface ElegantHeaderProps {
 export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
   const { t, direction } = useI18n();
   const settings = useSettings();
+  const router = useRouter();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -84,7 +86,7 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
                 buttonClass,
                 animationClass
               )}
-              onClick={() => onchange(false)}
+              onClick={onMenuClick}
             >
               <X className="w-4 h-4" />
             </Button>
@@ -164,6 +166,28 @@ export function ElegantHeader({ onMenuClick }: ElegantHeaderProps) {
 
         {/* Right Section - Enhanced buttons */}
         <div className="relative flex items-center space-x-4 rtl:space-x-reverse z-20">
+          {/* Home Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/")}
+            className={cn(
+              "h-12 w-12",
+              "bg-gradient-to-br from-muted/60 via-muted/40 to-muted/20",
+              "hover:from-primary/15 hover:via-primary/10 hover:to-primary/5",
+              "border border-border/60 hover:border-primary/40",
+              "shadow-lg hover:shadow-xl hover:shadow-primary/15",
+              "hover:scale-110 active:scale-95",
+              "backdrop-blur-xl",
+              "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+              buttonClass,
+              animationClass
+            )}
+            title={t("nav.home") || "Home"}
+          >
+            <Home className="h-5 w-5" />
+          </Button>
+
           <ThemeSwitcher
             buttonClassName={cn(
               "h-12 w-12",

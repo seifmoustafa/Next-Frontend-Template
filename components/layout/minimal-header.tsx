@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search } from "lucide-react";
+import { Menu, Search, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,9 +22,11 @@ import { cn } from "@/lib/utils";
 import { getNavigationItems } from "@/config/navigation";
 import { Logo } from "@/components/ui/logo";
 import { LanguageSwitcher, ThemeSwitcher } from "./common";
+import { useRouter } from "next/navigation";
 
 export function MinimalHeader() {
   const { t, direction } = useI18n();
+  const router = useRouter();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -182,6 +184,17 @@ export function MinimalHeader() {
               autoFocus={searchOpen}
             />
           </div>
+
+          {/* Home Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/")}
+            className={cn("hover-lift", buttonClass, animationClass)}
+            title={t("nav.home") || "Home"}
+          >
+            <Home className="h-5 w-5" />
+          </Button>
 
           <LanguageSwitcher
             buttonClassName={cn("hover-lift", buttonClass, animationClass)}

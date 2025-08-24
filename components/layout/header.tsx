@@ -1,11 +1,12 @@
 "use client"
 
-import { Bell, Menu } from "lucide-react"
+import { Bell, Menu, Home } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useI18n } from "@/providers/i18n-provider"
 import { useSettings } from "@/providers/settings-provider"
 import { cn } from "@/lib/utils"
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common"
+import { useRouter } from "next/navigation"
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown"
 import { PageBreadcrumbs } from "@/components/ui/page-breadcrumbs"
 
@@ -17,6 +18,7 @@ interface HeaderProps {
 export function Header({ onMenuClick, isModern = false }: HeaderProps) {
   const { t } = useI18n()
   const settings = useSettings()
+  const router = useRouter()
 
   return (
     <header
@@ -58,6 +60,16 @@ export function Header({ onMenuClick, isModern = false }: HeaderProps) {
 
         {/* Right side */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
+          {/* Home Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/")}
+            className="hover-lift"
+            title={t("nav.home") || "Home"}
+          >
+            <Home className="w-5 h-5" />
+          </Button>
           <LanguageSwitcher buttonClassName="hover-lift" />
           <ThemeSwitcher buttonClassName="hover-lift" />
           {settings.showNotifications && (

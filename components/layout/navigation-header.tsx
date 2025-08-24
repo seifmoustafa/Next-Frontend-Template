@@ -6,6 +6,9 @@ import {
   Menu,
   PanelLeftClose,
   PanelLeftOpen,
+  ChevronLeft,
+  ChevronRight,
+  Home,
 } from "lucide-react";
 import { useI18n } from "@/providers/i18n-provider";
 import { useAuth } from "@/providers/auth-provider";
@@ -17,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { LanguageSwitcher, ThemeSwitcher } from "./common";
+import { useRouter } from "next/navigation";
 
 interface NavigationHeaderProps {
   onMenuClick: () => void;
@@ -40,6 +44,7 @@ export function NavigationHeader({
   const { colorTheme, cardStyle } = useSettings();
   const { getAnimationClass } = useLayoutStyles();
   const animationClass = getAnimationClass();
+  const router = useRouter();
 
   return (
     <header
@@ -49,8 +54,8 @@ export function NavigationHeader({
         cardStyle === "glass"
           ? "bg-white/5 dark:bg-white/5 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]"
           : cardStyle === "solid"
-          ? "bg-background border-border backdrop-blur-sm"
-          : "bg-background/95 border-border/50 backdrop-blur-sm"
+            ? "bg-background border-border backdrop-blur-sm"
+            : "bg-background/95 border-border/50 backdrop-blur-sm"
       )}
     >
       {/* Header Content Container */}
@@ -61,13 +66,13 @@ export function NavigationHeader({
           // Dynamic margins based on sidebar states
           direction === "rtl"
             ? cn(
-                isMobile ? "mr-0" : "mr-16", // Account for main sidebar on desktop
-                !isMobile && panelOpen && hasPanel && "mr-80" // Account for panel sidebar when open
-              )
+              isMobile ? "mr-0" : "mr-16", // Account for main sidebar on desktop
+              !isMobile && panelOpen && hasPanel && "mr-80" // Account for panel sidebar when open
+            )
             : cn(
-                isMobile ? "ml-0" : "ml-16", // Account for main sidebar on desktop
-                !isMobile && panelOpen && hasPanel && "ml-80" // Account for panel sidebar when open
-              )
+              isMobile ? "ml-0" : "ml-16", // Account for main sidebar on desktop
+              !isMobile && panelOpen && hasPanel && "ml-80" // Account for panel sidebar when open
+            )
         )}
       >
         {/* Left Section - Mobile Menu + Panel Toggle + Title */}
@@ -82,51 +87,41 @@ export function NavigationHeader({
             <Menu className="w-5 h-5" />
           </Button>
 
-          {/* Panel Toggle Button - Only show if there's a panel and not mobile */}
+          {/* Panel Toggle Icon - Only show if there's a panel and not mobile */}
           {hasPanel && !isMobile && (
-            <Button
-              variant="ghost"
-              size="icon"
+            <div
               onClick={onPanelToggle}
-              className={cn(
-                "hover:bg-accent hover:text-accent-foreground transition-colors",
-                panelOpen
-                  ? cn(
-                      "text-white",
-                      colorTheme === "blue" && "bg-blue-600 hover:bg-blue-700",
-                      colorTheme === "purple" &&
-                        "bg-purple-600 hover:bg-purple-700",
-                      colorTheme === "green" &&
-                        "bg-green-600 hover:bg-green-700",
-                      colorTheme === "orange" &&
-                        "bg-orange-600 hover:bg-orange-700",
-                      colorTheme === "red" && "bg-red-600 hover:bg-red-700",
-                      colorTheme === "teal" && "bg-teal-600 hover:bg-teal-700",
-                      colorTheme === "pink" && "bg-pink-600 hover:bg-pink-700",
-                      colorTheme === "indigo" &&
-                        "bg-indigo-600 hover:bg-indigo-700",
-                      colorTheme === "cyan" && "bg-cyan-600 hover:bg-cyan-700"
-                    )
-                  : "text-muted-foreground"
-              )}
+              className="cursor-pointer hover:opacity-80 transition-opacity flex items-center justify-center w-10 h-10"
               title={
                 panelOpen
                   ? t("layout.hide_panel") || "Hide Panel"
                   : t("layout.show_panel") || "Show Panel"
               }
             >
-              {language === "ar" ? (
+              {direction === "rtl" ? (
                 panelOpen ? (
-                  <PanelLeftOpen className="w-5 h-5" />
+                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 18L15 12L9 6" stroke="hsl(var(--primary))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 ) : (
-                  <PanelLeftClose className="w-5 h-5" />
+                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" style={{ transform: 'scaleX(-1)' }}>
+                    <rect x="3" y="6" width="18" height="2" rx="1" fill="hsl(var(--primary))" />
+                    <rect x="3" y="11" width="12" height="2" rx="1" fill="hsl(var(--primary))" />
+                    <rect x="3" y="16" width="15" height="2" rx="1" fill="hsl(var(--primary))" />
+                  </svg>
                 )
               ) : panelOpen ? (
-                <PanelLeftClose className="w-5 h-5" />
+                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18L9 12L15 6" stroke="hsl(var(--primary))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               ) : (
-                <PanelLeftOpen className="w-5 h-5" />
+                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="6" width="18" height="2" rx="1" fill="hsl(var(--primary))" />
+                  <rect x="3" y="11" width="12" height="2" rx="1" fill="hsl(var(--primary))" />
+                  <rect x="3" y="16" width="15" height="2" rx="1" fill="hsl(var(--primary))" />
+                </svg>
               )}
-            </Button>
+            </div>
           )}
 
           {/* App Title */}
@@ -168,6 +163,17 @@ export function NavigationHeader({
             title="Search"
           >
             <Search className="w-5 h-5" />
+          </Button>
+
+          {/* Home Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/")}
+            className="hover:bg-accent hover:text-accent-foreground"
+          // title={t("nav.home") || "Home"}
+          >
+            <Home className="w-5 h-5" />
           </Button>
 
           <ThemeSwitcher

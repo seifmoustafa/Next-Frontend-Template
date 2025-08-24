@@ -1,12 +1,13 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
+import { useRouter } from "next/navigation";
 
 interface ClassicHeaderProps {
   onMenuClick: () => void;
@@ -14,6 +15,7 @@ interface ClassicHeaderProps {
 
 export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
   const { t } = useI18n();
+  const router = useRouter();
   const {
     getSpacingClass,
     getHeaderStyleClass,
@@ -26,7 +28,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
   const animationClass = getAnimationClass();
 
   const cardStyleClass = getCardStyleClass();
-  
+
   const headerClass = getHeaderStyleClass({
     compact: cn("h-14 border-b", cardStyleClass),
     elevated: cn("border-b-2 border-border/80 shadow-xl shadow-primary/10", cardStyleClass),
@@ -76,6 +78,22 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
             )}
             iconClassName="left-3 rtl:left-auto rtl:right-3"
           />
+
+          {/* Home Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/")}
+            className={cn(
+              "hover:bg-primary/10 hover:text-primary",
+              getBorderRadiusClass(),
+              animationClass,
+              "shadow-md hover:shadow-lg hover:scale-105"
+            )}
+            title={t("nav.home") || "Home"}
+          >
+            <Home className="w-5 h-5" />
+          </Button>
 
           <LanguageSwitcher
             buttonClassName={cn(

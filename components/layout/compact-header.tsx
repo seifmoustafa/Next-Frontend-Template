@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
@@ -8,6 +8,7 @@ import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
+import { useRouter } from "next/navigation";
 import { useSettings } from "@/providers/settings-provider";
 
 interface CompactHeaderProps {
@@ -17,6 +18,7 @@ interface CompactHeaderProps {
 export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
   const { t } = useI18n();
   const settings = useSettings();
+  const router = useRouter();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -66,7 +68,7 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
                 buttonClass,
                 getAnimationClass()
               )}
-              onClick={() => onchange(false)}
+              onClick={onMenuClick}
             >
               <X className="w-4 h-4" />
             </Button>
@@ -107,6 +109,22 @@ export function CompactHeader({ onMenuClick }: CompactHeaderProps) {
 
         {/* Right Section */}
         <div className="flex items-center space-x-2 rtl:space-x-reverse">
+          {/* Home Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/")}
+            className={cn(
+              "h-9 w-9 hover:bg-primary/10 hover:text-primary",
+              "shadow-sm hover:shadow-md hover:scale-105",
+              buttonClass,
+              animationClass
+            )}
+            title={t("nav.home") || "Home"}
+          >
+            <Home className="h-4 w-4" />
+          </Button>
+
           <ThemeSwitcher
             buttonClassName={cn(
               "h-9 w-9 hover:bg-primary/10 hover:text-primary",

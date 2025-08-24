@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
@@ -8,6 +8,7 @@ import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
 import { LanguageSwitcher, ThemeSwitcher, HeaderSearch } from "./common";
+import { useRouter } from "next/navigation";
 import { useSettings } from "@/providers/settings-provider";
 
 interface FloatingHeaderProps {
@@ -17,6 +18,7 @@ interface FloatingHeaderProps {
 export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
   const { t } = useI18n();
   const settings = useSettings();
+  const router = useRouter();
   const {
     getHeaderStyleClass,
     getAnimationClass,
@@ -109,6 +111,22 @@ export function FloatingHeader({ onMenuClick }: FloatingHeaderProps) {
 
         {/* Right Section */}
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          {/* Home Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/")}
+            className={cn(
+              "h-10 w-10 hover:bg-primary/10 hover:text-primary",
+              "shadow-md hover:shadow-lg hover:scale-105",
+              buttonClass,
+              animationClass
+            )}
+            title={t("nav.home") || "Home"}
+          >
+            <Home className="h-5 w-5" />
+          </Button>
+
           <ThemeSwitcher
             buttonClassName={cn(
               "h-10 w-10 hover:bg-primary/10 hover:text-primary",
