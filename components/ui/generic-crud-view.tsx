@@ -345,6 +345,29 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
         </DialogContent>
       </Dialog>
 
+      {/* View Modal */}
+      <Dialog
+        open={viewModel.viewModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            viewModel.closeViewModal();
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{`${t("common.view")} ${title}`}</DialogTitle>
+          </DialogHeader>
+          <GenericForm
+            fields={editFields || createFields}
+            initialValues={viewModel.viewItem || {}}
+            onSubmit={async () => { }} // No-op for read-only
+            onCancel={viewModel.closeViewModal}
+            readOnly={true}
+          />
+        </DialogContent>
+      </Dialog>
+
       {/* Professional confirmation dialog for delete operations */}
       <ConfirmationDialog
         open={deleteSystem.showConfirmation}

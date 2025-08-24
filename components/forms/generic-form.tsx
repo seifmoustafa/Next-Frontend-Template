@@ -64,6 +64,7 @@ interface GenericFormProps {
   initialValues?: Record<string, any>;
   onSubmit: (data: Record<string, any>) => Promise<void>;
   onCancel: () => void;
+  readOnly?: boolean; // New prop for read-only mode
 }
 
 export function GenericForm({
@@ -71,6 +72,7 @@ export function GenericForm({
   initialValues = {},
   onSubmit,
   onCancel,
+  readOnly = false,
 }: GenericFormProps) {
   const settings = useSettings();
   const { t, direction } = useI18n();
@@ -309,7 +311,7 @@ export function GenericForm({
                     value={formData[field.name] || ""}
                     onValueChange={(value: string | string[]) => handleChange(field.name, typeof value === 'string' ? value : value[0])}
                     placeholder={field.placeholder}
-                    disabled={field.disabled}
+                    disabled={field.disabled || readOnly}
                     className={getInputClasses(getInputHeight())}
                   />
                 ) : field.type === "searchable-select" || field.type === "server-select" ? (
@@ -330,7 +332,7 @@ export function GenericForm({
                     loading={field.loading}
                     noResultsText={field.noResultsText}
                     searchingText={field.searchingText}
-                    disabled={field.disabled}
+                    disabled={field.disabled || readOnly}
                     className={getInputClasses(getInputHeight())}
                   />
                 ) : field.type === "multi-select" ? (
@@ -351,7 +353,7 @@ export function GenericForm({
                     loading={field.loading}
                     noResultsText={field.noResultsText}
                     searchingText={field.searchingText}
-                    disabled={field.disabled}
+                    disabled={field.disabled || readOnly}
                     className={getInputClasses(getInputHeight())}
                   />
                 ) : field.type === "textarea" ? (
@@ -366,7 +368,7 @@ export function GenericForm({
                     )}
                     placeholder={field.placeholder}
                     rows={field.rows || 4}
-                    disabled={field.disabled}
+                    disabled={field.disabled || readOnly}
                     minLength={field.minLength}
                     maxLength={field.maxLength}
                     dir={direction}
@@ -396,7 +398,7 @@ export function GenericForm({
                       id={field.name}
                       checked={formData[field.name] || false}
                       onCheckedChange={(checked) => handleChange(field.name, checked)}
-                      disabled={field.disabled}
+                      disabled={field.disabled || readOnly}
                     />
                   </div>
                 ) : field.type === "checkbox" ? (
@@ -408,7 +410,7 @@ export function GenericForm({
                       id={field.name}
                       checked={formData[field.name] || false}
                       onCheckedChange={(checked) => handleChange(field.name, checked)}
-                      disabled={field.disabled}
+                      disabled={field.disabled || readOnly}
                       design={settings.checkboxStyle}
                     />
                     <Label htmlFor={field.name} className={cn(
@@ -422,7 +424,7 @@ export function GenericForm({
                   <RadioGroup
                     value={formData[field.name] || ""}
                     onValueChange={(value) => handleChange(field.name, value)}
-                    disabled={field.disabled}
+                    disabled={field.disabled || readOnly}
                     design={settings.radioStyle}
                   >
                     {field.options?.map((option) => (
@@ -452,7 +454,7 @@ export function GenericForm({
                       min={Number(field.min) || 0}
                       max={Number(field.max) || 100}
                       step={Number(field.step) || 1}
-                      disabled={field.disabled}
+                      disabled={field.disabled || readOnly}
                       className="w-full"
                     />
                     <div className={cn(
@@ -491,7 +493,7 @@ export function GenericForm({
                     )}
                     accept={field.accept}
                     multiple={field.multiple}
-                    disabled={field.disabled}
+                    disabled={field.disabled || readOnly}
                     dir={direction}
                   />
                 ) : (
@@ -512,7 +514,7 @@ export function GenericForm({
                     pattern={field.pattern}
                     minLength={field.minLength}
                     maxLength={field.maxLength}
-                    disabled={field.disabled}
+                    disabled={field.disabled || readOnly}
                     dir={direction}
                   />
                 )}
@@ -522,38 +524,56 @@ export function GenericForm({
 
         <Separator />
 
-        <div className={cn(
-          "flex flex-col sm:flex-row",
-          direction === "rtl" ? "justify-start" : "justify-end",
-          getGridGap(),
-          getSeparatorSpacing()
-        )}>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onCancel}
-            className={cn(
-              getInputHeight(),
-              direction === "rtl" ? "order-1 sm:order-2" : "order-2 sm:order-1"
-            )}
-            disabled={loading}
-            size={getButtonSize()}
-          >
-            {t("common.cancel")}
-          </Button>
-          <Button
-            type="submit"
-            disabled={loading}
-            className={cn(
-              getInputHeight(),
-              "gradient-primary",
-              direction === "rtl" ? "order-2 sm:order-1" : "order-1 sm:order-2"
-            )}
-            size={getButtonSize()}
-          >
-            {loading ? t("common.loading") : t("common.save")}
-          </Button>
-        </div>
+        {!readOnly && (
+          <div className={cn(
+            "flex flex-col sm:flex-row",
+            direction === "rtl" ? "justify-start" : "justify-end",
+            getGridGap(),
+            getSeparatorSpacing()
+          )}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCancel}
+              className={cn(
+                getInputHeight(),
+                direction === "rtl" ? "order-1 sm:order-2" : "order-2 sm:order-1"
+              )}
+              disabled={loading}
+              size={getButtonSize()}
+            >
+              {t("common.cancel")}
+            </Button>
+            <Button
+              type="submit"
+              disabled={loading}
+              className={cn(
+                getInputHeight(),
+                "gradient-primary",
+                direction === "rtl" ? "order-2 sm:order-1" : "order-1 sm:order-2"
+              )}
+              size={getButtonSize()}
+            >
+              {loading ? t("common.loading") : t("common.save")}
+            </Button>
+          </div>
+        )}
+        {readOnly && (
+          <div className={cn(
+            "flex justify-center",
+            getSeparatorSpacing()
+          )}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCancel}
+              className={getInputHeight()}
+              size={getButtonSize()}
+            >
+              {t("common.close")}
+            </Button>
+          </div>
+        )}
       </form>
     </div>
   );
