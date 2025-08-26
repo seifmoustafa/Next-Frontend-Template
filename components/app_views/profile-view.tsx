@@ -285,7 +285,9 @@ export function ProfileView() {
                       {t('profile.online')}
                     </div>
                   </div>
-                  <p className="text-muted-foreground mb-4">@{profile?.username}</p>
+                  <p className={`text-muted-foreground mb-4 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    {isRTL ? `${profile?.username}@` : `@${profile?.username}`}
+                  </p>
 
                   <div className="flex items-center justify-center lg:justify-start gap-2 mb-6">
                     <Button
