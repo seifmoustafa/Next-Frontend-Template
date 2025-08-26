@@ -264,7 +264,8 @@ export const ar = {
         projectPlanning: "تحديد نطاق المشروع وجمع المتطلبات",
         uiuxDesign: "مرحلة تصميم واجهة وتجربة المستخدم",
         frontendDevelopment: "تنفيذ مكونات React وواجهة المستخدم",
-        backendDevelopment: "تطوير واجهات برمجة التطبيقات وتصميم قاعدة البيانات",
+        backendDevelopment:
+          "تطوير واجهات برمجة التطبيقات وتصميم قاعدة البيانات",
         integrationTesting: "اختبار تكامل النظام من البداية للنهاية",
         userAcceptance: "اختبار العميل وجمع الملاحظات",
         deployment: "نشر الإنتاج وتشغيل النظام",
@@ -295,7 +296,7 @@ export const ar = {
       mixed: "مختلط",
       radar: "رادار",
       heatmap: "حراري",
-      timeline: "زمني"
+      timeline: "زمني",
     },
 
     // Chart sections
@@ -361,7 +362,8 @@ export const ar = {
     },
     mixed: {
       title: "الرسوم المختلطة",
-      description: "دمج أنواع مختلفة من الرسوم البيانية للحصول على عروض شاملة للبيانات",
+      description:
+        "دمج أنواع مختلفة من الرسوم البيانية للحصول على عروض شاملة للبيانات",
       lineBar: {
         title: "رسم خطي + عمودي",
         description: "دمج الرسوم الخطية والعمودية للحصول على منظور مزدوج",
@@ -379,7 +381,7 @@ export const ar = {
       title: "رسوم الرادار والمقياس",
       description: "بيانات متعددة الأبعاد وتصور مؤشرات الأداء الرئيسية",
     },
-   
+
     treemap: {
       title: "خرائط الشجرة",
       description: "تصور البيانات الهرمية بمستطيلات متداخلة",
@@ -392,8 +394,6 @@ export const ar = {
         description: "هيكل بيانات تنظيمي متعدد المستويات",
       },
     },
-    
-    
   },
 
   // Months
@@ -431,8 +431,6 @@ export const ar = {
     sat: "السبت",
     sun: "الأحد",
   },
-
-
 
   campaigns: {
     campaignA: "الحملة أ",
@@ -678,45 +676,77 @@ export const ar = {
   // Profile
   profile: {
     title: "الملف الشخصي",
-    subtitle: "إدارة بياناتك الشخصية وكلمة المرور",
-    personalInfo: {
-      title: "المعلومات الشخصية",
-      description: "تحديث بياناتك الأساسية",
-      firstName: "الاسم الأول",
-      firstNamePlaceholder: "أدخل الاسم الأول",
-      lastName: "الاسم الأخير",
-      lastNamePlaceholder: "أدخل الاسم الأخير",
-      phoneNumber: "رقم الهاتف",
-      phoneNumberPlaceholder: "أدخل رقم الهاتف",
-      username: "اسم المستخدم",
-      usernameHint: "لا يمكن تغيير اسم المستخدم",
-      adminType: "نوع المدير",
-      success: "تم تحديث البيانات بنجاح!",
-      save: "حفظ التغييرات",
-      saving: "جاري الحفظ...",
-    },
+    subtitle: "إدارة معلوماتك الشخصية وكلمة المرور",
+    personalInformation: "المعلومات الشخصية",
+    firstName: "الاسم الأول",
+    lastName: "اسم العائلة",
+    phoneNumber: "رقم الهاتف",
+    updateProfile: "تحديث الملف الشخصي",
+    updateSuccess: "تم تحديث الملف الشخصي بنجاح!",
+
+    // Header section
+    online: "متصل",
+    changePhoto: "تغيير الصورة",
+    accountOverview: "نظرة عامة على الحساب",
+    profileComplete: "اكتمال الملف الشخصي",
+    accountStatus: "حالة الحساب",
+    accessLevel: "مستوى الوصول",
+    securityStatus: "حالة الأمان",
+    active: "نشط",
+    admin: "مدير",
+    secure: "آمن",
+
+    // Info cards
+    username: "اسم المستخدم",
+    phone: "الهاتف",
+    role: "الدور",
+    status: "الحالة",
+
+    // Form descriptions
+    personalInfoDescription: "تحديث تفاصيلك الشخصية ومعلومات الاتصال",
+    passwordDescription: "تحديث كلمة المرور للحفاظ على أمان حسابك",
+
+    // Password section
     password: {
       title: "تغيير كلمة المرور",
-      description: "تحديث كلمة المرور الخاصة بك",
       current: "كلمة المرور الحالية",
-      currentPlaceholder: "أدخل كلمة المرور الحالية",
       new: "كلمة المرور الجديدة",
-      newPlaceholder: "أدخل كلمة المرور الجديدة",
       confirm: "تأكيد كلمة المرور الجديدة",
-      confirmPlaceholder: "أعد إدخال كلمة المرور الجديدة",
-      requirements: "متطلبات كلمة المرور:",
-      requirementLength: "• على الأقل 6 أحرف",
-      requirementCase: "• يُفضل استخدام أحرف كبيرة وصغيرة",
-      requirementNumbers: "• يُفضل استخدام أرقام ورموز خاصة",
+      requirements: "متطلبات كلمة المرور",
+      requirementLength: "6 أحرف على الأقل",
+      requirementCase: "مزيج من الأحرف الكبيرة والصغيرة",
+      requirementNumbers: "تتضمن أرقام ورموز خاصة",
       success: "تم تحديث كلمة المرور بنجاح!",
       update: "تحديث كلمة المرور",
-      updating: "جاري التحديث...",
+      updating: "جاري تحديث كلمة المرور...",
+      description: "تحديث كلمة المرور للحفاظ على أمان حسابك",
     },
+
+    // Sidebar sections
+    accountSecurity: "أمان الحساب",
+    twoFactorAuth: "المصادقة الثنائية",
+    enabled: "مفعل",
+    lastLogin: "آخر تسجيل دخول",
+    loginLocation: "موقع تسجيل الدخول",
+    quickActions: "الإجراءات السريعة",
+    exportProfileData: "تصدير بيانات الملف الشخصي",
+    privacySettings: "إعدادات الخصوصية",
+    activityLog: "سجل النشاط",
+    systemInfo: "معلومات النظام",
+    accountType: "نوع الحساب",
+    memberSince: "عضو منذ",
+    profileVersion: "إصدار الملف الشخصي",
+
+    // Time formats
+    hoursAgo: "منذ {hours} ساعة",
+    minutesAgo: "منذ {minutes} دقيقة",
+    daysAgo: "منذ {days} يوم",
+
     errors: {
-      fetch: "فشل في جلب بيانات الملف الشخصي",
-      update: "فشل في تحديث البيانات",
+      fetch: "فشل في تحميل الملف الشخصي",
+      update: "فشل في تحديث الملف الشخصي",
       passwordMismatch: "كلمات المرور الجديدة غير متطابقة",
-      passwordLength: "كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل",
+      passwordLength: "يجب أن تكون كلمة المرور الجديدة 6 أحرف على الأقل",
       currentPassword: "كلمة المرور الحالية غير صحيحة",
       updatePassword: "فشل في تحديث كلمة المرور",
       unexpected: "حدث خطأ غير متوقع",
@@ -725,12 +755,12 @@ export const ar = {
 
   // Settings
   settings: {
-    devices:{
+    devices: {
       desktop: "Desktop",
       mobile: "Mobile",
       tablet: "Tablet",
       smarttv: "Smart TV",
-      other: "Other"
+      other: "Other",
     },
     appearance: "المظهر",
     layout: "التخطيط",
@@ -900,8 +930,14 @@ export const ar = {
         gradient: { name: "متدرج", description: "خلفيات متدرجة ملونة" },
         outlined: { name: "محاط", description: "تصميم شفاف يركز على الحدود" },
         neon: { name: "نيون", description: "نمط سايبربانك متوهج" },
-        glassmorphism: { name: "زجاجي", description: "تأثير زجاجي شفاف مع ضبابية" },
-        neumorphism: { name: "نيومورفيزم", description: "تأثير ثلاثي الأبعاد ناعم" },
+        glassmorphism: {
+          name: "زجاجي",
+          description: "تأثير زجاجي شفاف مع ضبابية",
+        },
+        neumorphism: {
+          name: "نيومورفيزم",
+          description: "تأثير ثلاثي الأبعاد ناعم",
+        },
         aurora: { name: "شفق", description: "تدرجات متحركة سحرية" },
         cosmic: { name: "كوني", description: "سمة فضائية مع تدرجات نجمية" },
         quick: { name: "سريع", description: "يظهر لمدة ثانية واحدة" },
@@ -916,10 +952,19 @@ export const ar = {
         errorDesc: "حدث خطأ ما",
       },
       testMessages: {
-        success: { title: "توست النجاح", desc: "هذا توست نجاح مع التصميم المختار" },
+        success: {
+          title: "توست النجاح",
+          desc: "هذا توست نجاح مع التصميم المختار",
+        },
         error: { title: "توست الخطأ", desc: "هذا توست خطأ مع التصميم المختار" },
-        warning: { title: "توست التحذير", desc: "هذا توست تحذير مع التصميم المختار" },
-        info: { title: "توست المعلومات", desc: "هذا توست معلومات مع التصميم المختار" },
+        warning: {
+          title: "توست التحذير",
+          desc: "هذا توست تحذير مع التصميم المختار",
+        },
+        info: {
+          title: "توست المعلومات",
+          desc: "هذا توست معلومات مع التصميم المختار",
+        },
       },
     },
     darkMode: "الوضع المظلم",
@@ -1310,8 +1355,14 @@ export const ar = {
       title: "نمط النوافذ",
       description: "اختر كيفية ظهور النوافذ المنبثقة",
       options: {
-        default: { name: "افتراضي", description: "نافذة منبثقة قياسية في الوسط" },
-        centered: { name: "في الوسط", description: "نافذة منبثقة في الوسط دائماً" },
+        default: {
+          name: "افتراضي",
+          description: "نافذة منبثقة قياسية في الوسط",
+        },
+        centered: {
+          name: "في الوسط",
+          description: "نافذة منبثقة في الوسط دائماً",
+        },
         fullscreen: { name: "ملء الشاشة", description: "تغطي الشاشة بالكامل" },
         drawer: { name: "درج", description: "نافذة منبثقة جانبية منزلقة" },
         glass: { name: "زجاجي", description: "تأثير زجاجي مع ضبابية" },
@@ -1433,8 +1484,14 @@ export const ar = {
           glass: { name: "زجاجي", description: "تأثير شفاف زجاجي" },
           neon: { name: "نيون", description: "حدود متوهجة مشرقة" },
           gradient: { name: "متدرج", description: "خلفيات متدرجة ملونة" },
-          neumorphism: { name: "نيومورفيزم", description: "مظهر ثلاثي الأبعاد ناعم" },
-          cyberpunk: { name: "سايبربانك", description: "جمالية تقنية مستقبلية" },
+          neumorphism: {
+            name: "نيومورفيزم",
+            description: "مظهر ثلاثي الأبعاد ناعم",
+          },
+          cyberpunk: {
+            name: "سايبربانك",
+            description: "جمالية تقنية مستقبلية",
+          },
           luxury: { name: "فاخر", description: "لمسات ذهبية راقية" },
           aurora: { name: "شفق", description: "مستوحى من الأضواء الشمالية" },
           cosmic: { name: "كوني", description: "تصميم بموضوع الفضاء" },
@@ -1448,11 +1505,17 @@ export const ar = {
           crystal: { name: "كريستال", description: "بلوري شفاف" },
           plasma: { name: "بلازما", description: "تأثيرات طاقة كهربائية" },
           quantum: { name: "كمي", description: "مستوحى من فيزياء الجسيمات" },
-          holographic: { name: "هولوغرافي", description: "تحولات قوس قزح متلألئة" },
+          holographic: {
+            name: "هولوغرافي",
+            description: "تحولات قوس قزح متلألئة",
+          },
           stellar: { name: "نجمي", description: "خلفية حقل النجوم" },
           vortex: { name: "دوامة", description: "أنماط طاقة دوارة" },
-          phoenix: { name: "عنقاء", description: "موضوع النار والولادة الجديدة" }
-        }
+          phoenix: {
+            name: "عنقاء",
+            description: "موضوع النار والولادة الجديدة",
+          },
+        },
       },
       radio: {
         title: "تصميم أزرار الراديو",
@@ -1463,8 +1526,14 @@ export const ar = {
           glass: { name: "زجاجي", description: "تأثير شفاف زجاجي" },
           neon: { name: "نيون", description: "حدود متوهجة مشرقة" },
           gradient: { name: "متدرج", description: "خلفيات متدرجة ملونة" },
-          neumorphism: { name: "نيومورفيزم", description: "مظهر ثلاثي الأبعاد ناعم" },
-          cyberpunk: { name: "سايبربانك", description: "جمالية تقنية مستقبلية" },
+          neumorphism: {
+            name: "نيومورفيزم",
+            description: "مظهر ثلاثي الأبعاد ناعم",
+          },
+          cyberpunk: {
+            name: "سايبربانك",
+            description: "جمالية تقنية مستقبلية",
+          },
           luxury: { name: "فاخر", description: "لمسات ذهبية راقية" },
           aurora: { name: "شفق", description: "مستوحى من الأضواء الشمالية" },
           cosmic: { name: "كوني", description: "تصميم بموضوع الفضاء" },
@@ -1478,14 +1547,20 @@ export const ar = {
           crystal: { name: "كريستال", description: "بلوري شفاف" },
           plasma: { name: "بلازما", description: "تأثيرات طاقة كهربائية" },
           quantum: { name: "كمي", description: "مستوحى من فيزياء الجسيمات" },
-          holographic: { name: "هولوغرافي", description: "تحولات قوس قزح متلألئة" },
+          holographic: {
+            name: "هولوغرافي",
+            description: "تحولات قوس قزح متلألئة",
+          },
           stellar: { name: "نجمي", description: "خلفية حقل النجوم" },
           vortex: { name: "دوامة", description: "أنماط طاقة دوارة" },
-          phoenix: { name: "عنقاء", description: "موضوع النار والولادة الجديدة" }
-        }
+          phoenix: {
+            name: "عنقاء",
+            description: "موضوع النار والولادة الجديدة",
+          },
+        },
       },
       preview: "معاينة مباشرة",
-      previewDescription: "شاهد كيف تبدو الأنماط المحددة في العمل"
+      previewDescription: "شاهد كيف تبدو الأنماط المحددة في العمل",
     },
 
     behavior: {
@@ -1721,8 +1796,6 @@ export const ar = {
     deleteWarning: "لا يمكن التراجع عن هذا الإجراء.",
     deleting: "جاري الحذف...",
   },
-
-
 
   // Table
   table: {

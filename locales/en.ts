@@ -154,7 +154,7 @@ export const en = {
     title: "Chart Components",
     description: "Interactive chart components with sample data",
     lineCharts: "Line Charts",
-    areaCharts: "Area Charts", 
+    areaCharts: "Area Charts",
     barCharts: "Bar Charts",
     pieDonutCharts: "Pie & Donut Charts",
     scatterBubbleCharts: "Scatter & Bubble Charts",
@@ -166,12 +166,13 @@ export const en = {
     areaDesc: "Emphasize magnitude of change with filled areas under lines",
     barDesc: "Compare categories with horizontal or vertical bars",
     pieDesc: "Show proportional data with circular visualizations",
-    scatterDesc: "Visualize relationships between variables with plotted points",
+    scatterDesc:
+      "Visualize relationships between variables with plotted points",
     mixedDesc: "Combine different chart types for comprehensive data views",
     radarDesc: "Multi-dimensional data and KPI visualization",
     heatmapDesc: "Pattern recognition and hierarchical data visualization",
     timelineDesc: "Project tracking and conversion process visualization",
-    
+
     // Chart types
     basicLine: "Basic Line Chart",
     multiSeries: "Multi-Series Line",
@@ -195,7 +196,7 @@ export const en = {
     treemapChart: "Treemap Chart",
     timelineChart: "Timeline Chart",
     funnelChart: "Funnel Chart",
-    
+
     // Sample data labels
     sampleData: "Sample Data",
     monthlyRevenue: "Monthly Revenue",
@@ -205,7 +206,7 @@ export const en = {
     marketShare: "Market Share",
     conversionRates: "Conversion Rates",
     trafficSources: "Traffic Sources",
-    
+
     // Chart descriptions (removed duplicates)
     // lineDesc, areaDesc, etc. already defined above
     users: "Users",
@@ -320,7 +321,8 @@ export const en = {
       descriptions: {
         projectPlanning: "Initial project scope and requirements gathering",
         uiuxDesign: "User interface and experience design phase",
-        frontendDevelopment: "React components and user interface implementation",
+        frontendDevelopment:
+          "React components and user interface implementation",
         backendDevelopment: "API development and database design",
         integrationTesting: "End-to-end system integration testing",
         userAcceptance: "Client testing and feedback collection",
@@ -378,8 +380,6 @@ export const en = {
     sat: "Sat",
     sun: "Sun",
   },
-
-
 
   campaigns: {
     campaignA: "Campaign A",
@@ -558,39 +558,72 @@ export const en = {
   profile: {
     title: "Profile",
     subtitle: "Manage your personal info and password",
-    personalInfo: {
-      title: "Personal Information",
-      description: "Update your basic details",
-      firstName: "First Name",
-      firstNamePlaceholder: "Enter first name",
-      lastName: "Last Name",
-      lastNamePlaceholder: "Enter last name",
-      phoneNumber: "Phone Number",
-      phoneNumberPlaceholder: "Enter phone number",
-      username: "Username",
-      usernameHint: "Username cannot be changed",
-      adminType: "Admin Type",
-      success: "Profile updated successfully!",
-      save: "Save Changes",
-      saving: "Saving...",
-    },
+    personalInformation: "Personal Information",
+    firstName: "First Name",
+    lastName: "Last Name",
+    phoneNumber: "Phone Number",
+    updateProfile: "Update Profile",
+    updateSuccess: "Profile updated successfully!",
+
+    // Header section
+    online: "Online",
+    changePhoto: "Change Photo",
+    accountOverview: "Account Overview",
+    profileComplete: "Profile Complete",
+    accountStatus: "Account Status",
+    accessLevel: "Access Level",
+    securityStatus: "Security Status",
+    active: "Active",
+    admin: "Admin",
+    secure: "Secure",
+
+    // Info cards
+    username: "Username",
+    phone: "Phone",
+    role: "Role",
+    status: "Status",
+
+    // Form descriptions
+    personalInfoDescription:
+      "Update your personal details and contact information",
+    passwordDescription: "Update your password to keep your account secure",
+
+    // Password section
     password: {
       title: "Change Password",
-      description: "Update your password",
       current: "Current Password",
-      currentPlaceholder: "Enter current password",
       new: "New Password",
-      newPlaceholder: "Enter new password",
       confirm: "Confirm New Password",
-      confirmPlaceholder: "Re-enter new password",
-      requirements: "Password requirements:",
-      requirementLength: "• At least 6 characters",
-      requirementCase: "• Prefer uppercase and lowercase letters",
-      requirementNumbers: "• Prefer numbers and special characters",
+      requirements: "Password Requirements",
+      requirementLength: "At least 6 characters long",
+      requirementCase: "Mix of uppercase and lowercase letters",
+      requirementNumbers: "Include numbers and special characters",
       success: "Password updated successfully!",
       update: "Update Password",
-      updating: "Updating...",
+      updating: "Updating Password...",
+      description: "Update your password to keep your account secure",
     },
+
+    // Sidebar sections
+    accountSecurity: "Account Security",
+    twoFactorAuth: "Two-Factor Auth",
+    enabled: "Enabled",
+    lastLogin: "Last Login",
+    loginLocation: "Login Location",
+    quickActions: "Quick Actions",
+    exportProfileData: "Export Profile Data",
+    privacySettings: "Privacy Settings",
+    activityLog: "Activity Log",
+    systemInfo: "System Info",
+    accountType: "Account Type",
+    memberSince: "Member Since",
+    profileVersion: "Profile Version",
+
+    // Time formats
+    hoursAgo: "{hours} hours ago",
+    minutesAgo: "{minutes} minutes ago",
+    daysAgo: "{days} days ago",
+
     errors: {
       fetch: "Failed to load profile",
       update: "Failed to update profile",
@@ -736,7 +769,7 @@ export const en = {
         },
       },
     },
-   
+
     darkMode: "Dark Mode",
     lightDarkToggle: "Toggle between light and dark mode",
     selectColorTheme: "Select Color Theme",
@@ -804,29 +837,30 @@ export const en = {
       mobile: "Mobile",
       tablet: "Tablet",
       smarttv: "Smart TV",
-      other: "Other"
+      other: "Other",
     },
     charts: {
       tabs: {
         line: "Line",
-        area: "Area", 
+        area: "Area",
         bar: "Bar",
         pie: "Pie",
         scatter: "Scatter",
         mixed: "Mixed",
         radar: "Radar",
         heatmap: "Heatmap",
-        timeline: "Timeline"
+        timeline: "Timeline",
       },
       line: {
         title: "Line Charts",
-        description: "Display trends and changes over time with connected data points",
+        description:
+          "Display trends and changes over time with connected data points",
         basic: {
           title: "Basic Line Chart",
           description: "Simple line chart showing sales data over time",
         },
         multiSeries: {
-          title: "Multi-Series Line Chart", 
+          title: "Multi-Series Line Chart",
           description: "Compare multiple data series on the same chart",
         },
         curved: {
@@ -840,7 +874,8 @@ export const en = {
       },
       area: {
         title: "Area Charts",
-        description: "Emphasize magnitude of change with filled areas under lines",
+        description:
+          "Emphasize magnitude of change with filled areas under lines",
         basic: {
           title: "Basic Area Chart",
           description: "Simple area chart with gradient fill",
@@ -887,7 +922,8 @@ export const en = {
         },
         donut: {
           title: "Donut Chart",
-          description: "Pie chart with hollow center for additional information",
+          description:
+            "Pie chart with hollow center for additional information",
         },
         semiCircle: {
           title: "Semi-Circle Chart",
@@ -900,7 +936,8 @@ export const en = {
       },
       scatter: {
         title: "Scatter & Bubble Charts",
-        description: "Visualize relationships between variables with plotted points",
+        description:
+          "Visualize relationships between variables with plotted points",
         basic: {
           title: "Basic Scatter Chart",
           description: "Plot data points to show correlation patterns",
@@ -920,7 +957,8 @@ export const en = {
       },
       mixed: {
         title: "Mixed Charts",
-        description: "Combine different chart types for comprehensive data views",
+        description:
+          "Combine different chart types for comprehensive data views",
         lineBar: {
           title: "Line + Bar Chart",
           description: "Combine line and bar charts for dual perspective",
@@ -1289,14 +1327,38 @@ export const en = {
         compact: { name: "Compact", description: "Tighter spacing" },
         spacious: { name: "Spacious", description: "More breathing room" },
         inline: { name: "Inline", description: "Horizontal layout" },
-        modern: { name: "Modern", description: "Contemporary design with gradients" },
-        glass: { name: "Glass", description: "Glassmorphism with blur effects" },
-        minimal: { name: "Minimal", description: "Ultra-clean design with minimal borders" },
-        card: { name: "Card", description: "Form fields grouped in elevated containers" },
-        neon: { name: "Neon", description: "Futuristic glowing cyberpunk style" },
-        elegant: { name: "Elegant", description: "Sophisticated luxury design" },
-        organic: { name: "Organic", description: "Natural flowing curves and shapes" },
-        retro: { name: "Retro", description: "Vintage-inspired classic design" },
+        modern: {
+          name: "Modern",
+          description: "Contemporary design with gradients",
+        },
+        glass: {
+          name: "Glass",
+          description: "Glassmorphism with blur effects",
+        },
+        minimal: {
+          name: "Minimal",
+          description: "Ultra-clean design with minimal borders",
+        },
+        card: {
+          name: "Card",
+          description: "Form fields grouped in elevated containers",
+        },
+        neon: {
+          name: "Neon",
+          description: "Futuristic glowing cyberpunk style",
+        },
+        elegant: {
+          name: "Elegant",
+          description: "Sophisticated luxury design",
+        },
+        organic: {
+          name: "Organic",
+          description: "Natural flowing curves and shapes",
+        },
+        retro: {
+          name: "Retro",
+          description: "Vintage-inspired classic design",
+        },
       },
     },
     loadingStyle: {
@@ -1328,7 +1390,10 @@ export const en = {
         glass: { name: "Glass", description: "Glassmorphism with blur effect" },
         neon: { name: "Neon", description: "Glowing neon style" },
         minimal: { name: "Minimal", description: "Clean minimal design" },
-        elegant: { name: "Elegant", description: "Sophisticated gradient style" },
+        elegant: {
+          name: "Elegant",
+          description: "Sophisticated gradient style",
+        },
       },
     },
     badgeStyle: {
@@ -1365,9 +1430,15 @@ export const en = {
         fullscreen: { name: "Fullscreen", description: "Covers entire screen" },
         drawer: { name: "Drawer", description: "Sliding sidebar modal" },
         glass: { name: "Glass", description: "Glassmorphism with blur effect" },
-        floating: { name: "Floating", description: "Elevated floating appearance" },
+        floating: {
+          name: "Floating",
+          description: "Elevated floating appearance",
+        },
         card: { name: "Card", description: "Clean card-style design" },
-        overlay: { name: "Overlay", description: "Large overlay with backdrop" },
+        overlay: {
+          name: "Overlay",
+          description: "Large overlay with backdrop",
+        },
       },
       testButton: "Test {{style}}",
       testInstructions:
@@ -1510,7 +1581,7 @@ export const en = {
         fancy: { name: "Fancy", description: "Hover effects" },
       },
     },
-   
+
     behavior: {
       title: "UI Behavior",
       description: "Control how the interface behaves",
@@ -1568,11 +1639,23 @@ export const en = {
         designOptions: {
           default: { name: "Default", description: "Standard checkbox design" },
           modern: { name: "Modern", description: "Clean contemporary design" },
-          glass: { name: "Glass", description: "Translucent glassmorphism effect" },
+          glass: {
+            name: "Glass",
+            description: "Translucent glassmorphism effect",
+          },
           neon: { name: "Neon", description: "Bright glowing borders" },
-          gradient: { name: "Gradient", description: "Colorful gradient backgrounds" },
-          neumorphism: { name: "Neumorphism", description: "Soft 3D raised appearance" },
-          cyberpunk: { name: "Cyberpunk", description: "Futuristic tech aesthetic" },
+          gradient: {
+            name: "Gradient",
+            description: "Colorful gradient backgrounds",
+          },
+          neumorphism: {
+            name: "Neumorphism",
+            description: "Soft 3D raised appearance",
+          },
+          cyberpunk: {
+            name: "Cyberpunk",
+            description: "Futuristic tech aesthetic",
+          },
           luxury: { name: "Luxury", description: "Premium gold accents" },
           aurora: { name: "Aurora", description: "Northern lights inspired" },
           cosmic: { name: "Cosmic", description: "Space-themed design" },
@@ -1581,28 +1664,52 @@ export const en = {
           organic: { name: "Organic", description: "Natural curved shapes" },
           retro: { name: "Retro", description: "Vintage computing style" },
           matrix: { name: "Matrix", description: "Digital rain effect" },
-          diamond: { name: "Diamond", description: "Crystalline faceted design" },
+          diamond: {
+            name: "Diamond",
+            description: "Crystalline faceted design",
+          },
           liquid: { name: "Liquid", description: "Fluid morphing shapes" },
           crystal: { name: "Crystal", description: "Transparent crystalline" },
           plasma: { name: "Plasma", description: "Electric energy effects" },
-          quantum: { name: "Quantum", description: "Particle physics inspired" },
-          holographic: { name: "Holographic", description: "Iridescent rainbow shifts" },
+          quantum: {
+            name: "Quantum",
+            description: "Particle physics inspired",
+          },
+          holographic: {
+            name: "Holographic",
+            description: "Iridescent rainbow shifts",
+          },
           stellar: { name: "Stellar", description: "Star field background" },
           vortex: { name: "Vortex", description: "Swirling energy patterns" },
-          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" }
-        }
+          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" },
+        },
       },
       radio: {
         title: "Radio Button Design",
         description: "Choose the visual style for radio buttons",
         designOptions: {
-          default: { name: "Default", description: "Standard radio button design" },
+          default: {
+            name: "Default",
+            description: "Standard radio button design",
+          },
           modern: { name: "Modern", description: "Clean contemporary design" },
-          glass: { name: "Glass", description: "Translucent glassmorphism effect" },
+          glass: {
+            name: "Glass",
+            description: "Translucent glassmorphism effect",
+          },
           neon: { name: "Neon", description: "Bright glowing borders" },
-          gradient: { name: "Gradient", description: "Colorful gradient backgrounds" },
-          neumorphism: { name: "Neumorphism", description: "Soft 3D raised appearance" },
-          cyberpunk: { name: "Cyberpunk", description: "Futuristic tech aesthetic" },
+          gradient: {
+            name: "Gradient",
+            description: "Colorful gradient backgrounds",
+          },
+          neumorphism: {
+            name: "Neumorphism",
+            description: "Soft 3D raised appearance",
+          },
+          cyberpunk: {
+            name: "Cyberpunk",
+            description: "Futuristic tech aesthetic",
+          },
           luxury: { name: "Luxury", description: "Premium gold accents" },
           aurora: { name: "Aurora", description: "Northern lights inspired" },
           cosmic: { name: "Cosmic", description: "Space-themed design" },
@@ -1611,19 +1718,28 @@ export const en = {
           organic: { name: "Organic", description: "Natural curved shapes" },
           retro: { name: "Retro", description: "Vintage computing style" },
           matrix: { name: "Matrix", description: "Digital rain effect" },
-          diamond: { name: "Diamond", description: "Crystalline faceted design" },
+          diamond: {
+            name: "Diamond",
+            description: "Crystalline faceted design",
+          },
           liquid: { name: "Liquid", description: "Fluid morphing shapes" },
           crystal: { name: "Crystal", description: "Transparent crystalline" },
           plasma: { name: "Plasma", description: "Electric energy effects" },
-          quantum: { name: "Quantum", description: "Particle physics inspired" },
-          holographic: { name: "Holographic", description: "Iridescent rainbow shifts" },
+          quantum: {
+            name: "Quantum",
+            description: "Particle physics inspired",
+          },
+          holographic: {
+            name: "Holographic",
+            description: "Iridescent rainbow shifts",
+          },
           stellar: { name: "Stellar", description: "Star field background" },
           vortex: { name: "Vortex", description: "Swirling energy patterns" },
-          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" }
-        }
+          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" },
+        },
       },
       preview: "Live Preview",
-      previewDescription: "See how your selected styles look in action"
+      previewDescription: "See how your selected styles look in action",
     },
     preview: {
       title: "Live Preview",
@@ -1913,7 +2029,7 @@ export const en = {
         name: "Cosmic",
         description: "Space theme with stellar gradients",
       },
- 
+
       filled: { name: "Filled", description: "Solid backgrounds" },
     },
     preview: {
@@ -1955,12 +2071,10 @@ export const en = {
         desc: "This is an info toast with the selected design",
       },
     },
-   
-    
+
     showIconsLabel: "Show Icons in Toasts",
     showIconsDesc: "Display icons in toast notifications",
-   
-    
+
     messages: {
       success: {
         title: "Success!",
@@ -1979,7 +2093,7 @@ export const en = {
         description: "Here's some information.",
       },
     },
-    
+
     created: "{itemType} Created",
     updated: "{itemType} Updated",
     deleted: "{itemType} Deleted",
@@ -2211,8 +2325,8 @@ export const en = {
 
   components: {
     multiSelect: {
-      title:"Multi Select",
-      description:"Choose multible choices",
+      title: "Multi Select",
+      description: "Choose multible choices",
       searchStates: {
         noResults: "No Results",
         searching: "Searching ......",
