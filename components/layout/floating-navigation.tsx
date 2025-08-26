@@ -18,10 +18,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  getNavigationItems,
   isNavigationItemActive,
   type NavigationItem,
 } from "@/config/navigation";
+import { useDynamicNavigation } from "@/components/navigation/dynamic-navigation";
 import { Logo } from "@/components/ui/logo";
 
 interface FloatingNavigationProps {
@@ -42,7 +42,7 @@ export function FloatingNavigation({
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations
-  const navigation = getNavigationItems(t);
+  const navigation = useDynamicNavigation();
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>
@@ -303,10 +303,10 @@ export function FloatingNavigation({
                   spacingSize === "compact"
                     ? "space-x-3 rtl:space-x-reverse p-3"
                     : spacingSize === "comfortable"
-                    ? "space-x-5 rtl:space-x-reverse p-5"
-                    : spacingSize === "spacious"
-                    ? "space-x-6 rtl:space-x-reverse p-6"
-                    : "space-x-4 rtl:space-x-reverse p-4"
+                      ? "space-x-5 rtl:space-x-reverse p-5"
+                      : spacingSize === "spacious"
+                        ? "space-x-6 rtl:space-x-reverse p-6"
+                        : "space-x-4 rtl:space-x-reverse p-4"
                 )}
               >
                 <div className="relative">
@@ -317,13 +317,14 @@ export function FloatingNavigation({
                       spacingSize === "compact"
                         ? "h-10 w-10"
                         : spacingSize === "spacious"
-                        ? "h-14 w-14"
-                        : "h-12 w-12"
+                          ? "h-14 w-14"
+                          : "h-12 w-12"
                     )}
                   >
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold">
-                      { user.firstName.charAt(0) ?? user.username}
-                      {user.lastName.charAt(0) ?? ""}
+                      {/*{ user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}*/}
+                      {user.username}
                     </AvatarFallback>
                   </Avatar>
                   {/* Online indicator */}

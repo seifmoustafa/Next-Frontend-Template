@@ -15,9 +15,9 @@ import { ThemeSwitcher } from "@/components/layout/common/theme-switcher";
 import { useLoginViewModel } from "@/hooks/use-login-viewmodel";
 
 export function LoginView() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const vm = useLoginViewModel();
-
+  const isRTL = language === 'ar'
   // Handle redirect for authenticated users - only check once on mount
   useEffect(() => {
     if (vm.isAuthenticated) {
@@ -92,7 +92,7 @@ export function LoginView() {
                   value={vm.formData.password}
                   onChange={(e) => vm.updateField("password", e.target.value)}
                   required
-                  className="h-12 pr-10 [&::-ms-reveal]:hidden [&::-webkit-credentials-auto-fill-button]:hidden"
+                  className="h-12 [&::-ms-reveal]:hidden [&::-webkit-credentials-auto-fill-button]:hidden"
                   placeholder="••••••••"
                   disabled={vm.isLoading}
                   autoComplete="current-password"
@@ -101,7 +101,7 @@ export function LoginView() {
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8"
+                  className={`absolute ${isRTL ? 'left-2' : 'right-2'} top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-muted/50 rounded-xl`}
                   onClick={vm.togglePasswordVisibility}
                   disabled={vm.isLoading}
                 >
@@ -152,3 +152,5 @@ export function LoginView() {
     </div>
   );
 }
+
+export default LoginView;

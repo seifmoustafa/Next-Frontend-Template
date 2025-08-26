@@ -15,10 +15,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  getNavigationItems,
   isNavigationItemActive,
   type NavigationItem,
 } from "@/config/navigation";
+import { useDynamicNavigation } from "@/components/navigation/dynamic-navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Logo } from "@/components/ui/logo";
 
@@ -50,8 +50,8 @@ export function ModernSidebar({
     }
   };
 
-  // Get navigation items with translations
-  const navigation = getNavigationItems(t);
+  // Get navigation items with translations from dynamic navigation
+  const navigation = useDynamicNavigation();
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -256,8 +256,8 @@ export function ModernSidebar({
           open
             ? "translate-x-0"
             : direction === "rtl"
-            ? "translate-x-full"
-            : "-translate-x-full",
+              ? "translate-x-full"
+              : "-translate-x-full",
           isHovered ? "w-80" : "w-20"
         )}
         onMouseEnter={handleMouseEnter}
@@ -330,8 +330,9 @@ export function ModernSidebar({
                     )}
                   >
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-semibold text-sm">
-                      { user.firstName.charAt(0) ?? user.username}
-                      {user.lastName.charAt(0) ?? ""}
+                      {/*{ user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}*/}
+                      {user.username}
                     </AvatarFallback>
                   </Avatar>
                   {/* Online indicator */}

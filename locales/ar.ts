@@ -752,7 +752,21 @@ export const ar = {
       unexpected: "حدث خطأ غير متوقع",
     },
   },
-
+  // Not Authorized Page
+  notAuthorized: {
+    title: "تم رفض الوصول",
+    description:
+      "ليس لديك صلاحية للوصول إلى هذه الصفحة. يرجى الاتصال بمدير النظام إذا كنت تعتقد أن هذا خطأ.",
+    goBack: "العودة",
+    goHome: "الذهاب إلى لوحة التحكم",
+    contactAdmin: "تحتاج مساعدة؟ اتصل بمدير النظام.",
+    accessDeniedAlert: "تم رفض الوصول:",
+    accessDeniedMessage:
+      "ليس لديك الصلاحيات المطلوبة لعرض هذه الصفحة. يرجى الاتصال بمدير النظام إذا كنت تعتقد أن هذا خطأ.",
+    needAccessTitle: "تحتاج إلى صلاحية؟",
+    needAccessDescription:
+      "إذا كنت تحتاج إلى الوصول لهذا المورد، يرجى الاتصال بمدير النظام أو تقديم طلب من خلال القنوات المناسبة. قم بتضمين تفاصيل حول ما تحاول الوصول إليه ولماذا تحتاج إليه.",
+  },
   // Settings
   settings: {
     devices: {
@@ -1767,6 +1781,13 @@ export const ar = {
 
   // Common
   common: {
+    pageNotFound: "الصفحة غير موجودة",
+    pageNotFoundDescription: "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
+    goBack: "العودة",
+    goHome: "الذهاب للرئيسية",
+    unexpectedError:
+      "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى أو الاتصال بالدعم إذا استمرت المشكلة.",
+    errorId: "معرف الخطأ",
     collapseAll: "طي الكل",
     expandAll: "إظهار الكل",
     selectDate: "اختر التاريخ",

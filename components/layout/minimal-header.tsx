@@ -19,7 +19,7 @@ import { useI18n } from "@/providers/i18n-provider";
 import { useLayoutStyles } from "./use-layout-styles";
 import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import { cn } from "@/lib/utils";
-import { getNavigationItems } from "@/config/navigation";
+import { useDynamicNavigation } from "@/components/navigation/dynamic-navigation";
 import { Logo } from "@/components/ui/logo";
 import { LanguageSwitcher, ThemeSwitcher } from "./common";
 import { useRouter } from "next/navigation";
@@ -36,7 +36,7 @@ export function MinimalHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Get navigation items with translations from centralized config
-  const navigation = getNavigationItems(t);
+  const navigation = useDynamicNavigation();
 
   const headerClass = getHeaderStyleClass({
     compact: "py-3",

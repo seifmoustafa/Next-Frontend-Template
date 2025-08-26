@@ -15,10 +15,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  getNavigationItems,
   isNavigationItemActive,
   type NavigationItem,
 } from "@/config/navigation";
+import { useDynamicNavigation } from "@/components/navigation/dynamic-navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Logo } from "@/components/ui/logo";
 
@@ -48,7 +48,7 @@ export function Sidebar({
   };
 
   // Get navigation items with translations
-  const navigation = getNavigationItems(t);
+  const navigation = useDynamicNavigation();
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>
@@ -237,7 +237,7 @@ export function Sidebar({
                   )}
                 >
                   <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary text-sm font-semibold">
-                    //{ user.firstName.charAt(0) ?? user.username}
+                    //{user.firstName.charAt(0) ?? user.username}
                     {user.lastName.charAt(0) ?? ""}
                   </AvatarFallback>
                 </Avatar>

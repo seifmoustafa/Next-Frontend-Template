@@ -6,8 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronRight, Settings } from "lucide-react";
 import { useI18n } from "@/providers/i18n-provider";
+import { useDynamicNavigation } from "@/components/navigation/dynamic-navigation";
 import {
-  navigation,
   isNavigationItemActive,
   type NavigationItem,
 } from "@/config/navigation";
@@ -28,6 +28,7 @@ export function NavigationSidebar({
 }: NavigationSidebarProps) {
   const pathname = usePathname();
   const { t, language, direction } = useI18n();
+  const navigation = useDynamicNavigation();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
 
@@ -135,8 +136,8 @@ export function NavigationSidebar({
           open
             ? "translate-x-0"
             : direction === "rtl"
-            ? "translate-x-full"
-            : "-translate-x-full"
+              ? "translate-x-full"
+              : "-translate-x-full"
         )}
       >
         <div className="flex flex-col h-full">

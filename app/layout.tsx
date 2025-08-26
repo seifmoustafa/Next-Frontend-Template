@@ -3,10 +3,12 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { I18nProvider } from "@/providers/i18n-provider"
-import { ServiceProvider } from "@/providers/service-provider"
-import { AuthProvider } from "@/providers/auth-provider"
-import { SettingsProvider } from "@/providers/settings-provider"
-import { EnhancedToaster } from "@/components/ui/enhanced-toaster"
+import { ServiceProvider } from "@/providers/service-provider";
+import { AuthProvider } from "@/providers/auth-provider";
+import { SettingsProvider } from "@/providers/settings-provider";
+import { RouteGuard } from "@/components/auth/route-guard";
+import { EnhancedToaster } from "@/components/ui/enhanced-toaster";
+import { NavigationProvider } from "@/providers/navigation-provider"
 
 export const metadata: Metadata = {
   title: "لوحة التحكم الإدارية",
@@ -26,12 +28,16 @@ export default function RootLayout({
             <SettingsProvider>
               <I18nProvider>
                 <AuthProvider>
-                  {children}
-                  <EnhancedToaster />
+                  <NavigationProvider>
+                    <RouteGuard>
+                      {children}
+                    </RouteGuard>
+                  </NavigationProvider>
                 </AuthProvider>
               </I18nProvider>
             </SettingsProvider>
           </ServiceProvider>
+          <EnhancedToaster />
         </ThemeProvider>
       </body>
     </html>

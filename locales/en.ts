@@ -1889,9 +1889,30 @@ export const en = {
     arabic: "Arabic",
     english: "English",
   },
-
+  notAuthorized: {
+    title: "Access Denied",
+    description:
+      "You don't have permission to access this page. Please contact your administrator if you believe this is an error.",
+    goBack: "Go Back",
+    goHome: "Go to Dashboard",
+    contactAdmin: "Need help? Contact your system administrator.",
+    accessDeniedAlert: "Access Denied:",
+    accessDeniedMessage:
+      "You don't have the required permissions to view this page. Please contact your administrator if you believe this is an error.",
+    needAccessTitle: "Need Access?",
+    needAccessDescription:
+      "If you need access to this resource, please contact your system administrator or submit a request through the proper channels. Include details about what you're trying to access and why you need it.",
+  },
   // Common
   common: {
+    pageNotFound: "Page Not Found",
+    pageNotFoundDescription:
+      "The page you're looking for doesn't exist or has been moved.",
+    goBack: "Go Back",
+    goHome: "Go Home",
+    unexpectedError:
+      "An unexpected error occurred. Please try again or contact support if the problem persists.",
+    errorId: "Error ID",
     collapseAll: "Collapse All",
     expandAll: "Expand All",
     save: "Save",

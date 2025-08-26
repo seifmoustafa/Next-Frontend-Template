@@ -53,5 +53,5 @@ export const API_ENDPOINTS = {
   CREATE_CIVILIAN: "/Civilians",
   UPDATE_CIVILIAN: (id: string) => `/Civilians/${id}`,
   DELETE_CIVILIAN: (id: string) => `/Civilians/${id}`,
-
+  GET_MENU_ITEMS: "/MenuItems",
 };

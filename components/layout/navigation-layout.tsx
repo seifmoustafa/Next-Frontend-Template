@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
-import { navigation } from "@/config/navigation";
+import { useDynamicNavigation } from "@/components/navigation/dynamic-navigation";
 import { NavigationHeader } from "./navigation-header";
 import { NavigationMainSidebar } from "./navigation-main-sidebar";
 import { NavigationPanelSidebar } from "./navigation-panel-sidebar";
@@ -25,6 +25,7 @@ export function NavigationLayout({
 }: NavigationLayoutProps) {
   const { direction } = useI18n();
   const settings = useSettings();
+  const navigation = useDynamicNavigation();
   const pathname = usePathname();
   const [selectedMainItem, setSelectedMainItem] = useState<string>("dashboard");
   const [panelSidebarOpen, setPanelSidebarOpen] = useState(true);
@@ -59,11 +60,11 @@ export function NavigationLayout({
   useEffect(() => {
     const parentItem = findParentItemForPath(pathname);
     setSelectedMainItem(parentItem);
-    
+
     // If we're on a child page, keep the panel open
     const parentNavItem = navigation.find(item => item.name === parentItem);
     const hasChildren = parentNavItem?.children && parentNavItem.children.length > 0;
-    
+
     if (hasChildren && !isMobile) {
       setPanelSidebarOpen(true);
     }
@@ -128,13 +129,13 @@ export function NavigationLayout({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (!isMobile || !event.target) return;
-      
+
       const sidebar = document.querySelector(".navigation-main-sidebar");
       const panelSidebar = document.querySelector(".navigation-panel-sidebar");
       const sidebarTrigger = document.querySelector(".sidebar-trigger");
       const target = event.target as Node;
 
-      const clickedOutside = 
+      const clickedOutside =
         (!sidebar || !sidebar.contains(target)) &&
         (!panelSidebar || !panelSidebar.contains(target)) &&
         (!sidebarTrigger || !sidebarTrigger.contains(target));
@@ -275,13 +276,13 @@ export function NavigationLayout({
           // Dynamic margins based on sidebar states and direction
           direction === "rtl"
             ? cn(
-                "lg:mr-16", // Always account for main sidebar on desktop
-                shouldShowPanel && "lg:mr-80" // Add panel sidebar width when open
-              )
+              "lg:mr-16", // Always account for main sidebar on desktop
+              shouldShowPanel && "lg:mr-80" // Add panel sidebar width when open
+            )
             : cn(
-                "lg:ml-16", // Always account for main sidebar on desktop
-                shouldShowPanel && "lg:ml-80" // Add panel sidebar width when open
-              )
+              "lg:ml-16", // Always account for main sidebar on desktop
+              shouldShowPanel && "lg:ml-80" // Add panel sidebar width when open
+            )
         )}
       >
         {/* Main Content */}
@@ -298,7 +299,7 @@ export function NavigationLayout({
               className={cn(
                 settings.animationLevel === "high" && "animate-fade-in",
                 settings.animationLevel === "moderate" &&
-                  "transition-opacity duration-300",
+                "transition-opacity duration-300",
                 getBorderRadiusClass(),
                 getShadowClass(),
                 settings.cardStyle === "bordered" && "border border-border",

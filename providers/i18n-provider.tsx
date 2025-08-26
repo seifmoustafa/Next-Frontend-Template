@@ -25,13 +25,14 @@ const translations = {
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>("ar") // Default to Arabic
+  const [isHydrated, setIsHydrated] = useState(false)
   const { setSidebarPosition } = useSettings()
   const direction: Direction = language === "ar" ? "rtl" : "ltr"
 
   const t = (key: string): string => {
     const keys = key.split('.')
     let value: any = translations[language]
-    
+
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
         value = value[k]
@@ -39,16 +40,14 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
         return key // Return the key if path not found
       }
     }
-    
+
     return typeof value === 'string' ? value : key
   }
 
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang)
     localStorage.setItem("language", lang)
-    const newDirection = lang === "ar" ? "right" : "left"
-    setSidebarPosition(newDirection)
-    document.documentElement.setAttribute("dir", newDirection === "right" ? "rtl" : "ltr")
+    document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr")
     document.documentElement.setAttribute("lang", lang)
 
     // Update body class for font
@@ -62,6 +61,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
+    setIsHydrated(true)
     const savedLanguage = localStorage.getItem("language") as Language
     if (savedLanguage && (savedLanguage === "en" || savedLanguage === "ar")) {
       handleSetLanguage(savedLanguage)
@@ -86,9 +86,24 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useI18n() {
-  const context = useContext(I18nContext)
+  const context = useContext(I18nContext);
   if (context === undefined) {
-    throw new Error("useI18n must be used within an I18nProvider")
+    // During SSR/prerendering or before hydration, provide fallback values
+    if (typeof window === 'undefined') {
+      return {
+        language: 'ar' as const,
+        direction: 'rtl' as const,
+        setLanguage: () => { },
+        t: (key: string) => key, // Return key as fallback during SSR
+      };
+    }
+    // Client-side fallback for hydration issues
+    return {
+      language: 'ar' as const,
+      direction: 'rtl' as const,
+      setLanguage: () => { },
+      t: (key: string) => key,
+    };
   }
-  return context
+  return context;
 }

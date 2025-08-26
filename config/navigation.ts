@@ -18,6 +18,17 @@ import {
   Building,
   ContrastIcon,
   HardHat,
+  Move3D,
+  ShieldCheck,
+  ArrowRightLeft,
+  Users2,
+  Truck,
+  ScrollText,
+  FolderTree,
+  Grid3X3,
+  Package2,
+  Package,
+  Warehouse,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -30,26 +41,87 @@ export interface NavigationItem {
 }
 
 /**
+ * Icon mapping from string names to actual icon components
+ * Used to convert backend icon names to React components
+ */
+export const iconMap: Record<string, any> = {
+  MapPin: MapPin,
+  ShieldCheck: ShieldCheck,
+  ArrowRightLeft: ArrowRightLeft,
+  HardHat: HardHat,
+  Users2: Users2,
+  Shield: Shield,
+  Truck: Truck,
+  ScrollText: ScrollText,
+  Package2: Package2,
+  FolderTree: FolderTree,
+  Grid3X3: Grid3X3,
+  Package: Package,
+  Warehouse: Warehouse,
+  Store: Store,
+  LayoutDashboard: LayoutDashboard,
+  Users: Users,
+  BarChart3: BarChart3,
+  Settings: Settings,
+  User: User,
+  Building: Building,
+  Cog: Cog,
+  FileText: FileText,
+  TrendingUp: TrendingUp,
+  PieChart: PieChart,
+  BarChart: BarChart,
+};
+
+/**
  * ============================================================================
- * CENTRALIZED NAVIGATION CONFIGURATION
+ * DYNAMIC NAVIGATION SYSTEM - EASY MAINTENANCE & SWITCHING
  * ============================================================================
  *
- * This is the single source of truth for all sidebar navigation items.
- * All sidebar components (Modern, Classic, Elegant, etc.) use this configuration.
+ * 🚀 SUPER EASY TO MAINTAIN:
+ * - Single toggle flag to switch between static/dynamic navigation
+ * - All sidebar components automatically use the same system
+ * - No need to update individual components when adding new items
+ * - Centralized icon mapping and configuration
  *
- * To add a new navigation item:
- * 1. Add it to the navigation array below
- * 2. It will automatically appear in all sidebar layouts
- * 3. No need to update individual sidebar components
+ * 🔄 EASY SWITCHING:
+ * - Development: Set USE_DYNAMIC_NAVIGATION = false (uses static navigation)
+ * - Production: Set USE_DYNAMIC_NAVIGATION = true (uses backend navigation)
+ * - Automatic fallback when backend is unavailable
+ *
+ * 📁 CLEAN ARCHITECTURE:
+ * - useDynamicNavigation() hook handles all the logic
+ * - Components just call the hook and render
+ * - Route protection automatically enabled in dynamic mode
+ * - Translation support built-in
  *
  * ============================================================================
  */
 
+/**
+ * 🎛️ NAVIGATION MODE SWITCH
+ *
+ * Change this ONE flag to switch between static and dynamic navigation:
+ * - false = Static navigation (hardcoded, no backend calls, no route protection)
+ * - true = Dynamic navigation (from backend, with route protection)
+ */
+export const USE_DYNAMIC_NAVIGATION = true;
+
+// STATIC NAVIGATION - Used when USE_DYNAMIC_NAVIGATION is false
 export const navigation: NavigationItem[] = [
   {
     name: "nav.sites",
     href: "/sites",
     icon: MapPin,
+  },
+  {
+    name: "nav.roles",
+    href: "/roles",
+    icon: ShieldCheck,
+  },
+  {
+    name: "nav.transactions",
+    href: "/transactions",
+    icon: ArrowRightLeft,
   },
   {
     name: "nav.siteWorkers",
@@ -58,283 +130,105 @@ export const navigation: NavigationItem[] = [
       {
         name: "nav.civilians",
         href: "/civilians",
+        icon: Users2,
+      },
+      {
+        name: "nav.militaryPersons",
+        href: "/military-persons",
+        icon: Shield,
       },
     ],
   },
   {
     name: "nav.imports",
-    icon: Building,
+    icon: Truck,
     children: [
       {
         name: "nav.vendors",
         href: "/vendors",
-        // icon: Store,
+        icon: Store,
       },
       {
         name: "nav.contracts",
         href: "/contracts",
-        // icon: ContrastIcon,
+        icon: ScrollText,
       },
-       {
+      {
         name: "nav.categories",
-        href: "/categories",
-        icon: BarChart,
+        children: [
+          {
+            name: "nav.mainCategories",
+            href: "/categories",
+            icon: FolderTree,
+          },
+          {
+            name: "nav.subCategories",
+            href: "/sub-categories",
+            icon: Grid3X3,
+          },
+          {
+            name: "nav.products",
+            href: "/products",
+            icon: Package,
+          },
+        ],
+        icon: Package2,
       },
-       {
+
+      {
         name: "nav.warehouseLocations",
         href: "/warehouseLocations",
-        icon: BarChart,
+        icon: Warehouse,
       },
     ],
   },
-
-  // {
-  //   name: "nav.dashboard", // Uses translation key
-  //   href: "/",
-  //   icon: LayoutDashboard,
-  // },
-  // {
-  //   name: "nav.users", // Uses translation key
-  //   icon: Users,
-  //   children: [
-  //     {
-  //       name: "nav.user_list",
-  //       href: "/users",
-  //       icon: Users,
-  //     },
-  //     {
-  //       name: "nav.user_types",
-  //       href: "/user-types",
-  //       icon: Shield,
-  //     },
-  //   ],
-  // },
-  // {
-  //   name: "nav.analytics", // Uses translation key
-  //   href: "/analytics",
-  //   icon: BarChart3,
-  // },
-  // {
-  //   name: "nav.profile",
-  //   href: "/profile",
-  //   icon: User,
-  // },
-  // {
-  //   name: "nav.settings", // Uses translation key
-  //   href: "/settings",
-  //   icon: Settings,
-  // },
 ];
 
-/* 
-============================================================================
-NESTED MENU EXAMPLES - HOW TO ADD CHILDREN ITEMS
-============================================================================
-
-To add nested/children menu items, modify the navigation array above like this:
-
-export const navigation: NavigationItem[] = [
-  {
-    name: "nav.dashboard",
-    href: "/",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "nav.users",
-    icon: Users,
-    children: [
-      {
-        name: "قائمة المستخدمين",
-        href: "/users",
-        icon: Users,
-      },
-      {
-        name: "إضافة مستخدم",
-        href: "/users/create",
-        icon: UserPlus,
-      },
-      {
-        name: "إدارة الأدوار",
-        icon: Shield,
-        children: [  // 3rd level nesting
-          {
-            name: "عرض الأدوار",
-            href: "/users/roles",
-            icon: UserCheck,
-          },
-          {
-            name: "إنشاء دور جديد",
-            href: "/users/roles/create",
-            icon: UserPlus,
-          },
-          {
-            name: "الصلاحيات المتقدمة",
-            icon: Settings,
-            children: [  // 4th level nesting
-              {
-                name: "صلاحيات النظام",
-                href: "/users/permissions/system",
-                icon: Cog,
-              },
-              {
-                name: "صلاحيات المحتوى",
-                href: "/users/permissions/content",
-                icon: FileText,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        name: "المستخدمين النشطين",
-        href: "/users/active",
-        icon: UserCheck,
-        badge: 12, // Shows notification badge
-      },
-      {
-        name: "المستخدمين المحظورين",
-        href: "/users/blocked",
-        icon: UserX,
-        disabled: true, // Disabled state
-      },
-    ],
-  },
-  {
-    name: "nav.analytics",
-    icon: BarChart3,
-    children: [
-      {
-        name: "نظرة عامة",
-        href: "/analytics",
-        icon: BarChart3,
-      },
-      {
-        name: "الاتجاهات",
-        href: "/analytics/trends",
-        icon: TrendingUp,
-        badge: "جديد", // Text badge
-      },
-      {
-        name: "التقارير المتقدمة",
-        icon: PieChart,
-        children: [  // 3rd level nesting
-          {
-            name: "تقرير المبيعات الشهري",
-            href: "/analytics/reports/monthly-sales",
-            icon: BarChart,
-          },
-          {
-            name: "تحليل سلوك المستخدمين",
-            href: "/analytics/reports/user-behavior",
-            icon: Users,
-          },
-          {
-            name: "تقارير مخصصة",
-            icon: FileText,
-            children: [  // 4th level nesting
-              {
-                name: "إنشاء تقرير جديد",
-                href: "/analytics/reports/custom/create",
-                icon: UserPlus,
-              },
-              {
-                name: "قوالب التقارير",
-                href: "/analytics/reports/custom/templates",
-                icon: FileText,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "الملف الشخصي",
-    href: "/profile",
-    icon: User,
-  },
-  {
-    name: "nav.settings",
-    icon: Settings,
-    children: [
-      {
-        name: "الإعدادات العامة",
-        href: "/settings",
-        icon: Cog,
-      },
-      {
-        name: "إعدادات المظهر",
-        href: "/settings/appearance",
-        icon: Palette,
-      },
-      {
-        name: "إعدادات الإشعارات",
-        href: "/settings/notifications",
-        icon: Bell,
-        badge: 3, // Notification count
-      },
-    ],
-  },
-]
-
-============================================================================
-FEATURES SUPPORTED:
-============================================================================
-
-1. **Unlimited Nesting Levels**: Add children to any item for nested menus
-2. **Translation Support**: Use translation keys (e.g., "nav.dashboard") or direct text
-3. **Badges**: Add notification badges with numbers or text
-4. **Disabled States**: Mark items as disabled
-5. **Icons**: Each item can have its own icon
-6. **Flexible Routing**: Items can have href for direct links or children for dropdowns
-
-============================================================================
-ADDING NEW ITEMS:
-============================================================================
-
-To add a new navigation item:
-
-1. Import the required icon at the top of this file
-2. Add the new item to the navigation array
-3. The item will automatically appear in all sidebar layouts
-
-Example - Adding a "Reports" section:
-
-import { FileText, Download, Upload } from 'lucide-react'
-
-// Add to navigation array:
-{
-  name: "التقارير",
-  icon: FileText,
-  children: [
-    {
-      name: "عرض التقارير",
-      href: "/reports",
-      icon: FileText,
-    },
-    {
-      name: "تصدير البيانات",
-      href: "/reports/export",
-      icon: Download,
-    },
-    {
-      name: "استيراد البيانات",
-      href: "/reports/import",
-      icon: Upload,
-      badge: "قريباً",
-    },
-  ],
-},
-
-============================================================================
-*/
+// 🔄 Fallback navigation - used when backend is unavailable (same as static navigation)
+export const fallbackNavigation: NavigationItem[] = navigation;
 
 /**
- * Helper function to get navigation items with translation support
- * This can be used by sidebar components to get translated navigation items
+ * ============================================================================
+ * 📖 QUICK USAGE GUIDE
+ * ============================================================================
+ *
+ * 🔧 FOR DEVELOPERS:
+ * 1. Set USE_DYNAMIC_NAVIGATION = false for development
+ * 2. Edit the 'navigation' array below to add/remove items
+ * 3. All sidebar components will automatically update
+ *
+ * 🚀 FOR PRODUCTION:
+ * 1. Set USE_DYNAMIC_NAVIGATION = true
+ * 2. Implement /MenuItems API endpoint
+ * 3. System handles everything automatically
+ *
+ * 🎨 ADDING NEW STATIC ITEMS:
+ * 1. Import icon from lucide-react
+ * 2. Add to iconMap if using dynamic navigation
+ * 3. Add item to navigation array
+ *
+ * Example:
+ * {
+ *   name: "nav.newSection",
+ *   href: "/new-section",
+ *   icon: NewIcon,
+ *   children: [...] // Optional nested items
+ * }
+ *
+ * ============================================================================
+ */
+
+/**
+ * 🔧 UTILITY FUNCTIONS
+ * These are used internally by the navigation system
+ */
+
+/**
+ * Translates navigation items using the i18n system
  */
 export const getNavigationItems = (
-  t: (key: string) => string
+  t: (key: string) => string,
+  navigationItems: NavigationItem[] = fallbackNavigation
 ): NavigationItem[] => {
   const translateItem = (item: NavigationItem): NavigationItem => ({
     ...item,
@@ -342,11 +236,11 @@ export const getNavigationItems = (
     children: item.children?.map(translateItem),
   });
 
-  return navigation.map(translateItem);
+  return navigationItems.map(translateItem);
 };
 
 /**
- * Helper function to check if a navigation item or its children are active
+ * Checks if a navigation item or its children match the current pathname
  */
 export const isNavigationItemActive = (
   item: NavigationItem,
@@ -362,10 +256,10 @@ export const isNavigationItemActive = (
 };
 
 /**
- * Helper function to get all navigation items as a flat array (useful for search)
+ * Flattens nested navigation items into a single array (useful for search)
  */
 export const getFlatNavigationItems = (
-  items: NavigationItem[] = navigation
+  items: NavigationItem[] = fallbackNavigation
 ): NavigationItem[] => {
   const flatItems: NavigationItem[] = [];
 
@@ -382,4 +276,29 @@ export const getFlatNavigationItems = (
 
   flatten(items);
   return flatItems;
+};
+
+/**
+ * 🔄 Converts backend menu items to frontend navigation format
+ * Used internally by the dynamic navigation system
+ */
+export const convertMenuItemsToNavigation = (
+  menuItems: any[]
+): NavigationItem[] => {
+  const convertMenuItem = (item: any): NavigationItem => {
+    return {
+      name: item.name,
+      href: item.href,
+      icon: iconMap[item.icon] || iconMap["Package"], // Default fallback icon
+      children: item.children?.map(convertMenuItem) || [],
+      disabled: !item.isActive,
+    };
+  };
+
+  // Filter only active items and sort by order
+  const activeMenuItems = menuItems
+    .filter((item) => item.isActive && !item.isDeleted)
+    .sort((a, b) => a.order - b.order);
+
+  return activeMenuItems.map(convertMenuItem);
 };

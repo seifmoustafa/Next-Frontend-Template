@@ -18,10 +18,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  getNavigationItems,
   isNavigationItemActive,
   type NavigationItem,
 } from "@/config/navigation";
+import { useDynamicNavigation } from "@/components/navigation/dynamic-navigation";
 import { Logo } from "@/components/ui/logo";
 
 interface CompactSidebarProps {
@@ -57,7 +57,7 @@ export function CompactSidebar({
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   // Get navigation items with translations
-  const navigation = getNavigationItems(t);
+  const navigation = useDynamicNavigation();
 
   const toggleExpanded = (itemName: string) => {
     setExpandedItems((prev) =>
@@ -242,8 +242,8 @@ export function CompactSidebar({
           open
             ? "translate-x-0"
             : direction === "rtl"
-            ? "translate-x-full"
-            : "-translate-x-full",
+              ? "translate-x-full"
+              : "-translate-x-full",
           "mt-16"
         )}
       >
@@ -260,10 +260,10 @@ export function CompactSidebar({
                   spacingSize === "compact"
                     ? "space-x-2 rtl:space-x-reverse p-2"
                     : spacingSize === "comfortable"
-                    ? "space-x-4 rtl:space-x-reverse p-4"
-                    : spacingSize === "spacious"
-                    ? "space-x-5 rtl:space-x-reverse p-5"
-                    : "space-x-3 rtl:space-x-reverse p-3"
+                      ? "space-x-4 rtl:space-x-reverse p-4"
+                      : spacingSize === "spacious"
+                        ? "space-x-5 rtl:space-x-reverse p-5"
+                        : "space-x-3 rtl:space-x-reverse p-3"
                 )}
               >
                 <div className="relative">
@@ -274,13 +274,14 @@ export function CompactSidebar({
                       spacingSize === "compact"
                         ? "h-8 w-8"
                         : spacingSize === "spacious"
-                        ? "h-12 w-12"
-                        : "h-10 w-10"
+                          ? "h-12 w-12"
+                          : "h-10 w-10"
                     )}
                   >
                     <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-primary text-sm font-semibold">
-                      { user.firstName.charAt(0) ?? user.username}
-                      {user.lastName.charAt(0) ?? ""}
+                      {/*{ user.firstName.charAt(0) ?? user.username}
+                      {user.lastName.charAt(0) ?? ""}*/}
+                      {user.username}
                     </AvatarFallback>
                   </Avatar>
                   {/* Online indicator */}
