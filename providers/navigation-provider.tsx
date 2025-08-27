@@ -64,7 +64,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
 
     // Remove query parameters and trailing slashes for comparison
     const cleanPath = pathname.split('?')[0].replace(/\/$/, '') || '/';
-    
+
     // Always allow access to system pages for authenticated users
     const systemPages = [
       '/',           // Home page
@@ -79,7 +79,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       '/global-error', // Global error page
       '/error'       // Generic error page
     ];
-    
+
     if (systemPages.includes(cleanPath)) {
       return true;
     }
@@ -89,7 +89,23 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       return true;
     }
 
-    return navigationData.allowedPages.includes(cleanPath);
+    // Check for exact match first
+    if (navigationData.allowedPages.includes(cleanPath)) {
+      return true;
+    }
+
+    // Check for hierarchical access - if user has access to parent route, grant access to nested routes
+    const pathSegments = cleanPath.split('/').filter(segment => segment !== '');
+
+    // Build parent paths and check if user has access to any parent route
+    for (let i = pathSegments.length - 1; i > 0; i--) {
+      const parentPath = '/' + pathSegments.slice(0, i).join('/');
+      if (navigationData.allowedPages.includes(parentPath)) {
+        return true;
+      }
+    }
+
+    return false;
   }, [navigationData, isAuthenticated]);
 
   const getAllowedPages = useCallback((): string[] => {

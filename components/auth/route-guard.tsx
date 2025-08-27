@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/providers/auth-provider";
-import { USE_DYNAMIC_NAVIGATION } from "@/config/navigation";
 import { useNavigation } from "@/providers/navigation-provider";
+import { USE_DYNAMIC_NAVIGATION } from "@/config/navigation";
+import { useI18n } from "@/providers/i18n-provider";
+import { LoadingSpinner } from "../ui/loading-spinner";
 
 interface RouteGuardProps {
   children: React.ReactNode;
@@ -33,6 +35,7 @@ export function RouteGuard({ children }: RouteGuardProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [isChecking, setIsChecking] = useState(true);
+  const { t } = useI18n()
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -83,8 +86,8 @@ export function RouteGuard({ children }: RouteGuardProps) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading...</p>
+          <LoadingSpinner />
+          <p className="text-muted-foreground">{t("common.loading")}</p>
         </div>
       </div>
     );

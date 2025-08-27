@@ -1,5 +1,6 @@
 "use client";
 
+import { type } from "os";
 import type React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -351,7 +352,7 @@ const defaultSettings = {
   avatarStyle: "default" as AvatarStyle,
   logoType: "image" as LogoType,
   logoAnimation: "none" as LogoAnimation,
-  logoSize: "md" as LogoSize,
+  logoSize: "xl" as LogoSize,
   logoText: "SA",
   showBreadcrumbs: true,
   showUserAvatar: true,
@@ -662,7 +663,6 @@ export function useSettings() {
       setCalendarStyle: () => { },
       toastStyle: 'default' as ToastStyle,
       setToastStyle: () => { },
-
       // Animation settings
       animationSpeed: 'normal' as AnimationSpeed,
       setAnimationSpeed: () => { },
@@ -676,7 +676,7 @@ export function useSettings() {
       setIconStyle: () => { },
       spacingSize: 'default' as SpacingSize,
       setSpacingSize: () => { },
-
+      loadingStyle: "spinner" as LoadingStyle,
       // Additional settings
       compactMode: false,
       setCompactMode: () => { },
@@ -688,7 +688,12 @@ export function useSettings() {
       setStickyHeader: () => { },
       showFooter: true,
       setShowFooter: () => { },
-
+      formStyle: 'default' as FormStyle,
+      setFormStyle: () => { },
+      checkboxStyle: 'default' as CheckboxStyle,
+      setCheckboxStyle: () => { },
+      radioStyle: 'default' as RadioStyle,
+      setRadioStyle: () => { },
       // Logo settings
       logoType: 'default' as LogoType,
       setLogoType: () => { },
