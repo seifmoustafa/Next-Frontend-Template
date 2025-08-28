@@ -58,7 +58,7 @@ export function GenericModal({
     let baseClasses = "p-0 overflow-hidden flex flex-col";
     let sizeClasses = "";
     let styleClasses = "";
-    
+
     switch (settings.modalStyle) {
       case "centered":
         // Keep default centering behavior
@@ -177,7 +177,7 @@ export function GenericModal({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
       <DialogContent className={cn(getModalClasses())}>
         <DialogHeader className={cn(getHeaderPadding(), "border-b shrink-0")}>
           <DialogTitle className={cn("font-semibold", getTitleSize())}>
@@ -194,3 +194,4 @@ export function GenericModal({
     </Dialog>
   );
 }
+ 

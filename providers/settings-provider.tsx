@@ -697,6 +697,8 @@ export function useSettings() {
       // Logo settings
       logoType: 'default' as LogoType,
       setLogoType: () => { },
+      modalStyle: "default" as ModalStyle,
+
     };
   }
   return context;

@@ -429,8 +429,8 @@ export function GenericForm({
                   >
                     {field.options?.map((option) => (
                       <div key={option.value} className={cn(
-                        "flex items-center",
-                        direction === "rtl" ? "space-x-reverse space-x-2" : "space-x-2"
+                        "flex items-center gap-2",
+                        direction === "rtl" ? "flex-row-reverse" : "flex-row"
                       )}>
                         <RadioGroupItem
                           value={option.value}
@@ -438,7 +438,7 @@ export function GenericForm({
                           design={settings.radioStyle}
                         />
                         <Label htmlFor={`${field.name}-${option.value}`} className={cn(
-                          "text-sm",
+                          "text-sm cursor-pointer",
                           direction === "rtl" ? "text-right" : "text-left"
                         )}>
                           {option.label}
