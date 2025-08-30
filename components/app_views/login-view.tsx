@@ -62,7 +62,15 @@ export function LoginView() {
         </CardHeader>
 
         <CardContent>
-          <div className="space-y-6">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!vm.isLoading && vm.isFormValid) {
+                vm.handleLogin();
+              }
+            }}
+            className="space-y-6"
+          >
             {vm.error && (
               <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
                 {vm.error}
@@ -115,8 +123,7 @@ export function LoginView() {
             </div>
 
             <Button
-              type="button"
-              onClick={vm.handleLogin}
+              type="submit"
               className="w-full h-12 gradient-primary"
               disabled={vm.isLoading || !vm.isFormValid}
             >
@@ -129,7 +136,7 @@ export function LoginView() {
                 t("auth.loginButton")
               )}
             </Button>
-          </div>
+          </form>
 
           {/* Debug Section */}
           {process.env.NODE_ENV === "development" && (
