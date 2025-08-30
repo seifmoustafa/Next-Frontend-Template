@@ -34,7 +34,7 @@ export interface GenericTreeViewProps<T extends TreeNode, TCreate, TUpdate> {
   getId: (node: T) => string;
   getLabel: (node: T) => string;
   getChildren: (node: T) => T[] | undefined;
-  renderFormFields: (
+  renderFormFields?: (
     formValues: any,
     setFormValues: (values: any) => void,
     editing: T | null,
@@ -64,7 +64,7 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
 
   // Remove interfering focus management - let natural input behavior work
 
-  const toolbar = (
+  const toolbar = !vm.config.selectable ? (
     <div className="flex items-center gap-2">
       <Button size="sm" onClick={() => vm.openAddChild(null)}>
         <Plus className="h-4 w-4 mr-2 rtl:mr-0 rtl:ml-2" />
@@ -140,7 +140,7 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
         )}
       </div>
     </div>
-  );
+  ) : undefined;
 
   return (
     <main className={cn("space-y-4", className)}>
@@ -163,7 +163,7 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
         toolbar={toolbar}
         loading={vm.loading}
         emptyMessage={t("common.noData")}
-        actions={(n) => [
+        actions={vm.config.selectable ? undefined : (n) => [
           {
             label: t("common.add_child") ?? "Add child",
             onClick: () => vm.openAddChild(n),
@@ -175,77 +175,86 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
             variant: "destructive",
           },
         ]}
+        selectable={vm.config.selectable}
+        selectedValues={vm.selectedValues}
+        onSelectionChange={vm.handleSelectionChange}
+        getValueToSend={vm.config.getValueToSend}
+        disabled={vm.disabled}
       />
 
-      {/* Create/Edit Modal */}
-      <Dialog
-        open={vm.modalOpen}
-        onOpenChange={(o) => {
-          vm.setModalOpen(o);
-          if (!o) vm.resetForm();
-        }}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              {vm.editing
-                ? `${t("common.edit")} ${vm.config.itemTypeName}`
-                : `${t("common.add")} ${vm.config.itemTypeName}`}
-            </DialogTitle>
-          </DialogHeader>
+      {/* Create/Edit Modal - Only show if not in selectable mode */}
+      {!vm.config.selectable && renderFormFields && (
+        <Dialog
+          open={vm.modalOpen}
+          onOpenChange={(o) => {
+            vm.setModalOpen(o);
+            if (!o) vm.resetForm();
+          }}
+        >
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                {vm.editing
+                  ? `${t("common.edit")} ${vm.config.itemTypeName}`
+                  : `${t("common.add")} ${vm.config.itemTypeName}`}
+              </DialogTitle>
+            </DialogHeader>
 
-          <div className="space-y-4">
-            {renderFormFields(
-              vm.formValues,
-              vm.setFormValues,
-              vm.editing,
-              vm.parentForNew
-            )}
-
-            <div className="grid gap-2">
-              {vm.parentForNew && !vm.editing && (
-                <p className="text-xs text-muted-foreground">
-                  {(t("common.will_add_under") as string) ??
-                    "Will be added under"}
-                  : {getLabel(vm.parentForNew)}
-                </p>
+            <div className="space-y-4">
+              {renderFormFields(
+                vm.formValues,
+                vm.setFormValues,
+                vm.editing,
+                vm.parentForNew
               )}
+
+              <div className="grid gap-2">
+                {vm.parentForNew && !vm.editing && (
+                  <p className="text-xs text-muted-foreground">
+                    {(t("common.will_add_under") as string) ??
+                      "Will be added under"}
+                    : {getLabel(vm.parentForNew)}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
 
-          <DialogFooter className="mt-4">
-            <Button
-              variant="outline"
-              onClick={() => {
-                vm.setModalOpen(false);
-                vm.resetForm();
-              }}
-            >
-              {t("common.cancel")}
-            </Button>
-            <Button onClick={vm.onSubmit}>
-              {vm.editing ? t("common.save") : t("common.create")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogFooter className="mt-4">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  vm.setModalOpen(false);
+                  vm.resetForm();
+                }}
+              >
+                {t("common.cancel")}
+              </Button>
+              <Button onClick={vm.onSubmit}>
+                {vm.editing ? t("common.save") : t("common.create")}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
 
-      {/* Enhanced Confirmation Dialog */}
-      <ConfirmationDialog
-        open={vm.showConfirmation}
-        onOpenChange={(open) => !open && vm.cancelDelete()}
-        title={t("common.confirmDelete")}
-        description={`${t("common.deleteConfirmation").replace(
-          "{itemType}",
-          vm.deleteOptions.itemType || t("common.item")
-        )} "${vm.deleteOptions.itemName}". ${t("common.deleteWarning")}`}
-        confirmText={vm.isDeleting ? t("common.deleting") : t("common.delete")}
-        cancelText={t("common.cancel")}
-        variant="destructive"
-        isLoading={vm.isDeleting}
-        onConfirm={vm.executeDelete}
-        onCancel={vm.cancelDelete}
-      />
+      {/* Enhanced Confirmation Dialog - Only show if not in selectable mode */}
+      {!vm.config.selectable && (
+        <ConfirmationDialog
+          open={vm.showConfirmation}
+          onOpenChange={(open) => !open && vm.cancelDelete()}
+          title={t("common.confirmDelete")}
+          description={`${t("common.deleteConfirmation").replace(
+            "{itemType}",
+            vm.deleteOptions.itemType || t("common.item")
+          )} "${vm.deleteOptions.itemName}". ${t("common.deleteWarning")}`}
+          confirmText={vm.isDeleting ? t("common.deleting") : t("common.delete")}
+          cancelText={t("common.cancel")}
+          variant="destructive"
+          isLoading={vm.isDeleting}
+          onConfirm={vm.executeDelete}
+          onCancel={vm.cancelDelete}
+        />
+      )}
     </main>
   );
 }

@@ -20,6 +20,7 @@ import {
   Circle,
   GitBranch,
 } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useI18n } from "@/providers/i18n-provider";
 import { useSettings } from "@/providers/settings-provider";
 
@@ -54,6 +55,12 @@ export interface TreeViewProps<T> {
   footerComponent?: React.ReactNode;
   aboveTreeComponent?: React.ReactNode;
   belowTreeComponent?: React.ReactNode;
+  // Selectable functionality
+  selectable?: boolean;
+  selectedValues?: string[];
+  onSelectionChange?: (selectedValues: string[]) => void;
+  getValueToSend?: (node: T) => string;
+  disabled?: boolean;
 }
 
 export function TreeView<T>({
@@ -74,6 +81,11 @@ export function TreeView<T>({
   footerComponent,
   aboveTreeComponent,
   belowTreeComponent,
+  selectable = false,
+  selectedValues = [],
+  onSelectionChange,
+  getValueToSend,
+  disabled = false,
 }: TreeViewProps<T>) {
   const { direction, language, t } = useI18n();
   const settings = useSettings();
@@ -253,6 +265,11 @@ export function TreeView<T>({
           radius={radius}
           shadow={shadow}
           cardStyle={settings.cardStyle}
+          selectable={selectable}
+          selectedValues={selectedValues}
+          onSelectionChange={onSelectionChange}
+          getValueToSend={getValueToSend}
+          disabled={disabled}
         />
       </div>
       {belowTreeComponent}
@@ -274,7 +291,7 @@ function getNodeStyling(
 ) {
   const baseTransition = "transition-all duration-300 ease-in-out";
   const hoverScale = "hover:scale-[1.02] active:scale-[0.98]";
-  
+
   switch (variant) {
     case "modern":
       return cn(
@@ -454,6 +471,11 @@ function TreeList<T>({
   radius,
   shadow,
   cardStyle,
+  selectable = false,
+  selectedValues = [],
+  onSelectionChange,
+  getValueToSend,
+  disabled = false,
 }: {
   nodes: T[];
   variant: TreeVariant;
@@ -469,14 +491,107 @@ function TreeList<T>({
   radius: string;
   shadow: string;
   cardStyle: string;
+  selectable?: boolean;
+  selectedValues?: string[];
+  onSelectionChange?: (selectedValues: string[]) => void;
+  getValueToSend?: (node: T) => string;
+  disabled?: boolean;
 }) {
   const connectorLine =
     "border-muted-foreground/20 " +
     (variant === "lines"
       ? "border-solid"
       : variant === "minimal"
-      ? "border-dashed"
-      : "border-solid");
+        ? "border-dashed"
+        : "border-solid");
+
+  // Selection logic helpers
+  const isNodeSelected = (nodeValue: string) => {
+    return selectedValues.includes(nodeValue);
+  };
+
+  const getAllChildrenValues = (node: T): string[] => {
+    const children = getChildren(node) ?? [];
+    const values: string[] = [];
+
+    children.forEach((child) => {
+      if (getValueToSend) {
+        values.push(getValueToSend(child));
+        values.push(...getAllChildrenValues(child));
+      }
+    });
+
+    return values;
+  };
+
+  const getAllParentValues = (nodeValue: string, allNodes: T[]): string[] => {
+    const parents: string[] = [];
+
+    const findParents = (nodes: T[], targetValue: string, currentParents: string[] = []): boolean => {
+      for (const node of nodes) {
+        if (!getValueToSend) return false;
+        const nodeVal = getValueToSend(node);
+        const children = getChildren(node) ?? [];
+
+        if (children.some(child => getValueToSend(child) === targetValue)) {
+          parents.push(...currentParents, nodeVal);
+          return true;
+        }
+
+        if (findParents(children, targetValue, [...currentParents, nodeVal])) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    findParents(allNodes, nodeValue);
+    return parents;
+  };
+
+  const isNodeIndeterminate = (node: T) => {
+    const children = getChildren(node) ?? [];
+    if (children.length === 0 || !getValueToSend) return false;
+
+    const nodeValue = getValueToSend(node);
+    if (selectedValues.includes(nodeValue)) return false;
+
+    const childrenValues = getAllChildrenValues(node);
+    return childrenValues.some(childValue => selectedValues.includes(childValue));
+  };
+
+  const handleSelectionChange = (nodeValue: string, checked: boolean) => {
+    if (!onSelectionChange || !getValueToSend) return;
+
+    const node = nodes.find(n => getValueToSend(n) === nodeValue);
+    if (!node) return;
+
+    let newSelection = [...selectedValues];
+
+    if (checked) {
+      // Add the node
+      if (!newSelection.includes(nodeValue)) {
+        newSelection.push(nodeValue);
+      }
+
+      // Auto-select all parents
+      const parentValues = getAllParentValues(nodeValue, nodes);
+      parentValues.forEach(parentValue => {
+        if (!newSelection.includes(parentValue)) {
+          newSelection.push(parentValue);
+        }
+      });
+    } else {
+      // Remove the node
+      newSelection = newSelection.filter(val => val !== nodeValue);
+
+      // Remove all children
+      const childrenValues = getAllChildrenValues(node);
+      newSelection = newSelection.filter(val => !childrenValues.includes(val));
+    }
+
+    onSelectionChange(newSelection);
+  };
 
   return (
     <ul
@@ -488,9 +603,14 @@ function TreeList<T>({
       {nodes.map((node) => {
         const id = getId(node);
         const label = getLabel(node);
+        const nodeValue = getValueToSend ? getValueToSend(node) : '';
         const children = getChildren(node) ?? [];
         const hasChildren = children.length > 0;
         const isOpen = expanded[id];
+        const selected = selectable && getValueToSend ? isNodeSelected(nodeValue) : false;
+        const indeterminate = selectable && getValueToSend ? isNodeIndeterminate(node) : false;
+
+
 
         const nodeBase = getNodeStyling(variant, level, density, radius, shadow, cardStyle, hasChildren, isOpen);
 
@@ -528,6 +648,47 @@ function TreeList<T>({
                 )}
               </button>
 
+              {/* Checkbox for selectable mode */}
+              {selectable && getValueToSend && (
+                <div
+                  className={cn(
+                    "flex items-center justify-center p-1 rounded",
+                    disabled ? "!cursor-not-allowed !opacity-60" : "hover:bg-muted/50 cursor-pointer"
+                  )}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!disabled) {
+                      handleSelectionChange(nodeValue, !selected);
+                    }
+                  }}
+                  style={{
+                    cursor: disabled ? 'not-allowed !important' : 'pointer',
+                    opacity: disabled ? '0.6 !important' : '1'
+                  }}
+                >
+                  <Checkbox
+                    checked={selected}
+                    disabled={disabled}
+                    ref={(ref) => {
+                      if (ref && indeterminate) {
+                        (ref as any).indeterminate = true;
+                      }
+                    }}
+                    onCheckedChange={(checked) => !disabled && handleSelectionChange(nodeValue, checked === true)}
+                    className={cn(
+                      "data-[state=checked]:bg-primary data-[state=checked]:border-primary",
+                      disabled ? "!opacity-50 !cursor-not-allowed" : "",
+                      "pointer-events-none"
+                    )}
+                    style={{
+                      cursor: disabled ? 'not-allowed !important' : 'default',
+                      opacity: disabled ? '0.5 !important' : '1',
+                      pointerEvents: 'none'
+                    }}
+                  />
+                </div>
+              )}
+
               {/* Icon + Label */}
               <div className="flex items-center gap-2 flex-1 min-w-0">
                 {hasChildren ? (
@@ -542,7 +703,8 @@ function TreeList<T>({
                 <span
                   className={cn(
                     "truncate",
-                    level === 0 ? "text-base" : "text-sm"
+                    level === 0 ? "text-base" : "text-sm",
+                    selectable && selected ? "text-primary font-medium" : ""
                   )}
                 >
                   {label}
@@ -572,7 +734,7 @@ function TreeList<T>({
                         onClick={a.onClick}
                         className={cn(
                           a.variant === "destructive" &&
-                            "text-destructive focus:text-destructive"
+                          "text-destructive focus:text-destructive"
                         )}
                       >
                         {a.label}
@@ -612,6 +774,11 @@ function TreeList<T>({
                       radius={radius}
                       shadow={shadow}
                       cardStyle={cardStyle}
+                      selectable={selectable}
+                      selectedValues={selectedValues}
+                      onSelectionChange={onSelectionChange}
+                      getValueToSend={getValueToSend}
+                      disabled={disabled}
                     />
                   </div>
                 </div>
@@ -636,6 +803,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -658,6 +830,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -685,6 +862,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -707,6 +889,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -729,6 +916,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -751,6 +943,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -773,6 +970,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -795,6 +997,10 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
                 />
               </div>
             )}
@@ -817,6 +1023,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -839,6 +1050,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}
@@ -861,6 +1077,11 @@ function TreeList<T>({
                   radius={radius}
                   shadow={shadow}
                   cardStyle={cardStyle}
+                  selectable={selectable}
+                  selectedValues={selectedValues}
+                  onSelectionChange={onSelectionChange}
+                  getValueToSend={getValueToSend}
+                  disabled={disabled}
                 />
               </div>
             )}

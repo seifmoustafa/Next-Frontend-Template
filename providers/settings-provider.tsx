@@ -698,6 +698,7 @@ export function useSettings() {
       logoType: 'default' as LogoType,
       setLogoType: () => { },
       modalStyle: "default" as ModalStyle,
+      treeStyle: "modern" as TreeStyle,
 
     };
   }
