@@ -1,3 +1,19 @@
+/**
+ * GenericCrudView - A fully generic, reusable CRUD component
+ * 
+ * This component provides a complete CRUD interface with the following features:
+ * - Automatic table generation with sorting and pagination
+ * - Generic form handling for create/edit operations
+ * - Flexible action system (individual, bulk, and custom actions)
+ * - Confirmation dialogs with localization support
+ * - Error handling and loading states
+ * - Responsive design with mobile support
+ * - Full accessibility compliance
+ * 
+ * @author Contract Management System Team
+ * @version 2.0.0
+ * @since 1.0.0
+ */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -15,51 +31,210 @@ import { useSettings } from "@/providers/settings-provider";
 import { cn } from "@/lib/utils";
 import type { PaginationInfo } from "@/lib/pagination";
 import { useI18n } from "@/providers/i18n-provider";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
-export interface CrudColumn {
+/* ========================================
+ * TYPE DEFINITIONS & INTERFACES
+ * ======================================== */
+
+/**
+ * Configuration for table columns
+ * @template TItem - The type of items being displayed
+ */
+export interface CrudColumn<TItem = any> {
+  /** Unique key for the column (must match item property) */
   key: string;
+  /** Display label for the column header */
   label: string;
+  /** Whether the column supports sorting */
   sortable?: boolean;
-  render?: (value: any, item?: any) => React.ReactNode;
-}
-
-export interface CrudAction<TItem> {
-  label: string;
-  onClick?: (item: TItem) => void;
-  variant?: "default" | "ghost" | "destructive";
+  /** Custom render function for the column content */
+  render?: (value: any, item: TItem, index: number) => React.ReactNode;
+  /** CSS classes for the column */
   className?: string;
+  /** Whether the column is hidden on mobile */
+  hideOnMobile?: boolean;
 }
 
-export interface CrudConfig<TItem> {
-  // Page configuration
-  titleKey: string; // Translation key for title
-  subtitleKey: string; // Translation key for subtitle
-  customSubtitle?: string; // Custom subtitle text (overrides subtitleKey)
+/**
+ * Configuration for individual row actions
+ * @template TItem - The type of items the action operates on
+ */
+export interface CrudAction<TItem = any> {
+  /** Display label for the action */
+  label: string;
+  /** Action handler function */
+  onClick?: (item: TItem) => void | Promise<void>;
+  /** Button variant styling */
+  variant?: "default" | "ghost" | "destructive" | "outline" | "secondary";
+  /** Additional CSS classes */
+  className?: string;
+  /** Icon to display with the action */
+  icon?: React.ReactNode;
+  /** Conditional display logic */
+  show?: (item: TItem) => boolean;
+  /** Confirmation dialog title (if confirmation needed) */
+  confirmTitle?: string;
+  /** Confirmation dialog description (supports {name} placeholder) */
+  confirmDescription?: string;
+  /** Whether the action is disabled */
+  disabled?: (item: TItem) => boolean;
+  /** Tooltip text for the action */
+  tooltip?: string;
+  /** Loading state for async actions */
+  loading?: boolean;
+}
 
-  // Table configuration
-  columns: CrudColumn[];
+/**
+ * Configuration for bulk actions (operate on multiple selected items)
+ */
+export interface BulkAction {
+  /** Display label for the bulk action */
+  label: string;
+  /** Bulk action handler function */
+  onClick: (selectedIds: string[]) => Promise<void>;
+  /** Button variant styling */
+  variant?: "default" | "outline" | "destructive" | "secondary";
+  /** Additional CSS classes */
+  className?: string;
+  /** Confirmation dialog title */
+  confirmTitle?: string;
+  /** Confirmation dialog description (supports {count} placeholder) */
+  confirmDescription?: string;
+  /** Icon to display with the action */
+  icon?: React.ReactNode;
+  /** Minimum number of items required for the action */
+  minItems?: number;
+  /** Maximum number of items allowed for the action */
+  maxItems?: number;
+  /** Whether the action requires confirmation */
+  requiresConfirmation?: boolean;
+}
+
+/**
+ * Configuration for custom actions (always visible, operate on all items)
+ */
+export interface CustomAction {
+  /** Display label for the custom action */
+  label: string;
+  /** Custom action handler function */
+  onClick: () => Promise<void>;
+  /** Button variant styling */
+  variant?: "default" | "outline" | "destructive" | "secondary";
+  /** Additional CSS classes */
+  className?: string;
+  /** Confirmation dialog title */
+  confirmTitle?: string;
+  /** Confirmation dialog description */
+  confirmDescription?: string;
+  /** Icon to display with the action */
+  icon?: React.ReactNode;
+  /** Whether the action is disabled */
+  disabled?: boolean;
+  /** Tooltip text for the action */
+  tooltip?: string;
+  /** Loading state for async actions */
+  loading?: boolean;
+}
+
+/**
+ * Search configuration for the CRUD view
+ */
+export interface SearchConfig {
+  /** Whether search is enabled */
+  enabled?: boolean;
+  /** Placeholder text for search input */
+  placeholder?: string;
+  /** Debounce delay in milliseconds */
+  debounceMs?: number;
+  /** Custom search handler */
+  onSearch?: (term: string) => void;
+}
+
+/**
+ * Pagination configuration for the CRUD view
+ */
+export interface PaginationConfig extends PaginationInfo {
+  /** Page change handler */
+  onPageChange?: (page: number) => void;
+  /** Page size change handler */
+  onPageSizeChange?: (pageSize: number) => void;
+  /** Available page size options */
+  pageSizeOptions?: number[];
+}
+
+/**
+ * Main configuration interface for the GenericCrudView
+ * @template TItem - The type of items being managed
+ */
+export interface CrudConfig<TItem = any> {
+  /* ========================================
+   * PAGE CONFIGURATION
+   * ======================================== */
+  /** Translation key for the page title */
+  titleKey: string;
+  /** Translation key for the page subtitle */
+  subtitleKey: string;
+  /** Custom subtitle text (overrides subtitleKey) */
+  customSubtitle?: string;
+
+  /* ========================================
+   * TABLE & FORM CONFIGURATION
+   * ======================================== */
+  /** Column definitions for the table */
+  columns: CrudColumn<TItem>[];
+  /** Field definitions for create form */
   createFields: FieldConfig[];
+  /** Field definitions for edit form */
   editFields: FieldConfig[];
+  /** Initial values for create form */
+  createInitialValues?: Record<string, any>;
+  /** Function to get initial values for edit form */
+  editInitialValues?: (item: TItem) => Record<string, any>;
 
-  // Actions
+  /* ========================================
+   * ACTION CONFIGURATION
+   * ======================================== */
+  /** Function to generate individual row actions */
   getActions?: (vm: any, t: any, handleDelete?: (item: TItem) => void) => CrudAction<TItem>[];
+  /** Generic bulk actions for selected items */
+  bulkActions?: BulkAction[];
+  /** Always-visible custom actions */
+  customActions?: CustomAction[];
 
-  // Delete configuration
-  getItemDisplayName?: (item: TItem) => string; // For delete confirmation messages
-  itemTypeKey?: string; // Translation key for item type (e.g., "vendors.itemType")
-  deleteService?: (id: string) => Promise<void>; // Direct delete service function
+  /* ========================================
+   * DELETE CONFIGURATION
+   * ======================================== */
+  /** Function to get display name for delete confirmations */
+  getItemDisplayName?: (item: TItem) => string;
+  /** Translation key for item type */
+  itemTypeKey?: string;
+  /** Direct delete service function */
+  deleteService?: (id: string) => Promise<void>;
 
-  // Customization options
-  customHeaderContent?: React.ReactNode; // Custom content above the table
-  customFooterContent?: React.ReactNode; // Custom content below the table
-  customToolbarActions?: React.ReactNode; // Custom buttons in the toolbar
-  hideDefaultActions?: boolean; // Hide refresh/add buttons
-  customTableProps?: any; // Pass custom props to GenericTable
-  customModalProps?: any; // Pass custom props to modals
-  renderCustomRow?: (item: TItem, index: number) => React.ReactNode; // Custom row rendering
-  enableBulkActions?: boolean; // Enable/disable bulk selection
-  customBulkActions?: React.ReactNode; // Custom bulk action buttons
+  /* ========================================
+   * FEATURE TOGGLES
+   * ======================================== */
+  /** Enable/disable bulk selection */
+  enableBulkActions?: boolean;
+  /** Hide default refresh/add buttons */
+  hideDefaultActions?: boolean;
+
+  /* ========================================
+   * CUSTOMIZATION OPTIONS
+   * ======================================== */
+  /** Custom content above the table */
+  customHeaderContent?: React.ReactNode;
+  /** Custom content below the table */
+  customFooterContent?: React.ReactNode;
+  /** Custom props to pass to GenericTable */
+  customTableProps?: any;
+  /** Custom props to pass to modals */
+  customModalProps?: any;
+  /** @deprecated Use customActions instead */
+  customToolbarActions?: React.ReactNode;
+  /** @deprecated Use bulkActions instead */
+  customBulkActions?: React.ReactNode;
 }
 
 interface GenericCrudViewProps<T> {
@@ -122,15 +297,84 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
         } else {
           throw new Error("Delete service not configured");
         }
+      },
+      {
+        itemName: itemDisplayName,
+        itemType: itemType,
+        confirmTitle: t("common.confirmDelete"),
+        confirmDescription: t("common.deleteConfirmation").replace("{name}", itemDisplayName),
       }
     );
-  }, [deleteSystem, viewModel, config, t, operationSuccess, operationError]);
+  }, [deleteSystem, viewModel, config, t]);
+
+  // Generic bulk action handler
+  const handleBulkAction = useCallback(async (action: BulkAction, selectedIds: string[]) => {
+    await deleteSystem.confirmDelete(
+      async () => {
+        await action.onClick(selectedIds);
+        await viewModel.refreshItems();
+      },
+      {
+        itemName: `${selectedIds.length} items`,
+        itemType: config?.itemTypeKey ? t(config.itemTypeKey) : 'Items',
+        confirmTitle: action.confirmTitle || action.label,
+        confirmDescription: action.confirmDescription || `Are you sure you want to ${action.label.toLowerCase()} ${selectedIds.length} items?`,
+      }
+    );
+  }, [deleteSystem, viewModel, config, t]);
+
+  // Generic custom action handler
+  const handleCustomAction = useCallback(async (action: CustomAction) => {
+    await deleteSystem.confirmDelete(
+      async () => {
+        await action.onClick();
+        await viewModel.refreshItems();
+      },
+      {
+        itemName: "all items",
+        itemType: config?.itemTypeKey ? t(config.itemTypeKey) : 'Items',
+        confirmTitle: action.confirmTitle || action.label,
+        confirmDescription: action.confirmDescription || `Are you sure you want to ${action.label.toLowerCase()}?`,
+      }
+    );
+  }, [deleteSystem, viewModel, config, t]);
+
+  // Generic individual action handler
+  const handleIndividualAction = useCallback(async (action: any, item: any) => {
+    // If action has confirmTitle, it needs confirmation
+    if (action.confirmTitle || action.confirmDescription) {
+      const itemDisplayName = config?.getItemDisplayName ? config.getItemDisplayName(item) : item.name || item.id;
+      await deleteSystem.confirmDelete(
+        async () => {
+          await action.onClick(item);
+          await viewModel.refreshItems();
+        },
+        {
+          itemName: itemDisplayName,
+          itemType: config?.itemTypeKey ? t(config.itemTypeKey) : 'Item',
+          confirmTitle: action.confirmTitle || action.label,
+          confirmDescription: action.confirmDescription?.replace('{name}', itemDisplayName) || `Are you sure you want to ${action.label.toLowerCase()} ${itemDisplayName}?`,
+        }
+      );
+    } else {
+      // No confirmation needed, just execute and refresh
+      await action.onClick(item);
+      await viewModel.refreshItems();
+    }
+  }, [deleteSystem, viewModel, config, t]);
 
   // Use config if provided, otherwise use direct props (backward compatibility)
   const title = config ? t(config.titleKey) : propTitle!;
   const subtitle = config ? (config.customSubtitle || t(config.subtitleKey)) : propSubtitle;
   const columns = config ? config.columns : propColumns!;
-  const actions = config?.getActions ? config.getActions(viewModel, t, handleDelete) : propActions;
+
+  // Wrap actions to use the generic individual action handler
+  const rawActions = config?.getActions ? config.getActions(viewModel, t, handleDelete) : propActions;
+  const actions = rawActions?.map(action => ({
+    ...action,
+    onClick: action.onClick === handleDelete ? handleDelete : (item: any) => handleIndividualAction(action, item)
+  }));
+
   const createFields = config ? config.createFields : propCreateFields!;
   const editFields = config ? config.editFields : (propEditFields || propCreateFields!);
 
@@ -229,11 +473,41 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
           )}
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          {/* Custom bulk actions */}
+          {/* Always-visible custom actions */}
+          {config?.customActions?.map((action, index) => (
+            <Button
+              key={index}
+              onClick={() => handleCustomAction(action)}
+              variant={action.variant || "outline"}
+              size={getButtonSize()}
+              className={cn("flex-1 sm:flex-none", action.className)}
+            >
+              {action.icon && <span className="mr-2">{action.icon}</span>}
+              {action.label}
+            </Button>
+          ))}
+
+          {/* Generic bulk actions */}
+          {config?.bulkActions && viewModel.selectedItems.length > 0 &&
+            config.bulkActions.map((action, index) => (
+              <Button
+                key={index}
+                onClick={() => handleBulkAction(action, viewModel.selectedItems)}
+                variant={action.variant || "outline"}
+                size={getButtonSize()}
+                className={cn("flex-1 sm:flex-none", action.className)}
+              >
+                {action.icon && <span className="mr-2">{action.icon}</span>}
+                {action.label} ({viewModel.selectedItems.length})
+              </Button>
+            ))
+          }
+
+          {/* Legacy custom bulk actions (deprecated) */}
           {config?.customBulkActions && viewModel.selectedItems.length > 0 && config.customBulkActions}
 
           {/* Default bulk delete */}
-          {viewModel.selectedItems.length > 0 && !config?.customBulkActions && (config?.enableBulkActions !== false) && (
+          {viewModel.selectedItems.length > 0 && !config?.customBulkActions && !config?.bulkActions && (config?.enableBulkActions !== false) && (
             <Button
               onClick={viewModel.deleteSelectedItems}
               variant="destructive"
@@ -244,7 +518,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             </Button>
           )}
 
-          {/* Custom toolbar actions */}
+          {/* Legacy custom toolbar actions (deprecated) */}
           {config?.customToolbarActions && config.customToolbarActions}
 
           {/* Default actions (unless hidden) */}
@@ -313,6 +587,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
       >
         <GenericForm
           fields={createFields}
+          initialValues={config?.createInitialValues || {}}
           onSubmit={viewModel.createItem}
           onCancel={() => viewModel.setIsCreateModalOpen(false)}
         />
@@ -338,9 +613,10 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
               if (viewModel.editingItem) {
                 return viewModel.updateItem(viewModel.editingItem.id, data);
               }
+              return Promise.resolve();
             }}
-            initialValues={viewModel.editingItem || {}}
-            onCancel={viewModel.closeEditModal}
+            initialValues={config?.editInitialValues && viewModel.editingItem ? config.editInitialValues(viewModel.editingItem) : (viewModel.editingItem || {})}
+            onCancel={() => viewModel.setIsEditModalOpen(false)}
           />
         </DialogContent>
       </Dialog>

@@ -1,3 +1,31 @@
+/**
+ * Generic CRUD View Model Hook
+ *
+ * A comprehensive, reusable hook for managing CRUD operations with the following features:
+ * - Type-safe CRUD operations (Create, Read, Update, Delete)
+ * - Advanced pagination with customizable page sizes
+ * - Debounced search with focus management
+ * - Loading states and error handling
+ * - Modal management for create/edit/view operations
+ * - Bulk selection and operations
+ * - Dropdown data management for form fields
+ * - Optimistic updates and data synchronization
+ * - Memory leak prevention and cleanup
+ *
+ * @example
+ * ```typescript
+ * const vm = useGenericCrudViewModel(adminService, {
+ *   itemTypeName: "Admin",
+ *   itemTypeNamePlural: "Admins",
+ *   getItemDisplayName: (admin) => admin.username,
+ *   searchParamName: "PageSearch"
+ * });
+ * ```
+ *
+ * @author Contract Management System Team
+ * @version 2.0.0
+ * @since 1.0.0
+ */
 "use client";
 
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
@@ -97,32 +125,52 @@ export function useGenericCrudViewModel<
   const updateRef = useRef(service.update);
   const deleteRef = useRef(service.delete);
 
-  useEffect(() => { getDataRef.current = service.getData; }, [service.getData]);
-  useEffect(() => { createRef.current  = service.create;   }, [service.create]);
-  useEffect(() => { updateRef.current  = service.update;   }, [service.update]);
-  useEffect(() => { deleteRef.current  = service.delete;   }, [service.delete]);
+  useEffect(() => {
+    getDataRef.current = service.getData;
+  }, [service.getData]);
+  useEffect(() => {
+    createRef.current = service.create;
+  }, [service.create]);
+  useEffect(() => {
+    updateRef.current = service.update;
+  }, [service.update]);
+  useEffect(() => {
+    deleteRef.current = service.delete;
+  }, [service.delete]);
 
   // Keep config bits in refs
   const searchParamNameRef = useRef(config.searchParamName);
   const getItemDisplayNameRef = useRef(config.getItemDisplayName);
-  useEffect(() => { searchParamNameRef.current = config.searchParamName; }, [config.searchParamName]);
-  useEffect(() => { getItemDisplayNameRef.current = config.getItemDisplayName; }, [config.getItemDisplayName]);
+  useEffect(() => {
+    searchParamNameRef.current = config.searchParamName;
+  }, [config.searchParamName]);
+  useEffect(() => {
+    getItemDisplayNameRef.current = config.getItemDisplayName;
+  }, [config.getItemDisplayName]);
 
   // Dropdown service refs
   const dropdownServiceRef = useRef(config.dropdownService);
   const dropdownSearchParamNameRef = useRef(config.dropdownSearchParamName);
-  useEffect(() => { dropdownServiceRef.current = config.dropdownService; }, [config.dropdownService]);
-  useEffect(() => { dropdownSearchParamNameRef.current = config.dropdownSearchParamName; }, [config.dropdownSearchParamName]);
+  useEffect(() => {
+    dropdownServiceRef.current = config.dropdownService;
+  }, [config.dropdownService]);
+  useEffect(() => {
+    dropdownSearchParamNameRef.current = config.dropdownSearchParamName;
+  }, [config.dropdownSearchParamName]);
 
   // Core list function — ALWAYS returns TItem[]
   const list = useCallback(async (): Promise<TItem[]> => {
     const currentPagination = paginationRef.current;
     const currentSearchTerm = searchTermRef.current;
     const wasSearchFocused = searchInputRef.current === document.activeElement;
-    
+
     // Maintain focus during the entire API request process
     const maintainFocus = () => {
-      if (wasSearchFocused && searchInputRef.current && document.activeElement !== searchInputRef.current) {
+      if (
+        wasSearchFocused &&
+        searchInputRef.current &&
+        document.activeElement !== searchInputRef.current
+      ) {
         searchInputRef.current.focus();
       }
     };
@@ -134,8 +182,16 @@ export function useGenericCrudViewModel<
       const paramName = searchParamNameRef.current;
       const apiParams =
         paramName === "search"
-          ? { page: currentPagination.page, pageSize: currentPagination.pageSize, search: currentSearchTerm }
-          : { page: currentPagination.page, pageSize: currentPagination.pageSize, PageSearch: currentSearchTerm };
+          ? {
+              page: currentPagination.page,
+              pageSize: currentPagination.pageSize,
+              search: currentSearchTerm,
+            }
+          : {
+              page: currentPagination.page,
+              pageSize: currentPagination.pageSize,
+              PageSearch: currentSearchTerm,
+            };
 
       const res = await getDataRef.current(apiParams);
 
@@ -148,18 +204,22 @@ export function useGenericCrudViewModel<
       maintainFocus();
 
       // Update pagination but preserve user-selected page & pageSize
-      setPagination(prev => {
-        const next: PaginationInfo = { ...res.pagination, page: prev.page, pageSize: prev.pageSize };
+      setPagination((prev) => {
+        const next: PaginationInfo = {
+          ...res.pagination,
+          page: prev.page,
+          pageSize: prev.pageSize,
+        };
         const same =
           prev.itemsCount === next.itemsCount &&
-          prev.pageSize   === next.pageSize &&
-          prev.page       === next.page &&
+          prev.pageSize === next.pageSize &&
+          prev.page === next.page &&
           prev.pagesCount === next.pagesCount;
         return same ? prev : next;
       });
 
       setData(res.data ?? []);
-      
+
       // Maintain focus after state updates
       setTimeout(() => maintainFocus(), 10);
 
@@ -169,9 +229,9 @@ export function useGenericCrudViewModel<
       setError(err instanceof Error ? err.message : "Failed to load data");
       return []; // return empty array on error
     } finally {
-      if (!mountedRef.current) return[];
+      if (!mountedRef.current) return [];
       setLoading(false);
-      
+
       // Final focus restoration (exactly like tree view)
       setTimeout(() => maintainFocus(), 50);
       setTimeout(() => maintainFocus(), 100);
@@ -233,19 +293,22 @@ export function useGenericCrudViewModel<
   // Handle input change (exactly like tree view)
   const handleSearchChange = useCallback((value: string) => {
     setSearchValue(value); // Update display immediately
-    
+
     // Clear existing timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
-    
+
     // Set new timeout for debounced API call
     searchTimeoutRef.current = setTimeout(() => {
       // Ensure focus is maintained before making the API call
-      if (searchInputRef.current && document.activeElement !== searchInputRef.current) {
+      if (
+        searchInputRef.current &&
+        document.activeElement !== searchInputRef.current
+      ) {
         searchInputRef.current.focus();
       }
-      
+
       setPagination((prev) => ({ ...prev, page: 1 }));
       setSearchTerm(value); // This triggers the API call
     }, 300); // 300ms debounce
@@ -266,25 +329,38 @@ export function useGenericCrudViewModel<
   }, [searchTerm, list]);
 
   // Pagination handlers
-  const changePage = useCallback((page: number) => {
-    setPagination(prev => ({ ...prev, page }));
-    setTimeout(() => { list(); }, 0);
-  }, [list]);
+  const changePage = useCallback(
+    (page: number) => {
+      setPagination((prev) => ({ ...prev, page }));
+      setTimeout(() => {
+        list();
+      }, 0);
+    },
+    [list]
+  );
 
-  const changePageSize = useCallback((pageSize: number) => {
-    setPagination(prev => ({ ...prev, pageSize, page: 1 }));
-    setTimeout(() => { list(); }, 0);
-  }, [list]);
+  const changePageSize = useCallback(
+    (pageSize: number) => {
+      setPagination((prev) => ({ ...prev, pageSize, page: 1 }));
+      setTimeout(() => {
+        list();
+      }, 0);
+    },
+    [list]
+  );
 
   // Legacy compatibility
-  const searchItems = useCallback((term: string) => {
-    handleSearchChange(term);
-  }, [handleSearchChange]);
+  const searchItems = useCallback(
+    (term: string) => {
+      handleSearchChange(term);
+    },
+    [handleSearchChange]
+  );
 
   const dropdownOptionsMapped = useMemo(() => {
     const svc = dropdownServiceRef.current;
     if (!svc) return [];
-    return dropdownOptions.map(item => ({
+    return dropdownOptions.map((item) => ({
       label: svc.getLabel(item),
       value: svc.getValue(item),
     }));

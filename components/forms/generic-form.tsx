@@ -20,16 +20,18 @@ import { RichTextEditor } from "@/components/ui/rich-text-editor";
 export interface FieldOption {
   value: string;
   label: string;
+  children?: FieldOption[];
 }
 
 export interface FieldConfig {
   name: string;
   label?: string; // Optional for hidden fields
-  type: "text" | "password" | "email" | "number" | "tel" | "url" | "textarea" | "richtext" | "select" | "searchable-select" | "server-select" | "multi-select" | "switch" | "checkbox" | "radio" | "slider" | "range" | "hidden" | "date" | "datetime" | "datetime-local" | "time" | "month" | "week" | "color" | "file";
+  type: "text" | "password" | "email" | "number" | "tel" | "url" | "textarea" | "richtext" | "select" | "searchable-select" | "server-select" | "multi-select" | "tree" | "switch" | "checkbox" | "radio" | "slider" | "range" | "hidden" | "date" | "datetime" | "datetime-local" | "time" | "month" | "week" | "color" | "file";
   placeholder?: string;
   searchPlaceholder?: string; // For searchable selects
   required?: boolean;
   options?: FieldOption[];
+  treeData?: FieldOption[]; // For tree select type
   defaultValue?: any;
   // Input specific options
   min?: number | string; // For number, date, range inputs
@@ -76,10 +78,12 @@ export function GenericForm({
 }: GenericFormProps) {
   const settings = useSettings();
   const { t, direction } = useI18n();
-  const [formData, setFormData] = useState<Record<string, any>>(() => {
-    const data = { ...initialValues };
+
+  // Helper function to initialize form data with default values
+  const initializeFormData = React.useCallback((currentFields: FieldConfig[], currentInitialValues: Record<string, any>) => {
+    const data = { ...currentInitialValues };
     // Set default values for fields that have them and convert dates for HTML inputs
-    fields.forEach(field => {
+    currentFields.forEach(field => {
       if (field.defaultValue !== undefined && data[field.name] === undefined) {
         data[field.name] = field.defaultValue;
       }
@@ -89,8 +93,18 @@ export function GenericForm({
       }
     });
     return data;
-  });
+  }, []);
+
+  const [formData, setFormData] = useState<Record<string, any>>(() => initializeFormData(fields, initialValues));
   const [loading, setLoading] = useState(false);
+
+  // Re-initialize form data when fields change (for dynamic forms)
+  React.useEffect(() => {
+    setFormData(prevData => {
+      const newData = initializeFormData(fields, { ...initialValues, ...prevData });
+      return newData;
+    });
+  }, [fields, initializeFormData, initialValues]);
 
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => {
@@ -340,19 +354,31 @@ export function GenericForm({
                     type="multi"
                     options={field.options?.map(opt => ({ value: opt.value, label: opt.label })) || []}
                     value={formData[field.name] || []}
-                    onValueChange={(value: string | string[]) => handleChange(field.name, Array.isArray(value) ? value : [value])}
+                    onValueChange={(value: string | string[]) => handleChange(field.name, value)}
                     placeholder={field.placeholder}
                     searchPlaceholder={field.searchPlaceholder}
-                    searchType={field.searchType || "client"}
+                    searchType={field.searchType}
                     onServerSearch={field.onServerSearch ? async (query: string) => {
                       const results = await field.onServerSearch!(query);
                       return results.map(r => ({ value: r.value, label: r.label }));
                     } : undefined}
                     searchEndpoint={field.searchEndpoint}
                     debounceMs={field.debounceMs}
-                    loading={field.loading}
+                    allowClear={field.allowClear}
                     noResultsText={field.noResultsText}
                     searchingText={field.searchingText}
+                    maxSelectedDisplay={3}
+                    disabled={field.disabled || readOnly}
+                    className={getInputClasses(getInputHeight())}
+                  />
+                ) : field.type === "tree" ? (
+                  <GenericSelect
+                    type="tree"
+                    treeData={field.treeData || []}
+                    value={formData[field.name] || ""}
+                    onValueChange={(value: string | string[]) => handleChange(field.name, typeof value === 'string' ? value : value[0])}
+                    placeholder={field.placeholder}
+                    searchPlaceholder={field.searchPlaceholder}
                     disabled={field.disabled || readOnly}
                     className={getInputClasses(getInputHeight())}
                   />
