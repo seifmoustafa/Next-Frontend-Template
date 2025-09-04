@@ -291,7 +291,7 @@ function getNodeStyling(
 ) {
   const baseTransition = "transition-all duration-300 ease-in-out";
   const hoverScale = "hover:scale-[1.02] active:scale-[0.98]";
-
+  
   switch (variant) {
     case "modern":
       return cn(
@@ -502,8 +502,8 @@ function TreeList<T>({
     (variant === "lines"
       ? "border-solid"
       : variant === "minimal"
-        ? "border-dashed"
-        : "border-solid");
+      ? "border-dashed"
+      : "border-solid");
 
   // Selection logic helpers
   const isNodeSelected = (nodeValue: string) => {
@@ -513,38 +513,38 @@ function TreeList<T>({
   const getAllChildrenValues = (node: T): string[] => {
     const children = getChildren(node) ?? [];
     const values: string[] = [];
-
+    
     children.forEach((child) => {
       if (getValueToSend) {
         values.push(getValueToSend(child));
         values.push(...getAllChildrenValues(child));
       }
     });
-
+    
     return values;
   };
 
   const getAllParentValues = (nodeValue: string, allNodes: T[]): string[] => {
     const parents: string[] = [];
-
+    
     const findParents = (nodes: T[], targetValue: string, currentParents: string[] = []): boolean => {
       for (const node of nodes) {
         if (!getValueToSend) return false;
         const nodeVal = getValueToSend(node);
         const children = getChildren(node) ?? [];
-
+        
         if (children.some(child => getValueToSend(child) === targetValue)) {
           parents.push(...currentParents, nodeVal);
           return true;
         }
-
+        
         if (findParents(children, targetValue, [...currentParents, nodeVal])) {
           return true;
         }
       }
       return false;
     };
-
+    
     findParents(allNodes, nodeValue);
     return parents;
   };
@@ -552,10 +552,10 @@ function TreeList<T>({
   const isNodeIndeterminate = (node: T) => {
     const children = getChildren(node) ?? [];
     if (children.length === 0 || !getValueToSend) return false;
-
+    
     const nodeValue = getValueToSend(node);
     if (selectedValues.includes(nodeValue)) return false;
-
+    
     const childrenValues = getAllChildrenValues(node);
     return childrenValues.some(childValue => selectedValues.includes(childValue));
   };
@@ -573,7 +573,7 @@ function TreeList<T>({
       if (!newSelection.includes(nodeValue)) {
         newSelection.push(nodeValue);
       }
-
+      
       // Auto-select all parents
       const parentValues = getAllParentValues(nodeValue, nodes);
       parentValues.forEach(parentValue => {
@@ -584,7 +584,7 @@ function TreeList<T>({
     } else {
       // Remove the node
       newSelection = newSelection.filter(val => val !== nodeValue);
-
+      
       // Remove all children
       const childrenValues = getAllChildrenValues(node);
       newSelection = newSelection.filter(val => !childrenValues.includes(val));
@@ -609,8 +609,8 @@ function TreeList<T>({
         const isOpen = expanded[id];
         const selected = selectable && getValueToSend ? isNodeSelected(nodeValue) : false;
         const indeterminate = selectable && getValueToSend ? isNodeIndeterminate(node) : false;
-
-
+        
+        
 
         const nodeBase = getNodeStyling(variant, level, density, radius, shadow, cardStyle, hasChildren, isOpen);
 
@@ -650,10 +650,10 @@ function TreeList<T>({
 
               {/* Checkbox for selectable mode */}
               {selectable && getValueToSend && (
-                <div
+                <div 
                   className={cn(
-                    "flex items-center justify-center p-1 rounded",
-                    disabled ? "!cursor-not-allowed !opacity-60" : "hover:bg-muted/50 cursor-pointer"
+                    "flex items-center justify-center p-2 rounded-md min-w-[32px] min-h-[32px]",
+                    disabled ? "!cursor-not-allowed !opacity-60" : "hover:bg-muted/50 cursor-pointer transition-colors"
                   )}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -661,7 +661,7 @@ function TreeList<T>({
                       handleSelectionChange(nodeValue, !selected);
                     }
                   }}
-                  style={{
+                  style={{ 
                     cursor: disabled ? 'not-allowed !important' : 'pointer',
                     opacity: disabled ? '0.6 !important' : '1'
                   }}
@@ -680,7 +680,7 @@ function TreeList<T>({
                       disabled ? "!opacity-50 !cursor-not-allowed" : "",
                       "pointer-events-none"
                     )}
-                    style={{
+                    style={{ 
                       cursor: disabled ? 'not-allowed !important' : 'default',
                       opacity: disabled ? '0.5 !important' : '1',
                       pointerEvents: 'none'
@@ -690,7 +690,18 @@ function TreeList<T>({
               )}
 
               {/* Icon + Label */}
-              <div className="flex items-center gap-2 flex-1 min-w-0">
+              <div 
+                className={cn(
+                  "flex items-center gap-2 flex-1 min-w-0",
+                  selectable && !disabled ? "cursor-pointer hover:bg-muted/30 rounded-md p-1 transition-colors" : ""
+                )}
+                onClick={(e) => {
+                  if (selectable && getValueToSend && !disabled) {
+                    e.stopPropagation();
+                    handleSelectionChange(nodeValue, !selected);
+                  }
+                }}
+              >
                 {hasChildren ? (
                   isOpen ? (
                     <FolderOpen className="h-4 w-4 text-primary" />
@@ -734,7 +745,7 @@ function TreeList<T>({
                         onClick={a.onClick}
                         className={cn(
                           a.variant === "destructive" &&
-                          "text-destructive focus:text-destructive"
+                            "text-destructive focus:text-destructive"
                         )}
                       >
                         {a.label}

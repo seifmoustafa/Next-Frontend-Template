@@ -21,7 +21,7 @@ export default function NotFound() {
               {t("common.pageNotFoundDescription")}
             </p>
           </div>
-
+          
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               onClick={() => router.back()}

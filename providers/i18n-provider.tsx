@@ -32,7 +32,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const t = (key: string): string => {
     const keys = key.split('.')
     let value: any = translations[language]
-
+    
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
         value = value[k]
@@ -40,7 +40,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
         return key // Return the key if path not found
       }
     }
-
+    
     return typeof value === 'string' ? value : key
   }
 
@@ -93,7 +93,7 @@ export function useI18n() {
       return {
         language: 'ar' as const,
         direction: 'rtl' as const,
-        setLanguage: () => { },
+        setLanguage: () => {},
         t: (key: string) => key, // Return key as fallback during SSR
       };
     }
@@ -101,7 +101,7 @@ export function useI18n() {
     return {
       language: 'ar' as const,
       direction: 'rtl' as const,
-      setLanguage: () => { },
+      setLanguage: () => {},
       t: (key: string) => key,
     };
   }

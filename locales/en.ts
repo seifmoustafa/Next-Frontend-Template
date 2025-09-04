@@ -15,8 +15,26 @@ export const en = {
     validationError: "Please fill in all required fields",
   },
 
+  // Not Authorized Page
+  notAuthorized: {
+    title: "Access Denied",
+    description: "You don't have permission to access this page. Please contact your administrator if you believe this is an error.",
+    goBack: "Go Back",
+    goHome: "Go to Dashboard",
+    contactAdmin: "Need help? Contact your system administrator.",
+    accessDeniedAlert: "Access Denied:",
+    accessDeniedMessage: "You don't have the required permissions to view this page. Please contact your administrator if you believe this is an error.",
+    needAccessTitle: "Need Access?",
+    needAccessDescription: "If you need access to this resource, please contact your system administrator or submit a request through the proper channels. Include details about what you're trying to access and why you need it."
+  },
+
   // Navigation
   nav: {
+    siteProducts:"Site Products",
+    notReservedSiteProducts:"Not Reserved Site Products",
+    AdminsRoles:"Admins Roles",
+    admins:"Admins",
+    home:"Home",
     vendors: "Vendors",
     contracts: "Contracts",
     sites: "Sites",
@@ -149,12 +167,146 @@ export const en = {
     combined: "Combined Analytics",
   },
 
+  // Admins
+  admins: {
+    title: "Admin Management",
+    subtitle: "Manage administrators and their roles",
+    itemType: "Admin",
+    search: "Search admins...",
+    total: "Total admins",
+    noAdmins: "No admins found",
+    addAdmin: "Add Admin",
+    editAdmin: "Edit Admin",
+    deleteAdmin: "Delete Admin",
+    confirmDelete: "Delete Admin",
+    deleteConfirmation: "Are you sure you want to delete admin '{name}'?",
+    deleteWarning: "This action will permanently remove the admin and cannot be undone.",
+    deleting: "Deleting admin...",
+    created: "Admin Created",
+    updated: "Admin Updated",
+    table: {
+      username: "Username",
+      siteName: "Site",
+      militaryNumber: "Military Number",
+      roles: "Roles",
+      status: "Status",
+      noRoles: "No roles assigned",
+    },
+    form: {
+      username: "Username",
+      usernamePlaceholder: "Enter username",
+      password: "Password",
+      passwordPlaceholder: "Enter password",
+      militaryNumber: "Military Number",
+      militaryNumberPlaceholder: "Enter military number",
+      site: "Site",
+      sitePlaceholder: "Select site",
+      roles: "Roles",
+      rolesPlaceholder: "Select roles",
+      notes: "Notes",
+      notesPlaceholder: "Enter additional notes",
+      status: "Active Status",
+    },
+    deleted: "Admin Deleted",
+    createSuccess: "Admin '{name}' has been created successfully",
+    updateSuccess: "Admin '{name}' has been updated successfully",
+    deleteSuccess: "Admin '{name}' has been deleted successfully",
+    createError: "Failed to create admin",
+    updateError: "Failed to update admin",
+    deleteError: "Failed to delete admin",
+    loadError: "Failed to load admins",
+    validationError: "Please review the form for errors",
+    usernameRequired: "Username is required",
+    usernameMinLength: "Username must be at least 3 characters",
+    passwordRequired: "Password is required",
+    passwordMinLength: "Password must be at least 6 characters",
+    firstNameRequired: "First name is required",
+    lastNameRequired: "Last name is required",
+    militaryNumberRequired: "Military number is required",
+    siteRequired: "Site is required",
+    actions: {
+      activate: "Activate",
+      deactivate: "Deactivate",
+      resetPassword: "Reset Password",
+      bulkActivate: "Activate Selected",
+      bulkDeactivate: "Deactivate Selected",
+      bulkDelete: "Delete Selected",
+      activateAll: "Activate All",
+      deactivateAll: "Deactivate All",
+      deleteAll: "Delete All",
+    },
+    confirmations: {
+      activate: "Activate Admin",
+      deactivate: "Deactivate Admin",
+      resetPassword: "Reset Password",
+      activateConfirmation: "Are you sure you want to activate admin '{name}'?",
+      deactivateConfirmation: "Are you sure you want to deactivate admin '{name}'?",
+      resetPasswordConfirmation: "Are you sure you want to reset password for admin '{name}'?",
+      bulkActivateConfirmation: "Are you sure you want to activate {count} admins?",
+      bulkDeactivateConfirmation: "Are you sure you want to deactivate {count} admins?",
+      bulkDeleteConfirmation: "Are you sure you want to delete {count} admins?",
+      activateAllConfirmation: "Are you sure you want to activate all admins?",
+      deactivateAllConfirmation: "Are you sure you want to deactivate all admins?",
+      deleteAllConfirmation: "Are you sure you want to delete all admins?",
+      activateWarning: "The admin will be activated and can access the system.",
+      deactivateWarning: "The admin will be deactivated and cannot access the system.",
+      resetPasswordWarning: "The password will be reset to the default password.",
+      bulkWarning: "This action will affect multiple admins at once.",
+      permanentWarning: "This action is permanent and cannot be undone.",
+    },
+    messages: {
+      activating: "Activating admin...",
+      deactivating: "Deactivating admin...",
+      resettingPassword: "Resetting password...",
+      bulkActivating: "Activating selected admins...",
+      bulkDeactivating: "Deactivating selected admins...",
+      bulkDeleting: "Deleting selected admins...",
+      activateSuccess: "Admin '{name}' has been activated successfully",
+      deactivateSuccess: "Admin '{name}' has been deactivated successfully",
+      resetPasswordSuccess: "Password for admin '{name}' has been reset successfully",
+      bulkActivateSuccess: "{count} admins have been activated successfully",
+      bulkDeactivateSuccess: "{count} admins have been deactivated successfully",
+      bulkDeleteSuccess: "{count} admins have been deleted successfully",
+      activateError: "Failed to activate admin",
+      deactivateError: "Failed to deactivate admin",
+      resetPasswordError: "Failed to reset password",
+      bulkActivateError: "Failed to activate selected admins",
+      bulkDeactivateError: "Failed to deactivate selected admins",
+      bulkDeleteError: "Failed to delete selected admins",
+      roleAssignmentError: "Failed to assign roles",
+      roleAssignmentSuccess: "Roles assigned successfully",
+    },
+  },
+
+  // Admin Roles
+  adminRoles: {
+    title: "Admin Role Management",
+    subtitle: "Manage admin role assignments",
+    itemType: "Admin Role",
+    adminUserName: "Admin",
+    roleName: "Role",
+    assignedAt: "Assigned Date",
+    assignRole: "Assign Role",
+    removeRole: "Remove Role",
+    confirmRemove: "Remove Role",
+    removeConfirmation: "Are you sure you want to remove role '{role}' from admin '{admin}'?",
+    removeWarning: "The role will be removed from the admin and they will lose access to associated permissions.",
+    removing: "Removing role...",
+    assigned: "Role Assigned",
+    removed: "Role Removed",
+    assignSuccess: "Role '{role}' has been assigned to admin '{admin}' successfully",
+    removeSuccess: "Role '{role}' has been removed from admin '{admin}' successfully",
+    assignError: "Failed to assign role",
+    removeError: "Failed to remove role",
+    loadError: "Failed to load admin roles",
+  },
+
   // Charts
   charts: {
     title: "Chart Components",
     description: "Interactive chart components with sample data",
     lineCharts: "Line Charts",
-    areaCharts: "Area Charts",
+    areaCharts: "Area Charts", 
     barCharts: "Bar Charts",
     pieDonutCharts: "Pie & Donut Charts",
     scatterBubbleCharts: "Scatter & Bubble Charts",
@@ -166,13 +318,12 @@ export const en = {
     areaDesc: "Emphasize magnitude of change with filled areas under lines",
     barDesc: "Compare categories with horizontal or vertical bars",
     pieDesc: "Show proportional data with circular visualizations",
-    scatterDesc:
-      "Visualize relationships between variables with plotted points",
+    scatterDesc: "Visualize relationships between variables with plotted points",
     mixedDesc: "Combine different chart types for comprehensive data views",
     radarDesc: "Multi-dimensional data and KPI visualization",
     heatmapDesc: "Pattern recognition and hierarchical data visualization",
     timelineDesc: "Project tracking and conversion process visualization",
-
+    
     // Chart types
     basicLine: "Basic Line Chart",
     multiSeries: "Multi-Series Line",
@@ -196,7 +347,7 @@ export const en = {
     treemapChart: "Treemap Chart",
     timelineChart: "Timeline Chart",
     funnelChart: "Funnel Chart",
-
+    
     // Sample data labels
     sampleData: "Sample Data",
     monthlyRevenue: "Monthly Revenue",
@@ -206,7 +357,7 @@ export const en = {
     marketShare: "Market Share",
     conversionRates: "Conversion Rates",
     trafficSources: "Traffic Sources",
-
+    
     // Chart descriptions (removed duplicates)
     // lineDesc, areaDesc, etc. already defined above
     users: "Users",
@@ -321,8 +472,7 @@ export const en = {
       descriptions: {
         projectPlanning: "Initial project scope and requirements gathering",
         uiuxDesign: "User interface and experience design phase",
-        frontendDevelopment:
-          "React components and user interface implementation",
+        frontendDevelopment: "React components and user interface implementation",
         backendDevelopment: "API development and database design",
         integrationTesting: "End-to-end system integration testing",
         userAcceptance: "Client testing and feedback collection",
@@ -380,6 +530,8 @@ export const en = {
     sat: "Sat",
     sun: "Sun",
   },
+
+
 
   campaigns: {
     campaignA: "Campaign A",
@@ -450,6 +602,7 @@ export const en = {
     subtitle: "Manage product and service categories",
     itemType: "Category",
     name: "Category Name",
+    // ... (rest of the code remains the same)
     isActive: "Active Status",
     createdAt: "Created Date",
     addCategory: "Add Category",
@@ -564,7 +717,7 @@ export const en = {
     phoneNumber: "Phone Number",
     updateProfile: "Update Profile",
     updateSuccess: "Profile updated successfully!",
-
+    
     // Header section
     online: "Online",
     changePhoto: "Change Photo",
@@ -576,18 +729,17 @@ export const en = {
     active: "Active",
     admin: "Admin",
     secure: "Secure",
-
+    
     // Info cards
     username: "Username",
     phone: "Phone",
     role: "Role",
     status: "Status",
-
+    
     // Form descriptions
-    personalInfoDescription:
-      "Update your personal details and contact information",
+    personalInfoDescription: "Update your personal details and contact information",
     passwordDescription: "Update your password to keep your account secure",
-
+    
     // Password section
     password: {
       title: "Change Password",
@@ -603,7 +755,7 @@ export const en = {
       updating: "Updating Password...",
       description: "Update your password to keep your account secure",
     },
-
+    
     // Sidebar sections
     accountSecurity: "Account Security",
     twoFactorAuth: "Two-Factor Auth",
@@ -618,12 +770,12 @@ export const en = {
     accountType: "Account Type",
     memberSince: "Member Since",
     profileVersion: "Profile Version",
-
+    
     // Time formats
     hoursAgo: "{hours} hours ago",
     minutesAgo: "{minutes} minutes ago",
     daysAgo: "{days} days ago",
-
+    
     errors: {
       fetch: "Failed to load profile",
       update: "Failed to update profile",
@@ -769,7 +921,7 @@ export const en = {
         },
       },
     },
-
+   
     darkMode: "Dark Mode",
     lightDarkToggle: "Toggle between light and dark mode",
     selectColorTheme: "Select Color Theme",
@@ -837,30 +989,29 @@ export const en = {
       mobile: "Mobile",
       tablet: "Tablet",
       smarttv: "Smart TV",
-      other: "Other",
+      other: "Other"
     },
     charts: {
       tabs: {
         line: "Line",
-        area: "Area",
+        area: "Area", 
         bar: "Bar",
         pie: "Pie",
         scatter: "Scatter",
         mixed: "Mixed",
         radar: "Radar",
         heatmap: "Heatmap",
-        timeline: "Timeline",
+        timeline: "Timeline"
       },
       line: {
         title: "Line Charts",
-        description:
-          "Display trends and changes over time with connected data points",
+        description: "Display trends and changes over time with connected data points",
         basic: {
           title: "Basic Line Chart",
           description: "Simple line chart showing sales data over time",
         },
         multiSeries: {
-          title: "Multi-Series Line Chart",
+          title: "Multi-Series Line Chart", 
           description: "Compare multiple data series on the same chart",
         },
         curved: {
@@ -874,8 +1025,7 @@ export const en = {
       },
       area: {
         title: "Area Charts",
-        description:
-          "Emphasize magnitude of change with filled areas under lines",
+        description: "Emphasize magnitude of change with filled areas under lines",
         basic: {
           title: "Basic Area Chart",
           description: "Simple area chart with gradient fill",
@@ -922,8 +1072,7 @@ export const en = {
         },
         donut: {
           title: "Donut Chart",
-          description:
-            "Pie chart with hollow center for additional information",
+          description: "Pie chart with hollow center for additional information",
         },
         semiCircle: {
           title: "Semi-Circle Chart",
@@ -936,8 +1085,7 @@ export const en = {
       },
       scatter: {
         title: "Scatter & Bubble Charts",
-        description:
-          "Visualize relationships between variables with plotted points",
+        description: "Visualize relationships between variables with plotted points",
         basic: {
           title: "Basic Scatter Chart",
           description: "Plot data points to show correlation patterns",
@@ -957,8 +1105,7 @@ export const en = {
       },
       mixed: {
         title: "Mixed Charts",
-        description:
-          "Combine different chart types for comprehensive data views",
+        description: "Combine different chart types for comprehensive data views",
         lineBar: {
           title: "Line + Bar Chart",
           description: "Combine line and bar charts for dual perspective",
@@ -1327,38 +1474,14 @@ export const en = {
         compact: { name: "Compact", description: "Tighter spacing" },
         spacious: { name: "Spacious", description: "More breathing room" },
         inline: { name: "Inline", description: "Horizontal layout" },
-        modern: {
-          name: "Modern",
-          description: "Contemporary design with gradients",
-        },
-        glass: {
-          name: "Glass",
-          description: "Glassmorphism with blur effects",
-        },
-        minimal: {
-          name: "Minimal",
-          description: "Ultra-clean design with minimal borders",
-        },
-        card: {
-          name: "Card",
-          description: "Form fields grouped in elevated containers",
-        },
-        neon: {
-          name: "Neon",
-          description: "Futuristic glowing cyberpunk style",
-        },
-        elegant: {
-          name: "Elegant",
-          description: "Sophisticated luxury design",
-        },
-        organic: {
-          name: "Organic",
-          description: "Natural flowing curves and shapes",
-        },
-        retro: {
-          name: "Retro",
-          description: "Vintage-inspired classic design",
-        },
+        modern: { name: "Modern", description: "Contemporary design with gradients" },
+        glass: { name: "Glass", description: "Glassmorphism with blur effects" },
+        minimal: { name: "Minimal", description: "Ultra-clean design with minimal borders" },
+        card: { name: "Card", description: "Form fields grouped in elevated containers" },
+        neon: { name: "Neon", description: "Futuristic glowing cyberpunk style" },
+        elegant: { name: "Elegant", description: "Sophisticated luxury design" },
+        organic: { name: "Organic", description: "Natural flowing curves and shapes" },
+        retro: { name: "Retro", description: "Vintage-inspired classic design" },
       },
     },
     loadingStyle: {
@@ -1390,10 +1513,7 @@ export const en = {
         glass: { name: "Glass", description: "Glassmorphism with blur effect" },
         neon: { name: "Neon", description: "Glowing neon style" },
         minimal: { name: "Minimal", description: "Clean minimal design" },
-        elegant: {
-          name: "Elegant",
-          description: "Sophisticated gradient style",
-        },
+        elegant: { name: "Elegant", description: "Sophisticated gradient style" },
       },
     },
     badgeStyle: {
@@ -1430,15 +1550,9 @@ export const en = {
         fullscreen: { name: "Fullscreen", description: "Covers entire screen" },
         drawer: { name: "Drawer", description: "Sliding sidebar modal" },
         glass: { name: "Glass", description: "Glassmorphism with blur effect" },
-        floating: {
-          name: "Floating",
-          description: "Elevated floating appearance",
-        },
+        floating: { name: "Floating", description: "Elevated floating appearance" },
         card: { name: "Card", description: "Clean card-style design" },
-        overlay: {
-          name: "Overlay",
-          description: "Large overlay with backdrop",
-        },
+        overlay: { name: "Overlay", description: "Large overlay with backdrop" },
       },
       testButton: "Test {{style}}",
       testInstructions:
@@ -1581,7 +1695,7 @@ export const en = {
         fancy: { name: "Fancy", description: "Hover effects" },
       },
     },
-
+   
     behavior: {
       title: "UI Behavior",
       description: "Control how the interface behaves",
@@ -1639,23 +1753,11 @@ export const en = {
         designOptions: {
           default: { name: "Default", description: "Standard checkbox design" },
           modern: { name: "Modern", description: "Clean contemporary design" },
-          glass: {
-            name: "Glass",
-            description: "Translucent glassmorphism effect",
-          },
+          glass: { name: "Glass", description: "Translucent glassmorphism effect" },
           neon: { name: "Neon", description: "Bright glowing borders" },
-          gradient: {
-            name: "Gradient",
-            description: "Colorful gradient backgrounds",
-          },
-          neumorphism: {
-            name: "Neumorphism",
-            description: "Soft 3D raised appearance",
-          },
-          cyberpunk: {
-            name: "Cyberpunk",
-            description: "Futuristic tech aesthetic",
-          },
+          gradient: { name: "Gradient", description: "Colorful gradient backgrounds" },
+          neumorphism: { name: "Neumorphism", description: "Soft 3D raised appearance" },
+          cyberpunk: { name: "Cyberpunk", description: "Futuristic tech aesthetic" },
           luxury: { name: "Luxury", description: "Premium gold accents" },
           aurora: { name: "Aurora", description: "Northern lights inspired" },
           cosmic: { name: "Cosmic", description: "Space-themed design" },
@@ -1664,52 +1766,28 @@ export const en = {
           organic: { name: "Organic", description: "Natural curved shapes" },
           retro: { name: "Retro", description: "Vintage computing style" },
           matrix: { name: "Matrix", description: "Digital rain effect" },
-          diamond: {
-            name: "Diamond",
-            description: "Crystalline faceted design",
-          },
+          diamond: { name: "Diamond", description: "Crystalline faceted design" },
           liquid: { name: "Liquid", description: "Fluid morphing shapes" },
           crystal: { name: "Crystal", description: "Transparent crystalline" },
           plasma: { name: "Plasma", description: "Electric energy effects" },
-          quantum: {
-            name: "Quantum",
-            description: "Particle physics inspired",
-          },
-          holographic: {
-            name: "Holographic",
-            description: "Iridescent rainbow shifts",
-          },
+          quantum: { name: "Quantum", description: "Particle physics inspired" },
+          holographic: { name: "Holographic", description: "Iridescent rainbow shifts" },
           stellar: { name: "Stellar", description: "Star field background" },
           vortex: { name: "Vortex", description: "Swirling energy patterns" },
-          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" },
-        },
+          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" }
+        }
       },
       radio: {
         title: "Radio Button Design",
         description: "Choose the visual style for radio buttons",
         designOptions: {
-          default: {
-            name: "Default",
-            description: "Standard radio button design",
-          },
+          default: { name: "Default", description: "Standard radio button design" },
           modern: { name: "Modern", description: "Clean contemporary design" },
-          glass: {
-            name: "Glass",
-            description: "Translucent glassmorphism effect",
-          },
+          glass: { name: "Glass", description: "Translucent glassmorphism effect" },
           neon: { name: "Neon", description: "Bright glowing borders" },
-          gradient: {
-            name: "Gradient",
-            description: "Colorful gradient backgrounds",
-          },
-          neumorphism: {
-            name: "Neumorphism",
-            description: "Soft 3D raised appearance",
-          },
-          cyberpunk: {
-            name: "Cyberpunk",
-            description: "Futuristic tech aesthetic",
-          },
+          gradient: { name: "Gradient", description: "Colorful gradient backgrounds" },
+          neumorphism: { name: "Neumorphism", description: "Soft 3D raised appearance" },
+          cyberpunk: { name: "Cyberpunk", description: "Futuristic tech aesthetic" },
           luxury: { name: "Luxury", description: "Premium gold accents" },
           aurora: { name: "Aurora", description: "Northern lights inspired" },
           cosmic: { name: "Cosmic", description: "Space-themed design" },
@@ -1718,28 +1796,19 @@ export const en = {
           organic: { name: "Organic", description: "Natural curved shapes" },
           retro: { name: "Retro", description: "Vintage computing style" },
           matrix: { name: "Matrix", description: "Digital rain effect" },
-          diamond: {
-            name: "Diamond",
-            description: "Crystalline faceted design",
-          },
+          diamond: { name: "Diamond", description: "Crystalline faceted design" },
           liquid: { name: "Liquid", description: "Fluid morphing shapes" },
           crystal: { name: "Crystal", description: "Transparent crystalline" },
           plasma: { name: "Plasma", description: "Electric energy effects" },
-          quantum: {
-            name: "Quantum",
-            description: "Particle physics inspired",
-          },
-          holographic: {
-            name: "Holographic",
-            description: "Iridescent rainbow shifts",
-          },
+          quantum: { name: "Quantum", description: "Particle physics inspired" },
+          holographic: { name: "Holographic", description: "Iridescent rainbow shifts" },
           stellar: { name: "Stellar", description: "Star field background" },
           vortex: { name: "Vortex", description: "Swirling energy patterns" },
-          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" },
-        },
+          phoenix: { name: "Phoenix", description: "Fire and rebirth theme" }
+        }
       },
       preview: "Live Preview",
-      previewDescription: "See how your selected styles look in action",
+      previewDescription: "See how your selected styles look in action"
     },
     preview: {
       title: "Live Preview",
@@ -1793,6 +1862,8 @@ export const en = {
 
   // Layout Templates
   layout: {
+    hide_panel:"Hide panel",
+    show_panel:"Show panel",
     classic: "Classic",
     elegant: "Elegant",
     modern: "Modern",
@@ -1889,30 +1960,15 @@ export const en = {
     arabic: "Arabic",
     english: "English",
   },
-  notAuthorized: {
-    title: "Access Denied",
-    description:
-      "You don't have permission to access this page. Please contact your administrator if you believe this is an error.",
-    goBack: "Go Back",
-    goHome: "Go to Dashboard",
-    contactAdmin: "Need help? Contact your system administrator.",
-    accessDeniedAlert: "Access Denied:",
-    accessDeniedMessage:
-      "You don't have the required permissions to view this page. Please contact your administrator if you believe this is an error.",
-    needAccessTitle: "Need Access?",
-    needAccessDescription:
-      "If you need access to this resource, please contact your system administrator or submit a request through the proper channels. Include details about what you're trying to access and why you need it.",
-  },
+
   // Common
   common: {
-    pageNotFound: "Page Not Found",
-    pageNotFoundDescription:
-      "The page you're looking for doesn't exist or has been moved.",
-    goBack: "Go Back",
-    goHome: "Go Home",
-    unexpectedError:
-      "An unexpected error occurred. Please try again or contact support if the problem persists.",
-    errorId: "Error ID",
+    close:"Close",
+    status:"Status",
+    createdAt:"Date of creation",
+    back:"Back",
+    yes:"Yes",
+    no:"No",
     collapseAll: "Collapse All",
     expandAll: "Expand All",
     save: "Save",
@@ -1927,6 +1983,7 @@ export const en = {
     add: "Add",
     add_child: "Add child",
     will_add_under: "Will be added under",
+    edit_location_under: "Edit location under",
     root: "Root",
     loading: "Loading...",
     noData: "No data available",
@@ -1936,7 +1993,7 @@ export const en = {
     user: "User",
     // Confirmation Dialogs
     confirmDelete: "Confirm Delete",
-    deleteConfirmation: "Are you sure you want to delete this {itemType}?",
+    deleteConfirmation: "Are you sure you want to delete {name}?",
     deleteWarning: "This action cannot be undone.",
     deleting: "Deleting...",
     create: "Create",
@@ -1944,7 +2001,6 @@ export const en = {
     sort: "Sort",
     import: "Import",
     refresh: "Refresh",
-    close: "Close",
     open: "Open",
     download: "Download",
     upload: "Upload",
@@ -1970,8 +2026,6 @@ export const en = {
     discount: "Discount",
     shipping: "Shipping",
     grand_total: "Grand Total",
-    yes: "Yes",
-    no: "No",
     ok: "OK",
     confirm: "Confirm",
     warning: "Warning",
@@ -1988,6 +2042,12 @@ export const en = {
     suggestion: "Suggestion",
     improvement: "Improvement",
     enhancement: "Enhancement",
+    pageNotFound: "Page Not Found",
+    pageNotFoundDescription: "The page you're looking for doesn't exist or has been moved.",
+    goBack: "Go Back",
+    goHome: "Go Home",
+    unexpectedError: "An unexpected error occurred. Please try again or contact support if the problem persists.",
+    errorId: "Error ID",
     optimization: "Optimization",
     performance: "Performance",
     security: "Security",
@@ -2050,7 +2110,7 @@ export const en = {
         name: "Cosmic",
         description: "Space theme with stellar gradients",
       },
-
+ 
       filled: { name: "Filled", description: "Solid backgrounds" },
     },
     preview: {
@@ -2092,10 +2152,12 @@ export const en = {
         desc: "This is an info toast with the selected design",
       },
     },
-
+   
+    
     showIconsLabel: "Show Icons in Toasts",
     showIconsDesc: "Display icons in toast notifications",
-
+   
+    
     messages: {
       success: {
         title: "Success!",
@@ -2114,7 +2176,7 @@ export const en = {
         description: "Here's some information.",
       },
     },
-
+    
     created: "{itemType} Created",
     updated: "{itemType} Updated",
     deleted: "{itemType} Deleted",
@@ -2159,33 +2221,100 @@ export const en = {
     online: "Online",
   },
   contracts: {
-    title: "Contracts",
-    subtitle: "Manage vendor contracts",
-    itemType: "Contract",
+    title: "Contract Management",
+    subtitle: "Manage contracts and agreements",
     name: "Contract Name",
     number: "Contract Number",
-    date: "Contract Date",
     vendor: "Vendor",
+    date: "Contract Date",
+    itemType: "Contract",
+    viewProducts: "View Products",
     form: {
       name: "Contract Name",
-      namePlaceholder: "e.g., Annual Support Agreement",
+      namePlaceholder: "Enter contract name",
       number: "Contract Number",
-      numberPlaceholder: "e.g., 2025-001",
+      numberPlaceholder: "Enter contract number",
       date: "Contract Date",
       vendor: "Vendor",
-      vendorPlaceholder: "Select a vendor",
-      searchVendors: "Search vendors...",
+      vendorPlaceholder: "Select vendor",
+      searchVendors: "Search vendors..."
+    }
+  },
+  productContracts: {
+    title: "Product Contracts",
+    subtitle: "Products in contract:",
+    addProduct: "Add Product",
+    addProductModal: "Add Product to Contract",
+    editProductModal: "Edit Product Contract",
+    itemType: "Product Contract",
+    table: {
+      productName: "Product Name",
+      tempNiin: "Temp NIIN",
+      warrantyPeriod: "Warranty Period",
+      totalQuantity: "Total Quantity",
+      remainingQuantity: "Remaining Quantity",
+      months: "months"
     },
-    toasts: {
-      fetchError: "Failed to fetch contracts",
-      fetchOneError: "Failed to fetch contract",
-      createSuccess: "Contract created successfully",
-      createError: "Failed to create contract",
-      updateSuccess: "Contract updated successfully",
-      updateError: "Failed to update contract",
-      deleteSuccess: "Contract deleted successfully",
-      deleteError: "Failed to delete contract",
+    form: {
+      product: "Product",
+      selectProduct: "Select product",
+      warrantyPeriod: "Warranty Period (months)",
+      warrantyPeriodPlaceholder: "Enter warranty period in months",
+      totalQuantity: "Total Quantity",
+      totalQuantityPlaceholder: "Enter total quantity",
+      remainingQuantity: "Remaining Quantity",
+      remainingQuantityPlaceholder: "Enter remaining quantity",
+      order: "Order",
+      orderPlaceholder: "Enter order number",
+      notes: "Notes",
+      notesPlaceholder: "Enter additional notes",
+      isActive: "Active Status"
     },
+    errors: {
+      invalidContractId: "Invalid contract ID provided"
+    }
+  },
+  siteProductContracts: {
+    title: "Site Product Contracts",
+    subtitle: "Sites receiving products from contract:",
+    viewSites: "View Sites",
+    addSite: "Add Site",
+    addSiteModal: "Add Site to Product Contract",
+    editSiteModal: "Edit Site Product Contract",
+    itemType: "Site Product Contract",
+    table: {
+      siteName: "Site Name",
+      productName: "Product Name",
+      tempNiin: "Temp NIIN",
+      contractName: "Contract Name",
+      receivedQuantity: "Received Quantity"
+    },
+    form: {
+      site: "Site",
+      selectSite: "Select site",
+      receivedQuantity: "Received Quantity",
+      receivedQuantityPlaceholder: "Enter received quantity",
+      order: "Order",
+      orderPlaceholder: "Enter order number"
+    },
+    errors: {
+      invalidProductContractId: "Invalid product contract ID provided"
+    }
+  },
+  productSites: {
+    title: "Product Sites",
+    subtitle: "Sites that have received this product:",
+    viewSites: "View Sites",
+    noSites: "No sites have received this product yet",
+    table: {
+      siteName: "Site Name",
+      contractName: "Contract Name",
+      contractNumber: "Contract Number",
+      receivedQuantity: "Received Quantity"
+    },
+    errors: {
+      invalidProductId: "Invalid product ID provided"
+    }
   },
   Sites: {
     title: "Sites",
@@ -2243,11 +2372,15 @@ export const en = {
     phoneNumber: "Phone Number",
     address: "Address",
     site: "Site",
+    rank: "Rank",
     form: {
       personName: "Name",
       personNamePlaceholder: "Enter full name",
       militaryNumber: "Military Number",
       militaryNumberPlaceholder: "Enter military number",
+      rank: "Rank",
+      rankPlaceholder: "Select a rank",
+      searchRanks: "Search ranks...",
       nationalityNumber: "National ID Number",
       nationalityNumberPlaceholder: "Enter national ID number",
       phoneNumber: "Phone Number",
@@ -2322,32 +2455,77 @@ export const en = {
     form: {
       productName: "Product Name",
       productNamePlaceholder: "Enter product name",
-      category: "Category",
-      selectCategory: "Select category",
-      searchCategories: "Search categories...",
-      subCategory: "Sub-Category",
-      selectSubCategory: "Select sub-category",
+      categoryId: "Category",
+      categoryPlaceholder: "Select category",
+      subCategoryId: "Sub Category",
+      subCategoryPlaceholder: "Select sub category",
       selectCategoryFirst: "Select a category first",
-      searchSubCategories: "Search sub-categories...",
       mmcCatalogItemId: "MMC Catalog Item ID",
       mmcCatalogItemIdPlaceholder: "Enter MMC catalog item ID",
       notes: "Notes",
-      notesPlaceholder: "Enter additional notes",
-      isActive: "Active",
+      notesPlaceholder: "Enter notes",
+      isActive: "Active Status"
     },
     table: {
       productName: "Product Name",
-      category: "Category",
-      subCategory: "Sub-Category",
-      mmcCatalogItemId: "MMC Catalog Item ID",
-      status: "Status",
+      categoryName: "Category",
+      subCategoryName: "Sub Category",
+      mmcCatalogItemId: "MMC ID",
+      isActive: "Status",
+      createdTimestamp: "Created Date"
     },
   },
 
+  notReservedSiteProducts: {
+    title: "Not Reserved Site Products",
+    subtitle: "Manage site products that are not reserved",
+    itemType: "Site Product Location",
+    selectCondition: "Please select the condition type and specific item to view products",
+    table: {
+      productName: "Product Name",
+      tempNiin: "Temp NIIN",
+      serial: "Serial",
+      createdDate: "Created Date"
+    },
+    form: {
+      siteProductSerialId: "Site Product Serial ID",
+      order: "Order",
+      assignmentType: "Assignment Type",
+      warehouseLocation: "Warehouse Location",
+      personType: "Person Type",
+      civilian: "Civilian",
+      military: "Military",
+      selectWarehouseLocation: "Select warehouse location",
+      selectCivilian: "Select civilian",
+      selectMilitaryPerson: "Select military person",
+      destinationSite: "Destination Site",
+      selectDestinationSite: "Select destination site",
+      assignmentTypes: {
+        warehouse: "Warehouse",
+        person: "Person",
+        external: "External Site"
+      }
+    },
+    conditionType: "Condition Type",
+    selectCivilian: "Select Civilian",
+    selectMilitary: "Select Military Person",
+    selectSite: "Select Site",
+    searchCivilians: "Search civilians...",
+    searchMilitary: "Search military personnel...",
+    searchSites: "Search sites...",
+    selectedCivilian: "Selected Civilian",
+    selectedMilitary: "Selected Military",
+    selectedSite: "Selected Site",
+    proceed: "Proceed",
+  },
+
   components: {
+    select: {
+      placeholder: "Select......"
+    },
     multiSelect: {
-      title: "Multi Select",
-      description: "Choose multible choices",
+      title:"Multi Select",
+      // ... (rest of the code remains the same)
       searchStates: {
         noResults: "No Results",
         searching: "Searching ......",
@@ -2426,6 +2604,31 @@ export const en = {
       featuresDescription:
         "Showcase the main features of the multi-select tool.",
     },
+    treeSelect: {
+      title: "Tree Select",
+      placeholder: "Select warehouse location...",
+      searchPlaceholder: "Search locations...",
+      description: "Hierarchical tree selection with expand/collapse functionality for warehouse locations.",
+      form: {
+        siteProductSerialId: "Site Product Serial ID",
+        order: "Order",
+        assignmentType: "Assignment Type",
+        assignmentTypes: {
+          warehouse: "Warehouse Location",
+          person: "Assign to Person",
+          external: "External Exchange"
+        },
+        personType: "Person Type",
+        warehouseLocation: "Warehouse Location",
+        selectWarehouseLocation: "Select warehouse location...",
+        civilian: "Civilian",
+        military: "Military",
+        selectCivilian: "Select civilian...",
+        selectMilitaryPerson: "Select military person...",
+        destinationSite: "Destination Site",
+        selectDestinationSite: "Select destination site..."
+      },
+    },
     unifiedSelect: {
       types: {
         single: "Single Select",
@@ -2455,5 +2658,123 @@ export const en = {
     stellar: "Search stellar options...",
     vortex: "Search vortex options...",
     phoenix: "Search phoenix options...",
+  },
+
+  // Roles
+  roles: {
+    title: "Role Management",
+    subtitle: "Manage roles and permissions",
+    itemType: "Role",
+    createRole: "Create Role",
+    editRole: "Edit Role",
+    viewRole: "View Role",
+    createRoleDescription: "Create a new role with specific permissions",
+    editRoleDescription: "Edit role",
+    viewRoleDescription: "View role details and permissions",
+    roleInformation: "Role Information",
+    roleName: "Role Name",
+    roleNamePlaceholder: "Enter role name",
+    roleCode: "Role Code",
+    roleCodePlaceholder: "Enter role code",
+    roleDescription: "Role Description",
+    roleDescriptionPlaceholder: "Enter role description",
+    isActive: "Active Status",
+    permissions: "Permissions",
+    permissionsDescription: "Select permissions for this role",
+    selectedPermissions: "Selected Permissions",
+    noPermissions: "No permissions selected",
+    search: "Search roles...",
+    total: "Total roles",
+    active: "Active",
+    inactive: "Inactive",
+    status: "Status",
+    actions: "Actions",
+    noRoles: "No roles found",
+    confirmDelete: "Delete Role",
+    deleteConfirmation: "Are you sure you want to delete role '{name}'?",
+    deleteWarning: "This action will permanently remove the role and cannot be undone.",
+    deleting: "Deleting role...",
+    created: "Role Created",
+    updated: "Role Updated",
+    deleted: "Role Deleted",
+    createSuccess: "Role '{name}' has been created successfully",
+    updateSuccess: "Role '{name}' has been updated successfully",
+    deleteSuccess: "Role '{name}' has been deleted successfully",
+    createError: "Failed to create role",
+    updateError: "Failed to update role",
+    deleteError: "Failed to delete role",
+    loadError: "Failed to load roles",
+    validationError: "Please check the form for errors",
+    nameRequired: "Role name is required",
+    nameMinLength: "Role name must be at least 2 characters",
+    codeRequired: "Role code is required",
+    codeMinLength: "Role code must be at least 2 characters",
+    descriptionRequired: "Role description is required",
+    permissionsRequired: "At least one permission must be selected",
+  },
+
+  // Permissions
+  permissions: {
+    userManagement: "User Management",
+    userManagementDesc: "Manage users and user roles",
+    createUsers: "Create Users",
+    createUsersDesc: "Create new users",
+    editUsers: "Edit Users",
+    editUsersDesc: "Edit existing users",
+    deleteUsers: "Delete Users",
+    deleteUsersDesc: "Delete users",
+    roleManagement: "Role Management",
+    roleManagementDesc: "Manage roles and permissions",
+    createRoles: "Create Roles",
+    createRolesDesc: "Create new roles",
+    editRoles: "Edit Roles",
+    editRolesDesc: "Edit existing roles",
+    deleteRoles: "Delete Roles",
+    deleteRolesDesc: "Delete roles",
+    contractManagement: "Contract Management",
+    contractManagementDesc: "Manage contracts and agreements",
+    createContracts: "Create Contracts",
+    createContractsDesc: "Create new contracts",
+    editContracts: "Edit Contracts",
+    editContractsDesc: "Edit existing contracts",
+    deleteContracts: "Delete Contracts",
+    deleteContractsDesc: "Delete contracts",
+  },
+
+  // Site Product Locations
+  siteProductLocations: {
+    title: "Site Product Locations",
+    subtitle: "Manage site product assignments",
+    itemType: "Site Product Location",
+    table: {
+      productName: "Product Name",
+      tempNiin: "Temp NIIN",
+      serial: "Serial",
+      warehouseLocation: "Warehouse Location",
+      civilian: "Civilian",
+      militaryPerson: "Military Person",
+      destinationSite: "Destination Site",
+    },
+    form: {
+      assignmentType: "Assignment Type",
+      assignmentTypes: {
+        warehouse: "Warehouse Location",
+        person: "Person Assignment",
+        external: "External Site"
+      },
+      warehouseLocation: "Warehouse Location",
+      selectWarehouseLocation: "Select warehouse location",
+      searchWarehouseLocation: "Search warehouse locations...",
+      personType: "Person Type",
+      civilian: "Civilian",
+      military: "Military Person",
+      selectCivilian: "Select Civilian",
+      searchCivilian: "Search civilians...",
+      selectMilitaryPerson: "Select Military Person",
+      searchMilitaryPerson: "Search military persons...",
+      destinationSite: "Destination Site",
+      selectDestinationSite: "Select destination site",
+      searchDestinationSite: "Search destination sites...",
+    }
   },
 };

@@ -2260,6 +2260,53 @@ export function ComponentsTab() {
                         </p>
                       </div>
 
+                      {/* Tree Select Demo */}
+                      <div className="space-y-3">
+                        <h4 className="font-medium">{t('components.treeSelect.title')}</h4>
+                        <div className="max-w-md">
+                          <GenericSelect
+                            type="tree"
+                            treeData={[
+                              {
+                                value: "warehouse-1",
+                                label: "Main Warehouse",
+                                children: [
+                                  {
+                                    value: "section-a",
+                                    label: "Section A",
+                                    children: [
+                                      { value: "shelf-1", label: "Shelf 1" },
+                                      { value: "shelf-2", label: "Shelf 2" }
+                                    ]
+                                  },
+                                  {
+                                    value: "section-b", 
+                                    label: "Section B",
+                                    children: [
+                                      { value: "shelf-3", label: "Shelf 3" },
+                                      { value: "shelf-4", label: "Shelf 4" }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                value: "warehouse-2",
+                                label: "Secondary Warehouse",
+                                children: [
+                                  { value: "area-1", label: "Storage Area 1" },
+                                  { value: "area-2", label: "Storage Area 2" }
+                                ]
+                              }
+                            ]}
+                            placeholder={t('components.treeSelect.placeholder')}
+                            searchPlaceholder={t('components.treeSelect.searchPlaceholder')}
+                          />
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {t('components.treeSelect.description')}
+                        </p>
+                      </div>
+
                       <div className="pt-4 border-t">
                         <p className="text-xs text-muted-foreground">
                           <strong>{t('components.multiSelect.features')}:</strong> {t('components.multiSelect.featuresDescription')}

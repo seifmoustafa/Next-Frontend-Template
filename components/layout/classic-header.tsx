@@ -28,7 +28,7 @@ export function ClassicHeader({ onMenuClick }: ClassicHeaderProps) {
   const animationClass = getAnimationClass();
 
   const cardStyleClass = getCardStyleClass();
-
+  
   const headerClass = getHeaderStyleClass({
     compact: cn("h-14 border-b", cardStyleClass),
     elevated: cn("border-b-2 border-border/80 shadow-xl shadow-primary/10", cardStyleClass),

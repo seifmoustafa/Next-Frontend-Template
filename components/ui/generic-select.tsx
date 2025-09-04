@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { ChevronDown, X, Search, Check, Loader2 } from "lucide-react"
+import { ChevronDown, X, Search, Check, Loader2, ChevronRight } from "lucide-react"
 import { createPortal } from "react-dom"
 import { cn } from "@/lib/utils"
 import { useSettings } from "@/providers/settings-provider"
@@ -15,6 +15,9 @@ export interface GenericSelectOption {
   disabled?: boolean
   icon?: React.ReactNode
   description?: string
+  children?: GenericSelectOption[]
+  level?: number
+  parentId?: string | null
 }
 
 export interface GenericSelectProps {
@@ -28,7 +31,7 @@ export interface GenericSelectProps {
   design?: SelectStyle
 
   // Select type configuration
-  type?: "single" | "searchable" | "multi"
+  type?: "single" | "searchable" | "multi" | "tree"
 
   // Search configuration (for searchable and multi types)
   searchable?: boolean
@@ -49,6 +52,13 @@ export interface GenericSelectProps {
 
   // Loading state
   loading?: boolean
+
+  // Tree-select specific
+  treeData?: GenericSelectOption[]
+  onTreeDataLoad?: () => Promise<GenericSelectOption[]>
+  expandedKeys?: string[]
+  onExpandedKeysChange?: (keys: string[]) => void
+  showFullPath?: boolean
 
   // Additional props
   [key: string]: any
@@ -77,6 +87,11 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
   selectedText,
   allowClear = true,
   loading = false,
+  treeData,
+  onTreeDataLoad,
+  expandedKeys = [],
+  onExpandedKeysChange,
+  showFullPath = false,
   ...props
 }, ref) => {
   const { selectStyle } = useSettings()
@@ -87,7 +102,8 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
 
   // Determine if this is a multi-select based on type or value array
   const isMultiSelect = type === "multi" || Array.isArray(value)
-  const isSearchable = type === "searchable" || searchable || type === "multi"
+  const isSearchable = type === "searchable" || searchable || type === "multi" || type === "tree"
+  const isTreeSelect = type === "tree"
 
   // Default localized text values
   const defaultPlaceholder = placeholder || (isMultiSelect
@@ -105,7 +121,7 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
   // State management
   const [isOpen, setIsOpen] = React.useState(false)
   const [searchQuery, setSearchQuery] = React.useState("")
-  const [filteredOptions, setFilteredOptions] = React.useState<GenericSelectOption[]>(options)
+  const [filteredOptions, setFilteredOptions] = React.useState<GenericSelectOption[]>(options || [])
   const [isSearching, setIsSearching] = React.useState(false)
   const [serverOptions, setServerOptions] = React.useState<GenericSelectOption[]>([])
   const [dropdownPosition, setDropdownPosition] = React.useState({
@@ -114,6 +130,8 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
     width: 0,
     maxHeight: 240
   })
+  const [internalExpandedKeys, setInternalExpandedKeys] = React.useState<string[]>(expandedKeys)
+  const [flattenedTreeOptions, setFlattenedTreeOptions] = React.useState<GenericSelectOption[]>([])
 
 
   // Refs
@@ -122,12 +140,98 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
   const searchInputRef = React.useRef<HTMLInputElement>(null)
   const debounceRef = React.useRef<NodeJS.Timeout>()
 
+  // Tree-specific functions
+  const flattenTreeData = React.useCallback((treeNodes: GenericSelectOption[], level = 0): GenericSelectOption[] => {
+    const flattened: GenericSelectOption[] = []
+
+    treeNodes.forEach(node => {
+      const flatNode = { ...node, level }
+      flattened.push(flatNode)
+
+      if (node.children && internalExpandedKeys.includes(node.value)) {
+        flattened.push(...flattenTreeData(node.children, level + 1))
+      }
+    })
+
+    return flattened
+  }, [internalExpandedKeys])
+
+  const getNodePath = React.useCallback((nodeValue: string, treeNodes: GenericSelectOption[]): string[] => {
+    const findPath = (nodes: GenericSelectOption[], targetValue: string, currentPath: string[] = []): string[] | null => {
+      for (const node of nodes) {
+        const newPath = [...currentPath, node.label]
+        if (node.value === targetValue) {
+          return newPath
+        }
+        if (node.children) {
+          const childPath = findPath(node.children, targetValue, newPath)
+          if (childPath) return childPath
+        }
+      }
+      return null
+    }
+
+    return findPath(treeNodes, nodeValue) || [nodeValue]
+  }, [])
+
+  // Get parent node values for auto-expansion
+  const getParentNodeValues = React.useCallback((nodeValue: string, treeNodes: GenericSelectOption[]): string[] => {
+    const findParents = (nodes: GenericSelectOption[], targetValue: string, currentPath: string[] = []): string[] | null => {
+      for (const node of nodes) {
+        const newPath = [...currentPath, node.value]
+        if (node.value === targetValue) {
+          return currentPath // Return path without the target node itself
+        }
+        if (node.children) {
+          const childPath = findParents(node.children, targetValue, newPath)
+          if (childPath) return childPath
+        }
+      }
+      return null
+    }
+
+    return findParents(treeNodes, nodeValue) || []
+  }, [])
+
+  const toggleExpanded = (nodeValue: string) => {
+    const newExpandedKeys = internalExpandedKeys.includes(nodeValue)
+      ? internalExpandedKeys.filter(key => key !== nodeValue)
+      : [...internalExpandedKeys, nodeValue]
+
+    setInternalExpandedKeys(newExpandedKeys)
+    onExpandedKeysChange?.(newExpandedKeys)
+  }
+
   // Get current values
   const currentValues = Array.isArray(value) ? value : (value ? [value] : [])
-  const selectedOptions = options.filter((option: GenericSelectOption) => currentValues.includes(option.value))
+  
+  // For tree select, we need to search all nodes (not just expanded ones) to find selected options
+  const getAllTreeNodes = React.useCallback((treeNodes: GenericSelectOption[]): GenericSelectOption[] => {
+    const allNodes: GenericSelectOption[] = []
+    
+    const traverse = (nodes: GenericSelectOption[], level = 0) => {
+      nodes.forEach(node => {
+        allNodes.push({ ...node, level })
+        if (node.children) {
+          traverse(node.children, level + 1)
+        }
+      })
+    }
+    
+    traverse(treeNodes)
+    return allNodes
+  }, [])
+  
+  const sourceOptions = isTreeSelect ? flattenedTreeOptions : options
+  const allTreeNodes = isTreeSelect ? getAllTreeNodes(treeData || options) : []
+  const selectedOptions = isTreeSelect 
+    ? allTreeNodes.filter((option: GenericSelectOption) => currentValues.includes(option.value))
+    : sourceOptions.filter((option: GenericSelectOption) => currentValues.includes(option.value))
 
   // Get display options based on search type
-  const displayOptions = searchType === "server" ? serverOptions : filteredOptions
+  const displayOptions = (isTreeSelect
+    ? (searchType === "server" ? serverOptions : filteredOptions)
+    : (searchType === "server" ? serverOptions : filteredOptions)) || []
   const showLoading = loading || isSearching
 
   // Fixed positioning that stays attached to field with 5px gap
@@ -139,42 +243,34 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
 
     // Calculate available space above and below
     const spaceBelow = viewportHeight - rect.bottom - 5 // 5px gap
-    const spaceAbove = rect.top - 5 // 5px gap
+    const spaceAbove = rect.top - 6 // 6px gap for above positioning
 
-    // Estimate content height based on current state
-    const itemHeight = 40 // Approximate height per item
+    // Estimate content height based on current state and select type
+    const itemHeight = isTreeSelect ? 50 : 40 // Tree items are taller due to enhanced design
     const searchHeight = isSearchable ? 45 : 0
     const paddingHeight = 16
-    const maxItemsToShow = Math.min(displayOptions.length, 8) // Show max 8 items
+    // Dynamic height approach for better positioning
+    const maxDropdownHeight = isTreeSelect ? 320 : 280 // Maximum heights for scrolling
+    const minDropdownHeight = 120 // Minimum height
 
-    let estimatedContentHeight = searchHeight + paddingHeight
-    if (showLoading) {
-      estimatedContentHeight += 60 // Loading state height
-    } else if (displayOptions.length === 0) {
-      estimatedContentHeight += 50 // "No results" height
-    } else {
-      estimatedContentHeight += maxItemsToShow * itemHeight
-    }
-
-    // Determine optimal placement with 5px gap
-    const preferredHeight = Math.min(estimatedContentHeight, 320) // Max 320px
-    const shouldShowAbove = spaceBelow < preferredHeight && spaceAbove > spaceBelow
+    // Prefer showing below unless there's very little space
+    const shouldShowAbove = spaceBelow < minDropdownHeight && spaceAbove > spaceBelow + 50
 
     let top: number
     let maxHeight: number
 
     if (shouldShowAbove) {
-      // Position above the field with exactly 5px gap
+      // Position above the field with 6px gap
       const availableAbove = spaceAbove - 10 // 10px margin from viewport top
-      maxHeight = Math.min(preferredHeight, availableAbove)
+      maxHeight = Math.min(maxDropdownHeight, availableAbove)
       // Ensure minimum height first, then calculate position
-      maxHeight = Math.max(maxHeight, 120)
-      top = rect.top - maxHeight + 5 // 5px gap above field
+      maxHeight = Math.max(maxHeight, minDropdownHeight)
+      top = rect.top - maxHeight - 6 // 6px gap above field
     } else {
-      // Position below the field with exactly 5px gap
+      // Position below the field with 5px gap
       const availableBelow = spaceBelow - 10 // 10px margin from viewport bottom
-      maxHeight = Math.min(preferredHeight, availableBelow)
-      maxHeight = Math.max(maxHeight, 120)
+      maxHeight = Math.min(maxDropdownHeight, availableBelow)
+      maxHeight = Math.max(maxHeight, minDropdownHeight)
       top = rect.bottom + 5 // 5px gap below field
     }
 
@@ -184,24 +280,66 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
       width: rect.width,
       maxHeight: Math.floor(maxHeight)
     })
-  }, [displayOptions.length, showLoading, isSearchable])
+  }, [displayOptions?.length, showLoading, isSearchable, isTreeSelect])
+
+  // Initialize tree data
+  React.useEffect(() => {
+    if (isTreeSelect) {
+      const dataToUse = treeData || options
+      if (onTreeDataLoad && dataToUse.length === 0) {
+        onTreeDataLoad().then((data: GenericSelectOption[]) => {
+          setFlattenedTreeOptions(flattenTreeData(data))
+        })
+      } else {
+        setFlattenedTreeOptions(flattenTreeData(dataToUse))
+      }
+    }
+  }, [isTreeSelect, treeData, options, flattenTreeData, onTreeDataLoad])
+
+  // Auto-expand parent nodes to show path to selected option when dropdown opens
+  React.useEffect(() => {
+    if (isTreeSelect && isOpen && currentValues.length > 0) {
+      const dataToUse = treeData || options
+      if (dataToUse.length > 0) {
+        const selectedValue = currentValues[0] // Get first selected value
+        const parentNodes = getParentNodeValues(selectedValue, dataToUse)
+        
+        if (parentNodes.length > 0) {
+          // Merge existing expanded keys with parent nodes (avoid duplicates)
+          const newExpandedKeys = Array.from(new Set([...internalExpandedKeys, ...parentNodes]))
+          setInternalExpandedKeys(newExpandedKeys)
+          onExpandedKeysChange?.(newExpandedKeys)
+        }
+      }
+    }
+  }, [isTreeSelect, isOpen, currentValues, treeData, options, getParentNodeValues, onExpandedKeysChange])
+
+  // Update flattened tree when expanded keys change
+  React.useEffect(() => {
+    if (isTreeSelect) {
+      const dataToUse = treeData || options
+      setFlattenedTreeOptions(flattenTreeData(dataToUse))
+    }
+  }, [isTreeSelect, internalExpandedKeys, treeData, options, flattenTreeData])
 
   // Client-side filtering with position recalculation
   React.useEffect(() => {
     if (searchType === "client" && searchQuery) {
-      const filtered = options.filter((option: GenericSelectOption) =>
+      const sourceData = isTreeSelect ? flattenedTreeOptions : options
+      const filtered = sourceData.filter((option: GenericSelectOption) =>
         option.label.toLowerCase().includes(searchQuery.toLowerCase())
       )
       setFilteredOptions(filtered)
     } else {
-      setFilteredOptions(options)
+      const sourceData = isTreeSelect ? flattenedTreeOptions : options
+      setFilteredOptions(sourceData)
     }
 
     // Recalculate position when content changes
     if (isOpen) {
       setTimeout(() => calculateDropdownPosition(), 10)
     }
-  }, [searchQuery, options, searchType, isOpen, calculateDropdownPosition])
+  }, [searchQuery, options, flattenedTreeOptions, searchType, isTreeSelect, isOpen, calculateDropdownPosition])
 
   // Server-side search with debouncing
   React.useEffect(() => {
@@ -234,12 +372,24 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
     }
   }, [searchQuery, searchType, onServerSearch, searchEndpoint, debounceMs, options])
 
-  // Initialize server options
+  // Initialize server options and load initial data
   React.useEffect(() => {
     if (searchType === "server") {
       setServerOptions(options)
+      // Load initial data when component mounts if onServerSearch is available
+      if (onServerSearch && options.length === 0) {
+        setIsSearching(true)
+        onServerSearch("").then((results: GenericSelectOption[]) => {
+          setServerOptions(results)
+          setIsSearching(false)
+        }).catch((error: any) => {
+          console.error("Failed to load initial server options:", error)
+          setServerOptions([])
+          setIsSearching(false)
+        })
+      }
     }
-  }, [options, searchType])
+  }, [options, searchType, onServerSearch])
 
   // Recalculate position when server options change
   React.useEffect(() => {
@@ -306,14 +456,50 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
     onValueChange([])
   }
 
-  // Generate display text
+  // Generate display text with hierarchical breadcrumb for tree select
   const getDisplayText = () => {
     if (selectedOptions.length === 0) {
       return defaultPlaceholder
     }
 
     if (!isMultiSelect) {
-      return selectedOptions[0]?.label || defaultPlaceholder
+      const selectedOption = selectedOptions[0]
+      if (!selectedOption) return defaultPlaceholder
+
+      // For tree select, show full hierarchical path with RTL support
+      if (isTreeSelect) {
+        const path = getNodePath(selectedOption.value, treeData || options)
+
+        if (direction === "rtl") {
+          const reversedPath = [...path].reverse()
+          const selectedItem = reversedPath[0] // Selected item (WE)
+          const parentPath = reversedPath.slice(1) // Parent path (R2, R1, WH1)
+
+          return (
+            <div className="flex items-center gap-1 text-sm overflow-hidden">
+              {parentPath.length > 0 && (
+                <>
+                  <span className="text-muted-foreground text-xs truncate">{parentPath.join(' ‹ ')}</span>
+
+                  <span className="text-muted-foreground text-xs flex-shrink-0">›</span>
+                </>
+              )}
+              <span className="font-medium truncate">{selectedItem}</span>
+
+            </div>
+          )
+        } else {
+          return (
+            <div className="flex items-center gap-1 text-sm overflow-hidden">
+              <span className="text-muted-foreground text-xs truncate">{path.slice(0, -1).join(' › ')}</span>
+              {path.length > 1 && <span className="text-muted-foreground text-xs flex-shrink-0">›</span>}
+              <span className="font-medium truncate">{path[path.length - 1]}</span>
+            </div>
+          )
+        }
+      }
+
+      return selectedOption.label
     }
 
     if (selectedOptions.length <= maxSelectedDisplay) {
@@ -404,18 +590,34 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
           {isMultiSelect && selectedOptions.length > 0 ? (
             selectedOptions.length <= maxSelectedDisplay ? (
               // Show individual chips for small selections
-              selectedOptions.map((option: GenericSelectOption) => (
-                <ResponsiveChip
-                  key={option.value}
-                  label={option.label}
-                  onRemove={() => {
-                    if (!onValueChange) return
-                    onValueChange(currentValues.filter(v => v !== option.value))
-                  }}
-                  className={styles.chip}
-                  direction={direction}
-                />
-              ))
+              selectedOptions.map((option: GenericSelectOption) => {
+                // For tree select, show hierarchical path with RTL support
+                let displayLabel = option.label
+                if (isTreeSelect) {
+                  const path = getNodePath(option.value, treeData || options)
+                  if (direction === "rtl") {
+                    // RTL: Show selected item on left, parents on right (WE ‹ R2 ‹ R1 ‹ WH1)
+                    const reversedPath = [...path].reverse()
+                    displayLabel = reversedPath.join(' ‹ ')
+                  } else {
+                    // LTR: Show parents on left, selected on right (WH1 › R1 › R2 › WE)
+                    displayLabel = path.join(' › ')
+                  }
+                }
+
+                return (
+                  <ResponsiveChip
+                    key={option.value}
+                    label={displayLabel}
+                    onRemove={() => {
+                      if (!onValueChange) return
+                      onValueChange(currentValues.filter(v => v !== option.value))
+                    }}
+                    className={styles.chip}
+                    direction={direction}
+                  />
+                )
+              })
             ) : (
               // Show summary text for large selections with responsive handling
               <span className="text-sm text-muted-foreground truncate max-w-full">
@@ -525,8 +727,13 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
             </div>
           )}
 
-          {/* Options list */}
-          <div className="max-h-60 overflow-auto p-1">
+          {/* Options list with dynamic scrollable height */}
+          <div
+            className="overflow-y-auto p-1 scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent"
+            style={{ 
+              maxHeight: `calc(${dropdownPosition.maxHeight}px - ${isSearchable ? '84px' : '40px'})`
+            }}
+          >
             {showLoading ? (
               <div className="flex items-center justify-center py-6">
                 <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
@@ -539,37 +746,105 @@ export const GenericSelect = React.forwardRef<HTMLDivElement, GenericSelectProps
             ) : (
               displayOptions.map((option) => {
                 const isSelected = currentValues.includes(option.value)
+                const hasChildren = option.children && option.children.length > 0
+                const isExpanded = internalExpandedKeys.includes(option.value)
+                const level = option.level || 0
+
                 return (
                   <div
                     key={option.value}
                     className={cn(
-                      "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground",
-                      isSelected && "bg-accent text-accent-foreground",
+                      "group relative flex cursor-pointer select-none items-center rounded-lg my-0.5 py-2.5 text-sm outline-none transition-all duration-200",
+                      isTreeSelect ? (
+                        level === 0
+                          ? "bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 hover:from-primary/10 hover:to-primary/15 hover:border-primary/30 shadow-sm"
+                          : level === 1
+                            ? "bg-gradient-to-r from-blue-500/5 to-blue-500/10 border border-blue-500/20 hover:from-blue-500/10 hover:to-blue-500/15 hover:border-blue-500/30"
+                            : "bg-gradient-to-r from-muted/30 to-muted/50 border border-border/50 hover:from-muted/50 hover:to-muted/70 hover:border-border/70"
+                      ) : "hover:bg-accent hover:text-accent-foreground",
+                      isSelected && (isTreeSelect
+                        ? "ring-2 ring-primary/50 bg-primary/10 border-primary/40 shadow-md"
+                        : "bg-accent text-accent-foreground"),
                       option.disabled && "pointer-events-none opacity-50",
                       direction === "rtl" ? "text-right" : "text-left"
                     )}
-                    onClick={() => !option.disabled && handleSelect(option.value)}
+                    style={{
+                      paddingLeft: isTreeSelect ? `${12 + level * 20}px` : '12px',
+                      paddingRight: isTreeSelect ? '12px' : '12px',
+                      marginLeft: isTreeSelect ? `${level * 4}px` : '0px'
+                    }}
                   >
-                    {option.icon && (
-                      <span className={cn(
-                        "flex h-4 w-4 items-center justify-center",
-                        direction === "rtl" ? "ml-2" : "mr-2"
-                      )}>
-                        {option.icon}
-                      </span>
+                    {/* Tree expand/collapse button with enhanced design */}
+                    {isTreeSelect && (
+                      <button
+                        type="button"
+                        className={cn(
+                          "flex h-6 w-6 items-center justify-center rounded-full transition-all duration-200",
+                          hasChildren
+                            ? "hover:bg-primary/20 hover:shadow-sm border border-transparent hover:border-primary/30"
+                            : "opacity-30",
+                          direction === "rtl" ? "ml-2" : "mr-2"
+                        )}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          toggleExpanded(option.value)
+                        }}
+                      >
+                        {hasChildren ? (
+                          <ChevronRight className={cn(
+                            "h-4 w-4 transition-all duration-300 text-primary",
+                            isExpanded && "rotate-90 text-primary/80"
+                          )} />
+                        ) : (
+                          <div className="h-4 w-4 rounded-full bg-muted/50" />
+                        )}
+                      </button>
                     )}
-                    <div className="flex-1">
-                      <div className="font-medium">{option.label}</div>
-                      {option.description && (
-                        <div className="text-xs text-muted-foreground">{option.description}</div>
+
+                    {/* Option content */}
+                    <div
+                      className="flex-1 flex items-center"
+                      onClick={() => !option.disabled && handleSelect(option.value)}
+                    >
+                      {option.icon && (
+                        <span className={cn(
+                          "flex h-4 w-4 items-center justify-center",
+                          direction === "rtl" ? "ml-2" : "mr-2"
+                        )}>
+                          {option.icon}
+                        </span>
+                      )}
+                      <div className="flex-1">
+                        <div className={cn(
+                          "font-medium transition-colors",
+                          isTreeSelect && level === 0 && "text-primary font-semibold",
+                          isTreeSelect && level === 1 && "text-blue-600 font-medium",
+                          isTreeSelect && level > 1 && "text-foreground"
+                        )}>
+                          {option.label}
+                        </div>
+                        {option.description && (
+                          <div className="text-xs text-muted-foreground mt-0.5">{option.description}</div>
+                        )}
+                        {/* Show breadcrumb path for tree items on hover with RTL support */}
+                        {isTreeSelect && level > 0 && (
+                          <div className="text-xs text-muted-foreground/70 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            {direction === "rtl"
+                              ? getNodePath(option.value, treeData || options).reverse().join(' ‹ ')
+                              : getNodePath(option.value, treeData || options).join(' › ')
+                            }
+                          </div>
+                        )}
+                      </div>
+                      {isSelected && (
+                        <div className={cn(
+                          "flex items-center justify-center h-5 w-5 rounded-full bg-primary text-primary-foreground shadow-sm",
+                          direction === "rtl" ? "mr-2" : "ml-2"
+                        )}>
+                          <Check className="h-3 w-3" />
+                        </div>
                       )}
                     </div>
-                    {isSelected && (
-                      <Check className={cn(
-                        "h-4 w-4",
-                        direction === "rtl" ? "mr-2" : "ml-2"
-                      )} />
-                    )}
                   </div>
                 )
               })

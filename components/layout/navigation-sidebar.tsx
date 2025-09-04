@@ -136,8 +136,8 @@ export function NavigationSidebar({
           open
             ? "translate-x-0"
             : direction === "rtl"
-              ? "translate-x-full"
-              : "-translate-x-full"
+            ? "translate-x-full"
+            : "-translate-x-full"
         )}
       >
         <div className="flex flex-col h-full">

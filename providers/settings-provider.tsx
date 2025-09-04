@@ -103,7 +103,7 @@ export type TreeStyle = "lines" | "cards" | "minimal" | "bubble" | "modern" | "g
 export type ToastDesign = "minimal" | "modern" | "gradient" | "outlined" | "filled";
 export type DatePickerStyle = "default" | "modern" | "glass" | "outlined" | "filled" | "minimal" | "elegant";
 export type CalendarStyle = "default" | "modern" | "glass" | "elegant" | "minimal" | "dark";
-export type SelectStyle =
+export type SelectStyle = 
   | "default"
   | "modern"
   | "glass"
@@ -133,7 +133,7 @@ export type SelectStyle =
   | "phoenix";
 export type SwitchStyle = "default" | "modern" | "ios" | "android" | "toggle" | "slider" | "neon" | "neumorphism" | "liquid" | "cyberpunk" | "glassmorphism" | "aurora" | "matrix" | "cosmic" | "retro";
 
-export type CheckboxStyle =
+export type CheckboxStyle = 
   | "default"
   | "modern"
   | "glass"
@@ -159,7 +159,7 @@ export type CheckboxStyle =
   | "vortex"
   | "phoenix";
 
-export type RadioStyle =
+export type RadioStyle = 
   | "default"
   | "modern"
   | "glass"
@@ -185,7 +185,7 @@ export type RadioStyle =
   | "vortex"
   | "phoenix";
 
-export type ToastStyle =
+export type ToastStyle = 
   | "classic"
   | "neon"
   | "glassmorphism"
@@ -376,7 +376,7 @@ const defaultSettings = {
   switchStyle: "modern" as SwitchStyle,
   checkboxStyle: "default" as CheckboxStyle,
   radioStyle: "default" as RadioStyle,
-
+  
   // Toast settings
   toastStyle: "classic" as ToastStyle,
   showToastIcons: true,
@@ -464,8 +464,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         settings.fontSize === "small"
           ? "14px"
           : settings.fontSize === "large"
-            ? "18px"
-            : "16px"
+          ? "18px"
+          : "16px"
       );
 
       root.style.setProperty(
@@ -473,10 +473,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         settings.spacingSize === "compact"
           ? "0.5rem"
           : settings.spacingSize === "comfortable"
-            ? "1.5rem"
-            : settings.spacingSize === "spacious"
-              ? "2rem"
-              : "1rem"
+          ? "1.5rem"
+          : settings.spacingSize === "spacious"
+          ? "2rem"
+          : "1rem"
       );
 
       root.style.setProperty(
@@ -484,12 +484,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         settings.borderRadius === "none"
           ? "0"
           : settings.borderRadius === "small"
-            ? "0.25rem"
-            : settings.borderRadius === "large"
-              ? "0.75rem"
-              : settings.borderRadius === "full"
-                ? "9999px"
-                : "0.5rem"
+          ? "0.25rem"
+          : settings.borderRadius === "large"
+          ? "0.75rem"
+          : settings.borderRadius === "full"
+          ? "9999px"
+          : "0.5rem"
       );
 
       root.style.setProperty(
@@ -497,10 +497,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         settings.shadowIntensity === "none"
           ? "none"
           : settings.shadowIntensity === "subtle"
-            ? "0 1px 2px 0 rgb(0 0 0 / 0.05)"
-            : settings.shadowIntensity === "strong"
-              ? "0 25px 50px -12px rgb(0 0 0 / 0.25)"
-              : "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+          ? "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+          : settings.shadowIntensity === "strong"
+          ? "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+          : "0 4px 6px -1px rgb(0 0 0 / 0.1)"
       );
     }
   }, [settings, isHydrated]);
@@ -607,100 +607,100 @@ export function useSettings() {
   const context = useContext(SettingsContext);
   if (context === undefined) {
     // During SSR/prerendering or hydration issues, provide fallback values
-    return {
-      // Color theme
-      colorTheme: 'purple' as ColorTheme,
-      setColorTheme: () => { },
-
-      // Background themes
-      lightBackgroundTheme: 'default' as LightBackgroundTheme,
-      setLightBackgroundTheme: () => { },
-      darkBackgroundTheme: 'default' as DarkBackgroundTheme,
-      setDarkBackgroundTheme: () => { },
-
-      // Shadow intensity
-      shadowIntensity: 'moderate' as ShadowIntensity,
-      setShadowIntensity: () => { },
-
-      // Layout template
-      layoutTemplate: 'modern' as LayoutTemplate,
-      setLayoutTemplate: () => { },
-
-      // Font size
-      fontSize: 'default' as FontSize,
-      setFontSize: () => { },
-
-      // Border radius
-      radius: 'default' as BorderRadius,
-      setRadius: () => { },
-      borderRadius: 'default' as BorderRadius,
-      setBorderRadius: () => { },
-
-      // Sidebar position
-      sidebarPosition: 'right' as SidebarPosition,
-      setSidebarPosition: () => { },
-
-      // Theme
-      theme: 'light' as Theme,
-      setTheme: () => { },
-
-      // Component styles
-      cardStyle: 'default' as CardStyle,
-      setCardStyle: () => { },
-      badgeStyle: 'default' as BadgeStyle,
-      setBadgeStyle: () => { },
-      buttonStyle: 'default' as ButtonStyle,
-      setButtonStyle: () => { },
-      inputStyle: 'default' as InputStyle,
-      setInputStyle: () => { },
-      selectStyle: 'default' as SelectStyle,
-      setSelectStyle: () => { },
-      switchStyle: 'default' as SwitchStyle,
-      setSwitchStyle: () => { },
-      datePickerStyle: 'default' as DatePickerStyle,
-      setDatePickerStyle: () => { },
-      calendarStyle: 'default' as CalendarStyle,
-      setCalendarStyle: () => { },
-      toastStyle: 'default' as ToastStyle,
-      setToastStyle: () => { },
-      // Animation settings
-      animationSpeed: 'normal' as AnimationSpeed,
-      setAnimationSpeed: () => { },
-      animationLevel: 'moderate' as AnimationLevel,
-      setAnimationLevel: () => { },
-      sidebarStyle: "default" as SidebarStyle,
-      // Navigation settings
-      navigationStyle: 'default' as NavigationStyle,
-      setNavigationStyle: () => { },
-      iconStyle: 'outline' as IconStyle,
-      setIconStyle: () => { },
-      spacingSize: 'default' as SpacingSize,
-      setSpacingSize: () => { },
-      loadingStyle: "spinner" as LoadingStyle,
-      // Additional settings
-      compactMode: false,
-      setCompactMode: () => { },
-      highContrast: false,
-      setHighContrast: () => { },
-      reducedMotion: false,
-      setReducedMotion: () => { },
-      stickyHeader: true,
-      setStickyHeader: () => { },
-      showFooter: true,
-      setShowFooter: () => { },
-      formStyle: 'default' as FormStyle,
-      setFormStyle: () => { },
-      checkboxStyle: 'default' as CheckboxStyle,
-      setCheckboxStyle: () => { },
-      radioStyle: 'default' as RadioStyle,
-      setRadioStyle: () => { },
-      // Logo settings
-      logoType: 'default' as LogoType,
-      setLogoType: () => { },
-      modalStyle: "default" as ModalStyle,
-      treeStyle: "modern" as TreeStyle,
-
-    };
+      return {
+        // Color theme
+        colorTheme: 'purple' as ColorTheme,
+        setColorTheme: () => {},
+        
+        // Background themes
+        lightBackgroundTheme: 'default' as LightBackgroundTheme,
+        setLightBackgroundTheme: () => {},
+        darkBackgroundTheme: 'default' as DarkBackgroundTheme,
+        setDarkBackgroundTheme: () => {},
+        
+        // Shadow intensity
+        shadowIntensity: 'moderate' as ShadowIntensity,
+        setShadowIntensity: () => {},
+        
+        // Layout template
+        layoutTemplate: 'modern' as LayoutTemplate,
+        setLayoutTemplate: () => {},
+        
+        // Font size
+        fontSize: 'default' as FontSize,
+        setFontSize: () => {},
+        
+        // Border radius
+        radius: 'default' as BorderRadius,
+        setRadius: () => {},
+        borderRadius: 'default' as BorderRadius,
+        setBorderRadius: () => {},
+        
+        // Sidebar position
+        sidebarPosition: 'right' as SidebarPosition,
+        setSidebarPosition: () => {},
+        
+        // Theme
+        theme: 'light' as Theme,
+        setTheme: () => {},
+        
+        // Component styles
+        cardStyle: 'default' as CardStyle,
+        setCardStyle: () => {},
+        badgeStyle: 'default' as BadgeStyle,
+        setBadgeStyle: () => {},
+        buttonStyle: 'default' as ButtonStyle,
+        setButtonStyle: () => {},
+        inputStyle: 'default' as InputStyle,
+        setInputStyle: () => {},
+        selectStyle: 'default' as SelectStyle,
+        setSelectStyle: () => {},
+        switchStyle: 'default' as SwitchStyle,
+        setSwitchStyle: () => {},
+        datePickerStyle: 'default' as DatePickerStyle,
+        setDatePickerStyle: () => {},
+        calendarStyle: 'default' as CalendarStyle,
+        setCalendarStyle: () => {},
+        toastStyle: 'default' as ToastStyle,
+        setToastStyle: () => {},
+        // Animation settings
+        animationSpeed: 'normal' as AnimationSpeed,
+        setAnimationSpeed: () => {},
+        animationLevel: 'moderate' as AnimationLevel,
+        setAnimationLevel: () => {},
+        sidebarStyle: "default" as SidebarStyle,
+        // Navigation settings
+        navigationStyle: 'default' as NavigationStyle,
+        setNavigationStyle: () => {},
+        iconStyle: 'outline' as IconStyle,
+        setIconStyle: () => {},
+        spacingSize: 'default' as SpacingSize,
+        setSpacingSize: () => {},
+        loadingStyle: "spinner" as LoadingStyle,
+        // Additional settings
+        compactMode: false,
+        setCompactMode: () => {},
+        highContrast: false,
+        setHighContrast: () => {},
+        reducedMotion: false,
+        setReducedMotion: () => {},
+        stickyHeader: true,
+        setStickyHeader: () => {},
+        showFooter: true,
+        setShowFooter: () => {},
+        formStyle: 'default' as FormStyle,
+        setFormStyle: () => {},
+        checkboxStyle: 'default' as CheckboxStyle,
+        setCheckboxStyle: () => {},
+        radioStyle: 'default' as RadioStyle,
+        setRadioStyle: () => {},
+        // Logo settings
+        logoType: 'default' as LogoType,
+        setLogoType: () => {},
+        modalStyle: "default" as ModalStyle,
+        tableStyle: "default" as TableStyle,
+        treeStyle: "modern" as TreeStyle,
+      };
   }
   return context;
 }

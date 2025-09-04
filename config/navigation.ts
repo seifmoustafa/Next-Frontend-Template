@@ -45,61 +45,61 @@ export interface NavigationItem {
  * Used to convert backend icon names to React components
  */
 export const iconMap: Record<string, any> = {
-  MapPin: MapPin,
-  ShieldCheck: ShieldCheck,
-  ArrowRightLeft: ArrowRightLeft,
-  HardHat: HardHat,
-  Users2: Users2,
-  Shield: Shield,
-  Truck: Truck,
-  ScrollText: ScrollText,
-  Package2: Package2,
-  FolderTree: FolderTree,
-  Grid3X3: Grid3X3,
-  Package: Package,
-  Warehouse: Warehouse,
-  Store: Store,
-  LayoutDashboard: LayoutDashboard,
-  Users: Users,
-  BarChart3: BarChart3,
-  Settings: Settings,
-  User: User,
-  Building: Building,
-  Cog: Cog,
-  FileText: FileText,
-  TrendingUp: TrendingUp,
-  PieChart: PieChart,
-  BarChart: BarChart,
+  'MapPin': MapPin,
+  'ShieldCheck': ShieldCheck, 
+  'ArrowRightLeft': ArrowRightLeft,
+  'HardHat': HardHat,
+  'Users2': Users2,
+  'Shield': Shield,
+  'Truck': Truck,
+  'ScrollText': ScrollText,
+  'Package2': Package2,
+  'FolderTree': FolderTree,
+  'Grid3X3': Grid3X3,
+  'Package': Package,
+  'Warehouse': Warehouse,
+  'Store': Store,
+  'LayoutDashboard': LayoutDashboard,
+  'Users': Users,
+  'BarChart3': BarChart3,
+  'Settings': Settings,
+  'User': User,
+  'Building': Building,
+  'Cog': Cog,
+  'FileText': FileText,
+  'TrendingUp': TrendingUp,
+  'PieChart': PieChart,
+  'BarChart': BarChart
 };
 
 /**
  * ============================================================================
  * DYNAMIC NAVIGATION SYSTEM - EASY MAINTENANCE & SWITCHING
  * ============================================================================
- *
+ * 
  * 🚀 SUPER EASY TO MAINTAIN:
  * - Single toggle flag to switch between static/dynamic navigation
  * - All sidebar components automatically use the same system
  * - No need to update individual components when adding new items
  * - Centralized icon mapping and configuration
- *
+ * 
  * 🔄 EASY SWITCHING:
  * - Development: Set USE_DYNAMIC_NAVIGATION = false (uses static navigation)
  * - Production: Set USE_DYNAMIC_NAVIGATION = true (uses backend navigation)
  * - Automatic fallback when backend is unavailable
- *
+ * 
  * 📁 CLEAN ARCHITECTURE:
  * - useDynamicNavigation() hook handles all the logic
  * - Components just call the hook and render
  * - Route protection automatically enabled in dynamic mode
  * - Translation support built-in
- *
+ * 
  * ============================================================================
  */
 
 /**
  * 🎛️ NAVIGATION MODE SWITCH
- *
+ * 
  * Change this ONE flag to switch between static and dynamic navigation:
  * - false = Static navigation (hardcoded, no backend calls, no route protection)
  * - true = Dynamic navigation (from backend, with route protection)
@@ -114,13 +114,29 @@ export const navigation: NavigationItem[] = [
     icon: MapPin,
   },
   {
-    name: "nav.roles",
-    href: "/roles",
-    icon: ShieldCheck,
+    name: "nav.AdminsRoles",
+    icon: Users,
+    children: [
+      {
+        name: "nav.roles",
+        href: "/roles",
+        icon: ShieldCheck,
+      },
+      {
+        name: "nav.admins",
+        href: "/admins",
+        icon: Users,
+      },
+    ],
   },
   {
     name: "nav.transactions",
     href: "/transactions",
+    icon: ArrowRightLeft,
+  },
+  {
+    name: "nav.site118s",
+    href: "/site118s",
     icon: ArrowRightLeft,
   },
   {
@@ -155,6 +171,7 @@ export const navigation: NavigationItem[] = [
       },
       {
         name: "nav.categories",
+        icon: Package2,
         children: [
           {
             name: "nav.mainCategories",
@@ -172,15 +189,29 @@ export const navigation: NavigationItem[] = [
             icon: Package,
           },
         ],
-        icon: Package2,
       },
-
       {
         name: "nav.warehouseLocations",
         href: "/warehouseLocations",
         icon: Warehouse,
       },
     ],
+  },
+  {
+    name: "nav.siteProducts",
+    icon: Truck,
+    children: [
+      {
+        name: "nav.notReservedSiteProducts",
+        href: "/not-reserved-site-products",
+        icon: Package,
+      },
+    ],
+  },
+  {
+    name: "nav.siteProductQuantities",
+    href: "/siteProductQuantities",
+    icon: Truck,
   },
 ];
 
@@ -191,22 +222,22 @@ export const fallbackNavigation: NavigationItem[] = navigation;
  * ============================================================================
  * 📖 QUICK USAGE GUIDE
  * ============================================================================
- *
+ * 
  * 🔧 FOR DEVELOPERS:
  * 1. Set USE_DYNAMIC_NAVIGATION = false for development
  * 2. Edit the 'navigation' array below to add/remove items
  * 3. All sidebar components will automatically update
- *
+ * 
  * 🚀 FOR PRODUCTION:
  * 1. Set USE_DYNAMIC_NAVIGATION = true
  * 2. Implement /MenuItems API endpoint
  * 3. System handles everything automatically
- *
+ * 
  * 🎨 ADDING NEW STATIC ITEMS:
  * 1. Import icon from lucide-react
  * 2. Add to iconMap if using dynamic navigation
  * 3. Add item to navigation array
- *
+ * 
  * Example:
  * {
  *   name: "nav.newSection",
@@ -214,7 +245,7 @@ export const fallbackNavigation: NavigationItem[] = navigation;
  *   icon: NewIcon,
  *   children: [...] // Optional nested items
  * }
- *
+ * 
  * ============================================================================
  */
 
@@ -282,22 +313,20 @@ export const getFlatNavigationItems = (
  * 🔄 Converts backend menu items to frontend navigation format
  * Used internally by the dynamic navigation system
  */
-export const convertMenuItemsToNavigation = (
-  menuItems: any[]
-): NavigationItem[] => {
+export const convertMenuItemsToNavigation = (menuItems: any[]): NavigationItem[] => {
   const convertMenuItem = (item: any): NavigationItem => {
     return {
       name: item.name,
       href: item.href,
-      icon: iconMap[item.icon] || iconMap["Package"], // Default fallback icon
+      icon: iconMap[item.icon] || iconMap['Package'], // Default fallback icon
       children: item.children?.map(convertMenuItem) || [],
-      disabled: !item.isActive,
+      disabled: !item.isActive
     };
   };
 
   // Filter only active items and sort by order
   const activeMenuItems = menuItems
-    .filter((item) => item.isActive && !item.isDeleted)
+    .filter(item => item.isActive && !item.isDeleted)
     .sort((a, b) => a.order - b.order);
 
   return activeMenuItems.map(convertMenuItem);

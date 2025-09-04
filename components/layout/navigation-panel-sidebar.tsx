@@ -87,7 +87,7 @@ export function NavigationPanelSidebar({
 
   const getIconClasses = () => {
     const baseClasses = "w-4 h-4";
-
+    
     switch (iconStyle) {
       case "filled":
         return cn(baseClasses, "fill-current");
@@ -103,7 +103,7 @@ export function NavigationPanelSidebar({
   const getNavigationStyleClasses = (isActive: boolean, level: number = 0) => {
     const baseClasses = "w-full gap-2 h-10 px-3";
     const indent = level * 16;
-
+    
     if (!isActive) {
       return cn(baseClasses, "hover:bg-accent hover:text-accent-foreground");
     }
@@ -316,8 +316,8 @@ export function NavigationPanelSidebar({
         cardStyle === "glass"
           ? "bg-white/5 dark:bg-white/5 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]"
           : cardStyle === "solid"
-            ? "bg-background border-border backdrop-blur-sm"
-            : "bg-background/95 border-border/50 backdrop-blur-sm",
+          ? "bg-background border-border backdrop-blur-sm"
+          : "bg-background/95 border-border/50 backdrop-blur-sm",
         // RTL/LTR positioning and borders
         direction === "rtl" ? "right-16 border-l" : "left-16 border-r",
         "lg:translate-x-0"
@@ -340,23 +340,23 @@ export function NavigationPanelSidebar({
                   "w-8 h-8 flex items-center justify-center text-white flex-shrink-0",
                   getBorderRadiusClass(),
                   colorTheme === "blue" &&
-                  "bg-gradient-to-br from-blue-500 to-blue-600",
+                    "bg-gradient-to-br from-blue-500 to-blue-600",
                   colorTheme === "purple" &&
-                  "bg-gradient-to-br from-purple-500 to-purple-600",
+                    "bg-gradient-to-br from-purple-500 to-purple-600",
                   colorTheme === "green" &&
-                  "bg-gradient-to-br from-green-500 to-green-600",
+                    "bg-gradient-to-br from-green-500 to-green-600",
                   colorTheme === "orange" &&
-                  "bg-gradient-to-br from-orange-500 to-orange-600",
+                    "bg-gradient-to-br from-orange-500 to-orange-600",
                   colorTheme === "red" &&
-                  "bg-gradient-to-br from-red-500 to-red-600",
+                    "bg-gradient-to-br from-red-500 to-red-600",
                   colorTheme === "teal" &&
-                  "bg-gradient-to-br from-teal-500 to-teal-600",
+                    "bg-gradient-to-br from-teal-500 to-teal-600",
                   colorTheme === "pink" &&
-                  "bg-gradient-to-br from-pink-500 to-pink-600",
+                    "bg-gradient-to-br from-pink-500 to-pink-600",
                   colorTheme === "indigo" &&
-                  "bg-gradient-to-br from-indigo-500 to-indigo-600",
+                    "bg-gradient-to-br from-indigo-500 to-indigo-600",
                   colorTheme === "cyan" &&
-                  "bg-gradient-to-br from-cyan-500 to-cyan-600"
+                    "bg-gradient-to-br from-cyan-500 to-cyan-600"
                 )}
               >
                 <selectedNavItem.icon className="w-4 h-4" />

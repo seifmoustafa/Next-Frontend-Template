@@ -47,6 +47,7 @@ export function CategoriesView() {
       { name: "id", type: "hidden", required: true },
     ],
     getActions: (vm, t, handleDelete) => [
+      { label: t("common.view"), onClick: (item: Category) => vm.openViewModal(item), variant: "ghost" },
       { label: t("common.edit"), onClick: (item: Category) => vm.openEditModal(item), variant: "ghost" },
       { label: t("common.delete"), onClick: (item: Category) => handleDelete?.(item), variant: "ghost", className: "text-red-600 hover:text-red-700" },
     ],

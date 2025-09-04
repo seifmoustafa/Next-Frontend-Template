@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { Sparkles, Shield } from 'lucide-react'
 import { useSettings } from '@/providers/settings-provider'
 import { cn } from '@/lib/utils'
@@ -79,13 +80,13 @@ export function Logo({ className, showText = true, size = 'md', animation = 'non
   }
 
   return (
-    <div className={cn('flex items-center gap-2', className)}>
+    <Link href="/" className={cn('flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-200', className)}>
       {renderIcon()}
       {showText && settings.logoType === 'custom' && (
         <span className={cn('font-semibold', textSizeClasses[settings.logoSize])}>
           {settings.logoText}
         </span>
       )}
-    </div>
+    </Link>
   )
 }

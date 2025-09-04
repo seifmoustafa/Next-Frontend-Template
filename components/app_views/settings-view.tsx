@@ -112,12 +112,12 @@ export function SettingsView() {
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={handleExportSettings}>
-              <Download className="h-4 w-4 mr-2" />
+              <Download className="h-4 w-4 mx-2" />
               {t("common.export")}
             </Button>
             <Button variant="outline" asChild>
               <label htmlFor="import-settings" className="cursor-pointer">
-                <Upload className="h-4 w-4 mr-2" />
+                <Upload className="h-4 w-4 mx-2" />
                 {t("common.import")}
               </label>
             </Button>
@@ -133,11 +133,11 @@ export function SettingsView() {
               onClick={handleSaveSettings}
               disabled={settings.autoSave}
             >
-              <Save className="h-4 w-4 mr-2" />
+              <Save className="h-4 w-4 mx-2" />
               {t("common.save")}
             </Button>
             <Button variant="destructive" onClick={handleResetSettings}>
-              <RotateCcw className="h-4 w-4 mr-2" />
+              <RotateCcw className="h-4 w-4 mx-2" />
               {t("settings.resetAll")}
             </Button>
           </div>

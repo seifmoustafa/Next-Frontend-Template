@@ -2,6 +2,7 @@ export const API_ENDPOINTS = {
   LOGIN: "/Authentication/login",
   LOGOUT: "/Authentication/logout",
   REFRESH: "/Authentication/refresh",
+  GET_MENU_ITEMS: "/MenuItems",
 
   GET_USERS: "/admins",
   GET_USER: (id: string) => `/admins/${id}`,
@@ -53,5 +54,111 @@ export const API_ENDPOINTS = {
   CREATE_CIVILIAN: "/Civilians",
   UPDATE_CIVILIAN: (id: string) => `/Civilians/${id}`,
   DELETE_CIVILIAN: (id: string) => `/Civilians/${id}`,
-  GET_MENU_ITEMS: "/MenuItems",
+
+  GET_MILITARY_PERSONS: "/MilitaryPersons",
+  GET_MILITARY_PERSON: (id: string) => `/MilitaryPersons/${id}`,
+  CREATE_MILITARY_PERSON: "/MilitaryPersons",
+  UPDATE_MILITARY_PERSON: (id: string) => `/MilitaryPersons/${id}`,
+  DELETE_MILITARY_PERSON: (id: string) => `/MilitaryPersons/${id}`,
+
+  GET_SUBCATEGORIES: `/SubCategory`,
+  GET_SUBCATEGORY: (id: string) => `/SubCategory/${id}`,
+  GET_SUBCATEGORY_BY_CATEGORY_ID: (categoryId: string) => `/SubCategory/category/${categoryId}`,
+  CREATE_SUBCATEGORY: `/SubCategory`,
+  UPDATE_SUBCATEGORY: (id: string) => `/SubCategory/${id}`,
+  DELETE_SUBCATEGORY: (id: string) => `/SubCategory/${id}`,
+
+  GET_PRODUCTS: "/Products",
+  GET_PRODUCT: (id: string) => `/Products/${id}`,
+  GET_PRODUCT_BY_TEMP_NIIN: (tempNiin: string) => `/Products/temp-niin/${tempNiin}`,
+  CREATE_PRODUCT: "/Products",
+  UPDATE_PRODUCT: (id: string) => `/Products/${id}`,
+  DELETE_PRODUCT: (id: string) => `/Products/${id}`,
+
+  GET_PRODUCT_CONTRACTS: "/ProductContracts",
+  GET_PRODUCT_CONTRACT: (id: string) => `/ProductContracts/${id}`,
+  GET_PRODUCT_CONTRACTS_BY_CONTRACT_ID: (contractId: string) => `/ProductContracts/By-ContractId/${contractId}`,
+  GET_PRODUCT_CONTRACTS_BY_PRODUCT_ID: (productId: string) => `/ProductContracts/By-ProductId/${productId}`,
+  CREATE_PRODUCT_CONTRACT: "/ProductContracts",
+  UPDATE_PRODUCT_CONTRACT: (id: string) => `/ProductContracts/${id}`,
+  DELETE_PRODUCT_CONTRACT: (id: string) => `/ProductContracts/${id}`,
+
+  GET_ROLES: "/Roles",
+  GET_ROLE: (id: string) => `/Roles/${id}`,
+  CREATE_ROLE: "/Roles",
+  UPDATE_ROLE: (id: string) => `/Roles/${id}`,
+  DELETE_ROLE: (id: string) => `/Roles/${id}`,
+
+
+  GET_TRANSACTIONS: "/Transactions",
+  GET_TRANSACTION: (id: string) => `/Transactions/${id}`,
+  GET_TRANSACTIONS_BY_SITE_ID: (siteid: string) => `/Transactions/By-SiteId/${siteid}`,
+  GET_TRANSACTIONS_BY_PRODUCT_TEMPNIIN: (tempniin: string) => `/Transactions/By-ProductTempNiin/${tempniin}`,
+  GET_TRANSACTIONS_BY_SERIAL: (serial: string) => `/Transactions/By-Serial/${serial}`,
+  CREATE_TRANSACTION: "/Transactions",
+  UPDATE_TRANSACTION: (id: string) => `/Transactions/${id}`,
+  DELETE_TRANSACTION: (id: string) => `/Transactions/${id}`,
+
+  GET_SITE_PRODUCT_CONTRACTS: "/SiteProductContracts",
+  GET_SITE_PRODUCT_CONTRACT: (id: string) => `/SiteProductContracts/${id}`,
+  GET_SITE_PRODUCT_CONTRACTS_BY_PRODUCT_CONTRACT_ID: (productContractId: string) => `/SiteProductContracts/By-ProductContractId/${productContractId}`,
+  GET_SITE_PRODUCT_CONTRACTS_BY_PRODUCT_ID: (productId: string) => `/SiteProductContracts/By-ProductId/${productId}`,
+  GET_SITE_PRODUCT_CONTRACTS_BY_SITE_ID: (siteId: string) => `/SiteProductContracts/By-SiteId/${siteId}`,
+  GET_SITE_PRODUCT_CONTRACTS_BY_TEMP_NIIN: (tempNiin: string) => `/SiteProductContracts/By-ProductTempNiin/${tempNiin}`,
+  CREATE_SITE_PRODUCT_CONTRACT: "/SiteProductContracts",
+  UPDATE_SITE_PRODUCT_CONTRACT: (id: string) => `/SiteProductContracts/${id}`,
+  DELETE_SITE_PRODUCT_CONTRACT: (id: string) => `/SiteProductContracts/${id}`,
+
+  GET_SITE_PRODUCT_LOCATIONS: "/SiteProductLocations",
+  GET_SITE_PRODUCT_LOCATION: (id: string) => `/SiteProductLocations/${id}`,
+  GET_NOT_RESERVED_SITE_PRODUCT_LOCATIONS: "/SiteProductLocations/Not-Reserved",
+  CREATE_SITE_PRODUCT_LOCATION: "/SiteProductLocations",
+  UPDATE_SITE_PRODUCT_LOCATION: (id: string) => `/SiteProductLocations/${id}`,
+  DELETE_SITE_PRODUCT_LOCATION: (id: string) => `/SiteProductLocations/${id}`,
+
+
+  GET_SITE_PRODUCT_QUANTITIES: "/SiteProductQuantities",
+  GET_SITE_PRODUCT_QUANTITY: (id: string) => `/SiteProductQuantities/${id}`,
+  GET_SITE_PRODUCT_QUANTITIES_BY_SITE_ID:  `/SiteProductQuantities/By-SiteId`,
+  GET_SITE_PRODUCT_QUANTITIES_BY_PRODUCT_TEMPNIIN: (tempniin: string) => `/SiteProductQuantities/By-ProductTempNiin/${tempniin}`,
+  CREATE_SITE_PRODUCT_QUANTITY: "/SiteProductQuantities",
+  UPDATE_SITE_PRODUCT_QUANTITY: (id: string) => `/SiteProductQuantities/${id}`,
+  DELETE_SITE_PRODUCT_QUANTITY: (id: string) => `/SiteProductQuantities/${id}`,
+
+
+
+  GET_SITE_118S: "/Site118s",
+  GET_SITE_118: (id: string) => `/Site118s/${id}`,
+  GET_SITE_118S_BY_SITE_ID:  `/Site118s/By-SiteId`,
+  GET_SITE_118S_BY_PRODUCT_TEMPNIIN: (tempniin: string) => `/Site118s/By-ProductTempNiin/${tempniin}`,
+  CREATE_SITE_118S: "/Site118s",
+  UPDATE_SITE_118S: (id: string) => `/Site118s/${id}`,
+  DELETE_SITE_118S: (id: string) => `/Site118s/${id}`,
+
+  // Admin endpoints
+  GET_ADMINS: "/admins",
+  GET_ADMIN: (id: string) => `/admins/${id}`,
+  CREATE_ADMIN: "/admins",
+  UPDATE_ADMIN: (id: string) => `/admins/${id}`,
+  DELETE_ADMIN: (id: string) => `/admins/${id}`,
+  ACTIVATE_ADMIN: (id: string) => `/admins/${id}/activate`,
+  DEACTIVATE_ADMIN: (id: string) => `/admins/${id}/deactivate`,
+  RESET_ADMIN_PASSWORD: (id: string) => `/admins/${id}/reset-password`,
+  ACTIVATE_SELECTED_ADMINS: "/admins/activate-selected",
+  DEACTIVATE_SELECTED_ADMINS: "/admins/deactivate-selected",
+  DELETE_SELECTED_ADMINS: "/admins/delete-selected",
+  ACTIVATE_ALL_ADMINS: "/admins/activate-all",
+  DEACTIVATE_ALL_ADMINS: "/admins/deactivate-all",
+  DELETE_ALL_ADMINS: "/admins/delete-all",
+
+  // AdminRole endpoints
+  GET_ADMIN_ROLES: "/AdminRoles",
+  GET_ADMIN_ROLE: (id: string) => `/AdminRoles/${id}`,
+  ASSIGN_ADMIN_ROLES: "/AdminRoles/Assign",
+  DELETE_ADMIN_ROLE: (id: string) => `/AdminRoles/${id}`,
+
+  // Rank endpoints
+  GET_RANKS: "/Rank",
+  GET_RANK: (id: string) => `/Rank/${id}`,
+
 };

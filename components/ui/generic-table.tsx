@@ -47,6 +47,7 @@ interface Action<T> {
   onClick: (row: T) => void;
   variant?: "default" | "destructive" | "ghost";
   className?: string;
+  show?: (row: T) => boolean;
 }
 
 interface Pagination {
@@ -640,7 +641,9 @@ export function GenericTable<T extends Record<string, any>>({
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        {actions.map((action, actionIndex) => (
+                        {actions
+                          .filter((action) => !action.show || action.show(row))
+                          .map((action, actionIndex) => (
                           <DropdownMenuItem
                             key={actionIndex}
                             onClick={() => action.onClick(row)}
@@ -824,7 +827,9 @@ export function GenericTable<T extends Record<string, any>>({
                             <DropdownMenuContent
                               align={direction === "rtl" ? "start" : "end"}
                             >
-                              {actions.map((action, actionIndex) => (
+                              {actions
+                                .filter((action) => !action.show || action.show(row))
+                                .map((action, actionIndex) => (
                                 <DropdownMenuItem
                                   key={actionIndex}
                                   onClick={() => action.onClick(row)}

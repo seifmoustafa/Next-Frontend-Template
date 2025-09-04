@@ -33,8 +33,16 @@ export interface UpdateSiteRequest {
 }
 
 export interface ISiteService {
-  getSites(params?: { page?: number; pageSize?: number; PageSearch?: string }): Promise<SitesResponse>;
-  getSitesWithChildren(params?: { page?: number; pageSize?: number; PageSearch?: string }): Promise<SitesResponse>;
+  getSites(params?: {
+    page?: number;
+    pageSize?: number;
+    PageSearch?: string;
+  }): Promise<SitesResponse>;
+  getSitesWithChildren(params?: {
+    page?: number;
+    pageSize?: number;
+    PageSearch?: string;
+  }): Promise<SitesResponse>;
   getSiteById(id: string): Promise<Site>;
   createSite(data: CreateSiteRequest): Promise<Site>;
   updateSite(id: string, data: UpdateSiteRequest): Promise<Site>;
@@ -47,26 +55,42 @@ export class SiteService implements ISiteService {
     private notificationService: INotificationService
   ) {}
 
-  async getSites(params?: { page?: number; pageSize?: number; PageSearch?: string }): Promise<SitesResponse> {
+  async getSites(params?: {
+    page?: number;
+    pageSize?: number;
+    PageSearch?: string;
+  }): Promise<SitesResponse> {
     try {
       const q = new URLSearchParams();
-      if (params?.page !== undefined) q.append("PageNumber", String(params.page));
-      if (params?.pageSize !== undefined) q.append("PageSize", String(params.pageSize));
+      if (params?.page !== undefined)
+        q.append("PageNumber", String(params.page));
+      if (params?.pageSize !== undefined)
+        q.append("PageSize", String(params.pageSize));
       if (params?.PageSearch) q.append("PageSearch", params.PageSearch);
-      return await this.apiService.get<SitesResponse>(`${API_ENDPOINTS.GET_SITES}?${q.toString()}`);
+      return await this.apiService.get<SitesResponse>(
+        `${API_ENDPOINTS.GET_SITES}?${q.toString()}`
+      );
     } catch (error) {
       this.notificationService.error("Failed to fetch sites");
       throw error;
     }
   }
 
-  async getSitesWithChildren(params?: { page?: number; pageSize?: number; PageSearch?: string }): Promise<SitesResponse> {
+  async getSitesWithChildren(params?: {
+    page?: number;
+    pageSize?: number;
+    PageSearch?: string;
+  }): Promise<SitesResponse> {
     try {
       const q = new URLSearchParams();
-      if (params?.page !== undefined) q.append("PageNumber", String(params.page));
-      if (params?.pageSize !== undefined) q.append("PageSize", String(params.pageSize));
+      if (params?.page !== undefined)
+        q.append("PageNumber", String(params.page));
+      if (params?.pageSize !== undefined)
+        q.append("PageSize", String(params.pageSize));
       if (params?.PageSearch) q.append("PageSearch", params.PageSearch);
-      return await this.apiService.get<SitesResponse>(`${API_ENDPOINTS.GET_SITES_WITH_CHILDREN}?${q.toString()}`);
+      return await this.apiService.get<SitesResponse>(
+        `${API_ENDPOINTS.GET_SITES_WITH_CHILDREN}?${q.toString()}`
+      );
     } catch (error) {
       this.notificationService.error("Failed to fetch site tree");
       throw error;
@@ -84,7 +108,10 @@ export class SiteService implements ISiteService {
 
   async createSite(data: CreateSiteRequest): Promise<Site> {
     try {
-      const site = await this.apiService.post<Site>(API_ENDPOINTS.CREATE_SITE, data);
+      const site = await this.apiService.post<Site>(API_ENDPOINTS.CREATE_SITE, {
+        isActive: true,
+        isDeleted: false,
+      });
       this.notificationService.success("Site created successfully");
       return site;
     } catch (error) {
@@ -95,7 +122,10 @@ export class SiteService implements ISiteService {
 
   async updateSite(id: string, data: UpdateSiteRequest): Promise<Site> {
     try {
-      const site = await this.apiService.put<Site>(API_ENDPOINTS.UPDATE_SITE(id), data);
+      const site = await this.apiService.put<Site>(
+        API_ENDPOINTS.UPDATE_SITE(id),
+        { isActive: true, isDeleted: false, ...data }
+      );
       this.notificationService.success("Site updated successfully");
       return site;
     } catch (error) {

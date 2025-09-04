@@ -231,6 +231,8 @@ export interface CrudConfig<TItem = any> {
   customTableProps?: any;
   /** Custom props to pass to modals */
   customModalProps?: any;
+  /** Form key to force re-render when form fields change */
+  formKey?: number;
   /** @deprecated Use customActions instead */
   customToolbarActions?: React.ReactNode;
   /** @deprecated Use bulkActions instead */
@@ -367,14 +369,14 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
   const title = config ? t(config.titleKey) : propTitle!;
   const subtitle = config ? (config.customSubtitle || t(config.subtitleKey)) : propSubtitle;
   const columns = config ? config.columns : propColumns!;
-
+  
   // Wrap actions to use the generic individual action handler
   const rawActions = config?.getActions ? config.getActions(viewModel, t, handleDelete) : propActions;
   const actions = rawActions?.map(action => ({
     ...action,
     onClick: action.onClick === handleDelete ? handleDelete : (item: any) => handleIndividualAction(action, item)
   }));
-
+  
   const createFields = config ? config.createFields : propCreateFields!;
   const editFields = config ? config.editFields : (propEditFields || propCreateFields!);
 
@@ -488,7 +490,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
           ))}
 
           {/* Generic bulk actions */}
-          {config?.bulkActions && viewModel.selectedItems.length > 0 &&
+          {config?.bulkActions && viewModel.selectedItems.length > 0 && 
             config.bulkActions.map((action, index) => (
               <Button
                 key={index}
@@ -602,12 +604,14 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
             viewModel.closeEditModal();
           }
         }}
+        modal={false}
       >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{`${t("common.edit")} ${title}`}</DialogTitle>
           </DialogHeader>
           <GenericForm
+            key={`edit-form-${viewModel.editingItem?.id || 'new'}-${JSON.stringify(editFields?.map(f => f.name).sort())}-${config?.formKey || 0}`}
             fields={editFields || createFields}
             onSubmit={(data) => {
               if (viewModel.editingItem) {
@@ -616,7 +620,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
               return Promise.resolve();
             }}
             initialValues={config?.editInitialValues && viewModel.editingItem ? config.editInitialValues(viewModel.editingItem) : (viewModel.editingItem || {})}
-            onCancel={() => viewModel.setIsEditModalOpen(false)}
+            onCancel={() => viewModel.closeEditModal()}
           />
         </DialogContent>
       </Dialog>
@@ -637,7 +641,7 @@ export function GenericCrudView<T>(props: GenericCrudViewProps<T>) {
           <GenericForm
             fields={editFields || createFields}
             initialValues={viewModel.viewItem || {}}
-            onSubmit={async () => { }} // No-op for read-only
+            onSubmit={async () => {}} // No-op for read-only
             onCancel={viewModel.closeViewModal}
             readOnly={true}
           />

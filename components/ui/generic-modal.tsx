@@ -58,7 +58,7 @@ export function GenericModal({
     let baseClasses = "p-0 overflow-hidden flex flex-col";
     let sizeClasses = "";
     let styleClasses = "";
-
+    
     switch (settings.modalStyle) {
       case "centered":
         // Keep default centering behavior
@@ -194,4 +194,3 @@ export function GenericModal({
     </Dialog>
   );
 }
- 

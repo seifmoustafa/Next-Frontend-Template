@@ -256,8 +256,8 @@ export function ModernSidebar({
           open
             ? "translate-x-0"
             : direction === "rtl"
-              ? "translate-x-full"
-              : "-translate-x-full",
+            ? "translate-x-full"
+            : "-translate-x-full",
           isHovered ? "w-80" : "w-20"
         )}
         onMouseEnter={handleMouseEnter}

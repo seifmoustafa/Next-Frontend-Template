@@ -7,13 +7,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/providers/auth-provider"
 import { useI18n } from "@/providers/i18n-provider"
-import {
-  User,
-  Lock,
-  Eye,
-  EyeOff,
-  AlertCircle,
-  CheckCircle,
+import { 
+  User, 
+  Lock, 
+  Eye, 
+  EyeOff, 
+  AlertCircle, 
+  CheckCircle, 
   Loader2,
   Phone,
   Camera,
@@ -235,12 +235,12 @@ export function ProfileView() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(var(--primary),0.15),transparent_50%)]" />
         <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,rgba(var(--primary),0.05)_60deg,transparent_120deg)]" />
-
+        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20">
           {/* Premium Profile Card */}
           <div className="bg-card/95 backdrop-blur-2xl border border-border/50 rounded-3xl p-8 shadow-2xl shadow-primary/10">
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
-
+              
               {/* Enhanced Avatar Section */}
               <div className="relative group flex-shrink-0">
                 <div className="relative">
@@ -256,12 +256,12 @@ export function ProfileView() {
                       <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full blur-sm" />
                     </div>
                   </div>
-
+                  
                   {/* Professional Status Indicator */}
                   <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-green-500 rounded-full border-4 border-background shadow-lg flex items-center justify-center">
                     <div className="w-4 h-4 bg-white rounded-full animate-pulse" />
                   </div>
-
+                  
                   {/* Hover Camera Effect */}
                   <div className="absolute inset-0 bg-black/50 rounded-3xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer">
                     <div className="text-center text-white">
@@ -288,11 +288,11 @@ export function ProfileView() {
                   <p className={`text-muted-foreground mb-4 ${isRTL ? 'text-right' : 'text-left'}`}>
                     {isRTL ? `${profile?.username}@` : `@${profile?.username}`}
                   </p>
-
+                
                   <div className="flex items-center justify-center lg:justify-start gap-2 mb-6">
-                    <Button
-                      variant="outline"
-                      size="sm"
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
                       className="bg-background/50 backdrop-blur-sm border-border/50 hover:bg-background/80 transition-all duration-300"
                     >
                       <Camera className="w-4 h-4 mr-2" />
@@ -314,7 +314,7 @@ export function ProfileView() {
                       </div>
                     </div>
                   </div>
-
+                  
                   <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 rounded-2xl p-4 border border-green-500/20 hover:border-green-500/30 transition-colors">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-green-500/20 rounded-xl">
@@ -326,7 +326,7 @@ export function ProfileView() {
                       </div>
                     </div>
                   </div>
-
+                  
                   <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-2xl p-4 border border-purple-500/20 hover:border-purple-500/30 transition-colors">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-purple-500/20 rounded-xl">
@@ -338,7 +338,7 @@ export function ProfileView() {
                       </div>
                     </div>
                   </div>
-
+                  
                   <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 rounded-2xl p-4 border border-orange-500/20 hover:border-orange-500/30 transition-colors">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-orange-500/20 rounded-xl">
@@ -386,10 +386,10 @@ export function ProfileView() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 pb-12">
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-
+          
           {/* Left Column - Profile Information */}
           <div className="xl:col-span-2 space-y-8">
-
+            
             {/* Personal Information Card */}
             <Card className="bg-card/95 backdrop-blur-2xl border-border/50 rounded-3xl shadow-2xl shadow-primary/10 overflow-hidden">
               <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6 border-b border-border/50">
@@ -401,7 +401,7 @@ export function ProfileView() {
                 </CardTitle>
                 <p className="text-muted-foreground mt-2">{t('profile.personalInfoDescription')}</p>
               </div>
-
+              
               <CardContent className="p-8">
                 <form onSubmit={handleProfileSubmit} className="space-y-6">
                   {/* Name Fields */}
@@ -424,7 +424,7 @@ export function ProfileView() {
                         <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-transparent opacity-0 focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
                       </div>
                     </div>
-
+                    
                     <div className="space-y-3">
                       <Label htmlFor="lastName" className="text-sm font-semibold text-foreground/90 flex items-center gap-2">
                         <div className="w-2 h-2 bg-primary rounded-full" />
@@ -444,7 +444,7 @@ export function ProfileView() {
                       </div>
                     </div>
                   </div>
-
+                  
                   {/* Phone Number */}
                   <div className="space-y-3">
                     <Label htmlFor="phoneNumber" className="text-sm font-semibold text-foreground/90 flex items-center gap-2">
@@ -458,7 +458,7 @@ export function ProfileView() {
                         type="tel"
                         value={profileFormData.phoneNumber}
                         onChange={(e) => setProfileFormData(prev => ({ ...prev, phoneNumber: e.target.value }))}
-                        className={`h-14 rounded-2xl border-2 border-border/50 focus:border-primary/50 transition-all duration-300 bg-background/50 backdrop-blur-sm ${isRTL ? 'pr-12 pl-4' : 'pl-12 pr-4'} text-base font-medium`}
+                        className={`h-14 rounded-2xl border-2 border-border/50 focus:border-primary/50 transition-all duration-300 bg-background/50 backdrop-blur-sm ${isRTL ? 'pr-12 pl-4 text-right' : 'pl-12 pr-4'} text-base font-medium`}
                         placeholder={t('profile.phoneNumber')}
                         required
                       />
@@ -504,169 +504,6 @@ export function ProfileView() {
                 </form>
               </CardContent>
             </Card>
-
-            {/* Premium Password Change Card */}
-            <Card className="bg-card/95 backdrop-blur-2xl border-border/50 rounded-3xl shadow-2xl shadow-primary/10 overflow-hidden">
-              <div className="bg-gradient-to-r from-orange-500/10 via-orange-500/5 to-transparent p-6 border-b border-border/50">
-                <CardTitle className="text-2xl font-bold flex items-center gap-3">
-                  <div className="p-2 bg-orange-500/20 rounded-xl">
-                    <Lock className="w-6 h-6 text-orange-500" />
-                  </div>
-                  {t("profile.password.title")}
-                </CardTitle>
-                <p className="text-muted-foreground mt-2">{t("profile.password.description")}</p>
-              </div>
-
-              <CardContent className="p-8">
-                <form onSubmit={handlePasswordSubmit} className="space-y-6">
-                  {/* Password Fields */}
-                  <div className="space-y-6">
-                    <div className="space-y-3">
-                      <Label htmlFor="currentPassword" className="text-sm font-semibold text-foreground/90 flex items-center gap-2">
-                        <div className="w-2 h-2 bg-orange-500 rounded-full" />
-                        {t("profile.password.current")}
-                      </Label>
-                      <div className="relative">
-                        <Lock className={`absolute ${isRTL ? 'right-4' : 'left-4'} top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground`} />
-                        <Input
-                          id="currentPassword"
-                          type={showPasswords.current ? "text" : "password"}
-                          value={passwordFormData.currentPassword}
-                          onChange={(e) => setPasswordFormData({ ...passwordFormData, currentPassword: e.target.value })}
-                          required
-                          className={`h-14 rounded-2xl border-2 border-border/50 focus:border-orange-500/50 transition-all duration-300 bg-background/50 backdrop-blur-sm ${isRTL ? 'pr-12 pl-12' : 'pl-12 pr-12'} text-base font-medium`}
-                          placeholder={t('profile.password.current')}
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className={`absolute ${isRTL ? 'left-2' : 'right-2'} top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-muted/50 rounded-xl`}
-                          onClick={() => setShowPasswords({ ...showPasswords, current: !showPasswords.current })}
-                        >
-                          {showPasswords.current ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                        </Button>
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/5 to-transparent opacity-0 focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <Label htmlFor="newPassword" className="text-sm font-semibold text-foreground/90 flex items-center gap-2">
-                        <div className="w-2 h-2 bg-orange-500 rounded-full" />
-                        {t("profile.password.new")}
-                      </Label>
-                      <div className="relative">
-                        <Lock className={`absolute ${isRTL ? 'right-4' : 'left-4'} top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground`} />
-                        <Input
-                          id="newPassword"
-                          type={showPasswords.new ? "text" : "password"}
-                          value={passwordFormData.newPassword}
-                          onChange={(e) => setPasswordFormData({ ...passwordFormData, newPassword: e.target.value })}
-                          required
-                          className={`h-14 rounded-2xl border-2 border-border/50 focus:border-orange-500/50 transition-all duration-300 bg-background/50 backdrop-blur-sm ${isRTL ? 'pr-12 pl-12' : 'pl-12 pr-12'} text-base font-medium`}
-                          placeholder={t('profile.password.new')}
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className={`absolute ${isRTL ? 'left-2' : 'right-2'} top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-muted/50 rounded-xl`}
-                          onClick={() => setShowPasswords({ ...showPasswords, new: !showPasswords.new })}
-                        >
-                          {showPasswords.new ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                        </Button>
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/5 to-transparent opacity-0 focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <Label htmlFor="confirmPassword" className="text-sm font-semibold text-foreground/90 flex items-center gap-2">
-                        <div className="w-2 h-2 bg-orange-500 rounded-full" />
-                        {t("profile.password.confirm")}
-                      </Label>
-                      <div className="relative">
-                        <Lock className={`absolute ${isRTL ? 'right-4' : 'left-4'} top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground`} />
-                        <Input
-                          id="confirmPassword"
-                          type={showPasswords.confirm ? "text" : "password"}
-                          value={passwordFormData.confirmPassword}
-                          onChange={(e) => setPasswordFormData({ ...passwordFormData, confirmPassword: e.target.value })}
-                          required
-                          className={`h-14 rounded-2xl border-2 border-border/50 focus:border-orange-500/50 transition-all duration-300 bg-background/50 backdrop-blur-sm ${isRTL ? 'pr-12 pl-12' : 'pl-12 pr-12'} text-base font-medium`}
-                          placeholder={t('profile.password.confirm')}
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className={`absolute ${isRTL ? 'left-2' : 'right-2'} top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-muted/50 rounded-xl`}
-                          onClick={() => setShowPasswords({ ...showPasswords, confirm: !showPasswords.confirm })}
-                        >
-                          {showPasswords.confirm ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                        </Button>
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/5 to-transparent opacity-0 focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      </div>
-                    </div>
-
-                    {/* Password Requirements */}
-                    <div className="bg-orange-500/5 rounded-2xl p-6 border border-orange-500/20">
-                      <h4 className="text-sm font-semibold text-muted-foreground mb-3">{t('profile.password.requirements')}:</h4>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                          • {t('profile.password.requirementLength')}
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                          • {t('profile.password.requirementCase')}
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                          • {t('profile.password.requirementNumbers')}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Status Messages */}
-                  {passwordError && (
-                    <div className="flex items-center gap-3 text-red-600 text-sm p-4 bg-red-500/10 rounded-2xl border border-red-500/20 backdrop-blur-sm">
-                      <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                      <span className="font-medium">{passwordError}</span>
-                    </div>
-                  )}
-
-                  {passwordSuccess && (
-                    <div className="flex items-center gap-3 text-green-600 text-sm p-4 bg-green-500/10 rounded-2xl border border-green-500/20 backdrop-blur-sm">
-                      <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                      <span className="font-medium">Password updated successfully!</span>
-                    </div>
-                  )}
-
-                  {/* Submit Button */}
-                  <div className="pt-4">
-                    <Button
-                      type="submit"
-                      disabled={profileUpdateLoading}
-                      className="w-full h-14 rounded-2xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
-                    >
-                      {profileUpdateLoading ? (
-                        <>
-                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                          {t('profile.updateProfile')}...
-                        </>
-                      ) : (
-                        <>
-                          <Save className="w-5 h-5 mr-2" />
-                          {t('profile.updateProfile')}
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
-
             {/* Password Change Card */}
             <Card className="bg-card/95 backdrop-blur-2xl border-border/50 rounded-3xl shadow-2xl shadow-primary/10 overflow-hidden">
               <div className="bg-gradient-to-r from-orange-500/10 via-orange-500/5 to-transparent p-6 border-b border-border/50">
@@ -678,7 +515,7 @@ export function ProfileView() {
                 </CardTitle>
                 <p className="text-muted-foreground mt-2">{t('profile.passwordDescription')}</p>
               </div>
-
+              
               <CardContent className="p-8">
                 <form onSubmit={handlePasswordSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 gap-6">
@@ -830,7 +667,7 @@ export function ProfileView() {
           </div>
           {/* Right Sidebar - Additional Features */}
           <div className="space-y-8">
-
+            
             {/* Account Security Card */}
             <Card className="bg-card/95 backdrop-blur-2xl border-border/50 rounded-3xl shadow-2xl shadow-primary/10 overflow-hidden">
               <div className="bg-gradient-to-r from-green-500/10 via-green-500/5 to-transparent p-6 border-b border-border/50">
@@ -853,7 +690,7 @@ export function ProfileView() {
                     </div>
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                   </div>
-
+                  
                   <div className="flex items-center justify-between p-4 bg-blue-500/5 rounded-2xl border border-blue-500/20">
                     <div className="flex items-center gap-3">
                       <Clock className="w-5 h-5 text-blue-500" />
@@ -863,7 +700,7 @@ export function ProfileView() {
                       </div>
                     </div>
                   </div>
-
+                  
                   <div className="flex items-center justify-between p-4 bg-purple-500/5 rounded-2xl border border-purple-500/20">
                     <div className="flex items-center gap-3">
                       <MapPin className="w-5 h-5 text-purple-500" />
@@ -902,7 +739,7 @@ export function ProfileView() {
                       </>
                     )}
                   </Button>
-
+                  
                   <Button variant="outline" className={`w-full h-12 rounded-2xl border-2 hover:border-primary/50 transition-all duration-300 ${isRTL ? 'flex items-center justify-end flex-row-reverse' : 'flex items-center justify-start'}`}>
                     {isRTL ? (
                       <>
@@ -916,7 +753,7 @@ export function ProfileView() {
                       </>
                     )}
                   </Button>
-
+                  
                   <Button variant="outline" className={`w-full h-12 rounded-2xl border-2 hover:border-primary/50 transition-all duration-300 ${isRTL ? 'flex items-center justify-end flex-row-reverse' : 'flex items-center justify-start'}`}>
                     {isRTL ? (
                       <>
@@ -946,17 +783,17 @@ export function ProfileView() {
               </div>
               <CardContent className="p-6">
                 <div className="space-y-4 text-sm">
-
+                  
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">{t('profile.accountType')}</span>
                     <span className="font-semibold text-primary">{profile?.adminTypeName || t('profile.admin')}</span>
                   </div>
-
+                  
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">{t('profile.memberSince')}</span>
                     <span className="font-semibold">
-                      {(profile as any)?.createdTimestamp ?
-                        new Date((profile as any).createdTimestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) :
+                      {(profile as any)?.createdTimestamp ? 
+                        new Date((profile as any).createdTimestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : 
                         '-'
                       }
                     </span>

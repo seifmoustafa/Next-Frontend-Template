@@ -67,7 +67,7 @@ export function NavigationMainSidebar({
 
   const getIconClasses = () => {
     const baseClasses = "w-5 h-5";
-
+    
     switch (iconStyle) {
       case "filled":
         return cn(baseClasses, "fill-current");
@@ -82,7 +82,7 @@ export function NavigationMainSidebar({
 
   const getNavigationStyleClasses = (isActive: boolean, isMobile = false) => {
     const baseClasses = isMobile ? "w-full justify-start gap-3 h-12" : "w-12 h-12 relative group";
-
+    
     if (!isActive) {
       return cn(baseClasses, "hover:bg-accent hover:text-accent-foreground");
     }
@@ -118,7 +118,7 @@ export function NavigationMainSidebar({
           "rounded-none", // Remove border radius for clean sidebar style
           // For desktop main sidebar: right border for LTR, left border for RTL
           // For mobile: left border for LTR, right border for RTL
-          isMobile
+          isMobile 
             ? (direction === "rtl" ? "border-r-4" : "border-l-4")
             : (direction === "rtl" ? "border-l-4" : "border-r-4"),
           colorTheme === "blue" && "bg-blue-600/20 border-blue-600 text-blue-600",
@@ -254,8 +254,8 @@ export function NavigationMainSidebar({
           cardStyle === "glass"
             ? "bg-white/5 dark:bg-white/5 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]"
             : cardStyle === "solid"
-              ? "bg-background border-border backdrop-blur-sm"
-              : "bg-background/95 border-border/50 backdrop-blur-sm",
+            ? "bg-background border-border backdrop-blur-sm"
+            : "bg-background/95 border-border/50 backdrop-blur-sm",
           direction === "rtl" ? "right-0" : "left-0"
         )}
       >
@@ -279,14 +279,14 @@ export function NavigationMainSidebar({
           cardStyle === "glass"
             ? "bg-white/5 dark:bg-white/5 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] dark:shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]"
             : cardStyle === "solid"
-              ? "bg-background border-border backdrop-blur-sm"
-              : "bg-background/98 border-border/50 backdrop-blur-sm",
+            ? "bg-background border-border backdrop-blur-sm"
+            : "bg-background/98 border-border/50 backdrop-blur-sm",
           direction === "rtl" ? "right-0" : "left-0",
           open
             ? "translate-x-0"
             : direction === "rtl"
-              ? "translate-x-full"
-              : "-translate-x-full"
+            ? "translate-x-full"
+            : "-translate-x-full"
         )}
       >
         {/* Mobile Header */}

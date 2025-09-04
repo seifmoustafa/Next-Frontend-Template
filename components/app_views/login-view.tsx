@@ -62,7 +62,7 @@ export function LoginView() {
         </CardHeader>
 
         <CardContent>
-          <form
+          <form 
             onSubmit={(e) => {
               e.preventDefault();
               if (!vm.isLoading && vm.isFormValid) {

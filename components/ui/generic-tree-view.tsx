@@ -216,6 +216,13 @@ export function GenericTreeView<T extends TreeNode, TCreate, TUpdate>({
                     : {getLabel(vm.parentForNew)}
                   </p>
                 )}
+                {vm.parentForNew && vm.editing && (
+                  <p className="text-xs text-muted-foreground">
+                    {(t("common.edit_location_under") as string) ??
+                      "Edit location under"}
+                    : {getLabel(vm.parentForNew)}
+                  </p>
+                )}
               </div>
             </div>
 

@@ -108,6 +108,7 @@ export function CiviliansView() {
       { name: "id", type: "hidden", required: true },
     ],
     getActions: (vm, t, handleDelete) => [
+      { label: t("common.view"), onClick: (item: Civilian) => vm.openViewModal(item), variant: "ghost" },
       { label: t("common.edit"), onClick: (item: Civilian) => vm.openEditModal(item), variant: "ghost" },
       { label: t("common.delete"), onClick: (item: Civilian) => handleDelete?.(item), variant: "ghost", className: "text-red-600 hover:text-red-700" },
     ],

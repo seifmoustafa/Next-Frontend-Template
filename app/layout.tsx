@@ -6,13 +6,49 @@ import { I18nProvider } from "@/providers/i18n-provider"
 import { ServiceProvider } from "@/providers/service-provider";
 import { AuthProvider } from "@/providers/auth-provider";
 import { SettingsProvider } from "@/providers/settings-provider";
+import { NavigationProvider } from "@/providers/navigation-provider";
 import { RouteGuard } from "@/components/auth/route-guard";
 import { EnhancedToaster } from "@/components/ui/enhanced-toaster";
-import { NavigationProvider } from "@/providers/navigation-provider"
 
 export const metadata: Metadata = {
-  title: "لوحة التحكم الإدارية",
-  description: "لوحة تحكم إدارية احترافية مع دعم متعدد اللغات",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
+  title: "Contract Management System",
+  description: "Professional contract management system with multi-language support",
+  keywords: ["contract management", "government", "administration", "system"],
+  authors: [{ name: "Contract Management Team" }],
+  creator: "Contract Management System",
+  publisher: "Government Administration",
+  icons: {
+    icon: [
+      { url: "/app-logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/app-logo.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/app-logo.png",
+    apple: "/app-logo.png",
+  },
+  manifest: "/manifest.json",
+  openGraph: {
+    title: "Contract Management System",
+    description: "Professional contract management system with multi-language support",
+    url: "https://contract-management.gov",
+    siteName: "Contract Management System",
+    images: [
+      {
+        url: "/app-logo.png",
+        width: 512,
+        height: 512,
+        alt: "Contract Management System Logo",
+      },
+    ],
+    locale: "ar_SA",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contract Management System",
+    description: "Professional contract management system with multi-language support",
+    images: ["/app-logo.png"],
+  },
 }
 
 export default function RootLayout({
